@@ -8,10 +8,8 @@ lazy val app = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(
     libraryDependencies ++= Seq(
-      "com.beachape" %% "enumeratum-circe" % "1.6.1",
       // Implement search in the MemStore (and thus the TestStore)
       "com.outr" %% "lucene4s" % "1.9.1",
-      "io.circe" %% "circe-parser" % "0.12.3",
       "io.github.tetherless-world" %% "twxplore-base" % twxploreVersion,
       "io.github.tetherless-world" %% "twxplore-test" % twxploreVersion % Test,
     ),
