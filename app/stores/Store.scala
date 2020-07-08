@@ -1,0 +1,4 @@
+package stores
+
+trait Store {
+}
