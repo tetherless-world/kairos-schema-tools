@@ -1,8 +1,8 @@
-package formats.vocabulary
+package formats.sdf.vocabulary
 
 import org.apache.jena.rdf.model.ResourceFactory
 
-object SCHEMA {
+object SCHEMA_ORG {
   val PREFIX = "schema"
   val URI = "http://schema.org/"
 

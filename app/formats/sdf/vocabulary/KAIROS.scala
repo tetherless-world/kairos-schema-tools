@@ -1,4 +1,4 @@
-package formats.vocabulary
+package formats.sdf.vocabulary
 
 import org.apache.jena.rdf.model.ResourceFactory
 
