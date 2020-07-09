@@ -15,5 +15,8 @@ class MemStore extends Store {
   final override def putSchema(schema: Schema): Unit =
     schemasById.update(schema.id, schema)
 
+  final override def putSchemas(schemas: List[Schema]): Unit =
+    schemas.foreach(putSchema(_))
+
   private val schemasById = new mutable.HashMap[Uri, Schema]
 }

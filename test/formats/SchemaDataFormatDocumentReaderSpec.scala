@@ -5,12 +5,12 @@ import java.io.StringReader
 import formats.sdf.SchemaDataFormatDocumentReader
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import org.scalatest.{Matchers, WordSpec}
-import stores.ExampleDataResources
+import stores.ExampleData
 
 class SchemaDataFormatDocumentReaderSpec extends WordSpec with Matchers with WithResource {
   "Schema data format reader" can {
     "read the coordinated bombing attack TA1 example" in {
-      withResource(new SchemaDataFormatDocumentReader(new StringReader(ExampleDataResources.coordinatedBombingAttackTa1Json))) { reader =>
+      withResource(new SchemaDataFormatDocumentReader(new StringReader(ExampleData.coordinatedBombingAttackTa1Json))) { reader =>
         val document = reader.read()
         val schemas = document.schemas
         schemas.size should equal(1)

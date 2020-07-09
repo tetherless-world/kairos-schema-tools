@@ -1,11 +1,9 @@
 package stores
 
-import formats.sdf.SchemaDataFormatDocumentReader
 import org.scalatest.{Matchers, WordSpec}
-import stores.Store
 
 trait StoreBehaviors extends Matchers { this: WordSpec =>
-  val testSchema1 = SchemaDataFormatDocumentReader.read(ExampleDataResources.coordinatedBombingAttackTa1Json).schemas(0)
+  val testSchema1 = ExampleData.schemas(0)
 
   def store(storeFactory: () => Store): Unit = {
     "get a schema by id" in {
@@ -24,6 +22,13 @@ trait StoreBehaviors extends Matchers { this: WordSpec =>
       val store = storeFactory()
       store.putSchema(testSchema1)
       store.getSchemaById(testSchema1.id) should equal(Some(testSchema1))
+    }
+
+    "put schemas" in {
+      val store = storeFactory()
+      val expected = List(testSchema1)
+      store.putSchemas(expected)
+      store.getSchemas should equal(expected)
     }
   }
 }

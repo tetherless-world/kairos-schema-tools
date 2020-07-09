@@ -8,4 +8,5 @@ trait Store {
   def getSchemas: List[Schema]
 
   def putSchema(schema: Schema)
+  def putSchemas(schemas: List[Schema])
 }
