@@ -1,11 +1,14 @@
 package formats.sdf
 
-import java.io.Reader
+import java.io.{Reader, StringReader}
 
 import formats.sdf.versions.ZeroDot8aSchemaDataFormatDocumentReader
 import formats.sdf.vocabulary.KAIROS
+import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import org.apache.jena.rdf.model.{Model, ModelFactory, Resource}
 import org.apache.jena.riot.Lang
+
+import scala.io.Source
 
 final class SchemaDataFormatDocumentReader(reader: Reader) extends AutoCloseable {
   override def close(): Unit =
@@ -53,5 +56,11 @@ final class SchemaDataFormatDocumentReader(reader: Reader) extends AutoCloseable
     }
     val sdfVersion = readSdfVersion(rootResource)
   }
+}
 
+object SchemaDataFormatDocumentReader extends WithResource {
+  def read(json: String): SchemaDataFormatDocument =
+    withResource(new SchemaDataFormatDocumentReader(new StringReader(json))) { reader =>
+      reader.read()
+    }
 }
