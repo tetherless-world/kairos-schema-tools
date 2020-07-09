@@ -1,7 +1,7 @@
 package formats.sdf.versions
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.sdf.{MalformedSchemaDataFormatDocumentException, SchemaDataFormatDocument}
+import formats.sdf.{MalformedSchemaDataFormatDocumentException, SdfDocument}
 import formats.sdf.vocabulary.{KAIROS, KairosProperties, SCHEMA_ORG, SchemaOrgProperties}
 import io.github.tetherlessworld.scena.{Rdf, RdfProperties, RdfReader}
 import models.schema.{Duration, EntityType, Schema, Slot, Step}
@@ -9,9 +9,7 @@ import org.apache.jena.rdf.model.Resource
 
 import scala.collection.JavaConverters._
 
-object ZeroDot8aSchemaDataFormatDocumentReader extends RdfReader[SchemaDataFormatDocument] {
-  val SdfVersion = "0.8a"
-
+final class ZeroDot8aSdfDocumentReader(documentId: Uri, documentResource: Resource, documentSourceJson: String) {
   implicit class SchemaResource(val resource: Resource) extends KairosProperties with SchemaOrgProperties with RdfProperties
 
   private implicit val slotRdfReader: RdfReader[Slot] = (resource) => {
@@ -51,6 +49,7 @@ object ZeroDot8aSchemaDataFormatDocumentReader extends RdfReader[SchemaDataForma
       id = id,
       name = resource.names.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"schema ${id} missing required name property")),
       references = Option(resource.references).filter(_.nonEmpty),
+      sdfDocumentId = documentId,
       steps = resource.steps.map(resource => Rdf.read[Step](resource)),
       `super` = resource.supers.headOption,
       ta2 = false,
@@ -58,13 +57,16 @@ object ZeroDot8aSchemaDataFormatDocumentReader extends RdfReader[SchemaDataForma
     )
   }
 
-  private val schemasRdfReader: RdfReader[List[Schema]] = (resource) =>
-    resource.schemas.map(resource => Rdf.read[Schema](resource))
-
-  override def read(resource: Resource): SchemaDataFormatDocument = {
-    SchemaDataFormatDocument(
-      schemas = schemasRdfReader.read(resource),
-      sdfVersion = SdfVersion
+  def read(): SdfDocument = {
+    SdfDocument(
+      id = documentId,
+      schemas = documentResource.schemas.map(resource => Rdf.read[Schema](resource)),
+      sdfVersion = ZeroDot8aSdfDocumentReader.SdfVersion,
+      sourceJson = documentSourceJson
     )
   }
+}
+
+object ZeroDot8aSdfDocumentReader {
+  val SdfVersion = "0.8a"
 }

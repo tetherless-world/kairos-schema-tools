@@ -2,7 +2,8 @@ package formats.sdf
 
 import java.io.{Reader, StringReader}
 
-import formats.sdf.versions.ZeroDot8aSchemaDataFormatDocumentReader
+import edu.rpi.tw.twks.uri.Uri
+import formats.sdf.versions.ZeroDot8aSdfDocumentReader
 import formats.sdf.vocabulary.KAIROS
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import org.apache.jena.rdf.model.{Model, ModelFactory, Resource}
@@ -10,13 +11,15 @@ import org.apache.jena.riot.Lang
 
 import scala.io.Source
 
-final class SchemaDataFormatDocumentReader(reader: Reader) extends AutoCloseable {
+final class SdfDocumentReader(documentId: Uri, documentSource: Source) extends AutoCloseable {
   override def close(): Unit =
-    reader.close()
+    documentSource.close()
 
-  def read(): SchemaDataFormatDocument = {
+  def read(): SdfDocument = {
+    val documentSourceJson = documentSource.mkString
+
     val model = ModelFactory.createDefaultModel()
-    model.read(reader, null, Lang.JSONLD.getName)
+    model.read(new StringReader(documentSourceJson), documentId.toString, Lang.JSONLD.getName)
 
 //    model.write(System.out, Lang.TTL.getName)
 //    model.write(System.out, Lang.NT.getName)
@@ -24,7 +27,7 @@ final class SchemaDataFormatDocumentReader(reader: Reader) extends AutoCloseable
     val documentHeader = new SchemaDataFormatDocumentHeader(model)
 
     documentHeader.sdfVersion match {
-      case ZeroDot8aSchemaDataFormatDocumentReader.SdfVersion => ZeroDot8aSchemaDataFormatDocumentReader.read(documentHeader.rootResource)
+      case ZeroDot8aSdfDocumentReader.SdfVersion => new ZeroDot8aSdfDocumentReader(documentId, documentHeader.rootResource, documentSourceJson).read()
       case sdfVersion => throw new MalformedSchemaDataFormatDocumentException(s"unrecognized SDF version ${sdfVersion}")
     }
   }
@@ -58,9 +61,9 @@ final class SchemaDataFormatDocumentReader(reader: Reader) extends AutoCloseable
   }
 }
 
-object SchemaDataFormatDocumentReader extends WithResource {
-  def read(json: String): SchemaDataFormatDocument =
-    withResource(new SchemaDataFormatDocumentReader(new StringReader(json))) { reader =>
+object SdfDocumentReader extends WithResource {
+  def read(documentId: Uri, documentJson: String): SdfDocument =
+    withResource(new SdfDocumentReader(documentId, Source.fromString(documentJson))) { reader =>
       reader.read()
     }
 }

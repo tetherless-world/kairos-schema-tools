@@ -1,6 +1,6 @@
 package models.graphql
 
-import formats.sdf.SchemaDataFormatDocument
+import formats.sdf.SdfDocument
 import io.github.tetherlessworld.twxplore.lib.base.models.graphql.BaseGraphQlSchemaDefinition
 import models.schema.{Duration, EntityType, Slot, Step}
 import sangria.schema.{Argument, Field, ListType, ObjectType, OptionType, Schema, StringType, fields}
@@ -16,7 +16,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val SlotObjectType = deriveObjectType[GraphQlSchemaContext, Slot]()
   implicit val StepObjectType = deriveObjectType[GraphQlSchemaContext, Step]()
   implicit val SchemaObjectType = deriveObjectType[GraphQlSchemaContext, models.schema.Schema]()
-  implicit val SchemaDataFormatDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SchemaDataFormatDocument]()
+  implicit val SchemaDataFormatDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocument]()
 
   // Root query
   val RootQueryType = ObjectType("RootQuery",  fields[GraphQlSchemaContext, Unit](
