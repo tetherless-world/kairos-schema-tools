@@ -2,32 +2,28 @@ package formats.sdf
 
 import java.io.Reader
 
+import formats.sdf.versions.ZeroDot8aSchemaDataFormatDocumentReader
 import formats.sdf.vocabulary.KAIROS
-import models.schema.Schema
 import org.apache.jena.rdf.model.{Model, ModelFactory, Resource}
 import org.apache.jena.riot.Lang
-import formats.sdf.versions.ZeroDot8aSchemaDataFormatDocument
 
-final class SchemaDataFormatReader(reader: Reader) extends AutoCloseable {
+final class SchemaDataFormatDocumentReader(reader: Reader) extends AutoCloseable {
   override def close(): Unit =
     reader.close()
 
-  def read(): List[Schema] = {
+  def read(): SchemaDataFormatDocument = {
     val model = ModelFactory.createDefaultModel()
     model.read(reader, null, Lang.JSONLD.getName)
 
-    model.write(System.out, Lang.TTL.getName)
-    model.write(System.out, Lang.NT.getName)
+//    model.write(System.out, Lang.TTL.getName)
+//    model.write(System.out, Lang.NT.getName)
 
     val documentHeader = new SchemaDataFormatDocumentHeader(model)
 
-    val document: SchemaDataFormatDocument =
-      documentHeader.sdfVersion match {
-        case "0.8a" => new ZeroDot8aSchemaDataFormatDocument(documentHeader.rootResource)
-        case sdfVersion => throw new MalformedSchemaDataFormatDocumentException(s"unrecognized SDF version ${sdfVersion}")
-      }
-
-    document.schemas
+    documentHeader.sdfVersion match {
+      case ZeroDot8aSchemaDataFormatDocumentReader.SdfVersion => ZeroDot8aSchemaDataFormatDocumentReader.read(documentHeader.rootResource)
+      case sdfVersion => throw new MalformedSchemaDataFormatDocumentException(s"unrecognized SDF version ${sdfVersion}")
+    }
   }
 
   private final class SchemaDataFormatDocumentHeader(model: Model) {
