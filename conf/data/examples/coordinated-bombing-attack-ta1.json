@@ -229,7 +229,7 @@
             {
               "name": "recipient",
               "@id": "caci:Schemas/CoordinatedBombingAttack/Slots/wire_transfer/recipient",
-              "role": "Primitives/Transaction.WireTransfer/Slots/Recipient",
+              "role": "caci:Primitives/Transaction.WireTransfer/Slots/Recipient",
               "refvar": "Agent",
               "entityTypes": [
                 "kairos:PER",
