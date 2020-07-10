@@ -16,12 +16,14 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val SlotObjectType = deriveObjectType[GraphQlSchemaContext, Slot]()
   implicit val StepObjectType = deriveObjectType[GraphQlSchemaContext, Step]()
   implicit val SchemaObjectType = deriveObjectType[GraphQlSchemaContext, models.schema.Schema]()
-  implicit val SchemaDataFormatDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocument]()
+  implicit val SdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocument]()
 
   // Root query
   val RootQueryType = ObjectType("RootQuery",  fields[GraphQlSchemaContext, Unit](
-    Field("schemas", ListType(SchemaObjectType), resolve = ctx => ctx.ctx.store.getSchemas),
-    Field("schemaById", OptionType(SchemaObjectType), arguments = IdArgument :: Nil, resolve = ctx => ctx.ctx.store.getSchemaById(ctx.args.arg(IdArgument)))
+    Field("schemas", ListType(SchemaObjectType), resolve = _.ctx.store.getSchemas),
+    Field("schemaById", OptionType(SchemaObjectType), arguments = IdArgument :: Nil, resolve = ctx => ctx.ctx.store.getSchemaById(ctx.args.arg(IdArgument))),
+    Field("sdfDocumentById", OptionType(SdfDocumentObjectType), arguments = IdArgument :: Nil, resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.args.arg(IdArgument))),
+    Field("sdfDocuments", ListType(SdfDocumentObjectType), resolve = _.ctx.store.getSdfDocuments),
   ))
 
   // Schema

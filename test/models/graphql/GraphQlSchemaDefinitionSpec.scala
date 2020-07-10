@@ -47,6 +47,39 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
            |{"data":{"schemaById":{"name":"${expected.name}"}}}
            |""".stripMargin))
     }
+
+    "get SDF documents" in {
+      val query =
+        graphql"""
+          query SdfDocumentsQuery {
+            sdfDocuments {
+              id
+              sourceJson
+            }
+          }
+          """
+      val result = Json.stringify(executeQuery(query))
+      for (sdfDoc <- ExampleData.sdfDocuments) {
+        result must include(sdfDoc.id.toString)
+        result must include("@id")
+      }
+    }
+
+    "get SDF document by id" in {
+      val query =
+        graphql"""
+          query SdfDocumentByIdQuery($$id: String!) {
+            sdfDocumentById(id: $$id) {
+              id
+            }
+          }
+          """
+      val expected = ExampleData.sdfDocuments(0)
+      executeQuery(query, vars = Json.obj("id" -> expected.id.toString)) must be(Json.parse(
+        s"""
+           |{"data":{"sdfDocumentById":{"id":"${expected.id}"}}}
+           |""".stripMargin))
+    }
   }
 
   def executeQuery(query: Document, vars: JsObject = Json.obj()) = {
