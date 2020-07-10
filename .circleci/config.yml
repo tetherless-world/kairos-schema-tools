@@ -63,12 +63,12 @@ workflows:
   build:
     jobs:
       - scala:
-#          requires:
-#            - ts
+          requires:
+            - ts
           post-steps:
             - slack/status:
                 fail_only: true
-#      - ts:
-#          post-steps:
-#            - slack/status:
-#                fail_only: true
+      - ts:
+          post-steps:
+            - slack/status:
+                fail_only: true
