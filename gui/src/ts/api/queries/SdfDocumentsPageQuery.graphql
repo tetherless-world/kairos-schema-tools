@@ -1,0 +1,9 @@
+query SdfDocumentsPageQuery {
+    sdfDocuments {
+        id
+        schemas {
+            id
+            name
+        }
+    }
+}
