@@ -15,8 +15,7 @@ object ExampleData extends WithResource {
       withResource(getClass.getResourceAsStream(resourcePath)) { inputStream =>
         Source.fromInputStream(inputStream, "UTF-8").mkString
       }
-    val uri = Uri.parse(getClass.getResource(resourcePath).toString)
-    SdfDocumentReader.read(uri, json)
+    SdfDocumentReader.read(json)
   }
 
   val coordinatedBombingAttackTa1 = readSdfDocumentResource("coordinated-bombing-attack-ta1.json")
