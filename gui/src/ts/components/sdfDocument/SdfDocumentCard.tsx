@@ -32,12 +32,13 @@ export const SdfDocumentCard: React.FunctionComponent<{
   }
 
   return (
-    <Card>
+    <Card data-cy={"sdf-document-card-" + id}>
       <CardHeader
         title={
           <React.Fragment>
             <Link
               component="a"
+              data-cy="sdf-document-name"
               href={Hrefs.sdfDocuments.sdfDocument({id}).toString()}
             >
               {documentName}
@@ -47,7 +48,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
       />
       <CardContent>
         <Typography variant="h5">Schemas</Typography>
-        <Table>
+        <Table data-cy="sdf-document-schemas">
           <TableHead>
             <TableRow>
               <TableCell>Schema identifier</TableCell>
@@ -61,13 +62,13 @@ export const SdfDocumentCard: React.FunctionComponent<{
                 .schemas.schema(schema)
                 .toString();
               return (
-                <TableRow>
-                  <TableCell>
+                <TableRow data-cy={"schema-" + schema.id}>
+                  <TableCell data-cy="schema-id">
                     <Link component="a" href={schemaHref}>
                       {schema.id}
                     </Link>
                   </TableCell>
-                  <TableCell>
+                  <TableCell data-cy="schema-name">
                     <Link component="a" href={schemaHref}>
                       {schema.name}
                     </Link>
