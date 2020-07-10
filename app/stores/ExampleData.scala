@@ -21,5 +21,6 @@ object ExampleData extends WithResource {
 
   val coordinatedBombingAttackTa1 = readSdfDocumentResource("coordinated-bombing-attack-ta1.json")
 
-  val schemas = coordinatedBombingAttackTa1.schemas
+  val sdfDocuments = List(coordinatedBombingAttackTa1)
+  val schemas = sdfDocuments.flatMap(_.schemas)
 }

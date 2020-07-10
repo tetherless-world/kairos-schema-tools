@@ -12,8 +12,14 @@ import scala.io.Source
 class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
   "Schema data format reader" can {
     "read the coordinated bombing attack TA1 example" in {
-      withResource(new SdfDocumentReader(ExampleData.coordinatedBombingAttackTa1.id, Source.fromString(ExampleData.coordinatedBombingAttackTa1.sourceJson))) { reader =>
+      val testDocument = ExampleData.coordinatedBombingAttackTa1
+      withResource(new SdfDocumentReader(testDocument.id, Source.fromString(testDocument.sourceJson))) { reader =>
         val document = reader.read()
+
+        document.id should equal(testDocument.id)
+        document.sdfVersion should equal(testDocument.sdfVersion)
+        document.sourceJson should not be empty
+
         val schemas = document.schemas
         schemas.size should equal(1)
         val schema = schemas(0)
