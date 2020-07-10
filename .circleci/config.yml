@@ -1,0 +1,71 @@
+version: 2.1
+jobs:
+  scala:
+    docker:
+      - image: circleci/openjdk:11
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - checkout
+      - restore_cache:
+          key: sbt-cache-v1
+      - run:
+          name: Build and test
+          command: |
+            cp -p -R /tmp/workspace/dist/gui public
+            sbt test playUpdateSecret dist
+            cd target/universal && unzip -qq kairos-schema-tools-app*.zip && rm kairos-schema-tools-app*.zip && mkdir ~/dist && mv kairos-schema-tools-app-*-SNAPSHOT ~/dist/app
+      - store_test_results:
+          path: target/test-reports
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - dist/app
+      - save_cache:
+          key: sbt-cache-v1
+          paths:
+            - "~/.ivy2/cache"
+            - "~/.m2"
+            - "~/.sbt"
+  ts:
+    working_directory: ~/project
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - restore_cache:
+          key: ts-dependency-cache-v1-{{ checksum "gui/package.json" }}
+      - run:
+          name: Install dependencies
+          command: |
+            cd gui
+            npm install
+      - save_cache:
+          key: ts-dependency-cache-v1-{{ checksum "gui/package.json" }}
+          paths:
+            - gui/node_modules
+      - run:
+          name: Build
+          command: |
+            cd gui
+            npm run build
+            mkdir ~/dist
+            mv dist ~/dist/gui
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - dist/gui
+workflows:
+  version: 2
+  build:
+    jobs:
+      - scala:
+#          requires:
+#            - ts
+          post-steps:
+            - slack/status:
+                fail_only: true
+#      - ts:
+#          post-steps:
+#            - slack/status:
+#                fail_only: true

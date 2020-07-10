@@ -1,0 +1,452 @@
+@prefix schema: <http://schema.org/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix caci:  <https://caci.com/kairos/> .
+@prefix kairos: <https://kairos-sdf.s3.amazonaws.com/context/kairos#> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/bombing/agent>
+        schema:name         "agent" ;
+        kairos:entityTypes  "kairos:PER" ;
+        kairos:refvar       "Agent" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Detonate/Slots/SubjectAgent> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/obtain_financing>
+        a                    <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Transaction.Exchange.Donation> ;
+        schema:name          "Get financing from Sheikh" ;
+        kairos:aka           "financing" ;
+        kairos:comment       "Note that some slots are omitted here for brevity." ;
+        kairos:participants  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/obtain_financing/recipient> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/obtain_financing/giver> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack>
+        schema:description      "A coordinated effort by mulitple parties that results in a bombing attack" ;
+        schema:name             "Coordinated Bombing Attack" ;
+        schema:version          "caci-07.02.2020" ;
+        kairos:comment          "13. Escaped to Pakistan" , "10. Drive to Manhattan" , "8. Mail anti-Israel letters to newspapers" , "2. Wire transfer from an uncle" , "Scenario E:" , "NOTE: This is the TA1 schema" , "11. Park at WTC (1993)" , "1. Spend time training at Al Qaeda center in Afghanistan" , "12. Bomb explosion killing 6 people" , "4. Possess bomb making instruction" , "3. Enter US illegally" , "5. Contact Sheikh connected with Rabbi Kahane Murderer" , "Conceptually, Coordinated Bombing Attack extends caci:Schemas/BombingAttack, but this is out of scope for Phase I." , "" , "9. Rent a van" , "7. Train in NJ" , "6. Get financing from Sheikh" ;
+        kairos:entityRelations  [ kairos:comment          "This corresponds to 'Arguments A41 and A51 are either identical or related' from \"Structure of a schema\"" , "Giver of financing is one of the participants in the make_contact event, or is affiliated with it" ;
+                                  kairos:relationSubject  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/obtain_financing/giver> ;
+                                  kairos:relations        [ kairos:comment            "Giver of financing is affiliated with one of the participants in the make_contact event" ;
+                                                            kairos:relationObject     <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/make_contact/participant/sheikh> ;
+                                                            kairos:relationPredicate  "kairos:Relations/affiliatedWith"
+                                                          ] ;
+                                  kairos:relations        [ kairos:comment            "Giver of financing is one of the participants in the make_contact event" ;
+                                                            kairos:relationObject     <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/make_contact/participant/sheikh> ;
+                                                            kairos:relationPredicate  "kairos:Relations/sameAs"
+                                                          ]
+                                ] ;
+        kairos:entityRelations  [ kairos:comment          "Could we use caci:Schemas/CoordinatedBombingAttack/Slots/poc/shiekh for the relationObject here?" , "This corresponds to 'Each argument may be associated with a relation which may be useful to differentiate between schema' from \"Structure of a schema" , "Sheikh participant from make_contact event is connected with Rabbi Kahane Murderer." ;
+                                  kairos:relationSubject  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/make_contact/participant/sheikh> ;
+                                  kairos:relations        [ kairos:relationObject     <https://www.wikidata.org/wiki/Q2918749> ;
+                                                            kairos:relationPredicate  "kairos:Relations/affiliatedWith"
+                                                          ]
+                                ] ;
+        kairos:entityRelations  [ kairos:comment          "This corresponds to 'argument A32 could be identical with A21 or related to A22' from \"Structure of a schema\"" , "Same attacker moved to specific location as moved to general location, or lives in general attack location" ;
+                                  kairos:relationSubject  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_specific_attack_location/attacker> ;
+                                  kairos:relations        [ kairos:comment            "Attacker lives in general attack location" ;
+                                                            kairos:relationObject     <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_general_attack_location/attackLocation> ;
+                                                            kairos:relationPredicate  "kairos:Relations/residesIn"
+                                                          ] ;
+                                  kairos:relations        [ kairos:comment            "Same attacker moved to specific location as moved to general location" ;
+                                                            kairos:relationObject     <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_general_attack_location/attacker> ;
+                                                            kairos:relationPredicate  "kairos:Relations/sameAs"
+                                                          ]
+                                ] ;
+        kairos:order            [ kairos:after   <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/escape> ;
+                                  kairos:before  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/bombing> ;
+                                  kairos:flags   "precondition"
+                                ] ;
+        kairos:order            [ kairos:comment    "Wire transfer occurs while training with Al-Qaeda.  Contrived to show a container/contained example." ;
+                                  kairos:contained  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/wire_transfer> ;
+                                  kairos:container  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/training_1>
+                                ] ;
+        kairos:order            [ kairos:comment   "Mailing anti-Israel letters to newspapers and training in NJ overlap.  Contrived to show an overlaps example." ;
+                                  kairos:overlaps  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/media_propaganda> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/training_2>
+                                ] ;
+        kairos:order            [ kairos:after   <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/training_2> ;
+                                  kairos:before  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/training_1> ;
+                                  kairos:flags   "precondition"
+                                ] ;
+        kairos:order            [ kairos:after   <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/bombing> ;
+                                  kairos:before  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/obtain_transportation> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/media_propaganda> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/training_2> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/get_bombmaking_howto> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/move_illegally> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/wire_transfer>
+                                ] ;
+        kairos:order            [ kairos:after   <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/move_to_specific_attack_location> ;
+                                  kairos:before  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/move_to_general_attack_location> ;
+                                  kairos:flags   "precondition"
+                                ] ;
+        kairos:order            [ kairos:after    <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/bombing> ;
+                                  kairos:before   <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/move_to_specific_attack_location> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/move_to_general_attack_location> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/make_contact> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/obtain_financing> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/training_1> ;
+                                  kairos:comment  "At some point, the system should be able to infer transitive relations.  Not sure if in Phase I." ;
+                                  kairos:flags    "precondition"
+                                ] ;
+        kairos:privateData      [ caci:giant_bitstring  "s3://caci-kairos/privateData/CoordinatedBombingAttack/schema-bitstring.gz" ;
+                                  caci:my_key           "my value" ;
+                                  kairos:comment        "Performers can place any keys/values they wish here.  The map will be added to the graph but otherwise ignored by the system.  Properties maps can be added inside a schema, individual steps, slots, and order blocks, but not in their enclosing arrays.  Large amounts of private data can be stored on S3 and linked via a key in the map.  The intention is to validate the size (in bytes) of the object does not exceed a defined maximum."
+                                ] ;
+        kairos:slots            <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/place> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/agent> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/poc> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/target> ;
+        kairos:steps            <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/obtain_financing> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/escape> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/media_propaganda> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/make_contact> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/obtain_transportation> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/get_bombmaking_howto> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/move_to_general_attack_location> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/bombing> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/move_to_specific_attack_location> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/training_1> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/move_illegally> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/training_2> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/wire_transfer> ;
+        kairos:super            <https://caci.com/kairos/Schemas/BombingAttack> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_illegally/destinationPlace>
+        schema:name         "destinationPlace" ;
+        kairos:entityTypes  "kairos:GPE" , "kairos:FAC" , "kairos:LOC" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/destinationPlace> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/move_to_specific_attack_location>
+        a                    <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationLegal> ;
+        schema:name          "Park at WTC (1993)" ;
+        kairos:participants  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_specific_attack_location/thingsMoved> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_specific_attack_location/method> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_specific_attack_location/attacker> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_specific_attack_location/attackLocation> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_specific_attack_location/startingPoint> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/escape/destinationPlace>
+        schema:name         "destinationPlace" ;
+        kairos:entityTypes  "kairos:GPE" , "kairos:FAC" , "kairos:LOC" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/DestinationPlace> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/get_bombmaking_howto/AcquiredEntity>
+        schema:name         "acquiredEntity" ;
+        kairos:entityTypes  "kairos:COM" ;
+        kairos:reference    <https://www.wikidata.org/wiki/Q1057179> ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Transaction.Exchange/Slots/AcquiredEntity> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_general_attack_location/method>
+        schema:name         "method" ;
+        kairos:entityTypes  "kairos:VEH" ;
+        kairos:refvar       "Vehicle" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/Instrument> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/bombing/bomb>
+        schema:name         "bomb" ;
+        kairos:entityTypes  "kairos:WEA" , "kairos:COM" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Detonate/Slots/MeansInstrument> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_general_attack_location/startingPoint>
+        schema:name         "starting point" ;
+        kairos:entityTypes  "kairos:GPE" , "kairos:FAC" , "kairos:LOC" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationLegal/Slots/SourcePlace> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_illegally/thingsMoved>
+        schema:name         "thingsMoved" ;
+        kairos:entityTypes  "kairos:PER" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/ThingsMoved> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/wire_transfer/beneficiary>
+        schema:name         "beneficiary" ;
+        kairos:entityTypes  "kairos:SID" , "kairos:GPE" , "kairos:ORG" , "kairos:PER" ;
+        kairos:refvar       "Agent" ;
+        kairos:role         <https://caci.com/kairos/Primitives/Transaction.WireTransfer/Slots/Beneficiary> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/obtain_transportation>
+        a                    <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Transaction.Exchange> ;
+        schema:name          "Rent a van" ;
+        kairos:comment       "Note that some slots are omitted here for brevity." ;
+        kairos:participants  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/obtain_transportation/vehicle_rented> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/obtain_transportation/renter> .
+
+[ kairos:schemas     <https://caci.com/kairos/Schemas/CoordinatedBombingAttack> ;
+  kairos:sdfVersion  "0.8a"
+] .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/move_illegally>
+        a                    <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal> ;
+        schema:name          "Enter US illegally" ;
+        kairos:participants  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_illegally/thingsMoved> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_illegally/methodOfMovement> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_illegally/agentOfMovement> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_illegally/destinationPlace> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_illegally/sourcePlace> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_1/subject_matter>
+        schema:name         "subject_matter" ;
+        kairos:entityTypes  "kairos:INF" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Teaching/Slots/FieldOfKnowledge> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_2/subject_matter>
+        schema:name         "subject_matter" ;
+        kairos:entityTypes  "kairos:INF" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Teaching/Slots/FieldOfKnowledge> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/wire_transfer/sender>
+        schema:name         "sender" ;
+        kairos:entityTypes  "kairos:SID" , "kairos:GPE" , "kairos:ORG" , "kairos:PER" ;
+        kairos:role         <https://caci.com/kairos/Primitives/Transaction.WireTransfer/Slots/Sender> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_specific_attack_location/thingsMoved>
+        schema:name         "things moved" ;
+        kairos:entityTypes  "kairos:PER" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/ThingsMoved> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_specific_attack_location/attacker>
+        schema:name         "attacker" ;
+        kairos:entityTypes  "kairos:WEA" , "kairos:VEH" , "kairos:COM" , "kairos:PER" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/AgentOfMovement> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_2/learner>
+        schema:name         "learner" ;
+        kairos:entityTypes  "kairos:ORG" , "kairos:PER" ;
+        kairos:refvar       "Agent" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Teaching/Slots/Learner> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/agent>
+        kairos:aka          "attacker" , "Primary Actor" ;
+        kairos:entityTypes  "kairos:ORG" , "kairos:PER" ;
+        kairos:refvar       "Agent" ;
+        kairos:super        <https://caci.com/kairos/Schemas/BombingAttack/Slots/agent> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_specific_attack_location/method>
+        schema:name         "method" ;
+        kairos:entityTypes  "kairos:VEH" ;
+        kairos:refvar       "Vehicle" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/Instrument> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_illegally/methodOfMovement>
+        schema:name         "methodOfMovement" ;
+        kairos:entityTypes  "kairos:VEH" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/MethodOfMovement> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/escape/sourcePlace>
+        schema:name         "sourcePlace" ;
+        kairos:entityTypes  "kairos:GPE" , "kairos:FAC" , "kairos:LOC" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/SourcePlace> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/bombing/place>
+        schema:name         "place" ;
+        kairos:entityTypes  "kairos:LOC" ;
+        kairos:refvar       "Place" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Detonate/Slots/Place> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_general_attack_location/thingsMoved>
+        schema:name         "things moved" ;
+        kairos:entityTypes  "kairos:PER" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/ThingsMoved> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/escape>
+        a                    <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal> ;
+        schema:name          "Escaped to Pakistan" ;
+        kairos:participants  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/escape/thingsMoved> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/escape/getaway_car> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/escape/escapee> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/escape/destinationPlace> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/escape/sourcePlace> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/obtain_financing/recipient>
+        schema:name         "recipient" ;
+        kairos:entityTypes  "kairos:SID" , "kairos:GPE" , "kairos:ORG" , "kairos:PER" ;
+        kairos:refvar       "Agent" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Transaction.Exchange.Donation/Slots/Recipient> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/wire_transfer>
+        a                    <https://caci.com/kairos/Primitives/Transaction.WireTransfer> ;
+        schema:name          "Wire transfer from an uncle" ;
+        kairos:aka           "telegraphic transfer" ;
+        kairos:comment       "Transaction.WireTransfer is a specialization of kairos:Primitives/Transaction.Exchange.Donation" ;
+        kairos:participants  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/wire_transfer/carrier> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/wire_transfer/amount> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/wire_transfer/beneficiary> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/wire_transfer/recipient> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/wire_transfer/sender> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_1/trainer>
+        schema:name         "trainer" ;
+        kairos:aka          "teacher" ;
+        kairos:comment      "Reference specifies that the trainer is Al-Qaeda." ;
+        kairos:entityTypes  "kairos:AML" , "kairos:ORG" , "kairos:PER" ;
+        kairos:reference    <https://www.wikidata.org/wiki/Q34490> ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Teaching/Slots/Teacher> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/media_propaganda/sender>
+        schema:name         "sender" ;
+        kairos:entityTypes  "kairos:SID" , "kairos:GPE" , "kairos:ORG" , "kairos:PER" ;
+        kairos:refvar       "Agent" ;
+        kairos:role         <https://caci.com/kairos/Primitives/Propaganda/Slots/Sender> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/get_bombmaking_howto>
+        a                    <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Transaction.Exchange> ;
+        schema:name          "Possess bomb making instruction" ;
+        kairos:comment       "Note that some slots are omitted here for brevity." ;
+        kairos:participants  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/get_bombmaking_howto/AcquiredEntity> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_specific_attack_location/startingPoint>
+        schema:name         "starting point" ;
+        kairos:entityTypes  "kairos:GPE" , "kairos:FAC" , "kairos:LOC" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationLegal/Slots/SourcePlace> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/move_to_general_attack_location>
+        a                    <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationLegal> ;
+        schema:name          "Drive to Manhattan" ;
+        kairos:participants  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_general_attack_location/thingsMoved> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_general_attack_location/method> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_general_attack_location/attacker> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_general_attack_location/attackLocation> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_general_attack_location/startingPoint> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/bombing/object>
+        schema:name         "object" ;
+        kairos:entityTypes  "kairos:FAC" , "kairos:VEH" , "kairos:WEA" , "kairos:COM" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Detonate/Slots/Object> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_1/learner>
+        schema:name         "learner" ;
+        kairos:entityTypes  "kairos:AML" , "kairos:COM" , "kairos:ORG" , "kairos:PER" ;
+        kairos:refvar       "Agent" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Teaching/Slots/Learner> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/wire_transfer/recipient>
+        schema:name         "recipient" ;
+        kairos:entityTypes  "kairos:SID" , "kairos:GPE" , "kairos:ORG" , "kairos:PER" ;
+        kairos:refvar       "Agent" .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/training_2>
+        a                    <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Teaching> ;
+        schema:name          "Train in NJ" ;
+        kairos:aka           "teaching" , "training" ;
+        kairos:participants  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_2/institution> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_2/manner> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_2/subject_matter> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_2/learner> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_2/trainer> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/wire_transfer/amount>
+        schema:name         "amount" ;
+        kairos:comment      "In WireTransfer, the Amount slot fills the Donation's Item role, and restricts it to MON" ;
+        kairos:entityTypes  "kairos:MON" ;
+        kairos:role         <https://caci.com/kairos/Primitives/Transaction.WireTransfer/Slots/Amount> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/make_contact>
+        a                    <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Contact.Contact> ;
+        schema:name          "Contact Sheikh connected with Rabbi Kahane Murderer" ;
+        kairos:aka           "contact" ;
+        kairos:comment       "Note also that some slots are omitted here for brevity." , "can assign reference and refvars to both participants individually." , "Note that TA1 has broken up the Contact primitive's Participant role into two distinct slots, so that they" ;
+        kairos:participants  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/make_contact/participant/sheikh> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/make_contact/participant/primary_actor> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/escape/escapee>
+        schema:name         "escapee" ;
+        kairos:entityTypes  "kairos:PER" ;
+        kairos:refvar       "Agent" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/AgentOfMovement> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/media_propaganda>
+        a                    <https://caci.com/kairos/Primitives/Propaganda> ;
+        schema:name          "Mail anti-Israel letters to newspapers" ;
+        kairos:comment       "caci:Primitives/Propaganda is a specialization of the Contact.Broadcast event primitive" ;
+        kairos:participants  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/media_propaganda/subject_matter> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/media_propaganda/outlet> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/media_propaganda/sender> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_1/manner>
+        schema:name         "manner" ;
+        kairos:aka          "manner" , "means" , "instrument" ;
+        kairos:entityTypes  "kairos:INF" , "kairos:ABS" , "kairos:COM" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Teaching/Slots/MNR> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/poc>
+        kairos:aka          "Backer" , "Financier" , "POC" ;
+        kairos:entityTypes  "kairos:GPE" , "kairos:ORG" , "kairos:PER" ;
+        kairos:refvar       "Point of Contact" .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/escape/thingsMoved>
+        schema:name         "thingsMoved" ;
+        kairos:entityTypes  "kairos:PER" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/ThingsMoved> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_illegally/sourcePlace>
+        schema:name         "sourcePlace" ;
+        kairos:entityTypes  "kairos:GPE" , "kairos:FAC" , "kairos:LOC" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/SourcePlace> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_specific_attack_location/attackLocation>
+        schema:name         "attackLocation" ;
+        kairos:entityTypes  "kairos:GPE" , "kairos:FAC" , "kairos:LOC" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationLegal/Slots/DestinationPlace> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/obtain_financing/giver>
+        schema:name         "giver" ;
+        kairos:entityTypes  "kairos:SID" , "kairos:GPE" , "kairos:ORG" , "kairos:PER" ;
+        kairos:refvar       "Point of Contact" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Transaction.Exchange.Donation/Slots/Donor> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/place>
+        kairos:aka          "site" ;
+        kairos:entityTypes  "kairos:GPE" , "kairos:LOC" , "kairos:FAC" ;
+        kairos:refvar       "Place" ;
+        kairos:super        <https://caci.com/kairos/Schemas/BombingAttack/Slots/place> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/training_1>
+        a                    <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Teaching> ;
+        schema:name          "Spend time training at Al Qaeda center in Afghanistan" ;
+        kairos:aka           "teaching" , "learning" ;
+        kairos:maxDuration   "P3M"^^xsd:duration ;
+        kairos:minDuration   "PT10M"^^xsd:duration ;
+        kairos:participants  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_1/trainer> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_1/learner> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_1/institution> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_1/manner> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_1/subject_matter> ;
+        kairos:reference     <https://www.wikidata.org/wiki/Q918385> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/make_contact/participant/sheikh>
+        schema:name         "sheikh" ;
+        kairos:entityTypes  "kairos:PER" ;
+        kairos:reference    <https://www.wikidata.org/wiki/Q185166> ;
+        kairos:refvar       "Point of Contact" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Contact.Contact/Slots/Participant> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/escape/getaway_car>
+        schema:name         "getaway car" ;
+        kairos:entityTypes  "kairos:VEH" ;
+        kairos:refvar       "Vehicle" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/Instrument> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/obtain_transportation/renter>
+        schema:name         "renter" ;
+        kairos:entityTypes  "kairos:SID" , "kairos:GPE" , "kairos:ORG" , "kairos:PER" ;
+        kairos:refvar       "Agent" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Transaction.Exchange/Slots/AcquirerOrRecipient> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Steps/bombing>
+        a                    <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Detonate> ;
+        schema:name          "Bomb explosion killing 6 people" ;
+        kairos:aka           "explode" ;
+        kairos:participants  <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/bombing/place> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/bombing/bomb> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/bombing/object> , <https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/bombing/agent> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_2/manner>
+        schema:name         "manner" ;
+        kairos:aka          "manner" , "means" , "instrument" ;
+        kairos:entityTypes  "kairos:INF" , "kairos:ABS" , "kairos:COM" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Teaching/Slots/MNR> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_general_attack_location/attacker>
+        schema:name         "attacker" ;
+        kairos:entityTypes  "kairos:WEA" , "kairos:VEH" , "kairos:COM" , "kairos:PER" ;
+        kairos:refvar       "Agent" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/AgentOfMovement> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/target>
+        kairos:aka          "victim" ;
+        kairos:entityTypes  "kairos:VEH" , "kairos:PER" , "kairos:FAC" , "kairos:COM" ;
+        kairos:super        <https://caci.com/kairos/Schemas/BombingAttack/Slots/target> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/make_contact/participant/primary_actor>
+        schema:name         "primary_actor" ;
+        kairos:entityTypes  "kairos:PER" ;
+        kairos:refvar       "Agent" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Contact.Contact/Slots/Participant> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/media_propaganda/outlet>
+        schema:name         "outlet" ;
+        kairos:entityTypes  "kairos:FAC" , "kairos:LOC" ;
+        kairos:role         <https://caci.com/kairos/Primitives/Propaganda/Slots/Outlet> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_to_general_attack_location/attackLocation>
+        schema:name         "attackLocation" ;
+        kairos:entityTypes  "kairos:GPE" , "kairos:FAC" , "kairos:LOC" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationLegal/Slots/DestinationPlace> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/obtain_transportation/vehicle_rented>
+        schema:name         "vehicle_rented" ;
+        kairos:comment      "This shows an example of refvar used in primitive slots, not schema slot arguments." ;
+        kairos:entityTypes  "kairos:ORG" , "kairos:BAL" , "kairos:FAC" , "kairos:WEA" , "kairos:COM" , "kairos:MON" , "kairos:VEH" , "kairos:GPE" , "kairos:LOC" ;
+        kairos:refvar       "Vehicle" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Transaction.Exchange/Slots/AcquiredEntity> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/media_propaganda/subject_matter>
+        schema:name         "subject_matter" ;
+        kairos:entityTypes  "kairos:INF" ;
+        kairos:role         <https://caci.com/kairos/Primitives/Propaganda/Slots/Topic> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/wire_transfer/carrier>
+        schema:name         "place" ;
+        kairos:comment      "In WireTransfer, the Carrier slot fills the Donation's Place slot, and restricts it to ORG (e.g., Western Union" ;
+        kairos:entityTypes  "kairos:ORG" ;
+        kairos:role         <https://caci.com/kairos/Primitives/Transaction.WireTransfer/Slots/Carrier> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/move_illegally/agentOfMovement>
+        schema:name         "agentOfMovement" ;
+        kairos:entityTypes  "kairos:PER" ;
+        kairos:refvar       "Agent" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Movement.TransportationIllegal/Slots/agentOfMovement> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_1/institution>
+        schema:name         "institution" ;
+        kairos:entityTypes  "kairos:ORG" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Teaching/Slots/Institution> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_2/trainer>
+        schema:name         "trainer" ;
+        kairos:entityTypes  "kairos:ORG" , "kairos:PER" ;
+        kairos:refvar       "Point of Contact" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Teaching/Slots/Teacher> .
+
+<https://caci.com/kairos/Schemas/CoordinatedBombingAttack/Slots/training_2/institution>
+        schema:name         "institution" ;
+        kairos:entityTypes  "kairos:ORG" ;
+        kairos:role         <https://kairos-sdf.s3.amazonaws.com/context/kairos#Primitives/Teaching/Slots/Institution> .

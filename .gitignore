@@ -1,0 +1,14 @@
+/gui/
+/gui/dist/
+/gui/node_modules/
+/gui/package-lock.json
+/.idea/
+*.iml
+/logs/
+/project/project/
+/project/target/
+/target/
+/test/integration/
+/test/integration/cypress/plugins/
+/test/integration/cypress/videos/
+/test/integration/cypress/screenshots/
