@@ -36,6 +36,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
       <CardHeader
         title={
           <React.Fragment>
+            Document:&nbsp;
             <Link
               component="a"
               data-cy="sdf-document-name"
