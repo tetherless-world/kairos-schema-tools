@@ -1,22 +1,32 @@
-class SchemasTableRow {
+class Schema {
   constructor(private readonly selector: string) {}
 
-  get schemaId() {
+  get id() {
     return cy.get(this.selector + " [data-cy=schema-id]");
   }
 
-  get schemaName() {
+  get name() {
     return cy.get(this.selector + " [data-cy=schema-name]");
+  }
+}
+
+class Schemas {
+  constructor(private readonly selector: string) {}
+
+  get header() {
+    return cy.get(this.selector + " [data-cy=sdf-document-schemas-header]");
+  }
+
+  schema(id: string) {
+    return new Schema(this.selector + ` [data-cy="schema-${id}"]`);
   }
 }
 
 export class SdfDocumentCard {
   constructor(private readonly selector: string) {}
 
-  schema(id: string) {
-    return new SchemasTableRow(
-      this.selector + ` [data-cy=sdf-document-schemas] [data-cy="schema-${id}"]`
-    );
+  get schemas() {
+    return new Schemas(this.selector + " [data-cy=sdf-document-schemas]");
   }
 
   get sdfDocumentId() {

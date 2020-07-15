@@ -1,6 +1,7 @@
 import {TestData} from "../support/TestData";
 import {SdfDocumentPage} from "../support/pages/SdfDocumentPage";
 import {SdfDocumentsPage} from "../support/pages/SdfDocumentsPage";
+import {SchemasPage} from "../support/pages/SchemasPage";
 
 context("SDF document page", () => {
   const sdfDocument = TestData.sdfDocument;
@@ -28,8 +29,13 @@ context("SDF document page", () => {
 
   it("should list the document's schemas", () => {
     for (const schema of sdfDocument.schemas) {
-      page.card.schema(schema.id).schemaId.should("have.text", schema.id);
-      page.card.schema(schema.id).schemaName.should("have.text", schema.name);
+      page.card.schemas.schema(schema.id).id.should("have.text", schema.id);
+      page.card.schemas.schema(schema.id).name.should("have.text", schema.name);
     }
+  });
+
+  it("should link to another page with the document's schemas", () => {
+    page.card.schemas.header.click();
+    new SchemasPage({sdfDocumentId: sdfDocument.id}).assertLoaded();
   });
 });

@@ -44,9 +44,16 @@ export const SdfDocumentCard: React.FunctionComponent<{
               Identifier: <span data-cy="sdf-document-id">{id}</span>
             </Typography>
           </Grid>
-          <Grid item>
-            <Typography variant="h5">Schemas</Typography>
-            <Table data-cy="sdf-document-schemas">
+          <Grid item data-cy="sdf-document-schemas">
+            <Typography variant="h5">
+              <Link
+                data-cy="sdf-document-schemas-header"
+                href={Hrefs.sdfDocuments.sdfDocument({id}).schemas.toString()}
+              >
+                Schemas
+              </Link>
+            </Typography>
+            <Table data-cy="sdf-document-schemas-table">
               <TableHead>
                 <TableRow>
                   <TableCell>Schema identifier</TableCell>
