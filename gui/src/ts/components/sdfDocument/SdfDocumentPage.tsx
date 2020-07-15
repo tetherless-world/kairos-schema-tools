@@ -17,12 +17,16 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
   return (
     <Frame {...query}>
       {({data}) => {
+        const sdfDocument = Object.assign({}, data.sdfDocumentById, {
+          id: sdfDocumentId,
+        });
         return (
-          <StandardLayout title="Schema Data Format Document">
+          <StandardLayout
+            breadcrumbs={{sdfDocument}}
+            title="Schema Data Format Document"
+          >
             <div data-cy="sdf-document-card"></div>
-            <SdfDocumentCard
-              {...Object.assign({}, data.sdfDocumentById, {id: sdfDocumentId})}
-            />
+            <SdfDocumentCard {...sdfDocument} />
           </StandardLayout>
         );
       }}

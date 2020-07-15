@@ -1,9 +1,8 @@
 import {TestData} from "../support/TestData";
-import {SdfDocumentsPage} from "../support/pages/SdfDocumentsPage";
 import {SdfDocumentPage} from "../support/pages/SdfDocumentPage";
-import {SchemaPage} from "../support/pages/SchemaPage";
+import {SdfDocumentsPage} from "../support/pages/SdfDocumentsPage";
 
-context("SDF documents page", () => {
+context("SDF document page", () => {
   const sdfDocument = TestData.sdfDocument;
   const page = new SdfDocumentPage(sdfDocument.id);
 
@@ -15,6 +14,16 @@ context("SDF documents page", () => {
 
   it("should show the document id", () => {
     page.card.sdfDocumentId.should("have.text", sdfDocument.id);
+  });
+
+  it("should show a breadcrumb to all SDF documents", () => {
+    page.standardLayout.breadcrumbs.sdfDocuments.click();
+    new SdfDocumentsPage().assertLoaded();
+  });
+
+  it("should show a breadcrumb to this document", () => {
+    page.standardLayout.breadcrumbs.sdfDocument.click();
+    page.assertLoaded();
   });
 
   it("should list the document's schemas", () => {
