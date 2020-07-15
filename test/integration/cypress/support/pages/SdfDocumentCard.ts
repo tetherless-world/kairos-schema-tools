@@ -19,6 +19,10 @@ export class SdfDocumentCard {
     );
   }
 
+  get sdfDocumentId() {
+    return cy.get(this.selector + " [data-cy=sdf-document-id]");
+  }
+
   get sdfDocumentName() {
     return cy.get(this.selector + " [data-cy=sdf-document-name]");
   }

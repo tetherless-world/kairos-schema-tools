@@ -15,6 +15,12 @@ context("SDF documents page", () => {
       .sdfDocumentName.should("have.text", sdfDocument.schemas[0].name);
   });
 
+  it("should show the document id", () => {
+    page
+      .sdfDocument(sdfDocument.id)
+      .sdfDocumentId.should("have.text", sdfDocument.id);
+  });
+
   it("should link to the document page", () => {
     page.sdfDocument(sdfDocument.id).sdfDocumentName.click();
     new SdfDocumentPage(sdfDocument.id).assertLoaded();
