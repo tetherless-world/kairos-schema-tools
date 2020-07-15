@@ -1,0 +1,14 @@
+query SchemasPageQuery($sdfDocumentId: String!, $withSdfDocument: Boolean!) {
+    schemas @skip(if: $withSdfDocument) {
+        id
+        name
+    }
+
+    sdfDocumentById(id: $sdfDocumentId) @include(if: $withSdfDocument) {
+        name
+        schemas {
+            id
+            name
+        }
+    }
+}

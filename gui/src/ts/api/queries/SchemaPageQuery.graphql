@@ -1,0 +1,9 @@
+query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocument: Boolean!) {
+    schemaById(id: $schemaId) {
+        name
+    }
+
+    sdfDocumentById(id: $sdfDocumentId) @include(if: $withSdfDocument) {
+        name
+    }
+}

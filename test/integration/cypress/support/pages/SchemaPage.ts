@@ -1,5 +1,4 @@
 import {Page} from "./Page";
-import {SdfDocumentCard} from "./SdfDocumentCard";
 
 export class SchemaPage extends Page {
   constructor(kwds: {schemaId: string; sdfDocumentId?: string}) {
@@ -15,5 +14,5 @@ export class SchemaPage extends Page {
 
   readonly relativeUrl: string;
   readonly schemaId: string;
-  readonly sdfDocumentId: string;
+  readonly sdfDocumentId?: string;
 }
