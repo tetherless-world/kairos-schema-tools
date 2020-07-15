@@ -18,10 +18,8 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
     <Frame {...query}>
       {({data}) => {
         return (
-          <StandardLayout
-            subtitle={sdfDocumentId}
-            title="Schema Data Format Document"
-          >
+          <StandardLayout title="Schema Data Format Document">
+            <div data-cy="sdf-document-card"></div>
             <SdfDocumentCard
               {...Object.assign({}, data.sdfDocumentById, {id: sdfDocumentId})}
             />

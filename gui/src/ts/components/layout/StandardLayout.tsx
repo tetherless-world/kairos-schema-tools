@@ -22,7 +22,7 @@ export const StandardLayout: React.FunctionComponent<React.PropsWithChildren<{
             <Grid item>
               <Typography
                 data-cy="standard-layout-subtitle"
-                variant="h5"
+                variant="h6"
                 style={{textAlign: "center"}}
               >
                 {subtitle}

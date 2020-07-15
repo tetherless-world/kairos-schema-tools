@@ -10,7 +10,11 @@ context("SDF documents page", () => {
   beforeEach(() => page.visit());
 
   it("should show the document name", () => {
-    page.standardLayout.subtitle.should("have.text", sdfDocument.id);
+    page.card.sdfDocumentName.should("have.text", sdfDocument.schemas[0].name);
+  });
+
+  it("should show the document id", () => {
+    page.card.sdfDocumentId.should("have.text", sdfDocument.id);
   });
 
   it("should list the document's schemas", () => {
@@ -18,14 +22,5 @@ context("SDF documents page", () => {
       page.card.schema(schema.id).schemaId.should("have.text", schema.id);
       page.card.schema(schema.id).schemaName.should("have.text", schema.name);
     }
-  });
-
-  it("should link to schemas", () => {
-    const schema = sdfDocument.schemas[0];
-    page.card.schema(schema.id).schemaId.find("a").click();
-    new SchemaPage({
-      schemaId: schema.id,
-      sdfDocumentId: sdfDocument.id,
-    }).assertLoaded();
   });
 });
