@@ -1,0 +1,8 @@
+query SdfDocumentPageQuery($id: String!) {
+    sdfDocumentById(id: $id) {
+        schemas {
+            id
+            name
+        }
+    }
+}
