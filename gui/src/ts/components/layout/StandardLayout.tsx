@@ -1,12 +1,15 @@
-import {Grid, Typography, Breadcrumbs, Link} from "@material-ui/core";
+import {Breadcrumbs, Grid, Link, Typography} from "@material-ui/core";
 import * as React from "react";
 import {Hrefs} from "Hrefs";
-import {getSdfDocumentName} from "models/sdfDocument/getSdfDocumentName";
 
 export const StandardLayout: React.FunctionComponent<React.PropsWithChildren<{
   breadcrumbs?: {
     schema?: {id: string; name: string};
-    sdfDocument?: {id: string; schemas: {id: string; name: string}[]};
+    sdfDocument?: {
+      id: string;
+      name: string;
+      schemas: {id: string; name: string}[];
+    };
   };
   subtitle?: string;
   title: string;
@@ -32,7 +35,7 @@ export const StandardLayout: React.FunctionComponent<React.PropsWithChildren<{
                 .sdfDocument(breadcrumbs.sdfDocument)
                 .toString()}
             >
-              {getSdfDocumentName(breadcrumbs.sdfDocument)}
+              {breadcrumbs.sdfDocument.name}
             </Link>
           ) : null}
           {breadcrumbs.schema ? (

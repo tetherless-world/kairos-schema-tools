@@ -13,15 +13,15 @@ import {
   Typography,
 } from "@material-ui/core";
 import {Hrefs} from "Hrefs";
-import {getSdfDocumentName} from "models/sdfDocument/getSdfDocumentName";
 
 export const SdfDocumentCard: React.FunctionComponent<{
   id: string;
+  name: string;
   schemas: {
     id: string;
     name: string;
   }[];
-}> = ({id, schemas}) => {
+}> = ({id, name, schemas}) => {
   return (
     <Card data-cy={"sdf-document-card-" + id}>
       <CardHeader
@@ -32,7 +32,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
               data-cy="sdf-document-name"
               href={Hrefs.sdfDocuments.sdfDocument({id}).toString()}
             >
-              {getSdfDocumentName({id, schemas})}
+              {name}
             </Link>
           </React.Fragment>
         }

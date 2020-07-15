@@ -14,6 +14,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas {
 
 export interface SdfDocumentPageQuery_sdfDocumentById {
   __typename: "SdfDocument";
+  name: string;
   schemas: SdfDocumentPageQuery_sdfDocumentById_schemas[];
 }
 
