@@ -29,13 +29,17 @@ context("SDF document page", () => {
 
   it("should list the document's schemas", () => {
     for (const schema of sdfDocument.schemas) {
-      page.card.schemas.schema(schema.id).id.should("have.text", schema.id);
-      page.card.schemas.schema(schema.id).name.should("have.text", schema.name);
+      page.card.schemasTable
+        .schema(schema.id)
+        .id.should("have.text", schema.id);
+      page.card.schemasTable
+        .schema(schema.id)
+        .name.should("have.text", schema.name);
     }
   });
 
   it("should link to another page with the document's schemas", () => {
-    page.card.schemas.header.click();
+    page.card.schemasHeader.click();
     new SchemasPage({sdfDocumentId: sdfDocument.id}).assertLoaded();
   });
 });
