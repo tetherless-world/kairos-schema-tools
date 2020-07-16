@@ -9,5 +9,5 @@ final case class Slot(
                        id: Uri,
                        name: String,
                        refvar: Option[String],
-                       role: Uri
+                       role: Uri,
                      )

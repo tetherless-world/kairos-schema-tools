@@ -2,13 +2,58 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { EntityType } from "./../../graphqlGlobalTypes";
+
 // ====================================================
 // GraphQL query operation: SchemaPageQuery
 // ====================================================
 
+export interface SchemaPageQuery_schemaById_steps_maxDuration {
+  __typename: "Duration";
+  string: string;
+}
+
+export interface SchemaPageQuery_schemaById_steps_minDuration {
+  __typename: "Duration";
+  string: string;
+}
+
+export interface SchemaPageQuery_schemaById_steps_participants {
+  __typename: "Slot";
+  aka: string[] | null;
+  comments: string[] | null;
+  entityTypes: EntityType[] | null;
+  id: string;
+  name: string;
+  refvar: string | null;
+  role: string;
+}
+
+export interface SchemaPageQuery_schemaById_steps {
+  __typename: "Step";
+  aka: string[] | null;
+  comments: string[] | null;
+  id: string;
+  maxDuration: SchemaPageQuery_schemaById_steps_maxDuration | null;
+  minDuration: SchemaPageQuery_schemaById_steps_minDuration | null;
+  name: string;
+  participants: SchemaPageQuery_schemaById_steps_participants[] | null;
+  references: string[] | null;
+  type: string;
+}
+
 export interface SchemaPageQuery_schemaById {
   __typename: "Schema";
+  aka: string[] | null;
+  comments: string[] | null;
+  description: string;
   name: string;
+  references: string[] | null;
+  sdfDocumentId: string;
+  steps: SchemaPageQuery_schemaById_steps[];
+  super: string | null;
+  ta2: boolean;
+  version: string;
 }
 
 export interface SchemaPageQuery_sdfDocumentById {

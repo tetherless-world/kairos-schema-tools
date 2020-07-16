@@ -1,6 +1,37 @@
 query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocument: Boolean!) {
     schemaById(id: $schemaId) {
+        aka
+        comments
+        description
         name
+        references
+        sdfDocumentId
+        steps {
+            aka
+            comments
+            id
+            maxDuration {
+                string
+            }
+            minDuration {
+                string
+            }
+            name
+            participants {
+                aka
+                comments
+                entityTypes
+                id
+                name
+                refvar
+                role
+            }
+            references
+            type
+        }
+        super
+        ta2
+        version
     }
 
     sdfDocumentById(id: $sdfDocumentId) @include(if: $withSdfDocument) {
