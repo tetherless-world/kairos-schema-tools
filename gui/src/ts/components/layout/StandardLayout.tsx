@@ -1,15 +1,10 @@
 import {Breadcrumbs, Grid, Link, Typography} from "@material-ui/core";
 import * as React from "react";
 import {Hrefs} from "Hrefs";
+import {StandardLayoutBreadcrumbs} from "components/layout/StandardLayoutBreadcrumbs";
 
 export const StandardLayout: React.FunctionComponent<React.PropsWithChildren<{
-  breadcrumbs?: {
-    schema?: {id: string; name: string};
-    sdfDocument?: {
-      id: string;
-      name: string;
-    };
-  };
+  breadcrumbs?: StandardLayoutBreadcrumbs;
   subtitle?: React.ReactNode;
   title: React.ReactNode;
 }>> = ({breadcrumbs, children, subtitle, title}) => (

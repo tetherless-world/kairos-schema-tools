@@ -9,6 +9,7 @@ import {invariant} from "ts-invariant";
 import {Hrefs} from "Hrefs";
 import {Link} from "@material-ui/core";
 import {SchemasTable} from "components/schema/SchemasTable";
+import {StandardLayoutBreadcrumbs} from "components/layout/StandardLayoutBreadcrumbs";
 
 export const SchemasPage: React.FunctionComponent = () => {
   let {sdfDocumentId} = useParams<{sdfDocumentId?: string}>();
@@ -26,7 +27,7 @@ export const SchemasPage: React.FunctionComponent = () => {
   return (
     <Frame {...query}>
       {({data}) => {
-        let breadcrumbs: {sdfDocument: {id: string; name: string}} | undefined;
+        let breadcrumbs: StandardLayoutBreadcrumbs | undefined;
         type Schema = {id: string; name: string};
         let schemas: Schema[];
         let subtitle: React.ReactNode | undefined;
