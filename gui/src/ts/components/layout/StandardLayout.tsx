@@ -8,11 +8,10 @@ export const StandardLayout: React.FunctionComponent<React.PropsWithChildren<{
     sdfDocument?: {
       id: string;
       name: string;
-      schemas: {id: string; name: string}[];
     };
   };
-  subtitle?: string;
-  title: string;
+  subtitle?: React.ReactNode;
+  title: React.ReactNode;
 }>> = ({breadcrumbs, children, subtitle, title}) => (
   <Grid container data-cy="standard-layout" direction="column" spacing={4}>
     {breadcrumbs ? (

@@ -6,10 +6,13 @@ import {Frame} from "components/frame/Frame";
 import {SdfDocumentCard} from "components/sdfDocument/SdfDocumentCard";
 import {StandardLayout} from "components/layout/StandardLayout";
 import {SdfDocumentPageQuery} from "api/queries/types/SdfDocumentPageQuery";
+import * as _ from "lodash";
 
 export const SdfDocumentPage: React.FunctionComponent = () => {
-  let {sdfDocumentId} = useParams<{sdfDocumentId: string}>();
-  sdfDocumentId = decodeURIComponent(sdfDocumentId);
+  const {sdfDocumentId} = _.mapValues(
+    useParams<{sdfDocumentId: string}>(),
+    decodeURIComponent
+  );
   const query = useQuery<SdfDocumentPageQuery>(SdfDocumentPageQueryDocument, {
     variables: {id: sdfDocumentId},
   });

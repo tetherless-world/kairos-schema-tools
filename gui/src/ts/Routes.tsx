@@ -38,6 +38,15 @@ export const Routes: React.FunctionComponent = () => (
         component={SdfDocumentPage}
       />
 
+      {/*Get to schemas via a document*/}
+      <Route
+        exact
+        path={Hrefs.sdfDocuments
+          .sdfDocument(sdfDocumentIdParam)
+          .schemas.toString()}
+        component={SchemasPage}
+      />
+
       {/*Get to a schema via a document*/}
       <Route
         exact
