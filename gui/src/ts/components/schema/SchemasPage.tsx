@@ -7,31 +7,14 @@ import {Frame} from "components/frame/Frame";
 import {StandardLayout} from "components/layout/StandardLayout";
 import {invariant} from "ts-invariant";
 import {Hrefs} from "Hrefs";
-import {
-  Link,
-  List,
-  ListItem,
-  ListItemIcon,
-  Typography,
-} from "@material-ui/core";
-import {SchemaIcon} from "components/schema/SchemaIcon";
-import {makeStyles} from "@material-ui/core/styles";
-
-const useStyles = makeStyles((theme) => ({
-  schemaListItem: {
-    border: "solid",
-    borderWidth: 2,
-    padding: theme.spacing(4),
-  },
-}));
+import {Link} from "@material-ui/core";
+import {SchemasTable} from "components/schema/SchemasTable";
 
 export const SchemasPage: React.FunctionComponent = () => {
   let {sdfDocumentId} = useParams<{sdfDocumentId?: string}>();
   if (sdfDocumentId) {
     sdfDocumentId = decodeURIComponent(sdfDocumentId);
   }
-
-  const classes = useStyles();
 
   const query = useQuery<SchemasPageQuery>(SchemasPageQueryDocument, {
     variables: {
@@ -46,7 +29,6 @@ export const SchemasPage: React.FunctionComponent = () => {
         let breadcrumbs: {sdfDocument: {id: string; name: string}} | undefined;
         type Schema = {id: string; name: string};
         let schemas: Schema[];
-        let schemaHref: (schema: Schema) => string;
         let subtitle: React.ReactNode | undefined;
         if (sdfDocumentId) {
           const sdfDocument = data.sdfDocumentById;
@@ -54,11 +36,6 @@ export const SchemasPage: React.FunctionComponent = () => {
           breadcrumbs = {
             sdfDocument: {id: sdfDocumentId, name: sdfDocument!.name},
           };
-          schemaHref = (schema: Schema) =>
-            Hrefs.sdfDocuments
-              .sdfDocument({id: sdfDocumentId!})
-              .schemas.schema(schema)
-              .toString();
           schemas = sdfDocument!.schemas;
           subtitle = (
             <span>
@@ -74,8 +51,6 @@ export const SchemasPage: React.FunctionComponent = () => {
             </span>
           );
         } else {
-          schemaHref = (schema: Schema) =>
-            Hrefs.schemas.schema(schema).toString();
           schemas = data.schemas ?? [];
         }
 
@@ -85,22 +60,7 @@ export const SchemasPage: React.FunctionComponent = () => {
             subtitle={subtitle}
             title="Schemas"
           >
-            <List>
-              {schemas.map((schema) => (
-                <ListItem
-                  className={classes.schemaListItem}
-                  data-cy={"schema-" + schema.id}
-                  key={schema.id}
-                >
-                  <ListItemIcon>
-                    <SchemaIcon />
-                  </ListItemIcon>
-                  <Typography variant="h6">
-                    <Link href={schemaHref(schema)}>{schema.name}</Link>
-                  </Typography>
-                </ListItem>
-              ))}
-            </List>
+            <SchemasTable schemas={schemas} sdfDocumentId={sdfDocumentId} />
           </StandardLayout>
         );
       }}

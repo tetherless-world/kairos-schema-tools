@@ -1,32 +1,14 @@
-class Schema {
-  constructor(private readonly selector: string) {}
-
-  get id() {
-    return cy.get(this.selector + " [data-cy=schema-id]");
-  }
-
-  get name() {
-    return cy.get(this.selector + " [data-cy=schema-name]");
-  }
-}
-
-class Schemas {
-  constructor(private readonly selector: string) {}
-
-  get header() {
-    return cy.get(this.selector + " [data-cy=sdf-document-schemas-header]");
-  }
-
-  schema(id: string) {
-    return new Schema(this.selector + ` [data-cy="schema-${id}"]`);
-  }
-}
+import {SchemasTable} from "./SchemasTable";
 
 export class SdfDocumentCard {
   constructor(private readonly selector: string) {}
 
-  get schemas() {
-    return new Schemas(this.selector + " [data-cy=sdf-document-schemas]");
+  get schemasHeader() {
+    return cy.get(this.selector + " [data-cy=sdf-document-schemas-header]");
+  }
+
+  get schemasTable() {
+    return new SchemasTable(this.selector + " [data-cy=schemas-table]");
   }
 
   get sdfDocumentId() {

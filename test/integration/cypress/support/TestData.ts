@@ -7,8 +7,13 @@ export class TestData {
     name: "Coordinated Bombing Attack",
   };
 
+  static readonly schemas = [TestData.schema];
+
   static readonly sdfDocument: SdfDocument = {
     id: "sha1:61b869c787d305e0dc30fb4999f1d54d247ca099",
+    name: TestData.schema.name,
     schemas: [TestData.schema],
   };
+
+  static readonly sdfDocuments = [TestData.sdfDocument];
 }

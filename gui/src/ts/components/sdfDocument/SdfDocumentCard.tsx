@@ -5,14 +5,10 @@ import {
   CardHeader,
   Grid,
   Link,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
   Typography,
 } from "@material-ui/core";
 import {Hrefs} from "Hrefs";
+import {SchemasTable} from "components/schema/SchemasTable";
 
 export const SdfDocumentCard: React.FunctionComponent<{
   id: string;
@@ -53,36 +49,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
                 Schemas
               </Link>
             </Typography>
-            <Table data-cy="sdf-document-schemas-table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Schema identifier</TableCell>
-                  <TableCell>Schema name</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {schemas.map((schema) => {
-                  const schemaHref = Hrefs.sdfDocuments
-                    .sdfDocument({id})
-                    .schemas.schema(schema)
-                    .toString();
-                  return (
-                    <TableRow data-cy={"schema-" + schema.id}>
-                      <TableCell data-cy="schema-id">
-                        <Link component="a" href={schemaHref}>
-                          {schema.id}
-                        </Link>
-                      </TableCell>
-                      <TableCell data-cy="schema-name">
-                        <Link component="a" href={schemaHref}>
-                          {schema.name}
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
+            <SchemasTable schemas={schemas} sdfDocumentId={id} />
           </Grid>
         </Grid>
       </CardContent>

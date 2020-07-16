@@ -10,7 +10,7 @@ context("SDF document page", () => {
   beforeEach(() => page.visit());
 
   it("should show the document name", () => {
-    page.card.sdfDocumentName.should("have.text", sdfDocument.schemas[0].name);
+    page.card.sdfDocumentName.should("have.text", sdfDocument.name);
   });
 
   it("should show the document id", () => {

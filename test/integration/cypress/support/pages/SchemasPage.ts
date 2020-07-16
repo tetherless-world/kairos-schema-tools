@@ -1,4 +1,5 @@
 import {Page} from "./Page";
+import {SchemasTable} from "./SchemasTable";
 
 export class SchemasPage extends Page {
   constructor(kwds?: {sdfDocumentId?: string}) {
@@ -9,6 +10,14 @@ export class SchemasPage extends Page {
       ? `/sdfdocument/${encodeURIComponent(this.sdfDocumentId)}` +
         relativeUrlSuffix
       : relativeUrlSuffix;
+  }
+
+  get schemasTable() {
+    return new SchemasTable("[data-cy=schemas-table]");
+  }
+
+  get sdfDocumentName() {
+    return cy.get("[data-cy=sdf-document-name]");
   }
 
   readonly relativeUrl: string;
