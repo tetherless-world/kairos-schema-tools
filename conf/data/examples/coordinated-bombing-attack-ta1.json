@@ -27,10 +27,7 @@
       "@id": "kairos:reference",
       "@type": "@id"
     },
-    "steps": {
-      "@id": "kairos:steps",
-      "@container": "@list"
-    },
+    "steps": "kairos:steps",
     "slots": "kairos:slots",
     "participants": "kairos:participants",
     "role": {
