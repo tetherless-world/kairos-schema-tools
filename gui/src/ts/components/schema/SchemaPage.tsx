@@ -7,6 +7,14 @@ import {SchemaPageQuery} from "api/queries/types/SchemaPageQuery";
 import {invariant} from "ts-invariant";
 import {StandardLayoutBreadcrumbs} from "components/layout/StandardLayoutBreadcrumbs";
 import {StandardLayout} from "components/layout/StandardLayout";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Typography,
+} from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import {SchemaDetailsTable} from "components/schema/SchemaDetailsTable";
 
 export const SchemaPage: React.FunctionComponent = () => {
   let {schemaId, sdfDocumentId} = useParams<{
@@ -52,7 +60,18 @@ export const SchemaPage: React.FunctionComponent = () => {
               </span>
             }
           >
-            <div></div>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography variant="h6">Details</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <SchemaDetailsTable schema={schema} />
+              </AccordionDetails>
+            </Accordion>
           </StandardLayout>
         );
       }}
