@@ -21,6 +21,7 @@ import {SchemaDetailsTable} from "components/schema/SchemaDetailsTable";
 import {StepDetailsTable} from "components/schema/StepDetailsTable";
 import {makeStyles} from "@material-ui/core/styles";
 import {NoRoute} from "components/error/NoRoute";
+import {StepParticipantTable} from "components/schema/StepParticipantTable";
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -104,6 +105,31 @@ export const SchemaPage: React.FunctionComponent = () => {
                             <CardHeader title={step.name} />
                             <CardContent>
                               <StepDetailsTable step={step} />
+                              {step.participants &&
+                              step.participants.length > 0 ? (
+                                <Accordion>
+                                  <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                  >
+                                    Participants
+                                  </AccordionSummary>
+                                  <AccordionDetails>
+                                    <Grid
+                                      container
+                                      direction="column"
+                                      spacing={4}
+                                    >
+                                      {step.participants.map((participant) => (
+                                        <Grid item>
+                                          <StepParticipantTable
+                                            participant={participant}
+                                          />
+                                        </Grid>
+                                      ))}
+                                    </Grid>
+                                  </AccordionDetails>
+                                </Accordion>
+                              ) : null}
                             </CardContent>
                           </Card>
                         </Grid>
