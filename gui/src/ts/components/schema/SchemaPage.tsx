@@ -4,7 +4,6 @@ import {useQuery} from "@apollo/react-hooks";
 import * as SchemaPageQueryDocument from "api/queries/SchemaPageQuery.graphql";
 import {Frame} from "components/frame/Frame";
 import {SchemaPageQuery} from "api/queries/types/SchemaPageQuery";
-import {invariant} from "ts-invariant";
 import {StandardLayoutBreadcrumbs} from "components/layout/StandardLayoutBreadcrumbs";
 import {StandardLayout} from "components/layout/StandardLayout";
 import {
@@ -21,6 +20,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {SchemaDetailsTable} from "components/schema/SchemaDetailsTable";
 import {StepDetailsTable} from "components/schema/StepDetailsTable";
 import {makeStyles} from "@material-ui/core/styles";
+import {NoRoute} from "components/error/NoRoute";
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -51,11 +51,17 @@ export const SchemaPage: React.FunctionComponent = () => {
   return (
     <Frame {...query}>
       {({data}) => {
+        if (!data.schemaById) {
+          return <NoRoute />;
+        }
+
         let breadcrumbs: StandardLayoutBreadcrumbs;
         const schema = Object.assign({}, data.schemaById!, {id: schemaId});
         if (sdfDocumentId) {
           const sdfDocument = data.sdfDocumentById;
-          invariant(sdfDocument, "must be defined if the id was");
+          if (!sdfDocument) {
+            return <NoRoute />;
+          }
           breadcrumbs = {
             schema,
             sdfDocument: {id: sdfDocumentId, name: sdfDocument!.name},

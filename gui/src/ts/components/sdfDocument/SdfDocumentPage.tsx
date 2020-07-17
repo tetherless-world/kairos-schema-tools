@@ -7,6 +7,7 @@ import {SdfDocumentCard} from "components/sdfDocument/SdfDocumentCard";
 import {StandardLayout} from "components/layout/StandardLayout";
 import {SdfDocumentPageQuery} from "api/queries/types/SdfDocumentPageQuery";
 import * as _ from "lodash";
+import {NoRoute} from "components/error/NoRoute";
 
 export const SdfDocumentPage: React.FunctionComponent = () => {
   const {sdfDocumentId} = _.mapValues(
@@ -20,9 +21,14 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
   return (
     <Frame {...query}>
       {({data}) => {
+        if (!data.sdfDocumentById) {
+          return <NoRoute />;
+        }
+
         const sdfDocument = Object.assign({}, data.sdfDocumentById, {
           id: sdfDocumentId,
         });
+
         return (
           <StandardLayout
             breadcrumbs={{sdfDocument}}

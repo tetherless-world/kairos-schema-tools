@@ -1,18 +1,16 @@
 import * as React from "react";
 
 import {useLocation} from "react-router-dom";
-
-import {Frame} from "components/frame/Frame";
+import {Card, CardContent, CardHeader} from "@material-ui/core";
 
 export const NoRoute: React.FunctionComponent = () => {
   const location = useLocation();
   return (
-    <Frame data={true} loading={false}>
-      {({data}) => (
-        <h3>
-          <code>{location.pathname}</code>
-        </h3>
-      )}
-    </Frame>
+    <Card>
+      <CardHeader title="Not Found" />
+      <CardContent>
+        <code>{location.pathname}</code>
+      </CardContent>
+    </Card>
   );
 };

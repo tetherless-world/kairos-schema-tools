@@ -5,11 +5,11 @@ import {SchemasPageQuery} from "api/queries/types/SchemasPageQuery";
 import * as SchemasPageQueryDocument from "api/queries/SchemasPageQuery.graphql";
 import {Frame} from "components/frame/Frame";
 import {StandardLayout} from "components/layout/StandardLayout";
-import {invariant} from "ts-invariant";
 import {Hrefs} from "Hrefs";
 import {Link} from "@material-ui/core";
 import {SchemasTable} from "components/schema/SchemasTable";
 import {StandardLayoutBreadcrumbs} from "components/layout/StandardLayoutBreadcrumbs";
+import {NoRoute} from "components/error/NoRoute";
 
 export const SchemasPage: React.FunctionComponent = () => {
   let {sdfDocumentId} = useParams<{sdfDocumentId?: string}>();
@@ -33,9 +33,11 @@ export const SchemasPage: React.FunctionComponent = () => {
         let subtitle: React.ReactNode | undefined;
         if (sdfDocumentId) {
           const sdfDocument = data.sdfDocumentById;
-          invariant(sdfDocument, "must be defined if the id was");
+          if (!sdfDocument) {
+            return <NoRoute />;
+          }
           breadcrumbs = {
-            sdfDocument: {id: sdfDocumentId, name: sdfDocument!.name},
+            sdfDocument: {id: sdfDocumentId, name: sdfDocument.name},
           };
           schemas = sdfDocument!.schemas;
           subtitle = (
@@ -47,7 +49,7 @@ export const SchemasPage: React.FunctionComponent = () => {
                   .toString()}
                 data-cy="sdf-document-name"
               >
-                {sdfDocument!.name}
+                {sdfDocument.name}
               </Link>
             </span>
           );
