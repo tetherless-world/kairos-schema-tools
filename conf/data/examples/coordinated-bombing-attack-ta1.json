@@ -14,7 +14,10 @@
       "@type": "@id"
     },
     "name": "schema:name",
-    "comment": "kairos:comment",
+    "comment": {
+      "@id": "kairos:comment",
+      "@container": "@list"
+    },
     "description": "schema:description",
     "version": "schema:version",
     "sdfVersion": "kairos:sdfVersion",
@@ -24,7 +27,10 @@
       "@id": "kairos:reference",
       "@type": "@id"
     },
-    "steps": "kairos:steps",
+    "steps": {
+      "@id": "kairos:steps",
+      "@container": "@list"
+    },
     "slots": "kairos:slots",
     "participants": "kairos:participants",
     "role": {
