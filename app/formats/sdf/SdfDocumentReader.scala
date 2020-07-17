@@ -35,7 +35,7 @@ final class SdfDocumentReader(documentId: Option[Uri], documentSource: Source) e
     val model = ModelFactory.createDefaultModel()
     model.read(new StringReader(documentSourceJson), documentId.toString, Lang.JSONLD.getName)
 
-//    model.write(System.out, Lang.TTL.getName)
+    model.write(System.out, Lang.TTL.getName)
 //    model.write(System.out, Lang.NT.getName)
 
     val documentHeader = new SchemaDataFormatDocumentHeader(model)

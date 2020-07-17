@@ -11,10 +11,22 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Card,
+  CardContent,
+  CardHeader,
+  Grid,
   Typography,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {SchemaDetailsTable} from "components/schema/SchemaDetailsTable";
+import {StepDetailsTable} from "components/schema/StepDetailsTable";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  accordion: {
+    width: "100%",
+  },
+}));
 
 export const SchemaPage: React.FunctionComponent = () => {
   let {schemaId, sdfDocumentId} = useParams<{
@@ -33,6 +45,8 @@ export const SchemaPage: React.FunctionComponent = () => {
       withSdfDocument: !!sdfDocumentId,
     },
   });
+
+  const classes = useStyles();
 
   return (
     <Frame {...query}>
@@ -60,18 +74,39 @@ export const SchemaPage: React.FunctionComponent = () => {
               </span>
             }
           >
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography variant="h6">Details</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <SchemaDetailsTable schema={schema} />
-              </AccordionDetails>
-            </Accordion>
+            <Grid container direction="column" spacing={4}>
+              <Grid item>
+                <Accordion className={classes.accordion}>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography variant="h6">Details</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <SchemaDetailsTable schema={schema} />
+                  </AccordionDetails>
+                </Accordion>
+              </Grid>
+              <Grid item>
+                <Accordion className={classes.accordion}>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography variant="h6">Steps</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Grid container direction="column" spacing={4}>
+                      {schema.steps.map((step) => (
+                        <Grid item key={step.id}>
+                          <Card>
+                            <CardHeader title={step.name} />
+                            <CardContent>
+                              <StepDetailsTable step={step} />
+                            </CardContent>
+                          </Card>
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </AccordionDetails>
+                </Accordion>
+              </Grid>
+            </Grid>
           </StandardLayout>
         );
       }}
