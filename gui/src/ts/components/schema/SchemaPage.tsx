@@ -10,18 +10,14 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Card,
-  CardContent,
-  CardHeader,
   Grid,
   Typography,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {SchemaDetailsTable} from "components/schema/SchemaDetailsTable";
-import {StepDetailsTable} from "components/schema/StepDetailsTable";
 import {makeStyles} from "@material-ui/core/styles";
 import {NoRoute} from "components/error/NoRoute";
-import {StepParticipantTable} from "components/schema/StepParticipantTable";
+import {StepCard} from "components/schema/StepCard";
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -101,37 +97,7 @@ export const SchemaPage: React.FunctionComponent = () => {
                     <Grid container direction="column" spacing={4}>
                       {schema.steps.map((step) => (
                         <Grid item key={step.id}>
-                          <Card>
-                            <CardHeader title={step.name} />
-                            <CardContent>
-                              <StepDetailsTable step={step} />
-                              {step.participants &&
-                              step.participants.length > 0 ? (
-                                <Accordion>
-                                  <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                  >
-                                    Participants
-                                  </AccordionSummary>
-                                  <AccordionDetails>
-                                    <Grid
-                                      container
-                                      direction="column"
-                                      spacing={4}
-                                    >
-                                      {step.participants.map((participant) => (
-                                        <Grid item>
-                                          <StepParticipantTable
-                                            participant={participant}
-                                          />
-                                        </Grid>
-                                      ))}
-                                    </Grid>
-                                  </AccordionDetails>
-                                </Accordion>
-                              ) : null}
-                            </CardContent>
-                          </Card>
+                          <StepCard step={step} />
                         </Grid>
                       ))}
                     </Grid>
