@@ -4,6 +4,21 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
         comments
         description
         name
+        order {
+            comments
+            flags
+            ... on BeforeAfterStepOrder {
+                after
+                before
+            }
+            ... on ContainerContainedStepOrder {
+                contained
+                container
+            }
+            ... on OverlapsStepOrder {
+                overlaps
+            }
+        }
         references
         sdfDocumentId
         steps {

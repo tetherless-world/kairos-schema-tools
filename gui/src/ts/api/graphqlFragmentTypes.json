@@ -1,5 +1,21 @@
 {
   "__schema": {
-    "types": []
+    "types": [
+      {
+        "kind": "INTERFACE",
+        "name": "StepOrder",
+        "possibleTypes": [
+          {
+            "name": "BeforeAfterStepOrder"
+          },
+          {
+            "name": "ContainerContainedStepOrder"
+          },
+          {
+            "name": "OverlapsStepOrder"
+          }
+        ]
+      }
+    ]
   }
 }

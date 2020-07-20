@@ -2,11 +2,36 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { EntityType } from "./../../graphqlGlobalTypes";
+import { StepOrderFlag, EntityType } from "./../../graphqlGlobalTypes";
 
 // ====================================================
 // GraphQL query operation: SchemaPageQuery
 // ====================================================
+
+export interface SchemaPageQuery_schemaById_order_BeforeAfterStepOrder {
+  __typename: "BeforeAfterStepOrder";
+  comments: string[] | null;
+  flags: StepOrderFlag[] | null;
+  after: string[];
+  before: string[];
+}
+
+export interface SchemaPageQuery_schemaById_order_ContainerContainedStepOrder {
+  __typename: "ContainerContainedStepOrder";
+  comments: string[] | null;
+  flags: StepOrderFlag[] | null;
+  contained: string[];
+  container: string;
+}
+
+export interface SchemaPageQuery_schemaById_order_OverlapsStepOrder {
+  __typename: "OverlapsStepOrder";
+  comments: string[] | null;
+  flags: StepOrderFlag[] | null;
+  overlaps: string[];
+}
+
+export type SchemaPageQuery_schemaById_order = SchemaPageQuery_schemaById_order_BeforeAfterStepOrder | SchemaPageQuery_schemaById_order_ContainerContainedStepOrder | SchemaPageQuery_schemaById_order_OverlapsStepOrder;
 
 export interface SchemaPageQuery_schemaById_steps_maxDuration {
   __typename: "Duration";
@@ -48,6 +73,7 @@ export interface SchemaPageQuery_schemaById {
   comments: string[] | null;
   description: string;
   name: string;
+  order: SchemaPageQuery_schemaById_order[];
   references: string[] | null;
   sdfDocumentId: string;
   steps: SchemaPageQuery_schemaById_steps[];

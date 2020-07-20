@@ -62,6 +62,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
 
   // Schema
   val schema = Schema(
-    RootQueryType
+    RootQueryType,
+    additionalTypes = BeforeAfterStepOrderObjectType :: ContainerContainedStepOrderObjectType :: OverlapsStepOrderObjectType :: Nil
   )
 }

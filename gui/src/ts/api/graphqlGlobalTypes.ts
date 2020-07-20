@@ -23,6 +23,14 @@ export enum EntityType {
   WEA = "WEA",
 }
 
+export enum StepOrderFlag {
+  Causal = "Causal",
+  Optional = "Optional",
+  Precondition = "Precondition",
+  Simultaneous = "Simultaneous",
+  Subevent = "Subevent",
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================
