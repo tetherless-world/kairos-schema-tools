@@ -6,6 +6,7 @@ case class Schema(
   aka: Option[List[String]],
   comments: Option[List[String]],
   description: String,
+  entityRelations: List[EntityRelation],
   id: Uri,
   name: String,
   order: List[StepOrder],

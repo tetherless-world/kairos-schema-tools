@@ -34,7 +34,18 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
 //          comment should not be empty
 //        }
         schema.description should be("A coordinated effort by mulitple parties that results in a bombing attack")
+        schema.entityRelations should not be empty
+        for (entityRelation <- schema.entityRelations) {
+          entityRelation.comments should not be None
+          entityRelation.comments.get should not be empty
+          // relationSubject should be in slots
+          entityRelation.relations should not be empty
+          for (relation <- entityRelation.relations) {
+            relation.relationObjects should not be empty
+          }
+        }
         schema.name should be("Coordinated Bombing Attack")
+        schema.order should not be empty
         for (order <- schema.order) {
           order.stepIds should not be empty
           for (stepId <- order.stepIds) {
