@@ -1,7 +1,7 @@
 package stores
 
-import org.scalatest.WordSpec
+import org.scalatest.{BeforeAndAfterEach, WordSpec}
 
-class MemStoreSpec extends WordSpec with StoreBehaviors {
+class MemStoreSpec extends WordSpec with StoreBehaviors with BeforeAndAfterEach {
   behave like store(() => new MemStore)
 }

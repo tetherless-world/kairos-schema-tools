@@ -22,10 +22,10 @@ class MemStore extends Store {
   final override def getSdfDocuments: List[SdfDocument] =
     sdfDocumentsById.values.toList
 
-  final override def putSchema(schema: Schema): Unit =
+  private def putSchema(schema: Schema): Unit =
     schemasById.update(schema.id, schema)
 
-  final override def putSchemas(schemas: List[Schema]): Unit =
+  private def putSchemas(schemas: List[Schema]): Unit =
     schemas.foreach(putSchema(_))
 
   final override def putSdfDocument(sdfDocument: SdfDocument): Unit = {

@@ -24,10 +24,6 @@ final class SdfDocumentReader(documentSource: Source) extends AutoCloseable {
   def read(): SdfDocument = {
     val documentSourceJson = documentSource.mkString
 
-    // Hash the JSON to get a document id
-    // Not expected to be a stable identifier (yet)
-    // Would either need to hash a canonical serialization (easier but fragile) or a normalized graph (harder but robust)
-
     val model = ModelFactory.createDefaultModel()
     model.read(new StringReader(documentSourceJson), "", Lang.JSONLD.getName)
 
