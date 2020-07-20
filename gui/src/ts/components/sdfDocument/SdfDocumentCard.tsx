@@ -3,34 +3,21 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Grid,
   Link,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
   Typography,
 } from "@material-ui/core";
 import {Hrefs} from "Hrefs";
+import {SchemasTable} from "components/schema/SchemasTable";
 
 export const SdfDocumentCard: React.FunctionComponent<{
   id: string;
+  name: string;
   schemas: {
     id: string;
     name: string;
   }[];
-}> = ({id, schemas}) => {
-  let documentName: string;
-  if (schemas.length === 1) {
-    documentName = schemas[0].name;
-  } else {
-    if (id.startsWith("file:")) {
-      documentName = id.split("/").pop()!;
-    } else {
-      documentName = id;
-    }
-  }
-
+}> = ({id, name, schemas}) => {
   return (
     <Card data-cy={"sdf-document-card-" + id}>
       <CardHeader
@@ -41,43 +28,30 @@ export const SdfDocumentCard: React.FunctionComponent<{
               data-cy="sdf-document-name"
               href={Hrefs.sdfDocuments.sdfDocument({id}).toString()}
             >
-              {documentName}
+              {name}
             </Link>
           </React.Fragment>
         }
       />
       <CardContent>
-        <Typography variant="h5">Schemas</Typography>
-        <Table data-cy="sdf-document-schemas">
-          <TableHead>
-            <TableRow>
-              <TableCell>Schema identifier</TableCell>
-              <TableCell>Schema name</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {schemas.map((schema) => {
-              const schemaHref = Hrefs.sdfDocuments
-                .sdfDocument({id})
-                .schemas.schema(schema)
-                .toString();
-              return (
-                <TableRow data-cy={"schema-" + schema.id}>
-                  <TableCell data-cy="schema-id">
-                    <Link component="a" href={schemaHref}>
-                      {schema.id}
-                    </Link>
-                  </TableCell>
-                  <TableCell data-cy="schema-name">
-                    <Link component="a" href={schemaHref}>
-                      {schema.name}
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+        <Grid container direction="column" spacing={4}>
+          <Grid item>
+            <Typography variant="h6">
+              Identifier: <span data-cy="sdf-document-id">{id}</span>
+            </Typography>
+          </Grid>
+          <Grid item data-cy="sdf-document-schemas">
+            <Typography variant="h5">
+              <Link
+                data-cy="sdf-document-schemas-header"
+                href={Hrefs.sdfDocuments.sdfDocument({id}).schemas.toString()}
+              >
+                Schemas
+              </Link>
+            </Typography>
+            <SchemasTable schemas={schemas} sdfDocumentId={id} />
+          </Grid>
+        </Grid>
       </CardContent>
     </Card>
   );

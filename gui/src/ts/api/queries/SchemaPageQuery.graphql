@@ -1,0 +1,73 @@
+query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocument: Boolean!) {
+    schemaById(id: $schemaId) {
+        aka
+        comments
+        description
+        entityRelations {
+            comments
+            relations {
+                relationPredicate
+                relationObjects
+            }
+            relationSubject
+        }
+        name
+        order {
+            comments
+            flags
+            ... on BeforeAfterStepOrder {
+                after
+                before
+            }
+            ... on ContainerContainedStepOrder {
+                contained
+                container
+            }
+            ... on OverlapsStepOrder {
+                overlaps
+            }
+        }
+        references
+        sdfDocumentId
+        slots {
+            aka
+            comments
+            entityTypes
+            id
+            references
+            refvar
+            roleName
+        }
+        steps {
+            aka
+            comments
+            id
+            maxDuration {
+                string
+            }
+            minDuration {
+                string
+            }
+            name
+            participants {
+                aka
+                comments
+                entityTypes
+                id
+                name
+                references
+                refvar
+                role
+            }
+            references
+            type
+        }
+        super
+        ta2
+        version
+    }
+
+    sdfDocumentById(id: $sdfDocumentId) @include(if: $withSdfDocument) {
+        name
+    }
+}

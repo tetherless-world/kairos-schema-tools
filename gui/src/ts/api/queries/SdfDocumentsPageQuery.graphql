@@ -1,6 +1,7 @@
 query SdfDocumentsPageQuery {
     sdfDocuments {
         id
+        name
         schemas {
             id
             name

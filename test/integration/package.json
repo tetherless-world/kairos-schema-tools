@@ -10,9 +10,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@tetherless-world/twxplore-base": "1.0.11",
+    "@tetherless-world/twxplore-base": "1.0.12",
     "cross-env": "7.0.2",
-    "cypress": "4.9.0",
+    "cypress": "4.10.0",
     "cypress-intellij-reporter": "0.0.4",
     "typescript": "3.9.5"
   },

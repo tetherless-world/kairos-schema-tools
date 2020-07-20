@@ -14,7 +14,10 @@
       "@type": "@id"
     },
     "name": "schema:name",
-    "comment": "kairos:comment",
+    "comment": {
+      "@id": "kairos:comment",
+      "@container": "@list"
+    },
     "description": "schema:description",
     "version": "schema:version",
     "sdfVersion": "kairos:sdfVersion",
@@ -31,6 +34,7 @@
       "@id": "kairos:role",
       "@type": "@id"
     },
+    "roleName": "kairos:roleName",
     "entityTypes": "kairos:entityTypes",
     "entityTypes_AND": "kairos:entityTypes_AND",
     "entityTypes_OR": "kairos:entityTypes_OR",

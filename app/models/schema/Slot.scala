@@ -7,7 +7,7 @@ final case class Slot(
                        comments: Option[List[String]],
                        entityTypes: Option[List[EntityType]],
                        id: Uri,
-                       name: String,
+                       references: Option[List[String]],
                        refvar: Option[String],
-                       role: Uri
+                       roleName: String,
                      )

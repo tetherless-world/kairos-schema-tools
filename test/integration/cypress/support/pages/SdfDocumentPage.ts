@@ -8,7 +8,7 @@ export class SdfDocumentPage extends Page {
   }
 
   get card() {
-    return new SdfDocumentCard(this.id);
+    return new SdfDocumentCard(`[data-cy="sdf-document-card-${this.id}"]`);
   }
 
   readonly relativeUrl: string;
