@@ -6,7 +6,7 @@ import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.{MalformedSchemaDataFormatDocumentException, SdfDocument}
 import formats.sdf.vocabulary.{KAIROS, KairosProperties, SCHEMA_ORG, SchemaOrgProperties}
 import io.github.tetherlessworld.scena.{Rdf, RdfProperties, RdfReader}
-import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Schema, Slot, Step, StepOrder, StepOrderFlag}
+import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Schema, Slot, Step, StepOrder, StepOrderFlag, StepParticipant}
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.riot.Lang
 
@@ -33,9 +33,9 @@ final class ZeroDot8aSdfDocumentReader(documentId: Uri, documentResource: Resour
       comments = Option(resource.comment).filter(_.nonEmpty),
       entityTypes = Option(resource.entityTypes.map(EntityType(_))).filter(_.nonEmpty),
       id = id,
-      name = resource.name.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"slot ${id} missing required name property")),
+      references = Option(resource.reference).filter(_.nonEmpty),
       refvar = resource.refvar.headOption,
-      role = resource.role.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"slot ${id} missing required role property"))
+      roleName = resource.roleName.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"slot ${id} missing required roleName property"))
     )
   }
 
@@ -65,6 +65,21 @@ final class ZeroDot8aSdfDocumentReader(documentId: Uri, documentResource: Resour
     }
   }
 
+  private implicit val stepParticipantRdfReader: RdfReader[StepParticipant] = (resource) => {
+    val id = Uri.parse(resource.getURI)
+    StepParticipant(
+      aka = Option(resource.aka).filter(_.nonEmpty),
+      comments = Option(resource.comment).filter(_.nonEmpty),
+      entityTypes = Option(resource.entityTypes.map(EntityType(_))).filter(_.nonEmpty),
+      id = id,
+      name = resource.name.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"step participant ${id} missing required name property")),
+      references = Option(resource.reference).filter(_.nonEmpty),
+      refvar = resource.refvar.headOption,
+      role = resource.role.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"step participant ${id} missing required role property"))
+    )
+  }
+
+
   private implicit val stepRdfReader: RdfReader[Step] = (resource) => {
     val id = Uri.parse(resource.getURI)
     Step(
@@ -74,7 +89,7 @@ final class ZeroDot8aSdfDocumentReader(documentId: Uri, documentResource: Resour
       minDuration = resource.minDuration.map(Duration(_)).headOption,
       id = id,
       name = resource.name.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"step ${id} missing required name property")),
-      participants = Option(resource.participants.map(Rdf.read[Slot](_))).filter(_.nonEmpty),
+      participants = Option(resource.participants.map(Rdf.read[StepParticipant](_))).filter(_.nonEmpty),
       references = Option(resource.reference).filter(_.nonEmpty),
       `type` = Uri.parse(resource.types.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"step ${id} missing type")).getURI)
     )
@@ -92,6 +107,7 @@ final class ZeroDot8aSdfDocumentReader(documentId: Uri, documentResource: Resour
       order = resource.order.map(resource => Rdf.read[StepOrder](resource)),
       references = Option(resource.reference).filter(_.nonEmpty),
       sdfDocumentId = documentId,
+      slots = resource.slots.map(resource => Rdf.read[Slot](resource)),
       steps = resource.steps.map(resource => Rdf.read[Step](resource)),
       `super` = resource.`super`.headOption,
       ta2 = false,

@@ -9,7 +9,7 @@ final case class Step(
                        maxDuration: Option[Duration],
                        minDuration: Option[Duration],
                        name: String,
-                       participants: Option[List[Slot]],
-                       references: Option[List[Uri]],
+                       participants: Option[List[StepParticipant]],
+                       references: Option[List[String]],
                        `type`: Uri
                      )

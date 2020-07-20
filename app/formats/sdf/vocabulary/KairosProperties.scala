@@ -5,7 +5,7 @@ import formats.sdf.{MalformedSchemaDataFormatDocumentException, RdfListRdfReader
 import formats.sdf.RdfListRdfReader.read
 import io.github.tetherlessworld.scena.PropertyGetters
 import org.apache.jena.datatypes.xsd.XSDDuration
-import org.apache.jena.rdf.model.{Property, Resource}
+import org.apache.jena.rdf.model.{Property, RDFNode, Resource}
 import org.apache.jena.vocabulary.RDF
 
 trait KairosProperties extends PropertyGetters {
@@ -40,14 +40,16 @@ trait KairosProperties extends PropertyGetters {
   def order: List[Resource] = getPropertyObjectResources(KAIROS.order)
   def overlaps: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.overlaps)
   def participants: List[Resource] = getPropertyObjectResources(KAIROS.participants)
-  def reference: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.reference)
+  def reference: List[String] = getPropertyObjects(KAIROS.reference).map(node => if (node.isLiteral) node.asLiteral().getString else if (node.isURIResource) node.asResource().getURI else throw new UnsupportedOperationException)
   def relationObject: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.relationObject)
   def relations: List[Resource] = getPropertyObjectResources(KAIROS.relations)
   def relationPredicate: List[String] = getPropertyObjectStrings(KAIROS.relationPredicate)
   def relationSubject: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.relationSubject)
   def refvar: List[String] = getPropertyObjectStrings(KAIROS.refvar)
   def role: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.role)
+  def roleName: List[String] = getPropertyObjectStrings(KAIROS.roleName)
   def schemas: List[Resource] = getPropertyObjectResources(KAIROS.schemas).filter(resource => resource.isURIResource)
+  def slots: List[Resource] = getPropertyObjectResources(KAIROS.slots)
   def steps: List[Resource] = getPropertyObjectResources(KAIROS.steps).filter(resource => resource.isURIResource)
   def `super`: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.`super`)
   def sdfVersion: List[String] = getPropertyObjectStrings(KAIROS.sdfVersion)
