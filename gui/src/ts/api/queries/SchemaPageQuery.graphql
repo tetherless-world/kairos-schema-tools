@@ -3,6 +3,14 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
         aka
         comments
         description
+        entityRelations {
+            comments
+            relations {
+                relationPredicate
+                relationObjects
+            }
+            relationSubject
+        }
         name
         order {
             comments

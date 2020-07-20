@@ -8,6 +8,19 @@ import { StepOrderFlag, EntityType } from "./../../graphqlGlobalTypes";
 // GraphQL query operation: SchemaPageQuery
 // ====================================================
 
+export interface SchemaPageQuery_schemaById_entityRelations_relations {
+  __typename: "EntityRelationRelation";
+  relationPredicate: string;
+  relationObjects: string[];
+}
+
+export interface SchemaPageQuery_schemaById_entityRelations {
+  __typename: "EntityRelation";
+  comments: string[] | null;
+  relations: SchemaPageQuery_schemaById_entityRelations_relations[];
+  relationSubject: string;
+}
+
 export interface SchemaPageQuery_schemaById_order_BeforeAfterStepOrder {
   __typename: "BeforeAfterStepOrder";
   comments: string[] | null;
@@ -72,6 +85,7 @@ export interface SchemaPageQuery_schemaById {
   aka: string[] | null;
   comments: string[] | null;
   description: string;
+  entityRelations: SchemaPageQuery_schemaById_entityRelations[];
   name: string;
   order: SchemaPageQuery_schemaById_order[];
   references: string[] | null;

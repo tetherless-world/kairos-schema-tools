@@ -2,7 +2,7 @@ package models.graphql
 
 import formats.sdf.SdfDocument
 import io.github.tetherlessworld.twxplore.lib.base.models.graphql.BaseGraphQlSchemaDefinition
-import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityType, OverlapsStepOrder, Slot, Step, StepOrder, StepOrderFlag}
+import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Slot, Step, StepOrder, StepOrderFlag}
 import sangria.schema.{Argument, Field, InterfaceType, ListType, ObjectType, OptionType, Schema, StringType, fields}
 import sangria.macros.derive._
 
@@ -26,6 +26,8 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
 
   // Object types
   implicit val DurationObjectType = deriveObjectType[GraphQlSchemaContext, Duration]()
+  implicit val EntityRelationRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelationRelation]()
+  implicit val EntityRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelation]()
   implicit val SlotObjectType = deriveObjectType[GraphQlSchemaContext, Slot]()
   implicit val BeforeAfterStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, BeforeAfterStepOrder](
     Interfaces(StepOrderInterfaceType)

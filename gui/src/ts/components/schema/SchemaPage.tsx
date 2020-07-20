@@ -19,6 +19,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {NoRoute} from "components/error/NoRoute";
 import {StepCard} from "components/schema/StepCard";
 import {StepOrderCard} from "components/schema/StepOrderCard";
+import {EntityRelationCard} from "components/schema/EntityRelationCard";
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -108,15 +109,39 @@ export const SchemaPage: React.FunctionComponent = () => {
               <Grid item>
                 <Accordion className={classes.accordion}>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography variant="h6">Order</Typography>
+                    <Typography variant="h6">Step order</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Grid container direction="column" spacing={4}>
                       {schema.order.map((stepOrder, stepOrderIndex) => (
                         <Grid item key={stepOrderIndex}>
-                          <StepOrderCard stepOrder={stepOrder} />
+                          <StepOrderCard
+                            stepOrder={stepOrder}
+                            stepOrderIndex={stepOrderIndex}
+                          />
                         </Grid>
                       ))}
+                    </Grid>
+                  </AccordionDetails>
+                </Accordion>
+              </Grid>
+              <Grid item>
+                <Accordion className={classes.accordion}>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography variant="h6">Entity relations</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Grid container direction="column" spacing={4}>
+                      {schema.entityRelations.map(
+                        (entityRelation, entityRelationIndex) => (
+                          <Grid item key={entityRelationIndex}>
+                            <EntityRelationCard
+                              entityRelation={entityRelation}
+                              entityRelationIndex={entityRelationIndex}
+                            />
+                          </Grid>
+                        )
+                      )}
                     </Grid>
                   </AccordionDetails>
                 </Accordion>
