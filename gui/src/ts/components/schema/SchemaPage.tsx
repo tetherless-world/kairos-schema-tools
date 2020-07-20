@@ -18,6 +18,7 @@ import {SchemaDetailsTable} from "components/schema/SchemaDetailsTable";
 import {makeStyles} from "@material-ui/core/styles";
 import {NoRoute} from "components/error/NoRoute";
 import {StepCard} from "components/schema/StepCard";
+import {StepOrderCard} from "components/schema/StepOrderCard";
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -98,6 +99,22 @@ export const SchemaPage: React.FunctionComponent = () => {
                       {schema.steps.map((step) => (
                         <Grid item key={step.id}>
                           <StepCard step={step} />
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </AccordionDetails>
+                </Accordion>
+              </Grid>
+              <Grid item>
+                <Accordion className={classes.accordion}>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography variant="h6">Order</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Grid container direction="column" spacing={4}>
+                      {schema.order.map((stepOrder, stepOrderIndex) => (
+                        <Grid item key={stepOrderIndex}>
+                          <StepOrderCard stepOrder={stepOrder} />
                         </Grid>
                       ))}
                     </Grid>
