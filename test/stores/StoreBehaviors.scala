@@ -12,7 +12,7 @@ trait StoreBehaviors extends Matchers { this: WordSpec =>
       val store = storeFactory()
       store.getSchemaById(testSchema1.id) should equal(None)
       store.putSdfDocument(testSdfDocument1)
-      store.getSchemaById(testSchema1.id) should equal(Some(testSchema1))
+      store.getSchemaById(testSchema1.id).get.id should equal(testSchema1.id)
       store.getSchemaById(Uri.parse("http://example.com/other")) should equal(None)
     }
 
@@ -20,14 +20,14 @@ trait StoreBehaviors extends Matchers { this: WordSpec =>
       val store = storeFactory()
       store.getSchemas should equal(List())
       store.putSdfDocument(testSdfDocument1)
-      store.getSchemas should equal(List(testSchema1))
+      store.getSchemas.map(_.id) should equal(testSdfDocument1.schemas.map(_.id))
     }
 
     "get SDF document by id" in {
       val store = storeFactory()
       store.getSdfDocumentById(testSdfDocument1.id) should equal(None)
       store.putSdfDocument(testSdfDocument1)
-      store.getSdfDocumentById(testSdfDocument1.id) should equal(Some(testSdfDocument1))
+      store.getSdfDocumentById(testSdfDocument1.id).get.id should equal(testSdfDocument1.id)
       store.getSdfDocumentById(Uri.parse("http://example.com/other")) should equal(None)
     }
 
@@ -35,7 +35,7 @@ trait StoreBehaviors extends Matchers { this: WordSpec =>
       val store = storeFactory()
       store.getSdfDocuments should equal(List())
       store.putSdfDocument(testSdfDocument1)
-      store.getSdfDocuments should equal(List(testSdfDocument1))
+      store.getSdfDocuments.map(_.id) should equal(List(testSdfDocument1.id))
     }
   }
 }

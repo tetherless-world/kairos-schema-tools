@@ -8,11 +8,9 @@ import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.{SdfDocument, SdfDocumentReader}
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import models.schema.Schema
-import org.apache.commons.codec.digest.DigestUtils
-import org.apache.commons.io.FilenameUtils
 
-import scala.io.Source
 import scala.collection.JavaConverters._
+import scala.io.Source
 
 final class FsStore(val rootDirectoryPath: Path) extends Store with WithResource {
   final override def getSchemaById(id: Uri): Option[Schema] =
