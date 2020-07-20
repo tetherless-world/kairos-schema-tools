@@ -23,17 +23,27 @@ trait KairosProperties extends PropertyGetters {
       }
     })
 
+  private def getPropertyObjectResourceParsedUris(property: Property): List[Uri] =
+    super.getPropertyObjectResourceUris(property).map(Uri.parse(_))
+
+  def after: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.after)
   def akas: List[String] = getPropertyObjectStrings(KAIROS.aka)
+  def before: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.before)
   def comments: List[String] = getPropertyObjectStringList(KAIROS.comment)
+  def contained: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.contained)
+  def container: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.container)
   def entityTypes: List[String] = getPropertyObjectStrings(KAIROS.entityTypes)
+  def flags: List[String] = getPropertyObjectStrings(KAIROS.flags)
   def maxDurations: List[XSDDuration] = getPropertyObjectDurations(KAIROS.maxDuration)
   def minDurations: List[XSDDuration] = getPropertyObjectDurations(KAIROS.minDuration)
+  def order: List[Resource] = getPropertyObjectResources(KAIROS.order)
+  def overlaps: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.overlaps)
   def participants: List[Resource] = getPropertyObjectResources(KAIROS.participants)
-  def references: List[Uri] = getPropertyObjectResourceUris(KAIROS.reference).map(Uri.parse(_))
+  def references: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.reference)
   def refvars: List[String] = getPropertyObjectStrings(KAIROS.refvar)
-  def roles: List[Uri] = getPropertyObjectResourceUris(KAIROS.role).map(Uri.parse(_))
+  def roles: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.role)
   def schemas: List[Resource] = getPropertyObjectResources(KAIROS.schemas).filter(resource => resource.isURIResource)
   def steps: List[Resource] = getPropertyObjectResources(KAIROS.steps).filter(resource => resource.isURIResource)
-  def supers: List[Uri] = getPropertyObjectResourceUris(KAIROS.`super`).map(Uri.parse(_))
+  def supers: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.`super`)
   def sdfVersions: List[String] = getPropertyObjectStrings(KAIROS.sdfVersion)
 }

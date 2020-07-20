@@ -4,6 +4,7 @@ import java.io.StringReader
 
 import formats.sdf.SdfDocumentReader
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
+import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, OverlapsStepOrder}
 import org.scalatest.{Matchers, WordSpec}
 import stores.ExampleData
 
@@ -34,6 +35,17 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
 //        }
         schema.description should be("A coordinated effort by mulitple parties that results in a bombing attack")
         schema.name should be("Coordinated Bombing Attack")
+        for (order <- schema.order) {
+          order.stepIds should not be empty
+          for (stepId <- order.stepIds) {
+            schema.steps.exists(_.id == stepId) should be (true)
+          }
+        }
+        schema.order.exists(order => order.comments.isDefined && order.comments.get.nonEmpty) should be (true)
+        schema.order.exists(order => order.flags.isDefined && order.flags.get.nonEmpty) should be (true)
+        schema.order.exists(_.isInstanceOf[BeforeAfterStepOrder]) should be (true)
+        schema.order.exists(_.isInstanceOf[ContainerContainedStepOrder]) should be (true)
+        schema.order.exists(_.isInstanceOf[OverlapsStepOrder]) should be (true)
         schema.steps should not be empty
         for (step <- schema.steps) {
           step.name should not be empty

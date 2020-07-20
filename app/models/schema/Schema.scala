@@ -8,6 +8,7 @@ case class Schema(
   description: String,
   id: Uri,
   name: String,
+  order: List[StepOrder],
   references: Option[List[Uri]],
   sdfDocumentId: Uri,
   steps: List[Step],

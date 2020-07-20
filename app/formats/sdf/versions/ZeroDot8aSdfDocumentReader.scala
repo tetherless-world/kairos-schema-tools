@@ -1,11 +1,14 @@
 package formats.sdf.versions
 
+import java.io.StringWriter
+
 import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.{MalformedSchemaDataFormatDocumentException, SdfDocument}
 import formats.sdf.vocabulary.{KAIROS, KairosProperties, SCHEMA_ORG, SchemaOrgProperties}
 import io.github.tetherlessworld.scena.{Rdf, RdfProperties, RdfReader}
-import models.schema.{Duration, EntityType, Schema, Slot, Step}
+import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityType, OverlapsStepOrder, Schema, Slot, Step, StepOrder, StepOrderFlag}
 import org.apache.jena.rdf.model.Resource
+import org.apache.jena.riot.Lang
 
 import scala.collection.JavaConverters._
 
@@ -23,6 +26,32 @@ final class ZeroDot8aSdfDocumentReader(documentId: Uri, documentResource: Resour
       refvar = resource.refvars.headOption,
       role = resource.roles.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"slot ${id} missing required role property"))
     )
+  }
+
+  private implicit val stepOrderRdfReader: RdfReader[StepOrder] = (resource) => {
+    val after = resource.after
+    val before = resource.before
+    val comments = Option(resource.comments).filter(_.nonEmpty)
+    val contained = resource.contained
+    val container = resource.container
+    val flags = Option(resource.flags.map(flagString => StepOrderFlag.values.find(_.value == flagString).getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"unknown step order flag ${flagString}")))).filter(_.nonEmpty)
+    val overlaps = resource.overlaps
+
+    def resourceString: String = {
+      val resourceStringWriter = new StringWriter()
+      resource.listProperties().toModel.write(resourceStringWriter, Lang.TTL.getName)
+      resourceStringWriter.toString
+    }
+
+    if (after.nonEmpty && before.nonEmpty) {
+      BeforeAfterStepOrder(after = after, before = before, comments = comments, flags = flags)
+    } else if (contained.nonEmpty && container.size == 1) {
+      ContainerContainedStepOrder(comments = comments, container = container(0), contained = contained, flags = flags)
+    } else if (overlaps.nonEmpty) {
+      OverlapsStepOrder(comments = comments, flags = flags, overlaps = overlaps)
+    } else {
+      throw new MalformedSchemaDataFormatDocumentException(s"invalid step order:\n${resourceString}")
+    }
   }
 
   private implicit val stepRdfReader: RdfReader[Step] = (resource) => {
@@ -48,6 +77,7 @@ final class ZeroDot8aSdfDocumentReader(documentId: Uri, documentResource: Resour
       description = resource.descriptions.headOption.getOrElse(s"schema ${id} missing required description property"),
       id = id,
       name = resource.names.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"schema ${id} missing required name property")),
+      order = resource.order.map(resource => Rdf.read[StepOrder](resource)),
       references = Option(resource.references).filter(_.nonEmpty),
       sdfDocumentId = documentId,
       steps = resource.steps.map(resource => Rdf.read[Step](resource)),
