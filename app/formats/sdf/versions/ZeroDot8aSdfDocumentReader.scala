@@ -10,7 +10,9 @@ import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duratio
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.riot.Lang
 
-final class ZeroDot8aSdfDocumentReader(documentId: Uri, documentResource: Resource, documentSourceJson: String) {
+final class ZeroDot8aSdfDocumentReader(documentResource: Resource, documentSourceJson: String) {
+  private val documentId = Uri.parse(documentResource.getURI)
+
   implicit class SchemaResource(val resource: Resource) extends KairosProperties with SchemaOrgProperties with RdfProperties
 
   private implicit val entityRelationRelationRdfReader: RdfReader[EntityRelationRelation] = (resource) =>

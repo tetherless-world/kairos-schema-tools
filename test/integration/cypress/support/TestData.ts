@@ -10,7 +10,7 @@ export class TestData {
   static readonly schemas = [TestData.schema];
 
   static readonly sdfDocument: SdfDocument = {
-    id: "sha1:61b869c787d305e0dc30fb4999f1d54d247ca099",
+    id: "https://caci.com/kairos/Submissions/TA1/1234",
     name: TestData.schema.name,
     schemas: [TestData.schema],
   };
