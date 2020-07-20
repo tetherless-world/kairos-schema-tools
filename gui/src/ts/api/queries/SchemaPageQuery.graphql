@@ -29,6 +29,15 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
         }
         references
         sdfDocumentId
+        slots {
+            aka
+            comments
+            entityTypes
+            id
+            references
+            refvar
+            roleName
+        }
         steps {
             aka
             comments
@@ -46,6 +55,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
                 entityTypes
                 id
                 name
+                references
                 refvar
                 role
             }

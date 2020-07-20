@@ -4,31 +4,39 @@ import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import * as React from "react";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 
-export const StepParticipantTable: React.FunctionComponent<{
+export const StepParticipantDetailsTable: React.FunctionComponent<{
   participant: SchemaPageQuery_schemaById_steps_participants;
 }> = ({participant}) => (
   <Table>
     <TableBody>
+      <StringFieldTableRow name="Identifier" value={participant.id} />
       <StringFieldTableRow
         name="Name"
         value={participant.name}
         valueDataCy="step-participant-name"
       />
-      <StringFieldTableRow
-        name="Identifier"
-        value={participant.id}
-        valueDataCy="step-participant-id"
-      />
-      <StringFieldTableRow
-        name="Role"
-        value={participant.role}
-        valueDataCy="step-participant-role"
+      <StringListFieldTableRow
+        direction="column"
+        name="Also known as"
+        values={participant.aka}
       />
       <StringListFieldTableRow
+        direction="column"
+        name="Comments"
+        values={participant.comments}
+      />
+      <StringListFieldTableRow
+        direction="row"
         name="Entity types"
         values={participant.entityTypes}
-        valuesDataCy="step-participant-entity-types"
       />
+      <StringListFieldTableRow
+        direction="column"
+        name="References"
+        values={participant.references}
+      />
+      <StringFieldTableRow name="Refvar" value={participant.refvar} />
+      <StringFieldTableRow name="Role" value={participant.role} />
     </TableBody>
   </Table>
 );

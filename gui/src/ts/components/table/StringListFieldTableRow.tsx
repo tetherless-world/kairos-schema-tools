@@ -1,11 +1,12 @@
 import * as React from "react";
-import {List, ListItemText, TableCell, TableRow} from "@material-ui/core";
+import {Grid, List, ListItemText, TableCell, TableRow} from "@material-ui/core";
 
 export const StringListFieldTableRow: React.FunctionComponent<{
+  direction: "column" | "row";
   name: string;
   values: string[] | null;
   valuesDataCy?: string;
-}> = ({name, values, valuesDataCy}) => {
+}> = ({direction, name, values, valuesDataCy}) => {
   if (!values || values.length === 0) {
     return null;
   }
@@ -14,11 +15,21 @@ export const StringListFieldTableRow: React.FunctionComponent<{
     <TableRow>
       <TableCell>{name}</TableCell>
       <TableCell data-cy={valuesDataCy}>
-        <List>
-          {values.map((value) => (
-            <ListItemText key={value}>{value}</ListItemText>
-          ))}
-        </List>
+        {direction === "column" ? (
+          <List>
+            {values.map((value) => (
+              <ListItemText key={value}>{value}</ListItemText>
+            ))}
+          </List>
+        ) : (
+          <Grid container direction="row" spacing={4}>
+            {values.map((value) => (
+              <Grid item key={value}>
+                {value}
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </TableCell>
     </TableRow>
   );

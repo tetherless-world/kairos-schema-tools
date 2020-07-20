@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import {StepDetailsTable} from "components/schema/StepDetailsTable";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {StepParticipantTable} from "components/schema/StepParticipantTable";
+import {StepParticipantDetailsTable} from "components/schema/StepParticipantDetailsTable";
 import * as React from "react";
 
 export const StepCard: React.FunctionComponent<{
@@ -29,7 +29,7 @@ export const StepCard: React.FunctionComponent<{
             <Grid container direction="column" spacing={6}>
               {step.participants.map((participant) => (
                 <Grid item>
-                  <StepParticipantTable participant={participant} />
+                  <StepParticipantDetailsTable participant={participant} />
                 </Grid>
               ))}
             </Grid>

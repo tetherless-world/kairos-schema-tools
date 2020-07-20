@@ -19,11 +19,13 @@ export const StepDetailsTable: React.FunctionComponent<{
       valueDataCy="step-id"
     />
     <StringListFieldTableRow
+      direction="column"
       name="Also known as"
       values={step.aka}
       valuesDataCy="step-aka"
     />
     <StringListFieldTableRow
+      direction="column"
       name="Comments"
       values={step.comments}
       valuesDataCy="step-comments"
@@ -39,6 +41,7 @@ export const StepDetailsTable: React.FunctionComponent<{
       valueDataCy="step-min-duration"
     />
     <StringListFieldTableRow
+      direction="column"
       name="References"
       values={step.references}
       valuesDataCy="step-references"

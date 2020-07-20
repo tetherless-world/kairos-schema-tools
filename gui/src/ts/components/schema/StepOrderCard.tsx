@@ -22,10 +22,15 @@ export const StepOrderCard: React.FunctionComponent<{
           {stepOrder.__typename === "BeforeAfterStepOrder" ? (
             <React.Fragment>
               <StringListFieldTableRow
+                direction="column"
                 name="Before"
                 values={stepOrder.before}
               />
-              <StringListFieldTableRow name="After" values={stepOrder.after} />
+              <StringListFieldTableRow
+                direction="column"
+                name="After"
+                values={stepOrder.after}
+              />
             </React.Fragment>
           ) : null}
           {stepOrder.__typename === "ContainerContainedStepOrder" ? (
@@ -35,6 +40,7 @@ export const StepOrderCard: React.FunctionComponent<{
                 value={stepOrder.container}
               />
               <StringListFieldTableRow
+                direction="column"
                 name="Contained"
                 values={stepOrder.contained}
               />
@@ -42,15 +48,21 @@ export const StepOrderCard: React.FunctionComponent<{
           ) : null}
           {stepOrder.__typename === "OverlapsStepOrder" ? (
             <StringListFieldTableRow
+              direction="column"
               name="Overlaps"
               values={stepOrder.overlaps}
             />
           ) : null}
           <StringListFieldTableRow
+            direction="column"
             name="Comments"
             values={stepOrder.comments}
           />
-          <StringListFieldTableRow name="Flags" values={stepOrder.flags} />
+          <StringListFieldTableRow
+            direction="row"
+            name="Flags"
+            values={stepOrder.flags}
+          />
         </TableBody>
       </Table>
     </CardContent>

@@ -35,11 +35,13 @@ export const SchemaDetailsTable: React.FunctionComponent<{
         <TableCell>{schema.ta2 ? "TA2" : "TA1"}</TableCell>
       </TableRow>
       <StringListFieldTableRow
+        direction="column"
         name="Also known as"
         values={schema.aka}
         valuesDataCy="schema-aka"
       />
       <StringListFieldTableRow
+        direction="column"
         name="Comments"
         values={schema.comments}
         valuesDataCy="schema-comments"
@@ -50,6 +52,7 @@ export const SchemaDetailsTable: React.FunctionComponent<{
         valueDataCy="schema-description"
       />
       <StringListFieldTableRow
+        direction="column"
         name="References"
         values={schema.references}
         valuesDataCy="schema-references"

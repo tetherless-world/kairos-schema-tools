@@ -15,17 +15,22 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {SchemaDetailsTable} from "components/schema/SchemaDetailsTable";
-import {makeStyles} from "@material-ui/core/styles";
 import {NoRoute} from "components/error/NoRoute";
 import {StepCard} from "components/schema/StepCard";
 import {StepOrderCard} from "components/schema/StepOrderCard";
 import {EntityRelationCard} from "components/schema/EntityRelationCard";
+import {SlotCard} from "components/schema/SlotCard";
 
-const useStyles = makeStyles((theme) => ({
-  accordion: {
-    width: "100%",
-  },
-}));
+const SchemaPartAccordion: React.FunctionComponent<React.PropsWithChildren<{
+  title: string;
+}>> = ({children, title}) => (
+  <Accordion style={{width: "100%"}}>
+    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <Typography variant="h6">{title}</Typography>
+    </AccordionSummary>
+    <AccordionDetails>{children}</AccordionDetails>
+  </Accordion>
+);
 
 export const SchemaPage: React.FunctionComponent = () => {
   let {schemaId, sdfDocumentId} = useParams<{
@@ -44,8 +49,6 @@ export const SchemaPage: React.FunctionComponent = () => {
       withSdfDocument: !!sdfDocumentId,
     },
   });
-
-  const classes = useStyles();
 
   return (
     <Frame {...query}>
@@ -81,70 +84,61 @@ export const SchemaPage: React.FunctionComponent = () => {
           >
             <Grid container direction="column" spacing={4}>
               <Grid item>
-                <Accordion className={classes.accordion}>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography variant="h6">Details</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <SchemaDetailsTable schema={schema} />
-                  </AccordionDetails>
-                </Accordion>
+                <SchemaPartAccordion title="Details">
+                  <SchemaDetailsTable schema={schema} />
+                </SchemaPartAccordion>
               </Grid>
               <Grid item>
-                <Accordion className={classes.accordion}>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography variant="h6">Steps</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Grid container direction="column" spacing={4}>
-                      {schema.steps.map((step) => (
-                        <Grid item key={step.id}>
-                          <StepCard step={step} />
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </AccordionDetails>
-                </Accordion>
+                <SchemaPartAccordion title="Steps">
+                  <Grid container direction="column" spacing={4}>
+                    {schema.steps.map((step) => (
+                      <Grid item key={step.id}>
+                        <StepCard step={step} />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </SchemaPartAccordion>
               </Grid>
               <Grid item>
-                <Accordion className={classes.accordion}>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography variant="h6">Step order</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Grid container direction="column" spacing={4}>
-                      {schema.order.map((stepOrder, stepOrderIndex) => (
-                        <Grid item key={stepOrderIndex}>
-                          <StepOrderCard
-                            stepOrder={stepOrder}
-                            stepOrderIndex={stepOrderIndex}
+                <SchemaPartAccordion title="Step order">
+                  <Grid container direction="column" spacing={4}>
+                    {schema.order.map((stepOrder, stepOrderIndex) => (
+                      <Grid item key={stepOrderIndex}>
+                        <StepOrderCard
+                          stepOrder={stepOrder}
+                          stepOrderIndex={stepOrderIndex}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </SchemaPartAccordion>
+              </Grid>
+              <Grid item>
+                <SchemaPartAccordion title="Entity relations">
+                  <Grid container direction="column" spacing={4}>
+                    {schema.entityRelations.map(
+                      (entityRelation, entityRelationIndex) => (
+                        <Grid item key={entityRelationIndex}>
+                          <EntityRelationCard
+                            entityRelation={entityRelation}
+                            entityRelationIndex={entityRelationIndex}
                           />
                         </Grid>
-                      ))}
-                    </Grid>
-                  </AccordionDetails>
-                </Accordion>
+                      )
+                    )}
+                  </Grid>
+                </SchemaPartAccordion>
               </Grid>
               <Grid item>
-                <Accordion className={classes.accordion}>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography variant="h6">Entity relations</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Grid container direction="column" spacing={4}>
-                      {schema.entityRelations.map(
-                        (entityRelation, entityRelationIndex) => (
-                          <Grid item key={entityRelationIndex}>
-                            <EntityRelationCard
-                              entityRelation={entityRelation}
-                              entityRelationIndex={entityRelationIndex}
-                            />
-                          </Grid>
-                        )
-                      )}
-                    </Grid>
-                  </AccordionDetails>
-                </Accordion>
+                <SchemaPartAccordion title="Slots">
+                  <Grid container direction="column" spacing={4}>
+                    {schema.slots.map((slot) => (
+                      <Grid item key={slot.id}>
+                        <SlotCard slot={slot} />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </SchemaPartAccordion>
               </Grid>
             </Grid>
           </StandardLayout>

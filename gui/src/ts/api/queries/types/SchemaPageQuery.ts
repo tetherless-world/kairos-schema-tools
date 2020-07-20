@@ -46,6 +46,17 @@ export interface SchemaPageQuery_schemaById_order_OverlapsStepOrder {
 
 export type SchemaPageQuery_schemaById_order = SchemaPageQuery_schemaById_order_BeforeAfterStepOrder | SchemaPageQuery_schemaById_order_ContainerContainedStepOrder | SchemaPageQuery_schemaById_order_OverlapsStepOrder;
 
+export interface SchemaPageQuery_schemaById_slots {
+  __typename: "Slot";
+  aka: string[] | null;
+  comments: string[] | null;
+  entityTypes: EntityType[] | null;
+  id: string;
+  references: string[] | null;
+  refvar: string | null;
+  roleName: string;
+}
+
 export interface SchemaPageQuery_schemaById_steps_maxDuration {
   __typename: "Duration";
   string: string;
@@ -57,12 +68,13 @@ export interface SchemaPageQuery_schemaById_steps_minDuration {
 }
 
 export interface SchemaPageQuery_schemaById_steps_participants {
-  __typename: "Slot";
+  __typename: "StepParticipant";
   aka: string[] | null;
   comments: string[] | null;
   entityTypes: EntityType[] | null;
   id: string;
   name: string;
+  references: string[] | null;
   refvar: string | null;
   role: string;
 }
@@ -90,6 +102,7 @@ export interface SchemaPageQuery_schemaById {
   order: SchemaPageQuery_schemaById_order[];
   references: string[] | null;
   sdfDocumentId: string;
+  slots: SchemaPageQuery_schemaById_slots[];
   steps: SchemaPageQuery_schemaById_steps[];
   super: string | null;
   ta2: boolean;
