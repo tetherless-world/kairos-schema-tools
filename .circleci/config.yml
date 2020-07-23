@@ -20,6 +20,10 @@ jobs:
           command: |
             sleep 30
             docker exec kairos-schema-tools-app curl --retry 10 --retry-connrefused -s http://localhost
+      - run:
+          name: Push to DockerHub
+          command: |
+            docker login -u $DOCKER_ID -p $DOCKER_PASSWORD && docker-compose push app
   scala:
     docker:
       - image: circleci/openjdk:11
