@@ -23,6 +23,14 @@ import {EntityRelationCard} from "components/schema/EntityRelationCard";
 import {SlotCard} from "components/schema/SlotCard";
 import {Hrefs} from "Hrefs";
 import FolderIcon from "@material-ui/icons/Folder";
+import {makeStyles} from "@material-ui/core/styles";
+import WorkIcon from "@material-ui/icons/Work";
+
+const useStyles = makeStyles((theme) => ({
+  nestedListItem: {
+    paddingLeft: theme.spacing(12),
+  },
+}));
 
 export const SchemaPage: React.FunctionComponent = () => {
   let {schemaId, sdfDocumentId} = useParams<{
@@ -47,6 +55,8 @@ export const SchemaPage: React.FunctionComponent = () => {
         .sdfDocument({id: sdfDocumentId})
         .schemas.schema({id: schemaId})
     : Hrefs.schemas.schema({id: schemaId});
+
+  const classes = useStyles();
 
   return (
     <Frame {...query}>
@@ -88,7 +98,7 @@ export const SchemaPage: React.FunctionComponent = () => {
           children: (
             <Grid container direction="column" spacing={4}>
               {schema.steps.map((step) => (
-                <Grid item key={step.id}>
+                <Grid item id={hrefs.stepId(step)} key={step.id}>
                   <StepCard step={step} />
                 </Grid>
               ))}
@@ -104,8 +114,10 @@ export const SchemaPage: React.FunctionComponent = () => {
               {schema.order.map((stepOrder, stepOrderIndex) => (
                 <Grid item key={stepOrderIndex}>
                   <StepOrderCard
+                    hrefs={hrefs}
                     stepOrder={stepOrder}
                     stepOrderIndex={stepOrderIndex}
+                    steps={schema.steps}
                   />
                 </Grid>
               ))}
@@ -138,7 +150,7 @@ export const SchemaPage: React.FunctionComponent = () => {
           children: (
             <Grid container direction="column" spacing={4}>
               {schema.slots.map((slot) => (
-                <Grid item key={slot.id}>
+                <Grid item id={hrefs.slotId(slot)} key={slot.id}>
                   <SlotCard slot={slot} />
                 </Grid>
               ))}
@@ -158,19 +170,59 @@ export const SchemaPage: React.FunctionComponent = () => {
           >
             <Grid container direction="column" spacing={8}>
               <Grid item>
-                <p>Jump to:</p>
                 <List>
                   {schemaParts.map((schemaPart) => (
-                    <ListItem key={schemaPart.id}>
-                      <ListItemIcon>
-                        <FolderIcon />
-                      </ListItemIcon>
-                      <ListItemText>
-                        <Link href={hrefs.home + "#" + schemaPart.id}>
-                          {schemaPart.title}
-                        </Link>
-                      </ListItemText>
-                    </ListItem>
+                    <React.Fragment key={schemaPart.id}>
+                      <ListItem>
+                        <ListItemIcon>
+                          <FolderIcon />
+                        </ListItemIcon>
+                        <ListItemText>
+                          <Link href={hrefs.home + "#" + schemaPart.id}>
+                            {schemaPart.title}
+                          </Link>
+                        </ListItemText>
+                      </ListItem>
+                      {schemaPart.id === hrefs.SLOTS_ID ||
+                      schemaPart.id === hrefs.STEPS_ID ? (
+                        <List component="div" disablePadding>
+                          {schemaPart.id === hrefs.SLOTS_ID
+                            ? schema.slots.map((slot) => (
+                                <ListItem
+                                  className={classes.nestedListItem}
+                                  key={slot.id}
+                                >
+                                  <ListItemIcon>
+                                    <WorkIcon />
+                                  </ListItemIcon>
+                                  <ListItemText>
+                                    <Link href={hrefs.slot(slot)}>
+                                      Slot: {slot.roleName}
+                                    </Link>
+                                  </ListItemText>
+                                </ListItem>
+                              ))
+                            : null}
+                          {schemaPart.id === hrefs.STEPS_ID
+                            ? schema.steps.map((step) => (
+                                <ListItem
+                                  className={classes.nestedListItem}
+                                  key={step.id}
+                                >
+                                  <ListItemIcon>
+                                    <WorkIcon />
+                                  </ListItemIcon>
+                                  <ListItemText>
+                                    <Link href={hrefs.step(step)}>
+                                      Step: {step.name}
+                                    </Link>
+                                  </ListItemText>
+                                </ListItem>
+                              ))
+                            : null}
+                        </List>
+                      ) : null}
+                    </React.Fragment>
                   ))}
                 </List>
               </Grid>

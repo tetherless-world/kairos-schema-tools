@@ -7,7 +7,7 @@ export const SlotCard: React.FunctionComponent<{
   slot: SchemaPageQuery_schemaById_slots;
 }> = ({slot}) => (
   <Card>
-    <CardHeader title={slot.id} />
+    <CardHeader title={"Slot: " + slot.id} />
     <CardContent>
       <SlotDetailsTable slot={slot} />
     </CardContent>
