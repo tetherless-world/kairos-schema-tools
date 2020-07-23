@@ -11,9 +11,6 @@ trait Store {
   def getSdfDocumentById(id: Uri): Option[SdfDocument]
   def getSdfDocuments: List[SdfDocument]
 
-  def putSchema(schema: Schema)
-  def putSchemas(schemas: List[Schema])
-
   def putSdfDocument(sdfDocument: SdfDocument)
   def putSdfDocuments(sdfDocuments: List[SdfDocument])
 }
