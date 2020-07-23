@@ -1,5 +1,29 @@
 version: 2.1
 jobs:
+  app-docker:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build
+          command: |
+            docker-compose build
+      - run:
+          name: Run
+          background: true
+          command: |
+            docker-compose up --abort-on-container-exit
+      - run:
+          name: Wait for the server to start
+          command: |
+            sleep 30
+            docker exec kairos-schema-tools-app curl --retry 10 --retry-connrefused -s http://localhost
+      - run:
+          name: Push to DockerHub
+          command: |
+            docker login -u $DOCKER_ID -p $DOCKER_PASSWORD && docker-compose push app
   scala:
     docker:
       - image: circleci/openjdk:11
@@ -91,6 +115,12 @@ workflows:
             bin/kairos-schema-tools-app -Dtest
           wait-on: "http-get://localhost:9000/index.html"
           working_directory: test/integration
+      - app-docker:
+#          filters:
+#            branches:
+#              only: master
+          post-steps:
+            - slack/status
       - scala:
           requires:
             - ts
