@@ -17,7 +17,7 @@ export const StepCard: React.FunctionComponent<{
   step: SchemaPageQuery_schemaById_steps;
 }> = ({step}) => (
   <Card>
-    <CardHeader title={step.name} />
+    <CardHeader title={"Step: " + step.name} />
     <CardContent>
       <StepDetailsTable step={step} />
       {step.participants && step.participants.length > 0 ? (

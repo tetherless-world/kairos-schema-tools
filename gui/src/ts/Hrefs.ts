@@ -9,7 +9,53 @@ class SubHrefs {
   }
 }
 
-class SchemaHrefs extends SubHrefs {}
+export class SchemaHrefs extends SubHrefs {
+  readonly DETAILS_ID = "details";
+  readonly ENTITY_RELATIONS_ID = "entity-relations";
+  readonly SLOTS_ID = "slots";
+  readonly STEPS_ID = "steps";
+  readonly STEP_ORDER_ID = "step-order";
+
+  get details() {
+    return `${this.home}#${this.DETAILS_ID}`;
+  }
+
+  get entityRelations() {
+    return `${this.home}#${this.ENTITY_RELATIONS_ID}`;
+  }
+
+  get slots() {
+    return `${this.home}#${this.SLOTS_ID}`;
+  }
+
+  slot(slot: {id: string}) {
+    return `${this.home}#${this.slotId(slot)}`;
+  }
+
+  slotId(slot: {id: string}) {
+    return `slot-${this.sanitizeId(slot.id)}`;
+  }
+
+  private sanitizeId(id: string) {
+    return id.replace(/^[^a-z]+|[^\w:.-]+/gi, "");
+  }
+
+  step(step: {id: string}) {
+    return `${this.home}#${this.stepId(step)}`;
+  }
+
+  stepId(step: {id: string}) {
+    return `step-${this.sanitizeId(step.id)}`;
+  }
+
+  get stepOrder() {
+    return `${this.home}#${this.STEP_ORDER_ID}`;
+  }
+
+  get steps() {
+    return `${this.home}#${this.STEPS_ID}`;
+  }
+}
 
 class SchemasHrefs extends SubHrefs {
   schema(kwds: {id: string; idEncoded?: boolean}) {

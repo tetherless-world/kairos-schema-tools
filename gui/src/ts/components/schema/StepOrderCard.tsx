@@ -1,19 +1,58 @@
-import {SchemaPageQuery_schemaById_order} from "api/queries/types/SchemaPageQuery";
+import {
+  SchemaPageQuery_schemaById_order,
+  SchemaPageQuery_schemaById_steps,
+} from "api/queries/types/SchemaPageQuery";
 import {
   Card,
   CardContent,
   CardHeader,
+  Link,
+  List,
+  ListItemText,
   Table,
   TableBody,
+  TableCell,
+  TableRow,
 } from "@material-ui/core";
 import * as React from "react";
-import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
+import {SchemaHrefs} from "Hrefs";
+
+export const StepListTableRow: React.FunctionComponent<{
+  hrefs: SchemaHrefs;
+  name: string;
+  steps: SchemaPageQuery_schemaById_steps[];
+  values: string[] | null;
+}> = ({hrefs, name, steps, values}) => {
+  if (!values || values.length === 0) {
+    return null;
+  }
+
+  return (
+    <TableRow>
+      <TableCell>{name}</TableCell>
+      <TableCell>
+        <List>
+          {values.map((value) => (
+            <ListItemText key={value}>
+              <Link href={hrefs.step({id: value})}>
+                Step:&nbsp;
+                {steps.find((step) => step.id === value)?.name ?? value}
+              </Link>
+            </ListItemText>
+          ))}
+        </List>
+      </TableCell>
+    </TableRow>
+  );
+};
 
 export const StepOrderCard: React.FunctionComponent<{
+  hrefs: SchemaHrefs;
   stepOrder: SchemaPageQuery_schemaById_order;
   stepOrderIndex: number;
-}> = ({stepOrder, stepOrderIndex}) => (
+  steps: SchemaPageQuery_schemaById_steps[];
+}> = ({hrefs, stepOrder, stepOrderIndex, steps}) => (
   <Card>
     <CardHeader title={`Step order ${stepOrderIndex}`} />
     <CardContent>
@@ -21,35 +60,41 @@ export const StepOrderCard: React.FunctionComponent<{
         <TableBody>
           {stepOrder.__typename === "BeforeAfterStepOrder" ? (
             <React.Fragment>
-              <StringListFieldTableRow
-                direction="column"
+              <StepListTableRow
+                hrefs={hrefs}
                 name="Before"
+                steps={steps}
                 values={stepOrder.before}
               />
-              <StringListFieldTableRow
-                direction="column"
+              <StepListTableRow
+                hrefs={hrefs}
                 name="After"
+                steps={steps}
                 values={stepOrder.after}
               />
             </React.Fragment>
           ) : null}
           {stepOrder.__typename === "ContainerContainedStepOrder" ? (
             <React.Fragment>
-              <StringFieldTableRow
+              <StepListTableRow
+                hrefs={hrefs}
                 name="Container"
-                value={stepOrder.container}
+                steps={steps}
+                values={[stepOrder.container]}
               />
-              <StringListFieldTableRow
-                direction="column"
+              <StepListTableRow
+                hrefs={hrefs}
                 name="Contained"
+                steps={steps}
                 values={stepOrder.contained}
               />
             </React.Fragment>
           ) : null}
           {stepOrder.__typename === "OverlapsStepOrder" ? (
-            <StringListFieldTableRow
-              direction="column"
+            <StepListTableRow
+              hrefs={hrefs}
               name="Overlaps"
+              steps={steps}
               values={stepOrder.overlaps}
             />
           ) : null}
