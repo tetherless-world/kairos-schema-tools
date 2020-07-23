@@ -11,9 +11,9 @@ import {
   Link,
   List,
   ListItem,
-  Typography,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from "@material-ui/core";
 import {SchemaDetailsTable} from "components/schema/SchemaDetailsTable";
 import {NoRoute} from "components/error/NoRoute";
@@ -21,7 +21,7 @@ import {StepCard} from "components/schema/StepCard";
 import {StepOrderCard} from "components/schema/StepOrderCard";
 import {EntityRelationCard} from "components/schema/EntityRelationCard";
 import {SlotCard} from "components/schema/SlotCard";
-import {Hrefs, SchemaHrefs} from "Hrefs";
+import {Hrefs} from "Hrefs";
 import FolderIcon from "@material-ui/icons/Folder";
 
 export const SchemaPage: React.FunctionComponent = () => {
