@@ -1,0 +1,12 @@
+version: "3.5"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kairos-schema-tools-app
+    ports:
+      - 127.0.0.1:8080:80
+    restart: unless-stopped
+    volumes:
+      - ./conf/data/examples:/data:ro
