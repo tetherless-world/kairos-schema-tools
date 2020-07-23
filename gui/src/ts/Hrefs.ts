@@ -9,7 +9,33 @@ class SubHrefs {
   }
 }
 
-class SchemaHrefs extends SubHrefs {}
+class SchemaHrefs extends SubHrefs {
+  readonly DETAILS_ID = "details";
+  readonly ENTITY_RELATIONS_ID = "entity-relations";
+  readonly SLOTS_ID = "slots";
+  readonly STEPS_ID = "steps";
+  readonly STEP_ORDER_ID = "step-order";
+
+  get details() {
+    return `${this.home}#${this.DETAILS_ID}`;
+  }
+
+  get entityRelations() {
+    return `${this.home}#${this.ENTITY_RELATIONS_ID}`;
+  }
+
+  get slots() {
+    return `${this.home}#${this.SLOTS_ID}`;
+  }
+
+  get stepOrder() {
+    return `${this.home}#${this.STEP_ORDER_ID}`;
+  }
+
+  get steps() {
+    return `${this.home}#${this.STEPS_ID}`;
+  }
+}
 
 class SchemasHrefs extends SubHrefs {
   schema(kwds: {id: string; idEncoded?: boolean}) {
