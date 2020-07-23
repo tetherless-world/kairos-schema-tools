@@ -136,6 +136,8 @@ export const SchemaPage: React.FunctionComponent = () => {
                     <EntityRelationCard
                       entityRelation={entityRelation}
                       entityRelationIndex={entityRelationIndex}
+                      hrefs={hrefs}
+                      slots={schema.slots}
                     />
                   </Grid>
                 )
