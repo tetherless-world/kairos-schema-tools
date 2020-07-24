@@ -4,7 +4,7 @@ import org.apache.jena.rdf.model.ResourceFactory
 
 object KAIROS {
   val PREFIX = "kairos"
-  val URI = "https://kairos-sdf.s3.amazonaws.com/context/kairos#"
+  val URI = "https://kairos-sdf.s3.amazonaws.com/context/kairos/"
 
   // Properties
   val after = ResourceFactory.createProperty(URI + "after")

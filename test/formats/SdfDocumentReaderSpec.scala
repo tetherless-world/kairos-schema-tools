@@ -86,7 +86,7 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
         schema.steps.exists(_.minDuration.isDefined) should be (true)
         schema.`super` should not be None
         schema.ta2 should be (false)
-        schema.version should equal("caci-07.02.2020")
+        schema.version should equal("caci-07.20.2020")
       }
     }
   }
