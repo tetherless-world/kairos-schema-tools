@@ -5,6 +5,7 @@ import org.apache.jena.datatypes.xsd.XSDDuration
 import org.apache.jena.rdf.model.Resource
 
 trait KairosProperties extends PropertyGetters {
+  def achieves: List[String] = getPropertyObjectStrings(KAIROS.requires)
   def after: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.after)
   def aka: List[String] = getPropertyObjectStrings(KAIROS.aka)
   def before: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.before)
@@ -24,6 +25,7 @@ trait KairosProperties extends PropertyGetters {
   def relations: List[Resource] = getPropertyObjectResources(KAIROS.relations)
   def relationPredicate: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.relationPredicate)
   def relationSubject: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.relationSubject)
+  def requires: List[String] = getPropertyObjectStrings(KAIROS.requires)
   def refvar: List[String] = getPropertyObjectStrings(KAIROS.refvar)
   def role: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.role)
   def roleName: List[String] = getPropertyObjectStrings(KAIROS.roleName)

@@ -85,6 +85,7 @@ final class ZeroDot8bSdfDocumentReader(documentResource: Resource, documentSourc
   private implicit val stepRdfReader: RdfReader[Step] = (resource) => {
     val id = Uri.parse(resource.getURI)
     Step(
+      achieves = Option(resource.achieves).filter(_.nonEmpty),
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
       maxDuration = resource.maxDuration.map(Duration(_)).headOption,
@@ -93,6 +94,7 @@ final class ZeroDot8bSdfDocumentReader(documentResource: Resource, documentSourc
       name = resource.name.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"step ${id} missing required name property")),
       participants = Option(resource.participants.map(Rdf.read[StepParticipant](_))).filter(_.nonEmpty),
       references = Option(resource.reference).filter(_.nonEmpty),
+      requires = Option(resource.requires).filter(_.nonEmpty),
       `type` = Uri.parse(resource.types.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"step ${id} missing type")).getURI)
     )
   }
