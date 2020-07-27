@@ -9,7 +9,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
   const [queryText] = useQueryParam<string>("query");
 
   const query = useQuery<SdfDocumentPageQuery>(SdfDocumentPageQueryDocument, {
-    variables: {text: queryText},
+    variables: {limit: 20, offset: 0, text: queryText},
   });
 
   return (

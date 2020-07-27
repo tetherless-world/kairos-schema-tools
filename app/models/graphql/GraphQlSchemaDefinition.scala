@@ -51,7 +51,26 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
       Field("name", StringType, resolve = _.value.name)
     )
   )
-  implicit val SearchDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SearchDocument]()
+  implicit val SearchDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SearchDocument](
+    AddFields(
+        Field("schema", OptionType(SchemaObjectType), resolve = ctx => ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_))),
+        Field("slot", OptionType(SlotObjectType), resolve = ctx => {
+          if (ctx.value.slotId.isDefined) {
+            ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_)).flatMap(_.slots.find(_.id == ctx.value.slotId.get))
+          } else {
+            None
+          }
+        }),
+        Field("step", OptionType(StepObjectType), resolve = ctx => {
+          if (ctx.value.stepId.isDefined) {
+            ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_)).flatMap(_.steps.find(_.id == ctx.value.stepId.get))
+          } else {
+            None
+          }
+        }),
+        Field("sdfDocument", OptionType(SdfDocumentObjectType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.sdfDocumentId)),
+    )
+  )
   implicit val SearchResultsObjectType = deriveObjectType[GraphQlSchemaContext, SearchResults]()
 
   // Root query

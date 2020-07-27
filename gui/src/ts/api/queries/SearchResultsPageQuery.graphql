@@ -1,0 +1,23 @@
+query SearchResultsPageQuery($limit: Int!, $offset: Int!, $query: String!) {
+    search(limit: $limit, offset: $offset, query: $query) {
+        documents {
+            schema {
+                name
+            }
+            schemaId
+            sdfDocument {
+                name
+            }
+            sdfDocumentId
+            slot {
+                roleName
+            }
+            slotId
+            step {
+                name
+            }
+            stepId
+        }
+        total
+    }
+}
