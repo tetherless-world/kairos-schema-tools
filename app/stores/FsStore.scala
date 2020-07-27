@@ -8,11 +8,14 @@ import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.{SdfDocument, SdfDocumentReader}
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import models.schema.Schema
+import models.search.{SearchDocument, SearchResults}
 
 import scala.collection.JavaConverters._
 import scala.io.Source
 
 final class FsStore(val rootDirectoryPath: Path) extends Store with WithResource {
+  private val searchEngine = new SearchEngine
+
   final override def getSchemaById(id: Uri): Option[Schema] =
     getSchemas.find(_.id == id)
 
@@ -45,8 +48,12 @@ final class FsStore(val rootDirectoryPath: Path) extends Store with WithResource
     withResource(new FileWriter(filePath.toFile)) { fileWriter =>
       fileWriter.write(sdfDocument.sourceJson)
     }
+    searchEngine.putSdfDocument(sdfDocument)
   }
 
   final override def putSdfDocuments(sdfDocuments: List[SdfDocument]): Unit =
     sdfDocuments.foreach(putSdfDocument(_))
+
+  final override def search(limit: Int, offset: Int, query: String): SearchResults =
+    searchEngine.search(limit, offset, query)
 }

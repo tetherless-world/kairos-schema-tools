@@ -45,13 +45,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   )
   implicit val SdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocument](
     AddFields(
-      Field("name", StringType, resolve = ctx => {
-        if (!ctx.value.schemas.isEmpty) {
-          ctx.value.schemas(0).name
-        } else {
-          ctx.value.id.toString
-        }
-      })
+      Field("name", StringType, resolve = _.value.name)
     )
   )
 
