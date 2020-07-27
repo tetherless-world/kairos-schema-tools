@@ -52,28 +52,43 @@ export const Navbar: React.FunctionComponent<{
     }
   }
 
-  const topLevelPaths: {
-    readonly path: string;
+  const navLinks: {
+    readonly dataCy: string;
+    readonly href: string;
     readonly label: string;
   }[] = [
-    {path: Hrefs.schemas.toString(), label: "Schemas"},
-    {path: Hrefs.sdfDocuments.toString(), label: "SDF Documents"},
+    {
+      dataCy: "schemas-nav-link",
+      href: Hrefs.schemas.toString(),
+      label: "Schemas",
+    },
+    {
+      dataCy: "sdf-documents-nav-link",
+      href: Hrefs.sdfDocuments.toString(),
+      label: "SDF Documents",
+    },
   ];
 
   return (
-    <AppBar className={classes.navbar} position="static" data-cy="naVbar">
+    <AppBar className={classes.navbar} position="static" data-cy="navbar">
       <Toolbar>
-        <Button component={Link} to={Hrefs.home} className={classes.brand}>
+        <Button
+          component={Link}
+          to={Hrefs.home}
+          className={classes.brand}
+          data-cy="brand-link"
+        >
           <Typography variant="h5">KAIROS schema tools</Typography>
         </Button>
-        {topLevelPaths.map((tlp) => (
+        {navLinks.map((navLink) => (
           <Button
-            key={tlp.path}
+            data-cy={navLink.dataCy}
+            key={navLink.href}
             component={Link}
-            to={tlp.path}
+            to={navLink.href}
             className={classes.navButton}
           >
-            {tlp.label}
+            {navLink.label}
           </Button>
         ))}
         <div className={classes.searchFormSpacer} />
