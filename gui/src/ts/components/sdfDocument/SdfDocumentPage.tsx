@@ -8,6 +8,8 @@ import {StandardLayout} from "components/layout/StandardLayout";
 import {SdfDocumentPageQuery} from "api/queries/types/SdfDocumentPageQuery";
 import * as _ from "lodash";
 import {NoRoute} from "components/error/NoRoute";
+import {Grid} from "@material-ui/core";
+import {SdfDocumentEditor} from "components/sdfDocument/SdfDocumentEditor";
 
 export const SdfDocumentPage: React.FunctionComponent = () => {
   const {sdfDocumentId} = _.mapValues(
@@ -32,10 +34,17 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
         return (
           <StandardLayout
             breadcrumbs={{sdfDocument}}
+            rowItemStyle={{flexGrow: 1}}
             title="Schema Data Format Document"
           >
-            <div data-cy="sdf-document-card"></div>
-            <SdfDocumentCard {...sdfDocument} />
+            <Grid container direction="column" spacing={4}>
+              <Grid item data-cy="sdf-document-card">
+                <SdfDocumentCard {...sdfDocument} />
+              </Grid>
+              <Grid item>
+                <SdfDocumentEditor sourceJson={sdfDocument.sourceJson} />
+              </Grid>
+            </Grid>
           </StandardLayout>
         );
       }}
