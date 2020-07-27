@@ -30,6 +30,16 @@ export const StepDetailsTable: React.FunctionComponent<{
       values={step.comments}
       valuesDataCy="step-comments"
     />
+    <StringListFieldTableRow
+      direction="column"
+      name="Achieves"
+      values={step.achieves}
+    />
+    <StringListFieldTableRow
+      direction="column"
+      name="Requires"
+      values={step.requires}
+    />
     <StringFieldTableRow
       name="Max duration"
       value={step.maxDuration ? step.maxDuration.string : null}

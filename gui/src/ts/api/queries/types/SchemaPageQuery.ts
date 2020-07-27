@@ -81,6 +81,7 @@ export interface SchemaPageQuery_schemaById_steps_participants {
 
 export interface SchemaPageQuery_schemaById_steps {
   __typename: "Step";
+  achieves: string[] | null;
   aka: string[] | null;
   comments: string[] | null;
   id: string;
@@ -89,6 +90,7 @@ export interface SchemaPageQuery_schemaById_steps {
   name: string;
   participants: SchemaPageQuery_schemaById_steps_participants[] | null;
   references: string[] | null;
+  requires: string[] | null;
   type: string;
 }
 

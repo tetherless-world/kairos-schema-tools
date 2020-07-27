@@ -39,6 +39,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
             roleName
         }
         steps {
+            achieves
             aka
             comments
             id
@@ -60,6 +61,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
                 role
             }
             references
+            requires
             type
         }
         super

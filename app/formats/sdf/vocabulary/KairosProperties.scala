@@ -5,7 +5,7 @@ import org.apache.jena.datatypes.xsd.XSDDuration
 import org.apache.jena.rdf.model.Resource
 
 trait KairosProperties extends PropertyGetters {
-  def achieves: List[String] = getPropertyObjectStrings(KAIROS.requires)
+  def achieves: List[String] = getPropertyObjectStrings(KAIROS.achieves)
   def after: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.after)
   def aka: List[String] = getPropertyObjectStrings(KAIROS.aka)
   def before: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.before)
