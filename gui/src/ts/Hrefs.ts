@@ -1,3 +1,5 @@
+import * as qs from "qs";
+
 const encodeId = (kwds: {id: string; idEncoded?: boolean}) =>
   kwds.idEncoded ? kwds.id : encodeURIComponent(kwds.id);
 
@@ -81,4 +83,8 @@ export class Hrefs {
   static readonly home = "/";
   static readonly schemas = new SchemasHrefs("/schema/");
   static readonly sdfDocuments = new SdfDocumentsHrefs("/sdfdocument/");
+
+  static search(kwds?: {query: string}) {
+    return Hrefs.home + "search" + qs.stringify(kwds, {addQueryPrefix: true});
+  }
 }

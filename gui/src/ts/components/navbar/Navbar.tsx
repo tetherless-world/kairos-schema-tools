@@ -1,4 +1,5 @@
 import * as React from "react";
+import {Redirect} from "react-router-dom";
 
 import {
   Typography,
@@ -11,6 +12,7 @@ import {
 
 import {Hrefs} from "Hrefs";
 import {Link} from "react-router-dom";
+import {NavbarSearchForm} from "components/navbar/NavbarSearchForm";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -23,16 +25,36 @@ const useStyles = makeStyles((theme) =>
     },
     navButton: {
       color: theme.palette.primary.contrastText,
-    }
+    },
+    searchFormSpacer: {
+      marginLeft: theme.spacing(4),
+    },
   })
 );
 
-export const Navbar: React.FunctionComponent<{}> = () => {
+export const Navbar: React.FunctionComponent<{
+  onSearch?: (text: string) => void;
+}> = ({onSearch: onSearchUserDefined}) => {
   const classes = useStyles();
 
+  const [redirectToSearchText, setRedirectToSearchText] = React.useState<
+    string | null
+  >(null);
+
+  let onSearch: (text: string) => void;
+  if (onSearchUserDefined) {
+    onSearch = onSearchUserDefined;
+  } else {
+    onSearch = setRedirectToSearchText;
+
+    if (redirectToSearchText) {
+      return <Redirect to={Hrefs.search({query: redirectToSearchText})} />;
+    }
+  }
+
   const topLevelPaths: {
-      readonly path: string;
-      readonly label: string;
+    readonly path: string;
+    readonly label: string;
   }[] = [
     {path: Hrefs.schemas.toString(), label: "Schemas"},
     {path: Hrefs.sdfDocuments.toString(), label: "SDF Documents"},
@@ -54,6 +76,8 @@ export const Navbar: React.FunctionComponent<{}> = () => {
             {tlp.label}
           </Button>
         ))}
+        <div className={classes.searchFormSpacer} />
+        <NavbarSearchForm onSearch={onSearch} />
       </Toolbar>
     </AppBar>
   );
