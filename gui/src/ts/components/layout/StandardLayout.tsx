@@ -8,7 +8,7 @@ export const StandardLayout: React.FunctionComponent<React.PropsWithChildren<{
   breadcrumbs?: BreadcrumbsProps;
   flexGrow?: number;
   rowItemStyle?: CSSProperties;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   title: React.ReactNode;
 }>> = ({breadcrumbs, children, rowItemStyle, subtitle, title}) => (
   <Grid container data-cy="standard-layout" direction="column" spacing={4}>
