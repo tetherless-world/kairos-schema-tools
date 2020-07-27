@@ -80,6 +80,26 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
            |{"data":{"sdfDocumentById":{"id":"${expected.id}"}}}
            |""".stripMargin))
     }
+
+    "search" in {
+      val query =
+        graphql"""
+          query SearchQuery($$query: String!) {
+            search(limit: 10, offset: 0, query: $$query) {
+              documents {
+                label
+                sdfDocumentId
+                type
+              }
+              total
+            }
+          }
+          """
+      val sdfDocument = ExampleData.sdfDocuments(0)
+      val result = Json.stringify(executeQuery(query, vars = Json.obj("query" -> sdfDocument.name)))
+      result must include(sdfDocument.name)
+      result must include(sdfDocument.id.toString)
+    }
   }
 
   def executeQuery(query: Document, vars: JsObject = Json.obj()) = {
