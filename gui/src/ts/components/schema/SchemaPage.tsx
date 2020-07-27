@@ -4,7 +4,6 @@ import {useQuery} from "@apollo/react-hooks";
 import * as SchemaPageQueryDocument from "api/queries/SchemaPageQuery.graphql";
 import {Frame} from "components/frame/Frame";
 import {SchemaPageQuery} from "api/queries/types/SchemaPageQuery";
-import {StandardLayoutBreadcrumbs} from "components/layout/StandardLayoutBreadcrumbs";
 import {StandardLayout} from "components/layout/StandardLayout";
 import {
   Grid,
@@ -25,6 +24,7 @@ import {Hrefs} from "Hrefs";
 import FolderIcon from "@material-ui/icons/Folder";
 import {makeStyles} from "@material-ui/core/styles";
 import WorkIcon from "@material-ui/icons/Work";
+import {BreadcrumbsProps} from "components/breadcrumbs/BreadcrumbsProps";
 
 const useStyles = makeStyles((theme) => ({
   nestedListItem: {
@@ -65,7 +65,7 @@ export const SchemaPage: React.FunctionComponent = () => {
           return <NoRoute />;
         }
 
-        let breadcrumbs: StandardLayoutBreadcrumbs;
+        let breadcrumbs: BreadcrumbsProps;
         const schema = Object.assign({}, data.schemaById!, {id: schemaId});
         if (sdfDocumentId) {
           const sdfDocument = data.sdfDocumentById;

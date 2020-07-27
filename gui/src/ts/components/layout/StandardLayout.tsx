@@ -1,73 +1,24 @@
-import {Breadcrumbs, Grid, Link, Typography} from "@material-ui/core";
+import {Grid, Typography} from "@material-ui/core";
 import * as React from "react";
-import {Hrefs} from "Hrefs";
-import {StandardLayoutBreadcrumbs} from "components/layout/StandardLayoutBreadcrumbs";
+import {BreadcrumbsProps} from "components/breadcrumbs/BreadcrumbsProps";
+import {Breadcrumbs} from "components/breadcrumbs/Breadcrumbs";
+import {CSSProperties} from "@material-ui/core/styles/withStyles";
 
 export const StandardLayout: React.FunctionComponent<React.PropsWithChildren<{
-  breadcrumbs?: StandardLayoutBreadcrumbs;
+  breadcrumbs?: BreadcrumbsProps;
+  flexGrow?: number;
+  rowItemStyle?: CSSProperties;
   subtitle?: React.ReactNode;
   title: React.ReactNode;
-}>> = ({breadcrumbs, children, subtitle, title}) => (
+}>> = ({breadcrumbs, children, rowItemStyle, subtitle, title}) => (
   <Grid container data-cy="standard-layout" direction="column" spacing={4}>
     {breadcrumbs ? (
       <Grid item>
-        <Breadcrumbs aria-label="breadcrumb" data-cy="breadcrumbs">
-          {breadcrumbs.sdfDocument ? (
-            <Link
-              color="inherit"
-              data-cy="sdf-documents-breadcrumb"
-              href={Hrefs.sdfDocuments.toString()}
-            >
-              Schema data format documents
-            </Link>
-          ) : null}
-          {breadcrumbs.sdfDocument ? (
-            <Link
-              color="textPrimary"
-              data-cy="sdf-document-breadcrumb"
-              href={Hrefs.sdfDocuments
-                .sdfDocument(breadcrumbs.sdfDocument)
-                .toString()}
-            >
-              {breadcrumbs.sdfDocument.name}
-            </Link>
-          ) : null}
-          {breadcrumbs.schema ? (
-            <Link
-              color="inherit"
-              data-cy="schemas-breadcrumb"
-              href={
-                breadcrumbs.sdfDocument
-                  ? Hrefs.sdfDocuments
-                      .sdfDocument(breadcrumbs.sdfDocument)
-                      .toString()
-                  : Hrefs.schemas.toString()
-              }
-            >
-              Schemas
-            </Link>
-          ) : null}
-          {breadcrumbs.schema ? (
-            <Link
-              color="textPrimary"
-              data-cy="schema-breadcrumb"
-              href={
-                breadcrumbs.sdfDocument
-                  ? Hrefs.sdfDocuments
-                      .sdfDocument(breadcrumbs.sdfDocument)
-                      .schemas.schema(breadcrumbs.schema)
-                      .toString()
-                  : Hrefs.schemas.schema(breadcrumbs.schema).toString()
-              }
-            >
-              {breadcrumbs.schema.name}
-            </Link>
-          ) : null}
-        </Breadcrumbs>
+        <Breadcrumbs {...breadcrumbs} />
       </Grid>
     ) : null}
     <Grid item container justify="center">
-      <Grid item>
+      <Grid item style={rowItemStyle}>
         <Grid container direction="column" spacing={4}>
           <Grid item container direction="column">
             <Grid item>

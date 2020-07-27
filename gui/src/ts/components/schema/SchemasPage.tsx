@@ -8,8 +8,8 @@ import {StandardLayout} from "components/layout/StandardLayout";
 import {Hrefs} from "Hrefs";
 import {Link} from "@material-ui/core";
 import {SchemasTable} from "components/schema/SchemasTable";
-import {StandardLayoutBreadcrumbs} from "components/layout/StandardLayoutBreadcrumbs";
 import {NoRoute} from "components/error/NoRoute";
+import {BreadcrumbsProps} from "components/breadcrumbs/BreadcrumbsProps";
 
 export const SchemasPage: React.FunctionComponent = () => {
   let {sdfDocumentId} = useParams<{sdfDocumentId?: string}>();
@@ -27,7 +27,7 @@ export const SchemasPage: React.FunctionComponent = () => {
   return (
     <Frame {...query}>
       {({data}) => {
-        let breadcrumbs: StandardLayoutBreadcrumbs | undefined;
+        let breadcrumbs: BreadcrumbsProps | undefined;
         type Schema = {id: string; name: string};
         let schemas: Schema[];
         let subtitle: React.ReactNode | undefined;

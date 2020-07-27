@@ -1,4 +1,4 @@
-export interface StandardLayoutBreadcrumbs {
+export interface BreadcrumbsProps {
   schema?: {id: string; name: string};
   sdfDocument?: {
     id: string;
