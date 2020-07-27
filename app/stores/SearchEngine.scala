@@ -18,6 +18,7 @@ final class SearchEngine {
   private object Fields {
     val aka = lucene.create.field[String]("aka", fieldType = FieldType.NotStored, fullTextSearchable = true)
     val comments = lucene.create.field[String]("comments", fieldType = FieldType.NotStored, fullTextSearchable = true)
+    val id = lucene.create.field[String]("id", fieldType = FieldType.Untokenized)
     val label = lucene.create.field[String]("label", fullTextSearchable = true)
     val schemaId = lucene.create.field[String]("schemaId", fieldType = FieldType.Untokenized)
     val sdfDocumentId = lucene.create.field[String]("sdfDocumentId", fieldType = FieldType.Untokenized)
@@ -32,6 +33,7 @@ final class SearchEngine {
         putSearchDocument(SearchDocument(
           aka = slot.aka,
           comments = slot.comments,
+          id = slot.id,
           label = slot.roleName,
           schemaId = Some(schema.id),
           sdfDocumentId = sdfDocument.id,
@@ -43,6 +45,7 @@ final class SearchEngine {
           aka = step.aka,
           comments = step.comments,
           label = step.name,
+          id = step.id,
           schemaId = Some(schema.id),
           sdfDocumentId = sdfDocument.id,
           stepId = Some(step.id),
@@ -53,6 +56,7 @@ final class SearchEngine {
         aka = schema.aka,
         comments = schema.comments,
         label = schema.name,
+        id = schema.id,
         schemaId = Some(schema.id),
         sdfDocumentId = sdfDocument.id,
         `type` = SearchDocumentType.Schema))
@@ -65,6 +69,7 @@ final class SearchEngine {
         .facets(Facets.`type`(searchDocument.`type`.value))
         .fields(
           (List(
+            Fields.id(searchDocument.id.toString),
             Fields.label(searchDocument.label),
             Fields.sdfDocumentId(searchDocument.sdfDocumentId.toString),
             Fields.`type`(searchDocument.`type`.value)
@@ -80,6 +85,7 @@ final class SearchEngine {
 
     putSearchDocument(SearchDocument(
       label = sdfDocument.name,
+      id = sdfDocument.id,
       sdfDocumentId = sdfDocument.id,
       `type` = SearchDocumentType.SdfDocument
     ))
@@ -92,6 +98,7 @@ final class SearchEngine {
     SearchResults(
       documents = luceneResults.results.toList.map(result =>
         SearchDocument(
+          id = Uri.parse(result(Fields.id)),
           label = result(Fields.label),
           schemaId = Option(result(Fields.schemaId)).map(Uri.parse(_)),
           sdfDocumentId = Uri.parse(result(Fields.sdfDocumentId)),

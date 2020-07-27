@@ -3,6 +3,7 @@ package models.search
 import edu.rpi.tw.twks.uri.Uri
 
 final case class SearchDocument(
+                                 id: Uri,
                                  label: String,
                                  sdfDocumentId: Uri,
                                  `type`: SearchDocumentType,

@@ -1,6 +1,7 @@
 query SearchResultsPageQuery($limit: Int!, $offset: Int!, $query: String!) {
     search(limit: $limit, offset: $offset, query: $query) {
         documents {
+            id
             label
             schema {
                 name
@@ -10,13 +11,7 @@ query SearchResultsPageQuery($limit: Int!, $offset: Int!, $query: String!) {
                 name
             }
             sdfDocumentId
-            slot {
-                roleName
-            }
             slotId
-            step {
-                name
-            }
             stepId
             type
         }

@@ -18,26 +18,15 @@ export interface SearchResultsPageQuery_search_documents_sdfDocument {
   name: string;
 }
 
-export interface SearchResultsPageQuery_search_documents_slot {
-  __typename: "Slot";
-  roleName: string;
-}
-
-export interface SearchResultsPageQuery_search_documents_step {
-  __typename: "Step";
-  name: string;
-}
-
 export interface SearchResultsPageQuery_search_documents {
   __typename: "SearchDocument";
+  id: string;
   label: string;
   schema: SearchResultsPageQuery_search_documents_schema | null;
   schemaId: string | null;
   sdfDocument: SearchResultsPageQuery_search_documents_sdfDocument | null;
   sdfDocumentId: string;
-  slot: SearchResultsPageQuery_search_documents_slot | null;
   slotId: string | null;
-  step: SearchResultsPageQuery_search_documents_step | null;
   stepId: string | null;
   type: SearchDocumentType;
 }
