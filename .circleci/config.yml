@@ -116,9 +116,9 @@ workflows:
           wait-on: "http-get://localhost:9000/index.html"
           working_directory: test/integration
       - app-docker:
-#          filters:
-#            branches:
-#              only: master
+          filters:
+            branches:
+              only: master
           post-steps:
             - slack/status
       - scala:
