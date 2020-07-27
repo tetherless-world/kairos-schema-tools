@@ -247,13 +247,14 @@ export const SearchResultsPage: React.FunctionComponent = () => {
           throw new EvalError();
         }
         ReactDOM.unstable_batchedUpdates(() => {
+          setQueryText(variables.query);
           setSearchResults(data.search);
         });
       });
   };
 
   return (
-    <Frame {...query} onSearch={setQueryText}>
+    <Frame {...query} onSearch={(query) => onChange({limit, offset: 0, query})}>
       {({data: initialData}) => {
         if (searchResults === null) {
           setSearchResults(initialData.search);
