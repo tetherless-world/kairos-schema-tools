@@ -6,6 +6,7 @@
 node_modules/
 /project/project/
 /project/target/
+/schema.graphql
 /target/
 /test/integration/cypress/plugins/
 /test/integration/cypress/videos/
