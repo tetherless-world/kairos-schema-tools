@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 export const Navbar: React.FunctionComponent<{
-  onSearch?: (text: string) => void;
+  onSearch?: (query: string) => void;
 }> = ({onSearch: onSearchUserDefined}) => {
   const classes = useStyles();
 

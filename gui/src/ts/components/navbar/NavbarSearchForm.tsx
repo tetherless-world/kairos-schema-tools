@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const NavbarSearchForm: React.FunctionComponent<{
-  onSearch: (text: string) => void;
+  onSearch: (query: string) => void;
 }> = ({onSearch}) => {
   const [state, setState] = useState<{text: string}>({text: ""});
   const classes = useStyles();

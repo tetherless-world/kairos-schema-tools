@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { SearchDocumentType } from "./../../graphqlGlobalTypes";
+
 // ====================================================
 // GraphQL query operation: SearchResultsPageQuery
 // ====================================================
@@ -28,6 +30,7 @@ export interface SearchResultsPageQuery_search_documents_step {
 
 export interface SearchResultsPageQuery_search_documents {
   __typename: "SearchDocument";
+  label: string;
   schema: SearchResultsPageQuery_search_documents_schema | null;
   schemaId: string | null;
   sdfDocument: SearchResultsPageQuery_search_documents_sdfDocument | null;
@@ -36,6 +39,7 @@ export interface SearchResultsPageQuery_search_documents {
   slotId: string | null;
   step: SearchResultsPageQuery_search_documents_step | null;
   stepId: string | null;
+  type: SearchDocumentType;
 }
 
 export interface SearchResultsPageQuery_search {
