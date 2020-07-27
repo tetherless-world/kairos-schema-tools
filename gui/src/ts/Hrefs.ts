@@ -39,7 +39,7 @@ export class SchemaHrefs extends SubHrefs {
   }
 
   private sanitizeId(id: string) {
-    return id.replace(/^[^a-z]+|[^\w:.-]+/gi, "");
+    return id.replace(/[^a-z]/gi, "");
   }
 
   step(step: {id: string}) {
