@@ -179,16 +179,6 @@ const columns: MUIDataTableColumn[] = [
           default:
             return <span>{label}</span>;
         }
-
-        // return (
-        //   <KgNodeLink
-        //     node={{
-        //       id: nodeRowData[getPropertyColumnIndex("id")]!,
-        //       label: nodeRowData[getPropertyColumnIndex("label")] || null,
-        //       pos: nodeRowData[getPropertyColumnIndex("pos")] || null,
-        //     }}
-        //   />
-        // );
       },
     },
   },
