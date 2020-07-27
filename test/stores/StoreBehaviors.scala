@@ -1,6 +1,7 @@
 package stores
 
 import edu.rpi.tw.twks.uri.Uri
+import models.search.SearchDocumentType
 import org.scalatest.{Matchers, WordSpec}
 
 trait StoreBehaviors extends Matchers { this: WordSpec =>
@@ -37,5 +38,30 @@ trait StoreBehaviors extends Matchers { this: WordSpec =>
       store.putSdfDocument(testSdfDocument1)
       store.getSdfDocuments.map(_.id) should equal(List(testSdfDocument1.id))
     }
+
+    "search for an SDF document" in {
+      val store = storeFactory()
+      store.putSdfDocument(testSdfDocument1)
+      val results = store.search(limit = 10, offset = 0, query = "\"" + testSdfDocument1.name + "\"")
+      results.total should be > 0
+      results.documents.size should be > 0
+      results.documents.exists(document => document.`type` == SearchDocumentType.SdfDocument && document.label == testSdfDocument1.name && document.sdfDocumentId == testSdfDocument1.id) should be(true)
+    }
+
+    "search for a schema" in {
+      val store = storeFactory()
+      store.putSdfDocument(testSdfDocument1)
+      val results = store.search(limit = 10, offset = 0, query = testSchema1.name)
+      results.total should be > 0
+      results.documents.size should be > 0
+      results.documents.exists(
+        document =>
+          document.`type` == SearchDocumentType.Schema &&
+            document.label == testSchema1.name &&
+            document.sdfDocumentId == testSchema1.sdfDocumentId &&
+            document.schemaId == Some(testSchema1.id)
+      ) should be(true)
+    }
+
   }
 }

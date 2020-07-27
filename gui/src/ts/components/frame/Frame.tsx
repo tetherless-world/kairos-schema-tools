@@ -33,6 +33,7 @@ interface FrameProps<TData> {
   data?: TData;
   error?: ApolloError;
   loading: boolean;
+  onSearch?: (query: string) => void;
 }
 
 export const Frame = <TData,>({
@@ -40,6 +41,7 @@ export const Frame = <TData,>({
   data,
   error,
   loading,
+  onSearch,
 }: FrameProps<TData>) => {
   const classes = useStyles();
 
@@ -61,7 +63,7 @@ export const Frame = <TData,>({
         spacing={0} // Adds margins to sides of pages so set to 0
       >
         <Grid item>
-          <Navbar />
+          <Navbar onSearch={onSearch} />
         </Grid>
         <Grid className={classes.rootContainer} item>
           <div className={classes.root} data-cy="frame-content">

@@ -27,7 +27,7 @@ final class SdfDocumentReader(documentSource: Source) extends AutoCloseable {
     val model = ModelFactory.createDefaultModel()
     model.read(new StringReader(documentSourceJson), "", Lang.JSONLD.getName)
 
-    model.write(System.out, Lang.TTL.getName)
+//    model.write(System.out, Lang.TTL.getName)
 
     val documentHeader = new SchemaDataFormatDocumentHeader(model)
 

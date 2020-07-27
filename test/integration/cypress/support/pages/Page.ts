@@ -10,6 +10,28 @@ export abstract class Page {
   readonly frame = {
     selector: "[data-cy=frame]",
     bodySelector: "[data-cy=frame] [data-cy=frame-content]",
+    navbar: {
+      get brandLink() {
+        return cy.get(this.selector + " [data-cy=brand-link]");
+      },
+      get schemasLink() {
+        return cy.get(this.selector + " [data-cy=schemas-nav-link]");
+      },
+      get sdfDocumentsLink() {
+        return cy.get(this.selector + " [data-cy=sdf-documents-nav-link]");
+      },
+      search(text: string) {
+        this.searchInput.type(text);
+        this.searchButton.click();
+      },
+      get searchButton() {
+        return cy.get(this.selector + " [data-cy=search-button]");
+      },
+      get searchInput() {
+        return cy.get(this.selector + " [data-cy=search-input]");
+      },
+      selector: "[data-cy=navbar]",
+    },
   };
 
   abstract readonly relativeUrl: string;

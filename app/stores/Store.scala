@@ -3,6 +3,7 @@ package stores
 import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.SdfDocument
 import models.schema.Schema
+import models.search.{SearchDocument, SearchResults}
 
 trait Store {
   def getSchemaById(id: Uri): Option[Schema]
@@ -13,4 +14,6 @@ trait Store {
 
   def putSdfDocument(sdfDocument: SdfDocument)
   def putSdfDocuments(sdfDocuments: List[SdfDocument])
+
+  def search(limit: Int, offset: Int, query: String): SearchResults
 }

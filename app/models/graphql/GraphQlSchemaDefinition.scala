@@ -3,15 +3,18 @@ package models.graphql
 import formats.sdf.SdfDocument
 import io.github.tetherlessworld.twxplore.lib.base.models.graphql.BaseGraphQlSchemaDefinition
 import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Slot, Step, StepOrder, StepOrderFlag, StepParticipant}
+import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 import sangria.schema.{Argument, Field, InterfaceType, ListType, ObjectType, OptionType, Schema, StringType, fields}
 import sangria.macros.derive._
 
 object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   // Scalar arguments
   val IdArgument = Argument("id", UriType)
+  val QueryArgument = Argument("query", StringType)
 
   // Enum types
   implicit val EntityTypeEnumType = deriveEnumType[EntityType]()
+  implicit val SearchDocumentTypeEnumType = deriveEnumType[SearchDocumentType]()
   implicit val StepOrderFlagEnumType = deriveEnumType[StepOrderFlag]()
 
   // Interface types
@@ -45,15 +48,30 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   )
   implicit val SdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocument](
     AddFields(
-      Field("name", StringType, resolve = ctx => {
-        if (!ctx.value.schemas.isEmpty) {
-          ctx.value.schemas(0).name
-        } else {
-          ctx.value.id.toString
-        }
-      })
+      Field("name", StringType, resolve = _.value.name)
     )
   )
+  implicit val SearchDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SearchDocument](
+    AddFields(
+        Field("schema", OptionType(SchemaObjectType), resolve = ctx => ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_))),
+        Field("slot", OptionType(SlotObjectType), resolve = ctx => {
+          if (ctx.value.slotId.isDefined) {
+            ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_)).flatMap(_.slots.find(_.id == ctx.value.slotId.get))
+          } else {
+            None
+          }
+        }),
+        Field("step", OptionType(StepObjectType), resolve = ctx => {
+          if (ctx.value.stepId.isDefined) {
+            ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_)).flatMap(_.steps.find(_.id == ctx.value.stepId.get))
+          } else {
+            None
+          }
+        }),
+        Field("sdfDocument", OptionType(SdfDocumentObjectType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.sdfDocumentId)),
+    )
+  )
+  implicit val SearchResultsObjectType = deriveObjectType[GraphQlSchemaContext, SearchResults]()
 
   // Root query
   val RootQueryType = ObjectType("RootQuery",  fields[GraphQlSchemaContext, Unit](
@@ -61,6 +79,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
     Field("schemaById", OptionType(SchemaObjectType), arguments = IdArgument :: Nil, resolve = ctx => ctx.ctx.store.getSchemaById(ctx.args.arg(IdArgument))),
     Field("sdfDocumentById", OptionType(SdfDocumentObjectType), arguments = IdArgument :: Nil, resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.args.arg(IdArgument))),
     Field("sdfDocuments", ListType(SdfDocumentObjectType), resolve = _.ctx.store.getSdfDocuments),
+    Field("search", SearchResultsObjectType, arguments = LimitArgument :: OffsetArgument :: QueryArgument :: Nil, resolve = ctx => ctx.ctx.store.search(limit = ctx.args.arg(LimitArgument), offset = ctx.args.arg(OffsetArgument), query = ctx.args.arg(QueryArgument)))
   ))
 
   // Schema

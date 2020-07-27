@@ -1,3 +1,5 @@
+import * as qs from "qs";
+
 const encodeId = (kwds: {id: string; idEncoded?: boolean}) =>
   kwds.idEncoded ? kwds.id : encodeURIComponent(kwds.id);
 
@@ -37,7 +39,7 @@ export class SchemaHrefs extends SubHrefs {
   }
 
   private sanitizeId(id: string) {
-    return id.replace(/^[^a-z]+|[^\w:.-]+/gi, "");
+    return id.replace(/[^a-z]/gi, "");
   }
 
   step(step: {id: string}) {
@@ -81,4 +83,8 @@ export class Hrefs {
   static readonly home = "/";
   static readonly schemas = new SchemasHrefs("/schema/");
   static readonly sdfDocuments = new SdfDocumentsHrefs("/sdfdocument/");
+
+  static search(kwds?: {query: string}) {
+    return Hrefs.home + "search" + qs.stringify(kwds, {addQueryPrefix: true});
+  }
 }

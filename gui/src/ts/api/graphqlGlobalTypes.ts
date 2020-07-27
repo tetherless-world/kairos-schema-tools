@@ -23,6 +23,13 @@ export enum EntityType {
   WEA = "WEA",
 }
 
+export enum SearchDocumentType {
+  Schema = "Schema",
+  SdfDocument = "SdfDocument",
+  Slot = "Slot",
+  Step = "Step",
+}
+
 export enum StepOrderFlag {
   Causal = "Causal",
   Optional = "Optional",
