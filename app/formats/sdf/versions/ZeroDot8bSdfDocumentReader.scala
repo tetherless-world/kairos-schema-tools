@@ -10,22 +10,28 @@ import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duratio
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.riot.Lang
 
-final class ZeroDot8aSdfDocumentReader(documentResource: Resource, documentSourceJson: String) {
+final class ZeroDot8bSdfDocumentReader(documentResource: Resource, documentSourceJson: String) {
   private val documentId = Uri.parse(documentResource.getURI)
 
-  implicit class SchemaResource(val resource: Resource) extends KairosProperties with SchemaOrgProperties with RdfProperties
+  implicit class SchemaResource(val resource: Resource) extends KairosProperties with SchemaOrgProperties with RdfProperties {
+    def toTtlString(): String = {
+      val resourceStringWriter = new StringWriter()
+      resource.listProperties().toModel.write(resourceStringWriter, Lang.TTL.getName)
+      resourceStringWriter.toString
+    }
+  }
 
   private implicit val entityRelationRelationRdfReader: RdfReader[EntityRelationRelation] = (resource) =>
     EntityRelationRelation(
       relationObjects = resource.relationObject,
-      relationPredicate = resource.relationPredicate.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException("entity relation missing relation predicate"))
+      relationPredicate = resource.relationPredicate.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"entity relation missing relation predicate: ${resource.toTtlString()}"))
     )
 
   private implicit val entityRelationRdfReader: RdfReader[EntityRelation] = (resource) =>
     EntityRelation(
       comments = Option(resource.comment).filter(_.nonEmpty),
       relations = resource.relations.map(Rdf.read[EntityRelationRelation](_)),
-      relationSubject = resource.relationSubject.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException("entity relation missing subject"))
+      relationSubject = resource.relationSubject.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"entity relation missing subject: ${resource.toTtlString()}"))
     )
 
   private implicit val slotRdfReader: RdfReader[Slot] = (resource) => {
@@ -50,12 +56,6 @@ final class ZeroDot8aSdfDocumentReader(documentResource: Resource, documentSourc
     val flags = Option(resource.flags.map(flagString => StepOrderFlag.values.find(_.value == flagString).getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"unknown step order flag ${flagString}")))).filter(_.nonEmpty)
     val overlaps = resource.overlaps
 
-    def resourceString: String = {
-      val resourceStringWriter = new StringWriter()
-      resource.listProperties().toModel.write(resourceStringWriter, Lang.TTL.getName)
-      resourceStringWriter.toString
-    }
-
     if (after.nonEmpty && before.nonEmpty) {
       BeforeAfterStepOrder(after = after, before = before, comments = comments, flags = flags)
     } else if (contained.nonEmpty && container.size == 1) {
@@ -63,7 +63,7 @@ final class ZeroDot8aSdfDocumentReader(documentResource: Resource, documentSourc
     } else if (overlaps.nonEmpty) {
       OverlapsStepOrder(comments = comments, flags = flags, overlaps = overlaps)
     } else {
-      throw new MalformedSchemaDataFormatDocumentException(s"invalid step order:\n${resourceString}")
+      throw new MalformedSchemaDataFormatDocumentException(s"invalid step order:\n${resource.toTtlString()}")
     }
   }
 
@@ -85,6 +85,7 @@ final class ZeroDot8aSdfDocumentReader(documentResource: Resource, documentSourc
   private implicit val stepRdfReader: RdfReader[Step] = (resource) => {
     val id = Uri.parse(resource.getURI)
     Step(
+      achieves = Option(resource.achieves).filter(_.nonEmpty),
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
       maxDuration = resource.maxDuration.map(Duration(_)).headOption,
@@ -93,6 +94,7 @@ final class ZeroDot8aSdfDocumentReader(documentResource: Resource, documentSourc
       name = resource.name.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"step ${id} missing required name property")),
       participants = Option(resource.participants.map(Rdf.read[StepParticipant](_))).filter(_.nonEmpty),
       references = Option(resource.reference).filter(_.nonEmpty),
+      requires = Option(resource.requires).filter(_.nonEmpty),
       `type` = Uri.parse(resource.types.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"step ${id} missing type")).getURI)
     )
   }
@@ -121,12 +123,12 @@ final class ZeroDot8aSdfDocumentReader(documentResource: Resource, documentSourc
     SdfDocument(
       id = documentId,
       schemas = documentResource.schemas.map(resource => Rdf.read[Schema](resource)),
-      sdfVersion = ZeroDot8aSdfDocumentReader.SdfVersion,
+      sdfVersion = ZeroDot8bSdfDocumentReader.SdfVersion,
       sourceJson = documentSourceJson
     )
   }
 }
 
-object ZeroDot8aSdfDocumentReader {
-  val SdfVersion = "0.8a"
+object ZeroDot8bSdfDocumentReader {
+  val SdfVersion = "0.8b"
 }
