@@ -29,7 +29,7 @@ export const SchemasTable: React.FunctionComponent<{
               .toString()
           : Hrefs.schemas.schema(schema).toString();
         return (
-          <TableRow data-cy={"schema-" + schema.id}>
+          <TableRow data-cy={"schema-" + schema.id} key={schema.id}>
             <TableCell data-cy="schema-id">
               <Link component="a" href={schemaHref}>
                 {schema.id}
