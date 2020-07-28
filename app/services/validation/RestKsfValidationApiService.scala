@@ -11,7 +11,7 @@ import play.api.libs.ws.WSClient
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class RestKsfValidationApiService @Inject()(ws: WSClient)(implicit ec: ExecutionContext) {
+class RestKsfValidationApiService @Inject()(ws: WSClient)(implicit ec: ExecutionContext) extends KsfValidationApiService {
   private val Url = "http://validation.kairos.nextcentury.com/json-ld/ksf/validate"
   private val Accept = "application/json"
   private val ContentType = "application/ld+json"

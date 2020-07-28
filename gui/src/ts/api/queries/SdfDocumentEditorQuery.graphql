@@ -1,0 +1,6 @@
+query SdfDocumentEditorQuery($json: String!) {
+    validateSdfDocument(json: $json) {
+        errorsList
+        warningsList
+    }
+}
