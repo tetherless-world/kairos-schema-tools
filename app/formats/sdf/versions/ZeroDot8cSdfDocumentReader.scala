@@ -10,7 +10,7 @@ import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duratio
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.riot.Lang
 
-final class ZeroDot8bSdfDocumentReader(documentResource: Resource, documentSourceJson: String) {
+final class ZeroDot8cSdfDocumentReader(documentResource: Resource, documentSourceJson: String) {
   private val documentId = Uri.parse(documentResource.getURI)
 
   implicit class SchemaResource(val resource: Resource) extends KairosProperties with SchemaOrgProperties with RdfProperties {
@@ -39,7 +39,7 @@ final class ZeroDot8bSdfDocumentReader(documentResource: Resource, documentSourc
     Slot(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
-      entityTypes = Option(resource.entityTypes.map(EntityType(_))).filter(_.nonEmpty),
+      entityTypes = Option(resource.entityTypes).filter(_.nonEmpty),
       id = id,
       references = Option(resource.reference).filter(_.nonEmpty),
       refvar = resource.refvar.headOption,
@@ -72,7 +72,7 @@ final class ZeroDot8bSdfDocumentReader(documentResource: Resource, documentSourc
     StepParticipant(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
-      entityTypes = Option(resource.entityTypes.map(EntityType(_))).filter(_.nonEmpty),
+      entityTypes = Option(resource.entityTypes).filter(_.nonEmpty),
       id = id,
       name = resource.name.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"step participant ${id} missing required name property")),
       references = Option(resource.reference).filter(_.nonEmpty),
@@ -80,7 +80,6 @@ final class ZeroDot8bSdfDocumentReader(documentResource: Resource, documentSourc
       role = resource.role.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"step participant ${id} missing required role property"))
     )
   }
-
 
   private implicit val stepRdfReader: RdfReader[Step] = (resource) => {
     val id = Uri.parse(resource.getURI)
@@ -123,12 +122,12 @@ final class ZeroDot8bSdfDocumentReader(documentResource: Resource, documentSourc
     SdfDocument(
       id = documentId,
       schemas = documentResource.schemas.map(resource => Rdf.read[Schema](resource)),
-      sdfVersion = ZeroDot8bSdfDocumentReader.SdfVersion,
+      sdfVersion = ZeroDot8cSdfDocumentReader.SdfVersion,
       sourceJson = documentSourceJson
     )
   }
 }
 
-object ZeroDot8bSdfDocumentReader {
-  val SdfVersion = "0.8b"
+object ZeroDot8cSdfDocumentReader {
+  val SdfVersion = "0.8c"
 }
