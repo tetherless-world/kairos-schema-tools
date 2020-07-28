@@ -17,7 +17,6 @@ import FolderIcon from "@material-ui/icons/Folder";
 import WorkIcon from "@material-ui/icons/Work";
 import {SchemaHrefs} from "Hrefs";
 import {makeStyles} from "@material-ui/core/styles";
-import {ElementScroller} from "react-scroll-manager";
 import {Link} from "components/Link";
 
 const useStyles = makeStyles((theme) => ({
@@ -111,76 +110,72 @@ export const SchemaPartsGrid: React.FunctionComponent<{
   });
 
   return (
-    <ElementScroller scrollKey="nav">
-      <Grid container direction="column" spacing={8}>
-        <Grid item>
-          <List>
-            {schemaParts.map((schemaPart) => (
-              <React.Fragment key={schemaPart.id}>
-                <ListItem>
-                  <ListItemIcon>
-                    <FolderIcon />
-                  </ListItemIcon>
-                  <ListItemText>
-                    <Link to={hrefs.home + "#" + schemaPart.id}>
-                      {schemaPart.title}
-                    </Link>
-                  </ListItemText>
-                </ListItem>
-                {schemaPart.id === hrefs.SLOTS_ID ||
-                schemaPart.id === hrefs.STEPS_ID ? (
-                  <List component="div" disablePadding>
-                    {schemaPart.id === hrefs.SLOTS_ID
-                      ? schema.slots.map((slot) => (
-                          <ListItem
-                            className={classes.nestedListItem}
-                            key={slot.id}
-                          >
-                            <ListItemIcon>
-                              <WorkIcon />
-                            </ListItemIcon>
-                            <ListItemText>
-                              <Link to={hrefs.slot(slot)}>
-                                Slot: {slot.roleName}
-                              </Link>
-                            </ListItemText>
-                          </ListItem>
-                        ))
-                      : null}
-                    {schemaPart.id === hrefs.STEPS_ID
-                      ? schema.steps.map((step) => (
-                          <ListItem
-                            className={classes.nestedListItem}
-                            key={step.id}
-                          >
-                            <ListItemIcon>
-                              <WorkIcon />
-                            </ListItemIcon>
-                            <ListItemText>
-                              <Link to={hrefs.step(step)}>
-                                Step: {step.name}
-                              </Link>
-                            </ListItemText>
-                          </ListItem>
-                        ))
-                      : null}
-                  </List>
-                ) : null}
-              </React.Fragment>
-            ))}
-          </List>
-        </Grid>
-        {schemaParts.map((schemaPart) => (
-          <Grid key={schemaPart.id} item>
-            <Grid container direction="column" id={schemaPart.id} spacing={4}>
-              <Grid item>
-                <Typography variant="h4">{schemaPart.title}</Typography>
-              </Grid>
-              <Grid>{schemaPart.children}</Grid>
-            </Grid>
-          </Grid>
-        ))}
+    <Grid container direction="column" spacing={8}>
+      <Grid item>
+        <List>
+          {schemaParts.map((schemaPart) => (
+            <React.Fragment key={schemaPart.id}>
+              <ListItem>
+                <ListItemIcon>
+                  <FolderIcon />
+                </ListItemIcon>
+                <ListItemText>
+                  <Link to={hrefs.home + "#" + schemaPart.id}>
+                    {schemaPart.title}
+                  </Link>
+                </ListItemText>
+              </ListItem>
+              {schemaPart.id === hrefs.SLOTS_ID ||
+              schemaPart.id === hrefs.STEPS_ID ? (
+                <List component="div" disablePadding>
+                  {schemaPart.id === hrefs.SLOTS_ID
+                    ? schema.slots.map((slot) => (
+                        <ListItem
+                          className={classes.nestedListItem}
+                          key={slot.id}
+                        >
+                          <ListItemIcon>
+                            <WorkIcon />
+                          </ListItemIcon>
+                          <ListItemText>
+                            <Link to={hrefs.slot(slot)}>
+                              Slot: {slot.roleName}
+                            </Link>
+                          </ListItemText>
+                        </ListItem>
+                      ))
+                    : null}
+                  {schemaPart.id === hrefs.STEPS_ID
+                    ? schema.steps.map((step) => (
+                        <ListItem
+                          className={classes.nestedListItem}
+                          key={step.id}
+                        >
+                          <ListItemIcon>
+                            <WorkIcon />
+                          </ListItemIcon>
+                          <ListItemText>
+                            <Link to={hrefs.step(step)}>Step: {step.name}</Link>
+                          </ListItemText>
+                        </ListItem>
+                      ))
+                    : null}
+                </List>
+              ) : null}
+            </React.Fragment>
+          ))}
+        </List>
       </Grid>
-    </ElementScroller>
+      {schemaParts.map((schemaPart) => (
+        <Grid key={schemaPart.id} item>
+          <Grid container direction="column" id={schemaPart.id} spacing={4}>
+            <Grid item>
+              <Typography variant="h4">{schemaPart.title}</Typography>
+            </Grid>
+            <Grid>{schemaPart.children}</Grid>
+          </Grid>
+        </Grid>
+      ))}
+    </Grid>
   );
 };
