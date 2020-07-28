@@ -24,7 +24,7 @@ import {Hrefs} from "Hrefs";
 import FolderIcon from "@material-ui/icons/Folder";
 import {makeStyles} from "@material-ui/core/styles";
 import WorkIcon from "@material-ui/icons/Work";
-import {BreadcrumbsProps} from "components/breadcrumbs/BreadcrumbsProps";
+import * as _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   nestedListItem: {
@@ -33,14 +33,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const SchemaPage: React.FunctionComponent = () => {
-  let {schemaId, sdfDocumentId} = useParams<{
-    schemaId: string;
-    sdfDocumentId?: string;
-  }>();
-  schemaId = decodeURIComponent(schemaId);
-  if (sdfDocumentId) {
-    sdfDocumentId = decodeURIComponent(sdfDocumentId);
-  }
+  const {schemaId, sdfDocumentId} = _.mapValues(
+    useParams<{
+      schemaId: string;
+      sdfDocumentId: string;
+    }>(),
+    decodeURIComponent
+  );
 
   const query = useQuery<SchemaPageQuery>(SchemaPageQueryDocument, {
     variables: {
@@ -50,11 +49,9 @@ export const SchemaPage: React.FunctionComponent = () => {
     },
   });
 
-  const hrefs = sdfDocumentId
-    ? Hrefs.sdfDocuments
-        .sdfDocument({id: sdfDocumentId})
-        .schemas.schema({id: schemaId})
-    : Hrefs.schemas.schema({id: schemaId});
+  const hrefs = Hrefs.sdfDocuments
+    .sdfDocument({id: sdfDocumentId})
+    .schemas.schema({id: schemaId});
 
   const classes = useStyles();
 
@@ -65,19 +62,10 @@ export const SchemaPage: React.FunctionComponent = () => {
           return <NoRoute />;
         }
 
-        let breadcrumbs: BreadcrumbsProps;
-        const schema = Object.assign({}, data.schemaById!, {id: schemaId});
-        if (sdfDocumentId) {
-          const sdfDocument = data.sdfDocumentById;
-          if (!sdfDocument) {
-            return <NoRoute />;
-          }
-          breadcrumbs = {
-            schema,
-            sdfDocument: {id: sdfDocumentId, name: sdfDocument!.name},
-          };
-        } else {
-          breadcrumbs = {schema};
+        const schema = Object.assign({}, data.schemaById, {id: schemaId});
+        const sdfDocument = data.sdfDocumentById;
+        if (!sdfDocument) {
+          return <NoRoute />;
         }
 
         const schemaParts: {
@@ -162,7 +150,10 @@ export const SchemaPage: React.FunctionComponent = () => {
 
         return (
           <StandardLayout
-            breadcrumbs={breadcrumbs}
+            breadcrumbs={{
+              schema,
+              sdfDocument: {id: sdfDocumentId, name: sdfDocument!.name},
+            }}
             subtitle={schema.id}
             title={
               <span>

@@ -10,6 +10,7 @@ export interface SchemasPageQuery_schemas {
   __typename: "Schema";
   id: string;
   name: string;
+  sdfDocumentId: string;
 }
 
 export interface SchemasPageQuery_sdfDocumentById_schemas {

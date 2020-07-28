@@ -34,6 +34,9 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
 
         const sdfDocument = Object.assign({}, data.sdfDocumentById, {
           id: sdfDocumentId,
+          schemas: data.sdfDocumentById.schemas.map((schema) =>
+            Object.assign({}, schema, {sdfDocumentId})
+          ),
         });
 
         return (

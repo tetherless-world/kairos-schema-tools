@@ -28,7 +28,7 @@ export const SchemasPage: React.FunctionComponent = () => {
     <Frame {...query}>
       {({data}) => {
         let breadcrumbs: BreadcrumbsProps | undefined;
-        type Schema = {id: string; name: string};
+        type Schema = {id: string; name: string; sdfDocumentId: string};
         let schemas: Schema[];
         let subtitle: React.ReactNode | undefined;
         if (sdfDocumentId) {
@@ -39,7 +39,9 @@ export const SchemasPage: React.FunctionComponent = () => {
           breadcrumbs = {
             sdfDocument: {id: sdfDocumentId, name: sdfDocument.name},
           };
-          schemas = sdfDocument!.schemas;
+          schemas = sdfDocument!.schemas.map((schema) =>
+            Object.assign({}, schema, {sdfDocumentId: sdfDocumentId!})
+          );
           subtitle = (
             <span>
               Document:{" "}
@@ -63,7 +65,7 @@ export const SchemasPage: React.FunctionComponent = () => {
             subtitle={subtitle}
             title="Schemas"
           >
-            <SchemasTable schemas={schemas} sdfDocumentId={sdfDocumentId} />
+            <SchemasTable schemas={schemas} />
           </StandardLayout>
         );
       }}

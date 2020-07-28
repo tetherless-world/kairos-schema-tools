@@ -16,7 +16,13 @@ export const SdfDocumentsPage: React.FunctionComponent = () => {
         <StandardLayout title="Schema Data Format Documents">
           {data.sdfDocuments.map((sdfDocument) => (
             <Grid item key={sdfDocument.id}>
-              <SdfDocumentCard {...sdfDocument} />
+              <SdfDocumentCard
+                {...Object.assign({}, sdfDocument, {
+                  schemas: sdfDocument.schemas.map((schema) =>
+                    Object.assign({}, schema, {sdfDocumentId: sdfDocument.id})
+                  ),
+                })}
+              />
             </Grid>
           ))}
         </StandardLayout>
