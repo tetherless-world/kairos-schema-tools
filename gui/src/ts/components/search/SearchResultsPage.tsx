@@ -65,8 +65,8 @@ const columns: MUIDataTableColumn[] = [
         const sdfDocument = rowData[getPropertyColumnIndex("sdfDocument")];
         return (
           <Link
+            dataCy="sdf-document-link"
             to={Hrefs.sdfDocuments.sdfDocument({id: sdfDocumentId}).toString()}
-            data-cy="sdf-document-link"
           >
             {sdfDocument ? sdfDocument.name : sdfDocumentId}
           </Link>
@@ -95,11 +95,11 @@ const columns: MUIDataTableColumn[] = [
           rowData[getPropertyColumnIndex("sdfDocumentId")];
         return (
           <Link
+            dataCy="schema-link"
             to={Hrefs.sdfDocuments
               .sdfDocument({id: sdfDocumentId})
               .schemas.schema({id: schemaId})
               .toString()}
-            data-cy="schema-link"
           >
             {schema ? schema.name : schemaId}
           </Link>

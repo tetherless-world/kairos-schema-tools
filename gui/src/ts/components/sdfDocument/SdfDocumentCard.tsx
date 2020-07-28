@@ -25,7 +25,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
         title={
           <React.Fragment>
             <Link
-              data-cy="sdf-document-name"
+              dataCy="sdf-document-name"
               to={Hrefs.sdfDocuments.sdfDocument({id}).toString()}
             >
               {name}
@@ -43,7 +43,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
           <Grid item data-cy="sdf-document-schemas">
             <Typography variant="h5">
               <Link
-                data-cy="sdf-document-schemas-header"
+                dataCy="sdf-document-schemas-header"
                 to={Hrefs.sdfDocuments.sdfDocument({id}).schemas.toString()}
               >
                 Schemas

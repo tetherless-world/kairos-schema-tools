@@ -46,10 +46,10 @@ export const SchemasPage: React.FunctionComponent = () => {
             <span>
               Document:{" "}
               <Link
+                dataCy="sdf-document-name"
                 to={Hrefs.sdfDocuments
                   .sdfDocument({id: sdfDocumentId})
                   .toString()}
-                data-cy="sdf-document-name"
               >
                 {sdfDocument.name}
               </Link>

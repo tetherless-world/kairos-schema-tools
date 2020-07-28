@@ -13,7 +13,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
     {sdfDocument ? (
       <Link
         color="inherit"
-        data-cy="sdf-documents-breadcrumb"
+        dataCy="sdf-documents-breadcrumb"
         to={Hrefs.sdfDocuments.toString()}
       >
         Schema data format documents
@@ -22,7 +22,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
     {sdfDocument ? (
       <Link
         color="textPrimary"
-        data-cy="sdf-document-breadcrumb"
+        dataCy="sdf-document-breadcrumb"
         to={Hrefs.sdfDocuments.sdfDocument(sdfDocument).toString()}
       >
         {sdfDocument.name}
@@ -31,7 +31,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
     {schema ? (
       <Link
         color="inherit"
-        data-cy="schemas-breadcrumb"
+        dataCy="schemas-breadcrumb"
         to={
           sdfDocument
             ? Hrefs.sdfDocuments.sdfDocument(sdfDocument).toString()
@@ -44,7 +44,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
     {schema ? (
       <Link
         color="textPrimary"
-        data-cy="schema-breadcrumb"
+        dataCy="schema-breadcrumb"
         to={Hrefs.sdfDocuments
           .sdfDocument(sdfDocument)
           .schemas.schema(schema)
