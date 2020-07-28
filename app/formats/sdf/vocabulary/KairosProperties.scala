@@ -1,6 +1,8 @@
 package formats.sdf.vocabulary
 
 import edu.rpi.tw.twks.uri.Uri
+import formats.sdf.MalformedSchemaDataFormatDocumentException
+import models.schema.EntityType
 import org.apache.jena.datatypes.xsd.XSDDuration
 import org.apache.jena.rdf.model.Resource
 
@@ -13,7 +15,11 @@ trait KairosProperties extends PropertyGetters {
   def contained: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.contained)
   def container: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.container)
   def entityRelations: List[Resource] = getPropertyObjectResources(KAIROS.entityRelations)
-  def entityTypes: List[String] = getPropertyObjectStringList(KAIROS.entityTypes)
+  def entityTypes: List[EntityType] = getPropertyObjectUriResourceList(KAIROS.entityTypes).map(resource => {
+    val uri = Uri.parse(resource.getURI)
+    val abbreviation = uri.toString.substring(uri.toString.lastIndexOf('/') + 1)
+    EntityType.values.find(_.value == abbreviation).getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"unknown entity type ${abbreviation}"))
+  })
   def flags: List[String] = getPropertyObjectStrings(KAIROS.flags)
   def maxDuration: List[XSDDuration] = getPropertyObjectDurations(KAIROS.maxDuration)
   def minDuration: List[XSDDuration] = getPropertyObjectDurations(KAIROS.minDuration)

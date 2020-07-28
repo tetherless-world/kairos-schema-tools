@@ -3,7 +3,7 @@ package formats.sdf
 import java.io.{Reader, StringReader}
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.sdf.versions.ZeroDot8bSdfDocumentReader
+import formats.sdf.versions.ZeroDot8cSdfDocumentReader
 import formats.sdf.vocabulary.KAIROS
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import org.apache.jena.rdf.model.{Model, ModelFactory, Resource}
@@ -32,7 +32,7 @@ final class SdfDocumentReader(documentSource: Source) extends AutoCloseable {
     val documentHeader = new SchemaDataFormatDocumentHeader(model)
 
     documentHeader.sdfVersion match {
-      case ZeroDot8bSdfDocumentReader.SdfVersion => new ZeroDot8bSdfDocumentReader(documentHeader.rootResource, documentSourceJson).read()
+      case ZeroDot8cSdfDocumentReader.SdfVersion => new ZeroDot8cSdfDocumentReader(documentHeader.rootResource, documentSourceJson).read()
       case sdfVersion => throw new MalformedSchemaDataFormatDocumentException(s"unrecognized SDF version ${sdfVersion}")
     }
   }
