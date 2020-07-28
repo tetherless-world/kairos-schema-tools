@@ -1,6 +1,6 @@
 export interface BreadcrumbsProps {
   schema?: {id: string; name: string};
-  sdfDocument?: {
+  sdfDocument: {
     id: string;
     name: string;
   };

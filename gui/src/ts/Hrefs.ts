@@ -59,7 +59,7 @@ export class SchemaHrefs extends SubHrefs {
   }
 }
 
-class SchemasHrefs extends SubHrefs {
+class SdfDocumentSchemasHrefs extends SubHrefs {
   schema(kwds: {id: string; idEncoded?: boolean}) {
     return new SchemaHrefs(this.home + encodeId(kwds));
   }
@@ -67,7 +67,7 @@ class SchemasHrefs extends SubHrefs {
 
 class SdfDocumentHrefs extends SubHrefs {
   get schemas() {
-    return new SchemasHrefs(this.home + "schema/");
+    return new SdfDocumentSchemasHrefs(this.home + "schema/");
   }
 }
 
@@ -81,7 +81,7 @@ export class Hrefs {
   static readonly contact = "mailto:gordom6@rpi.edu";
   static readonly gitHub = "https://github.com/tetherless-world/mcs-portal";
   static readonly home = "/";
-  static readonly schemas = new SchemasHrefs("/schema/");
+  static readonly schemas = "/schema/";
   static readonly sdfDocuments = new SdfDocumentsHrefs("/sdfdocument/");
 
   static search(kwds?: {query: string}) {

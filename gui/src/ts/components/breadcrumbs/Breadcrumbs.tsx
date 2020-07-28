@@ -44,14 +44,10 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
       <Link
         color="textPrimary"
         data-cy="schema-breadcrumb"
-        href={
-          sdfDocument
-            ? Hrefs.sdfDocuments
-                .sdfDocument(sdfDocument)
-                .schemas.schema(schema)
-                .toString()
-            : Hrefs.schemas.schema(schema).toString()
-        }
+        href={Hrefs.sdfDocuments
+          .sdfDocument(sdfDocument)
+          .schemas.schema(schema)
+          .toString()}
       >
         {schema.name}
       </Link>

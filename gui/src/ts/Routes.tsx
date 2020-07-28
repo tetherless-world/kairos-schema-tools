@@ -20,14 +20,8 @@ export const Routes: React.FunctionComponent = () => (
           <Redirect to={Hrefs.sdfDocuments.toString()} />
         </Route>
 
+        {/*All schemas*/}
         <Route exact path={Hrefs.schemas.toString()} component={SchemasPage} />
-
-        {/*Get to a schema page via the schemas page*/}
-        <Route
-          exact
-          path={Hrefs.schemas.schema(schemaIdParam).toString()}
-          component={SchemaPage}
-        />
 
         <Route
           exact
@@ -41,7 +35,7 @@ export const Routes: React.FunctionComponent = () => (
           component={SdfDocumentPage}
         />
 
-        {/*Get to schemas via a document*/}
+        {/*Document scemas*/}
         <Route
           exact
           path={Hrefs.sdfDocuments
@@ -50,7 +44,7 @@ export const Routes: React.FunctionComponent = () => (
           component={SchemasPage}
         />
 
-        {/*Get to a schema via a document*/}
+        {/*Document schema*/}
         <Route
           exact
           path={Hrefs.sdfDocuments

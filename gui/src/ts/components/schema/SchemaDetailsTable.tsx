@@ -24,7 +24,12 @@ export const SchemaDetailsTable: React.FunctionComponent<{
         <TableRow>
           <TableCell>Super</TableCell>
           <TableCell data-cy="schema-super">
-            <Link href={Hrefs.schemas.schema({id: schema.super}).toString()}>
+            <Link
+              href={Hrefs.sdfDocuments
+                .sdfDocument({id: schema.sdfDocumentId})
+                .schemas.schema({id: schema.super})
+                .toString()}
+            >
               {schema.super}
             </Link>
           </TableCell>

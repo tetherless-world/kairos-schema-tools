@@ -16,6 +16,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
   schemas: {
     id: string;
     name: string;
+    sdfDocumentId: string;
   }[];
 }> = ({id, name, schemas}) => {
   return (
@@ -49,7 +50,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
                 Schemas
               </Link>
             </Typography>
-            <SchemasTable schemas={schemas} sdfDocumentId={id} />
+            <SchemasTable schemas={schemas} />
           </Grid>
         </Grid>
       </CardContent>
