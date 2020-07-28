@@ -4,12 +4,14 @@ import formats.sdf.SdfDocument
 import io.github.tetherlessworld.twxplore.lib.base.models.graphql.BaseGraphQlSchemaDefinition
 import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Slot, Step, StepOrder, StepOrderFlag, StepParticipant}
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
+import models.validation.KsfValidationResults
 import sangria.schema.{Argument, Field, InterfaceType, ListType, ObjectType, OptionType, Schema, StringType, fields}
 import sangria.macros.derive._
 
 object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   // Scalar arguments
   val IdArgument = Argument("id", UriType)
+  val JsonArgument = Argument("json", StringType)
   val QueryArgument = Argument("query", StringType)
 
   // Enum types
@@ -38,6 +40,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val ContainerContainedStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, ContainerContainedStepOrder](
     Interfaces(StepOrderInterfaceType)
   )
+  implicit val KsfValidationResultsObjectType = deriveObjectType[GraphQlSchemaContext, KsfValidationResults]()
   implicit val OverlapsStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, OverlapsStepOrder](
     Interfaces(StepOrderInterfaceType)
   )
@@ -79,7 +82,8 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
     Field("schemaById", OptionType(SchemaObjectType), arguments = IdArgument :: Nil, resolve = ctx => ctx.ctx.store.getSchemaById(ctx.args.arg(IdArgument))),
     Field("sdfDocumentById", OptionType(SdfDocumentObjectType), arguments = IdArgument :: Nil, resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.args.arg(IdArgument))),
     Field("sdfDocuments", ListType(SdfDocumentObjectType), resolve = _.ctx.store.getSdfDocuments),
-    Field("search", SearchResultsObjectType, arguments = LimitArgument :: OffsetArgument :: QueryArgument :: Nil, resolve = ctx => ctx.ctx.store.search(limit = ctx.args.arg(LimitArgument), offset = ctx.args.arg(OffsetArgument), query = ctx.args.arg(QueryArgument)))
+    Field("search", SearchResultsObjectType, arguments = LimitArgument :: OffsetArgument :: QueryArgument :: Nil, resolve = ctx => ctx.ctx.store.search(limit = ctx.args.arg(LimitArgument), offset = ctx.args.arg(OffsetArgument), query = ctx.args.arg(QueryArgument))),
+    Field("validateSdfDocument", KsfValidationResultsObjectType, arguments = JsonArgument :: Nil, resolve = ctx => ctx.ctx.services.ksfValidationApiService.validate(ctx.args.arg(JsonArgument)))
   ))
 
   // Schema
