@@ -9,6 +9,14 @@ A web application for working with KAIROS schemas.
 * [Docker](https://docs.docker.com/get-docker/)
 * [Docker Compose](https://docs.docker.com/compose/)
 
+## One-time setup
+
+    script/bootstrap
+
+### Updating
+
+    script/update
+
 ## Running
 
     script/server
