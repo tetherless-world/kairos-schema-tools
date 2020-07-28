@@ -77,7 +77,10 @@ export const SchemaPage: React.FunctionComponent = () => {
                 <div hidden={tab !== "table"}>
                   <SchemaPartsGrid hrefs={hrefs} schema={schema} />
                 </div>
-                <div hidden={tab !== "graph"}>
+                <div
+                  hidden={tab !== "graph"}
+                  style={{minHeight: 600, minWidth: 800}}
+                >
                   <SchemaGraph />
                 </div>
               </Grid>

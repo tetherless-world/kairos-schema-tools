@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import {Graph} from "react-d3-graph";
+import {AutoSizer} from "react-virtualized";
 
 // graph payload (with minimalist structure)
 const data = {
@@ -9,20 +10,6 @@ const data = {
     {source: "Harry", target: "Sally"},
     {source: "Harry", target: "Alice"},
   ],
-};
-
-// the graph configuration, you only need to pass down properties
-// that you want to override, otherwise default ones will be used
-const myConfig = {
-  nodeHighlightBehavior: true,
-  node: {
-    color: "lightgreen",
-    size: 120,
-    highlightStrokeColor: "blue",
-  },
-  link: {
-    highlightColor: "lightblue",
-  },
 };
 
 // graph event callbacks
@@ -73,20 +60,48 @@ const onNodePositionChange = function (nodeId: any, x: any, y: any) {
 };
 
 export const SchemaGraph: React.FunctionComponent = () => (
-  <Graph
-    id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
-    data={data}
-    config={myConfig}
-    onClickNode={onClickNode}
-    onDoubleClickNode={onDoubleClickNode}
-    onRightClickNode={onRightClickNode}
-    onClickGraph={onClickGraph}
-    onClickLink={onClickLink}
-    onRightClickLink={onRightClickLink}
-    onMouseOverNode={onMouseOverNode}
-    onMouseOutNode={onMouseOutNode}
-    onMouseOverLink={onMouseOverLink}
-    onMouseOutLink={onMouseOutLink}
-    onNodePositionChange={onNodePositionChange}
-  />
+  <AutoSizer
+  // onResize={({height, width}) =>
+  //   console.log(`Resize: height=${height}, width=${width}`)
+  // }
+  >
+    {({height, width}) => {
+      if (height <= 0 || width <= 0) {
+        return null;
+      }
+
+      const config = {
+        height,
+        link: {
+          highlightColor: "lightblue",
+        },
+        nodeHighlightBehavior: true,
+        node: {
+          color: "lightgreen",
+          size: 800,
+          highlightStrokeColor: "blue",
+        },
+        width,
+      };
+
+      return (
+        <Graph
+          id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
+          data={data}
+          config={config}
+          onClickNode={onClickNode}
+          onDoubleClickNode={onDoubleClickNode}
+          onRightClickNode={onRightClickNode}
+          onClickGraph={onClickGraph}
+          onClickLink={onClickLink}
+          onRightClickLink={onRightClickLink}
+          onMouseOverNode={onMouseOverNode}
+          onMouseOutNode={onMouseOutNode}
+          onMouseOverLink={onMouseOverLink}
+          onMouseOutLink={onMouseOutLink}
+          onNodePositionChange={onNodePositionChange}
+        />
+      );
+    }}
+  </AutoSizer>
 );
