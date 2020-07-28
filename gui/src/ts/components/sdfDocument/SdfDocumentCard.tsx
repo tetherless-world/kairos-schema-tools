@@ -4,11 +4,11 @@ import {
   CardContent,
   CardHeader,
   Grid,
-  Link,
   Typography,
 } from "@material-ui/core";
 import {Hrefs} from "Hrefs";
 import {SchemasTable} from "components/schema/SchemasTable";
+import {Link} from "components/Link";
 
 export const SdfDocumentCard: React.FunctionComponent<{
   id: string;
@@ -25,9 +25,8 @@ export const SdfDocumentCard: React.FunctionComponent<{
         title={
           <React.Fragment>
             <Link
-              component="a"
               data-cy="sdf-document-name"
-              href={Hrefs.sdfDocuments.sdfDocument({id}).toString()}
+              to={Hrefs.sdfDocuments.sdfDocument({id}).toString()}
             >
               {name}
             </Link>
@@ -45,7 +44,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
             <Typography variant="h5">
               <Link
                 data-cy="sdf-document-schemas-header"
-                href={Hrefs.sdfDocuments.sdfDocument({id}).schemas.toString()}
+                to={Hrefs.sdfDocuments.sdfDocument({id}).schemas.toString()}
               >
                 Schemas
               </Link>

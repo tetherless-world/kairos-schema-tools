@@ -4,7 +4,7 @@ import * as SearchResultsPageQueryDocument from "api/queries/SearchResultsPageQu
 import {Frame} from "components/frame/Frame";
 import * as React from "react";
 import MUIDataTable, {MUIDataTableColumn} from "mui-datatables";
-import {Link, Typography} from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 import {
   SearchResultsPageQuery,
   SearchResultsPageQuery_search,
@@ -15,6 +15,7 @@ import * as ReactDOM from "react-dom";
 import {Hrefs} from "Hrefs";
 import {SearchDocumentType} from "api/graphqlGlobalTypes";
 import {invariant} from "ts-invariant";
+import {Link} from "components/Link";
 
 const columns: MUIDataTableColumn[] = [
   {
@@ -64,9 +65,7 @@ const columns: MUIDataTableColumn[] = [
         const sdfDocument = rowData[getPropertyColumnIndex("sdfDocument")];
         return (
           <Link
-            href={Hrefs.sdfDocuments
-              .sdfDocument({id: sdfDocumentId})
-              .toString()}
+            to={Hrefs.sdfDocuments.sdfDocument({id: sdfDocumentId}).toString()}
             data-cy="sdf-document-link"
           >
             {sdfDocument ? sdfDocument.name : sdfDocumentId}
@@ -96,7 +95,7 @@ const columns: MUIDataTableColumn[] = [
           rowData[getPropertyColumnIndex("sdfDocumentId")];
         return (
           <Link
-            href={Hrefs.sdfDocuments
+            to={Hrefs.sdfDocuments
               .sdfDocument({id: sdfDocumentId})
               .schemas.schema({id: schemaId})
               .toString()}
@@ -130,7 +129,7 @@ const columns: MUIDataTableColumn[] = [
             invariant(schemaId, "schema id must be defined");
             return (
               <Link
-                href={Hrefs.sdfDocuments
+                to={Hrefs.sdfDocuments
                   .sdfDocument({id: sdfDocumentId})
                   .schemas.schema({id: schemaId!})
                   .toString()}
@@ -142,7 +141,7 @@ const columns: MUIDataTableColumn[] = [
           case SearchDocumentType.SdfDocument:
             return (
               <Link
-                href={Hrefs.sdfDocuments
+                to={Hrefs.sdfDocuments
                   .sdfDocument({id: sdfDocumentId})
                   .toString()}
                 data-cy={dataCy}
@@ -155,7 +154,7 @@ const columns: MUIDataTableColumn[] = [
             invariant(slotId, "slot id must be defined");
             return (
               <Link
-                href={Hrefs.sdfDocuments
+                to={Hrefs.sdfDocuments
                   .sdfDocument({id: sdfDocumentId})
                   .schemas.schema({id: schemaId})
                   .slot({id: slotId})
@@ -170,7 +169,7 @@ const columns: MUIDataTableColumn[] = [
             invariant(stepId, "step id must be defined");
             return (
               <Link
-                href={Hrefs.sdfDocuments
+                to={Hrefs.sdfDocuments
                   .sdfDocument({id: sdfDocumentId})
                   .schemas.schema({id: schemaId})
                   .step({id: stepId})

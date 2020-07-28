@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-  Link,
   Table,
   TableBody,
   TableCell,
@@ -8,6 +7,7 @@ import {
   TableRow,
 } from "@material-ui/core";
 import {Hrefs} from "Hrefs";
+import {Link} from "components/Link";
 
 export const SchemasTable: React.FunctionComponent<{
   schemas: {id: string; name: string; sdfDocumentId: string}[];
@@ -28,14 +28,10 @@ export const SchemasTable: React.FunctionComponent<{
         return (
           <TableRow data-cy={"schema-" + schema.id} key={schema.id}>
             <TableCell data-cy="schema-id">
-              <Link component="a" href={schemaHref}>
-                {schema.id}
-              </Link>
+              <Link to={schemaHref}>{schema.id}</Link>
             </TableCell>
             <TableCell data-cy="schema-name">
-              <Link component="a" href={schemaHref}>
-                {schema.name}
-              </Link>
+              <Link to={schemaHref}>{schema.name}</Link>
             </TableCell>
           </TableRow>
         );

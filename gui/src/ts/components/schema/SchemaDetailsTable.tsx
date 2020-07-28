@@ -1,9 +1,10 @@
 import * as React from "react";
-import {Link, Table, TableBody, TableCell, TableRow} from "@material-ui/core";
+import {Table, TableBody, TableCell, TableRow} from "@material-ui/core";
 import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {Hrefs} from "Hrefs";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {SchemaPageSchema} from "components/schema/SchemaPageSchema";
+import {Link} from "components/Link";
 
 export const SchemaDetailsTable: React.FunctionComponent<{
   schema: SchemaPageSchema;
@@ -25,7 +26,7 @@ export const SchemaDetailsTable: React.FunctionComponent<{
           <TableCell>Super</TableCell>
           <TableCell data-cy="schema-super">
             <Link
-              href={Hrefs.sdfDocuments
+              to={Hrefs.sdfDocuments
                 .sdfDocument({id: schema.sdfDocumentId})
                 .schemas.schema({id: schema.super})
                 .toString()}
