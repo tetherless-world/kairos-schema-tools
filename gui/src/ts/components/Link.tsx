@@ -5,9 +5,10 @@ import {Link as RouterLink} from "react-router-dom";
 
 export const Link: React.FunctionComponent<PropsWithChildren<{
   color?: string;
+  dataCy?: string;
   to: string;
-}>> = ({children, color, to}) => (
-  <MuiLink component={RouterLink} to={to}>
+}>> = ({children, color, dataCy, to}) => (
+  <MuiLink component={RouterLink} data-cy={dataCy} to={to}>
     {children}
   </MuiLink>
 );

@@ -129,11 +129,11 @@ const columns: MUIDataTableColumn[] = [
             invariant(schemaId, "schema id must be defined");
             return (
               <Link
+                dataCy={dataCy}
                 to={Hrefs.sdfDocuments
                   .sdfDocument({id: sdfDocumentId})
                   .schemas.schema({id: schemaId!})
                   .toString()}
-                data-cy={dataCy}
               >
                 Schema: {label}
               </Link>
@@ -141,10 +141,10 @@ const columns: MUIDataTableColumn[] = [
           case SearchDocumentType.SdfDocument:
             return (
               <Link
+                dataCy={dataCy}
                 to={Hrefs.sdfDocuments
                   .sdfDocument({id: sdfDocumentId})
                   .toString()}
-                data-cy={dataCy}
               >
                 SDF document: {label}
               </Link>
@@ -154,12 +154,12 @@ const columns: MUIDataTableColumn[] = [
             invariant(slotId, "slot id must be defined");
             return (
               <Link
+                dataCy={dataCy}
                 to={Hrefs.sdfDocuments
                   .sdfDocument({id: sdfDocumentId})
                   .schemas.schema({id: schemaId})
                   .slot({id: slotId})
                   .toString()}
-                data-cy={dataCy}
               >
                 Slot: {label}
               </Link>
@@ -169,12 +169,12 @@ const columns: MUIDataTableColumn[] = [
             invariant(stepId, "step id must be defined");
             return (
               <Link
+                dataCy={dataCy}
                 to={Hrefs.sdfDocuments
                   .sdfDocument({id: sdfDocumentId})
                   .schemas.schema({id: schemaId})
                   .step({id: stepId})
                   .toString()}
-                data-cy={dataCy}
               >
                 Step: {label}
               </Link>
