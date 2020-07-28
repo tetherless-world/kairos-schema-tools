@@ -46,7 +46,7 @@ export const EntityRelationCard: React.FunctionComponent<{
           </TableHead>
           <TableBody>
             {entityRelation.relations.map((relation, relationIndex) => (
-              <React.Fragment>
+              <React.Fragment key={relationIndex.toString()}>
                 {relation.relationObjects.map(
                   (relationObject, relationObjectIndex) => (
                     <TableRow

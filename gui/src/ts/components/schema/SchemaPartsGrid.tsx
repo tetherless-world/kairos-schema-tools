@@ -169,14 +169,8 @@ export const SchemaPartsGrid: React.FunctionComponent<{
         </List>
       </Grid>
       {schemaParts.map((schemaPart) => (
-        <Grid item>
-          <Grid
-            container
-            direction="column"
-            id={schemaPart.id}
-            key={schemaPart.id}
-            spacing={4}
-          >
+        <Grid key={schemaPart.id} item>
+          <Grid container direction="column" id={schemaPart.id} spacing={4}>
             <Grid item>
               <Typography variant="h4">{schemaPart.title}</Typography>
             </Grid>
