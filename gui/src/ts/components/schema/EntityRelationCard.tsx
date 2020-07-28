@@ -6,7 +6,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Link,
   Table,
   TableBody,
   TableCell,
@@ -15,6 +14,7 @@ import {
 } from "@material-ui/core";
 import * as React from "react";
 import {SchemaHrefs} from "Hrefs";
+import {Link} from "components/Link";
 
 export const EntityRelationCard: React.FunctionComponent<{
   entityRelation: SchemaPageQuery_schemaById_entityRelations;
@@ -25,7 +25,7 @@ export const EntityRelationCard: React.FunctionComponent<{
   const entityLink = (entityId: string): React.ReactNode => {
     const slot = slots.find((slot) => slot.id === entityId);
     if (slot) {
-      return <Link href={hrefs.slot(slot)}>"Slot: " + slot.roleName</Link>;
+      return <Link to={hrefs.slot(slot)}>"Slot: " + slot.roleName</Link>;
     } else {
       return <span>{entityId}</span>;
     }
@@ -46,7 +46,7 @@ export const EntityRelationCard: React.FunctionComponent<{
           </TableHead>
           <TableBody>
             {entityRelation.relations.map((relation, relationIndex) => (
-              <React.Fragment>
+              <React.Fragment key={relationIndex.toString()}>
                 {relation.relationObjects.map(
                   (relationObject, relationObjectIndex) => (
                     <TableRow

@@ -28,7 +28,7 @@ export const StepCard: React.FunctionComponent<{
           <AccordionDetails>
             <Grid container direction="column" spacing={6}>
               {step.participants.map((participant) => (
-                <Grid item>
+                <Grid key={participant.id} item>
                   <StepParticipantDetailsTable participant={participant} />
                 </Grid>
               ))}

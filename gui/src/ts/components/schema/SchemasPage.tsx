@@ -6,10 +6,10 @@ import * as SchemasPageQueryDocument from "api/queries/SchemasPageQuery.graphql"
 import {Frame} from "components/frame/Frame";
 import {StandardLayout} from "components/layout/StandardLayout";
 import {Hrefs} from "Hrefs";
-import {Link} from "@material-ui/core";
 import {SchemasTable} from "components/schema/SchemasTable";
 import {NoRoute} from "components/error/NoRoute";
 import {BreadcrumbsProps} from "components/breadcrumbs/BreadcrumbsProps";
+import {Link} from "components/Link";
 
 export const SchemasPage: React.FunctionComponent = () => {
   let {sdfDocumentId} = useParams<{sdfDocumentId?: string}>();
@@ -46,10 +46,10 @@ export const SchemasPage: React.FunctionComponent = () => {
             <span>
               Document:{" "}
               <Link
-                href={Hrefs.sdfDocuments
+                dataCy="sdf-document-name"
+                to={Hrefs.sdfDocuments
                   .sdfDocument({id: sdfDocumentId})
                   .toString()}
-                data-cy="sdf-document-name"
               >
                 {sdfDocument.name}
               </Link>

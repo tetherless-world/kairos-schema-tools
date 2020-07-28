@@ -6,7 +6,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Link,
   List,
   ListItemText,
   Table,
@@ -17,6 +16,7 @@ import {
 import * as React from "react";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {SchemaHrefs} from "Hrefs";
+import {Link} from "components/Link";
 
 export const StepListTableRow: React.FunctionComponent<{
   hrefs: SchemaHrefs;
@@ -35,7 +35,7 @@ export const StepListTableRow: React.FunctionComponent<{
         <List>
           {values.map((value) => (
             <ListItemText key={value}>
-              <Link href={hrefs.step({id: value})}>
+              <Link to={hrefs.step({id: value})}>
                 Step:&nbsp;
                 {steps.find((step) => step.id === value)?.name ?? value}
               </Link>

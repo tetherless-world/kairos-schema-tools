@@ -1,8 +1,9 @@
-import {Breadcrumbs as MuiBreadcrumbs, Link} from "@material-ui/core";
+import {Breadcrumbs as MuiBreadcrumbs} from "@material-ui/core";
 
 import {BreadcrumbsProps} from "components/breadcrumbs/BreadcrumbsProps";
 import {Hrefs} from "Hrefs";
 import * as React from "react";
+import {Link} from "components/Link";
 
 export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
   schema,
@@ -12,8 +13,8 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
     {sdfDocument ? (
       <Link
         color="inherit"
-        data-cy="sdf-documents-breadcrumb"
-        href={Hrefs.sdfDocuments.toString()}
+        dataCy="sdf-documents-breadcrumb"
+        to={Hrefs.sdfDocuments.toString()}
       >
         Schema data format documents
       </Link>
@@ -21,8 +22,8 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
     {sdfDocument ? (
       <Link
         color="textPrimary"
-        data-cy="sdf-document-breadcrumb"
-        href={Hrefs.sdfDocuments.sdfDocument(sdfDocument).toString()}
+        dataCy="sdf-document-breadcrumb"
+        to={Hrefs.sdfDocuments.sdfDocument(sdfDocument).toString()}
       >
         {sdfDocument.name}
       </Link>
@@ -30,8 +31,8 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
     {schema ? (
       <Link
         color="inherit"
-        data-cy="schemas-breadcrumb"
-        href={
+        dataCy="schemas-breadcrumb"
+        to={
           sdfDocument
             ? Hrefs.sdfDocuments.sdfDocument(sdfDocument).toString()
             : Hrefs.schemas.toString()
@@ -43,8 +44,8 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
     {schema ? (
       <Link
         color="textPrimary"
-        data-cy="schema-breadcrumb"
-        href={Hrefs.sdfDocuments
+        dataCy="schema-breadcrumb"
+        to={Hrefs.sdfDocuments
           .sdfDocument(sdfDocument)
           .schemas.schema(schema)
           .toString()}
