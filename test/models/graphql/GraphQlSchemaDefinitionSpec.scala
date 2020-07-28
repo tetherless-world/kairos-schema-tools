@@ -8,6 +8,8 @@ import sangria.execution.Executor
 import sangria.marshalling.playJson._
 import stores.{ExampleData, TestStore}
 import sangria.macros._
+import services.Services
+import services.validation.DummyKsfValidationApiService
 
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -100,12 +102,32 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
       result must include(sdfDocument.name)
       result must include(sdfDocument.id.toString)
     }
+
+    "validate SDF document" in {
+      val query =
+        graphql"""
+          query ValidateSdfDocumentQuery($$json: String!) {
+            validateSdfDocument(json: $$json) {
+              errorsList
+              warningsList
+            }
+          }
+          """
+      val sdfDocument = ExampleData.sdfDocuments(0)
+      val result = Json.stringify(executeQuery(query, vars = Json.obj("json" -> sdfDocument.sourceJson)))
+      result must include("errorsList")
+    }
   }
 
   def executeQuery(query: Document, vars: JsObject = Json.obj()) = {
     val futureResult = Executor.execute(GraphQlSchemaDefinition.schema, query,
       variables = vars,
-      userContext = new GraphQlSchemaContext(FakeRequest(), new TestStore)
+      userContext =
+        new GraphQlSchemaContext(
+          request = FakeRequest(),
+          services = new Services(new DummyKsfValidationApiService),
+          store = new TestStore
+        )
     )
     Await.result(futureResult, 10.seconds)
   }
