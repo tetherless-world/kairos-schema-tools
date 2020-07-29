@@ -5,6 +5,7 @@ query SdfDocumentPageQuery($id: String!) {
             id
             name
         }
+        sdfVersion
         sourceJson
     }
 }

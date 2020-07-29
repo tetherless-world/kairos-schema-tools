@@ -17,6 +17,7 @@ export interface SdfDocumentsPageQuery_sdfDocuments {
   id: string;
   name: string;
   schemas: SdfDocumentsPageQuery_sdfDocuments_schemas[];
+  sdfVersion: string;
 }
 
 export interface SdfDocumentsPageQuery {

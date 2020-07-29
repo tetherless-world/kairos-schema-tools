@@ -14,17 +14,19 @@ export const SdfDocumentsPage: React.FunctionComponent = () => {
     <Frame {...query}>
       {({data}) => (
         <StandardLayout title="Schema Data Format Documents">
-          {data.sdfDocuments.map((sdfDocument) => (
-            <Grid item key={sdfDocument.id}>
-              <SdfDocumentCard
-                {...Object.assign({}, sdfDocument, {
-                  schemas: sdfDocument.schemas.map((schema) =>
-                    Object.assign({}, schema, {sdfDocumentId: sdfDocument.id})
-                  ),
-                })}
-              />
-            </Grid>
-          ))}
+          <Grid container spacing={4}>
+            {data.sdfDocuments.map((sdfDocument) => (
+              <Grid item key={sdfDocument.id}>
+                <SdfDocumentCard
+                  {...Object.assign({}, sdfDocument, {
+                    schemas: sdfDocument.schemas.map((schema) =>
+                      Object.assign({}, schema, {sdfDocumentId: sdfDocument.id})
+                    ),
+                  })}
+                />
+              </Grid>
+            ))}
+          </Grid>
         </StandardLayout>
       )}
     </Frame>

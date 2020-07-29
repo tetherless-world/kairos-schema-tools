@@ -6,5 +6,6 @@ query SdfDocumentsPageQuery {
             id
             name
         }
+        sdfVersion
     }
 }
