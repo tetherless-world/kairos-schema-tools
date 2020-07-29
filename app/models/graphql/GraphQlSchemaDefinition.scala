@@ -1,12 +1,14 @@
 package models.graphql
 
-import formats.sdf.SdfDocument
+import formats.sdf.{MalformedSchemaDataFormatDocumentException, SdfDocument, SdfDocumentReader}
 import io.github.tetherlessworld.twxplore.lib.base.models.graphql.BaseGraphQlSchemaDefinition
-import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, SchemaPath, Slot, Step, StepOrder, StepOrderFlag, StepParticipant}
+import models.schema._
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
-import models.validation.KsfValidationResults
-import sangria.schema.{Argument, Field, InterfaceType, ListType, ObjectType, OptionType, Schema, StringType, fields}
+import models.validation.{ValidationMessage, ValidationMessageType}
 import sangria.macros.derive._
+import sangria.schema.{Argument, Field, InterfaceType, ListType, ObjectType, OptionType, Schema, StringType, fields}
+
+import scala.concurrent.Future
 
 object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   // Scalar arguments
@@ -18,6 +20,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val EntityTypeEnumType = deriveEnumType[EntityType]()
   implicit val SearchDocumentTypeEnumType = deriveEnumType[SearchDocumentType]()
   implicit val StepOrderFlagEnumType = deriveEnumType[StepOrderFlag]()
+  implicit val ValidationMessageTypeEnumType = deriveEnumType[ValidationMessageType]()
 
   // Interface types
   val StepOrderInterfaceType: InterfaceType[GraphQlSchemaContext, StepOrder] =
@@ -40,7 +43,6 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val ContainerContainedStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, ContainerContainedStepOrder](
     Interfaces(StepOrderInterfaceType)
   )
-  implicit val KsfValidationResultsObjectType = deriveObjectType[GraphQlSchemaContext, KsfValidationResults]()
   implicit val OverlapsStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, OverlapsStepOrder](
     Interfaces(StepOrderInterfaceType)
   )
@@ -48,6 +50,11 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val StepObjectType = deriveObjectType[GraphQlSchemaContext, Step]()
   implicit val SchemaObjectType = deriveObjectType[GraphQlSchemaContext, models.schema.Schema](
     ReplaceField("order", Field("order", ListType(StepOrderInterfaceType), resolve = _.value.order))
+  )
+  implicit val SdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocument](
+    AddFields(
+      Field("name", StringType, resolve = _.value.name)
+    )
   )
   implicit val SchemaPathObjectType = deriveObjectType[GraphQlSchemaContext, SchemaPath](
     AddFields(
@@ -69,13 +76,9 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
       Field("sdfDocument", OptionType(SdfDocumentObjectType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.sdfDocumentId)),
     )
   )
-  implicit val SdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocument](
-    AddFields(
-      Field("name", StringType, resolve = _.value.name)
-    )
-  )
   implicit val SearchDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SearchDocument]()
   implicit val SearchResultsObjectType = deriveObjectType[GraphQlSchemaContext, SearchResults]()
+  implicit val ValidationMessageObjectType = deriveObjectType[GraphQlSchemaContext, ValidationMessage]()
 
   // Root query
   val RootQueryType = ObjectType("RootQuery",  fields[GraphQlSchemaContext, Unit](
@@ -84,7 +87,15 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
     Field("sdfDocumentById", OptionType(SdfDocumentObjectType), arguments = IdArgument :: Nil, resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.args.arg(IdArgument))),
     Field("sdfDocuments", ListType(SdfDocumentObjectType), resolve = _.ctx.store.getSdfDocuments),
     Field("search", SearchResultsObjectType, arguments = LimitArgument :: OffsetArgument :: QueryArgument :: Nil, resolve = ctx => ctx.ctx.store.search(limit = ctx.args.arg(LimitArgument), offset = ctx.args.arg(OffsetArgument), query = ctx.args.arg(QueryArgument))),
-    Field("validateSdfDocument", KsfValidationResultsObjectType, arguments = JsonArgument :: Nil, resolve = ctx => ctx.ctx.services.ksfValidationApiService.validate(ctx.args.arg(JsonArgument)))
+    Field("validateSdfDocument", ListType(ValidationMessageObjectType), arguments = JsonArgument :: Nil, resolve = ctx => {
+        val sdfDocumentJson = ctx.args.arg(JsonArgument)
+        try {
+          val sdfDocument = SdfDocumentReader.read(sdfDocumentJson)
+          ctx.ctx.validators.validateSdfDocument(sdfDocument)
+        } catch {
+          case e: MalformedSchemaDataFormatDocumentException => Future.successful(List(ValidationMessage(message = e.getMessage, path = e.path, `type` = ValidationMessageType.Error)))
+        }
+    })
   ))
 
   // Schema

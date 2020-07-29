@@ -1,3 +1,6 @@
 package formats.sdf
 
-final class MalformedSchemaDataFormatDocumentException(message: String) extends Exception(message)
+import edu.rpi.tw.twks.uri.Uri
+import models.schema.SchemaPath
+
+final class MalformedSchemaDataFormatDocumentException(message: String, val path: SchemaPath) extends Exception(message)

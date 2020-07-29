@@ -1,7 +1,7 @@
 package models.graphql
 
 import play.api.mvc.Request
-import services.Services
+import validators.Validators
 import stores.Store
 
-final class GraphQlSchemaContext(request: Request[_], val services: Services, val store: Store)
+final class GraphQlSchemaContext(request: Request[_], val store: Store, val validators: Validators)

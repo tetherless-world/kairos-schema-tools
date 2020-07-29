@@ -18,7 +18,7 @@ trait KairosProperties extends PropertyGetters {
   def entityTypes: List[EntityType] = getPropertyObjectUriResourceList(KAIROS.entityTypes).map(resource => {
     val uri = Uri.parse(resource.getURI)
     val abbreviation = uri.toString.substring(uri.toString.lastIndexOf('/') + 1)
-    EntityType.values.find(_.value == abbreviation).getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"unknown entity type ${abbreviation}"))
+    EntityType.values.find(_.value == abbreviation).getOrElse(throw new IllegalArgumentException(s"unknown entity type ${abbreviation}"))
   })
   def flags: List[String] = getPropertyObjectStrings(KAIROS.flags)
   def maxDuration: List[XSDDuration] = getPropertyObjectDurations(KAIROS.maxDuration)
