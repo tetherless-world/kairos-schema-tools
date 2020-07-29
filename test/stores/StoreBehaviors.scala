@@ -5,7 +5,7 @@ import models.search.SearchDocumentType
 import org.scalatest.{Matchers, WordSpec}
 
 trait StoreBehaviors extends Matchers { this: WordSpec =>
-  val testSdfDocument1 = ExampleData.sdfDocuments(0)
+  val testSdfDocument1 = ConfData.sdfDocuments(0)
   val testSchema1 = testSdfDocument1.schemas(0)
 
   def store(storeFactory: () => Store): Unit = {

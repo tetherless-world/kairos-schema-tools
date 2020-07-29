@@ -4,6 +4,10 @@ import {
   CardContent,
   CardHeader,
   Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
   Typography,
 } from "@material-ui/core";
 import {Hrefs} from "Hrefs";
@@ -18,7 +22,8 @@ export const SdfDocumentCard: React.FunctionComponent<{
     name: string;
     sdfDocumentId: string;
   }[];
-}> = ({id, name, schemas}) => {
+  sdfVersion: string;
+}> = ({id, name, schemas, sdfVersion}) => {
   return (
     <Card data-cy={"sdf-document-card-" + id}>
       <CardHeader
@@ -36,12 +41,23 @@ export const SdfDocumentCard: React.FunctionComponent<{
       <CardContent>
         <Grid container direction="column" spacing={4}>
           <Grid item>
-            <Typography variant="h6">
-              Identifier: <span data-cy="sdf-document-id">{id}</span>
-            </Typography>
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Identifier</TableCell>
+                  <TableCell data-cy="sdf-document-id">{id}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Version</TableCell>
+                  <TableCell data-cy="sdf-document-version">
+                    {sdfVersion}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
           </Grid>
           <Grid item data-cy="sdf-document-schemas">
-            <Typography variant="h5">
+            <Typography variant="h6">
               <Link
                 dataCy="sdf-document-schemas-header"
                 to={Hrefs.sdfDocuments.sdfDocument({id}).schemas.toString()}

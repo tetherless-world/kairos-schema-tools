@@ -4,14 +4,14 @@ import formats.sdf.SdfDocumentReader
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, OverlapsStepOrder}
 import org.scalatest.{Matchers, WordSpec}
-import stores.ExampleData
+import stores.ConfData
 
 import scala.io.Source
 
 class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
   "Schema data format reader" can {
     "read the coordinated bombing attack TA1 example" in {
-      val testDocument = ExampleData.coordinatedBombingAttackTa1
+      val testDocument = ConfData.coordinatedBombingAttackTa1
       withResource(new SdfDocumentReader(Source.fromString(testDocument.sourceJson))) { reader =>
         val document = reader.read()
 
