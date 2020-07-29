@@ -3,16 +3,18 @@ query SearchResultsPageQuery($limit: Int!, $offset: Int!, $query: String!) {
         documents {
             id
             label
-            schema {
-                name
+            path {
+                schema {
+                    name
+                }
+                schemaId
+                sdfDocument {
+                    name
+                }
+                sdfDocumentId
+                slotId
+                stepId
             }
-            schemaId
-            sdfDocument {
-                name
-            }
-            sdfDocumentId
-            slotId
-            stepId
             type
         }
         total
