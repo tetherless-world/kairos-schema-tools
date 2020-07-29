@@ -90,7 +90,9 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
             search(limit: 10, offset: 0, query: $$query) {
               documents {
                 label
-                sdfDocumentId
+                path {
+                  sdfDocumentId
+                }
                 type
               }
               total
@@ -108,14 +110,13 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
         graphql"""
           query ValidateSdfDocumentQuery($$json: String!) {
             validateSdfDocument(json: $$json) {
-              errorsList
-              warningsList
+              message
+              type
             }
           }
           """
       val sdfDocument = ConfData.sdfDocuments(0)
       val result = Json.stringify(executeQuery(query, vars = Json.obj("json" -> sdfDocument.sourceJson)))
-      result must include("errorsList")
     }
   }
 
