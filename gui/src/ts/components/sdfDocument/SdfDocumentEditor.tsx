@@ -19,10 +19,15 @@ import {
 } from "@material-ui/core";
 import {useLazyQuery} from "@apollo/react-hooks";
 import * as SdfDocumentEditorQueryDocument from "api/queries/SdfDocumentEditorQuery.graphql";
-import {SdfDocumentEditorQuery} from "api/queries/types/SdfDocumentEditorQuery";
+import {
+  SdfDocumentEditorQuery,
+  SdfDocumentEditorQuery_validateSdfDocument,
+} from "api/queries/types/SdfDocumentEditorQuery";
+import {ValidationMessageType} from "api/graphqlGlobalTypes";
+import * as _ from "lodash";
 
 const ValidationErrorsCard: React.FunctionComponent<{
-  messages: string[];
+  messages: SdfDocumentEditorQuery_validateSdfDocument[];
   title: string;
 }> = ({messages, title}) => (
   <Card>
@@ -34,7 +39,7 @@ const ValidationErrorsCard: React.FunctionComponent<{
             <TableRow key={messageIndex.toString()}>
               <TableCell>{messageIndex + 1}</TableCell>
               <TableCell style={{overflowWrap: "break-word"}}>
-                {message}
+                {message.message}
               </TableCell>
             </TableRow>
           ))}
@@ -52,6 +57,22 @@ export const SdfDocumentEditor: React.FunctionComponent<{
   const [validateSdfDocument, {data: validateSdfDocumentData}] = useLazyQuery<
     SdfDocumentEditorQuery
   >(SdfDocumentEditorQueryDocument);
+
+  const validationMessagesByType: {
+    [index: string]: SdfDocumentEditorQuery_validateSdfDocument[];
+  } = {};
+  if (validateSdfDocumentData) {
+    for (const validationMessage of validateSdfDocumentData.validateSdfDocument) {
+      let validationMessagesForType =
+        validationMessagesByType[validationMessage.type];
+      if (!validationMessagesForType) {
+        validationMessagesForType = validationMessagesByType[
+          validationMessage.type
+        ] = [];
+      }
+      validationMessagesForType.push(validationMessage);
+    }
+  }
 
   return (
     <Grid container direction="row" spacing={4}>
@@ -84,32 +105,27 @@ export const SdfDocumentEditor: React.FunctionComponent<{
       <Grid item xs={4}>
         {validateSdfDocumentData ? (
           <Grid container direction="column" spacing={8}>
-            {validateSdfDocumentData.validateSdfDocument.errorsList.length >
-            0 ? (
+            {validationMessagesByType[ValidationMessageType.Error] ? (
               <Grid item>
                 <ValidationErrorsCard
                   messages={
-                    validateSdfDocumentData.validateSdfDocument.errorsList
+                    validationMessagesByType[ValidationMessageType.Error]
                   }
                   title="Errors"
                 />
               </Grid>
             ) : null}
-            {validateSdfDocumentData.validateSdfDocument.warningsList.length >
-            0 ? (
+            {validationMessagesByType[ValidationMessageType.Warning] ? (
               <Grid item>
                 <ValidationErrorsCard
                   messages={
-                    validateSdfDocumentData?.validateSdfDocument.warningsList
+                    validationMessagesByType[ValidationMessageType.Warning]
                   }
                   title="Warnings"
                 />
               </Grid>
             ) : null}
-            {validateSdfDocumentData.validateSdfDocument.errorsList.length ===
-              0 &&
-            validateSdfDocumentData.validateSdfDocument.warningsList.length ===
-              0 ? (
+            {_.isEmpty(validationMessagesByType) ? (
               <Grid item>
                 <h2>No validation errors detected.</h2>
               </Grid>
