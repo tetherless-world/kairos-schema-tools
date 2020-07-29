@@ -6,7 +6,7 @@ import play.api.test.FakeRequest
 import sangria.ast.Document
 import sangria.execution.Executor
 import sangria.marshalling.playJson._
-import stores.{ExampleData, TestStore}
+import stores.{ConfData, TestStore}
 import sangria.macros._
 import services.Services
 import services.validation.DummyKsfValidationApiService
@@ -28,7 +28,7 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
           }
           """
       val result = Json.stringify(executeQuery(query))
-      for (schema <- ExampleData.schemas) {
+      for (schema <- ConfData.schemas) {
         result must include(schema.id.toString)
         result must include(schema.name)
       }
@@ -43,7 +43,7 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
             }
           }
           """
-      val expected = ExampleData.schemas(0)
+      val expected = ConfData.schemas(0)
       executeQuery(query, vars = Json.obj("id" -> expected.id.toString)) must be(Json.parse(
         s"""
            |{"data":{"schemaById":{"name":"${expected.name}"}}}
@@ -61,7 +61,7 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
           }
           """
       val result = Json.stringify(executeQuery(query))
-      for (sdfDoc <- ExampleData.sdfDocuments) {
+      for (sdfDoc <- ConfData.sdfDocuments) {
         result must include(sdfDoc.id.toString)
         result must include("@id")
       }
@@ -76,7 +76,7 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
             }
           }
           """
-      val expected = ExampleData.sdfDocuments(0)
+      val expected = ConfData.sdfDocuments(0)
       executeQuery(query, vars = Json.obj("id" -> expected.id.toString)) must be(Json.parse(
         s"""
            |{"data":{"sdfDocumentById":{"id":"${expected.id}"}}}
@@ -97,7 +97,7 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
             }
           }
           """
-      val sdfDocument = ExampleData.sdfDocuments(0)
+      val sdfDocument = ConfData.sdfDocuments(0)
       val result = Json.stringify(executeQuery(query, vars = Json.obj("query" -> sdfDocument.name)))
       result must include(sdfDocument.name)
       result must include(sdfDocument.id.toString)
@@ -113,7 +113,7 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
             }
           }
           """
-      val sdfDocument = ExampleData.sdfDocuments(0)
+      val sdfDocument = ConfData.sdfDocuments(0)
       val result = Json.stringify(executeQuery(query, vars = Json.obj("json" -> sdfDocument.sourceJson)))
       result must include("errorsList")
     }
