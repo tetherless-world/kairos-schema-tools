@@ -5,7 +5,7 @@ import com.outr.lucene4s.DirectLucene
 import com.outr.lucene4s.field.FieldType
 import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.SdfDocument
-import models.schema.{Schema, Slot, Step}
+import models.schema.{Schema, SchemaPath, Slot, Step}
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 
 final class SearchEngine {
@@ -35,9 +35,11 @@ final class SearchEngine {
           comments = slot.comments,
           id = slot.id,
           label = slot.roleName,
-          schemaId = Some(schema.id),
-          sdfDocumentId = sdfDocument.id,
-          slotId = Some(slot.id),
+          path = SchemaPath(
+            schemaId = Some(schema.id),
+            sdfDocumentId = sdfDocument.id,
+            slotId = Some(slot.id),
+          ),
           `type` = SearchDocumentType.Slot))
 
       def putStep(step: Step): Unit =
@@ -46,9 +48,11 @@ final class SearchEngine {
           comments = step.comments,
           label = step.name,
           id = step.id,
-          schemaId = Some(schema.id),
-          sdfDocumentId = sdfDocument.id,
-          stepId = Some(step.id),
+          path = SchemaPath(
+            schemaId = Some(schema.id),
+            sdfDocumentId = sdfDocument.id,
+            stepId = Some(step.id),
+          ),
           `type` = SearchDocumentType.Step
         ))
 
@@ -57,8 +61,10 @@ final class SearchEngine {
         comments = schema.comments,
         label = schema.name,
         id = schema.id,
-        schemaId = Some(schema.id),
-        sdfDocumentId = sdfDocument.id,
+        path = SchemaPath(
+          schemaId = Some(schema.id),
+          sdfDocumentId = sdfDocument.id,
+        ),
         `type` = SearchDocumentType.Schema))
       schema.slots.foreach(putSlot(_))
       schema.steps.foreach(putStep(_))
@@ -71,14 +77,14 @@ final class SearchEngine {
           (List(
             Fields.id(searchDocument.id.toString),
             Fields.label(searchDocument.label),
-            Fields.sdfDocumentId(searchDocument.sdfDocumentId.toString),
+            Fields.sdfDocumentId(searchDocument.path.sdfDocumentId.toString),
             Fields.`type`(searchDocument.`type`.value)
           ) ++
             searchDocument.aka.map(aka => Fields.aka(aka.mkString(" "))).toList ++
             searchDocument.comments.map(comments => Fields.comments(comments.mkString(" "))).toList ++
-            searchDocument.schemaId.map(schemaId => Fields.schemaId(schemaId.toString)).toList ++
-            searchDocument.slotId.map(slotId => Fields.slotId(slotId.toString)).toList ++
-            searchDocument.stepId.map(stepId => Fields.stepId(stepId.toString)).toList
+            searchDocument.path.schemaId.map(schemaId => Fields.schemaId(schemaId.toString)).toList ++
+            searchDocument.path.slotId.map(slotId => Fields.slotId(slotId.toString)).toList ++
+            searchDocument.path.stepId.map(stepId => Fields.stepId(stepId.toString)).toList
             ): _*)
         .index()
     }
@@ -86,7 +92,9 @@ final class SearchEngine {
     putSearchDocument(SearchDocument(
       label = sdfDocument.name,
       id = sdfDocument.id,
-      sdfDocumentId = sdfDocument.id,
+      path = SchemaPath(
+        sdfDocumentId = sdfDocument.id,
+      ),
       `type` = SearchDocumentType.SdfDocument
     ))
     sdfDocument.schemas.foreach(putSchema(_))
@@ -100,10 +108,12 @@ final class SearchEngine {
         SearchDocument(
           id = Uri.parse(result(Fields.id)),
           label = result(Fields.label),
-          schemaId = Option(result(Fields.schemaId)).map(Uri.parse(_)),
-          sdfDocumentId = Uri.parse(result(Fields.sdfDocumentId)),
-          slotId = Option(result(Fields.slotId)).map(Uri.parse(_)),
-          stepId = Option(result(Fields.stepId)).map(Uri.parse(_)),
+          path = SchemaPath(
+            schemaId = Option(result(Fields.schemaId)).map(Uri.parse(_)),
+            sdfDocumentId = Uri.parse(result(Fields.sdfDocumentId)),
+            slotId = Option(result(Fields.slotId)).map(Uri.parse(_)),
+            stepId = Option(result(Fields.stepId)).map(Uri.parse(_)),
+          ),
           `type` = SearchDocumentType.values.find(result(Fields.`type`) == _.value).get
         )),
       total = luceneResults.total.intValue()
