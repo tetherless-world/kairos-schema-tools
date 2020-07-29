@@ -8,8 +8,8 @@ import sangria.execution.Executor
 import sangria.marshalling.playJson._
 import stores.{ConfData, TestStore}
 import sangria.macros._
-import services.Services
-import services.validation.DummyKsfValidationApiService
+import validators.Validators
+import validators.ksfValidationApi.DummyKsfValidationApi
 
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -90,7 +90,9 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
             search(limit: 10, offset: 0, query: $$query) {
               documents {
                 label
-                sdfDocumentId
+                path {
+                  sdfDocumentId
+                }
                 type
               }
               total
@@ -108,14 +110,13 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
         graphql"""
           query ValidateSdfDocumentQuery($$json: String!) {
             validateSdfDocument(json: $$json) {
-              errorsList
-              warningsList
+              message
+              type
             }
           }
           """
       val sdfDocument = ConfData.sdfDocuments(0)
       val result = Json.stringify(executeQuery(query, vars = Json.obj("json" -> sdfDocument.sourceJson)))
-      result must include("errorsList")
     }
   }
 
@@ -125,8 +126,8 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
       userContext =
         new GraphQlSchemaContext(
           request = FakeRequest(),
-          services = new Services(new DummyKsfValidationApiService),
-          store = new TestStore
+          store = new TestStore,
+          validators = new Validators(new DummyKsfValidationApi),
         )
     )
     Await.result(futureResult, 10.seconds)

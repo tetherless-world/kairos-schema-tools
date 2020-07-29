@@ -42,6 +42,11 @@ export enum StepOrderFlag {
   Subevent = "Subevent",
 }
 
+export enum ValidationMessageType {
+  Error = "Error",
+  Warning = "Warning",
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

@@ -9,13 +9,13 @@ object RdfListRdfReader extends RdfReader[List[RDFNode]]{
     val first = Option(resource.getProperty(RDF.first)) flatMap {
       statement => Option(statement.getObject)
     } getOrElse {
-      throw new MalformedSchemaDataFormatDocumentException("List resource missing rdf:first")
+      throw new IllegalArgumentException("List resource missing rdf:first")
     }
 
     val rest = Option(resource.getProperty(RDF.rest)) flatMap {
       statement => Option(statement.getObject)
     } getOrElse {
-      throw new MalformedSchemaDataFormatDocumentException("List resource missing rdf:rest")
+      throw new IllegalArgumentException("List resource missing rdf:rest")
     }
 
     rest.asResource match {

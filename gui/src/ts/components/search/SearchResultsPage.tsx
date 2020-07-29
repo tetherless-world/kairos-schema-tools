@@ -8,7 +8,6 @@ import {Typography} from "@material-ui/core";
 import {
   SearchResultsPageQuery,
   SearchResultsPageQuery_search,
-  SearchResultsPageQuery_search_documents,
   SearchResultsPageQueryVariables,
 } from "api/queries/types/SearchResultsPageQuery";
 import * as ReactDOM from "react-dom";
@@ -46,13 +45,13 @@ const columns: MUIDataTableColumn[] = [
     },
   },
   {
-    name: "sdfDocument",
+    name: "path.sdfDocument",
     options: {
       display: "false",
     },
   },
   {
-    name: "sdfDocumentId",
+    name: "path.sdfDocumentId",
     label: "SDF document",
     options: {
       customBodyRender(_, tableMeta): any {
@@ -61,8 +60,8 @@ const columns: MUIDataTableColumn[] = [
           tableMeta.rowIndex
         ] as unknown) as any[];
         const sdfDocumentId: string =
-          rowData[getPropertyColumnIndex("sdfDocumentId")];
-        const sdfDocument = rowData[getPropertyColumnIndex("sdfDocument")];
+          rowData[getPropertyColumnIndex("path.sdfDocumentId")];
+        const sdfDocument = rowData[getPropertyColumnIndex("path.sdfDocument")];
         return (
           <Link
             dataCy="sdf-document-link"
@@ -75,13 +74,13 @@ const columns: MUIDataTableColumn[] = [
     },
   },
   {
-    name: "schema",
+    name: "path.schema",
     options: {
       display: "false",
     },
   },
   {
-    name: "schemaId",
+    name: "path.schemaId",
     label: "Schema",
     options: {
       customBodyRender(_, tableMeta): any {
@@ -89,10 +88,10 @@ const columns: MUIDataTableColumn[] = [
         const rowData = (tableMeta.tableData[
           tableMeta.rowIndex
         ] as unknown) as any[];
-        const schema = rowData[getPropertyColumnIndex("schema")];
-        const schemaId = rowData[getPropertyColumnIndex("schemaId")];
+        const schema = rowData[getPropertyColumnIndex("path.schema")];
+        const schemaId = rowData[getPropertyColumnIndex("path.schemaId")];
         const sdfDocumentId: string =
-          rowData[getPropertyColumnIndex("sdfDocumentId")];
+          rowData[getPropertyColumnIndex("path.sdfDocumentId")];
         return (
           <Link
             dataCy="schema-link"
@@ -115,11 +114,12 @@ const columns: MUIDataTableColumn[] = [
         const rowData = (tableMeta.tableData[
           tableMeta.rowIndex
         ] as unknown) as any[];
-        const schemaId: string = rowData[getPropertyColumnIndex("schemaId")];
+        const schemaId: string =
+          rowData[getPropertyColumnIndex("path.schemaId")];
         const sdfDocumentId: string =
-          rowData[getPropertyColumnIndex("sdfDocumentId")];
-        const slotId: string = rowData[getPropertyColumnIndex("slotId")];
-        const stepId: string = rowData[getPropertyColumnIndex("stepId")];
+          rowData[getPropertyColumnIndex("path.sdfDocumentId")];
+        const slotId: string = rowData[getPropertyColumnIndex("path.slotId")];
+        const stepId: string = rowData[getPropertyColumnIndex("path.stepId")];
         const type: SearchDocumentType =
           rowData[getPropertyColumnIndex("type")];
 
@@ -186,22 +186,20 @@ const columns: MUIDataTableColumn[] = [
     },
   },
   {
-    name: "slotId",
+    name: "path.slotId",
     options: {
       display: "false",
     },
   },
   {
-    name: "stepId",
+    name: "path.stepId",
     options: {
       display: "false",
     },
   },
 ];
 
-const getPropertyColumnIndex = (
-  property: Exclude<keyof SearchResultsPageQuery_search_documents, "__typename">
-) => {
+const getPropertyColumnIndex = (property: string) => {
   return columns.findIndex(
     (col) => typeof col !== "string" && col.name === property
   );
@@ -263,6 +261,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
               columns={columns}
               options={{
                 count: searchResults.total,
+                enableNestedDataAccess: ".", // allows nested data separated by "." (see column names and the data structure above)
                 filter: false,
                 rowsPerPageOptions: [],
                 serverSide: true,
