@@ -1,3 +1,5 @@
+#import "./ValidationMessageFragment.graphql"
+
 query SdfDocumentPageQuery($id: String!) {
     sdfDocumentById(id: $id) {
         name
@@ -7,5 +9,8 @@ query SdfDocumentPageQuery($id: String!) {
         }
         sdfVersion
         sourceJson
+        validationMessages {
+            ... ValidationMessageFragment
+        }
     }
 }

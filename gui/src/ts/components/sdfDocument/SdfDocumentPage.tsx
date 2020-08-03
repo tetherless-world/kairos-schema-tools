@@ -57,7 +57,10 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                   <SdfDocumentCard {...sdfDocument} />
                 </div>
                 <div hidden={tab !== "source"}>
-                  <SdfDocumentEditor sourceJson={sdfDocument.sourceJson} />
+                  <SdfDocumentEditor
+                    initialValidationMessages={sdfDocument.validationMessages}
+                    sourceJson={sdfDocument.sourceJson}
+                  />
                 </div>
               </Grid>
             </Grid>

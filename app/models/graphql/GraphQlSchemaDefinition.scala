@@ -81,12 +81,10 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
     Field("type", ValidationMessageTypeEnumType, resolve = _.value.`type`)
   )
   )
-  implicit lazy val SdfDocumentObjectType: ObjectType[GraphQlSchemaContext, SdfDocument] = ObjectType("SdfDocument", () => fields[GraphQlSchemaContext, SdfDocument](
-    Field("id", UriType, resolve = _.value.id),
-    Field("name", StringType, resolve = _.value.name),
-    Field("schemas", ListType(SchemaObjectType), resolve = _.value.schemas),
-    Field("validationMessages", ListType(ValidationMessageObjectType), resolve = _.value.validationMessages)
-  )
+  implicit lazy val SdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocument](
+    AddFields(
+      Field("name", StringType, resolve = _.value.name)
+    )
   )
   implicit val SearchDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SearchDocument]()
   implicit val SearchResultsObjectType = deriveObjectType[GraphQlSchemaContext, SearchResults]()

@@ -1,0 +1,4 @@
+fragment ValidationMessageFragment on ValidationMessage {
+    message
+    type
+}
