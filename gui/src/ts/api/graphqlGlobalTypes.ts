@@ -44,6 +44,7 @@ export enum StepOrderFlag {
 
 export enum ValidationMessageType {
   Error = "Error",
+  Fatal = "Fatal",
   Warning = "Warning",
 }
 

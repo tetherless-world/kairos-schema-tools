@@ -69,6 +69,10 @@ class SdfDocumentHrefs extends SubHrefs {
   get schemas() {
     return new SdfDocumentSchemasHrefs(this.home + "schema/");
   }
+
+  tab(value: "source" | "table") {
+    return this.home + qs.stringify({tab: value}, {addQueryPrefix: true});
+  }
 }
 
 class SdfDocumentsHrefs extends SubHrefs {

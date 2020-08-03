@@ -1,5 +1,6 @@
 package stores
 
+import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.{SdfDocument, SdfDocumentReader}
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 
@@ -12,11 +13,12 @@ object ConfData extends WithResource {
     if (resourceInputStream == null) {
       return None
     }
+    val resourceUri = Uri.parse(getClass.getResource(resourcePath).toURI.toString)
     val json =
       withResource(resourceInputStream) { inputStream =>
         Source.fromInputStream(inputStream, "UTF-8").mkString
       }
-    Some(SdfDocumentReader.read(json))
+    Some(SdfDocumentReader.read(json, resourceUri))
   }
 
   val coordinatedBombingAttackTa1 = readSdfDocumentResource("coordinated-bombing-attack-ta1.json").get

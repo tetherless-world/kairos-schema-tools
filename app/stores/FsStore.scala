@@ -32,7 +32,7 @@ final class FsStore(val rootDirectoryPath: Path) extends Store with WithResource
     Files.list(rootDirectoryPath).collect(Collectors.toList()).asScala.flatMap(path => {
       if (Files.isRegularFile(path) && path.getFileName.toString.toLowerCase().endsWith(".json")) {
         withResource(Source.fromFile(path.toFile)) { source =>
-          Some((path.getFileName.toString, new SdfDocumentReader(source).read()))
+          Some((path.getFileName.toString, new SdfDocumentReader(source, Uri.parse(path.toUri.toString)).read()))
         }
       } else {
         None

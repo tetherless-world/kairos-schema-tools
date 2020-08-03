@@ -3,10 +3,11 @@ package formats.sdf.versions
 import java.io.StringWriter
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.sdf.{MalformedSchemaDataFormatDocumentException, SdfDocument, SdfDocumentHeader}
+import formats.sdf.{SdfDocument, SdfDocumentHeader}
 import formats.sdf.vocabulary.{KAIROS, KairosProperties, SCHEMA_ORG, SchemaOrgProperties}
 import io.github.tetherlessworld.scena.{Rdf, RdfProperties, RdfReader}
 import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Schema, SchemaPath, Slot, Step, StepOrder, StepOrderFlag, StepParticipant}
+import models.validation.ValidationException
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.riot.Lang
 
@@ -25,14 +26,14 @@ final class ZeroDot8cSdfDocumentReader(documentHeader: SdfDocumentHeader, docume
   private implicit val entityRelationRelationRdfReader: RdfReader[EntityRelationRelation] = (resource) =>
     EntityRelationRelation(
       relationObjects = resource.relationObject,
-      relationPredicate = resource.relationPredicate.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"entity relation missing relation predicate: ${resource.toTtlString()}", documentPath))
+      relationPredicate = resource.relationPredicate.headOption.getOrElse(throw ValidationException(s"entity relation missing relation predicate: ${resource.toTtlString()}", documentPath))
     )
 
   private implicit val entityRelationRdfReader: RdfReader[EntityRelation] = (resource) =>
     EntityRelation(
       comments = Option(resource.comment).filter(_.nonEmpty),
       relations = resource.relations.map(Rdf.read[EntityRelationRelation](_)),
-      relationSubject = resource.relationSubject.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"entity relation missing subject: ${resource.toTtlString()}", documentPath))
+      relationSubject = resource.relationSubject.headOption.getOrElse(throw ValidationException(s"entity relation missing subject: ${resource.toTtlString()}", documentPath))
     )
 
   private implicit val slotRdfReader: RdfReader[Slot] = (resource) => {
@@ -44,7 +45,7 @@ final class ZeroDot8cSdfDocumentReader(documentHeader: SdfDocumentHeader, docume
       id = id,
       references = Option(resource.reference).filter(_.nonEmpty),
       refvar = resource.refvar.headOption,
-      roleName = resource.roleName.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"slot ${id} missing required roleName property", documentPath))
+      roleName = resource.roleName.headOption.getOrElse(throw ValidationException(s"slot ${id} missing required roleName property", documentPath))
     )
   }
 
@@ -54,7 +55,7 @@ final class ZeroDot8cSdfDocumentReader(documentHeader: SdfDocumentHeader, docume
     val comments = Option(resource.comment).filter(_.nonEmpty)
     val contained = resource.contained
     val container = resource.container
-    val flags = Option(resource.flags.map(flagString => StepOrderFlag.values.find(_.value == flagString).getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"unknown step order flag ${flagString}", documentPath)))).filter(_.nonEmpty)
+    val flags = Option(resource.flags.map(flagString => StepOrderFlag.values.find(_.value == flagString).getOrElse(throw ValidationException(s"unknown step order flag ${flagString}", documentPath)))).filter(_.nonEmpty)
     val overlaps = resource.overlaps
 
     if (after.nonEmpty && before.nonEmpty) {
@@ -64,7 +65,7 @@ final class ZeroDot8cSdfDocumentReader(documentHeader: SdfDocumentHeader, docume
     } else if (overlaps.nonEmpty) {
       OverlapsStepOrder(comments = comments, flags = flags, overlaps = overlaps)
     } else {
-      throw new MalformedSchemaDataFormatDocumentException(s"invalid step order:\n${resource.toTtlString()}", documentPath)
+      throw ValidationException(s"invalid step order:\n${resource.toTtlString()}", documentPath)
     }
   }
 
@@ -75,10 +76,10 @@ final class ZeroDot8cSdfDocumentReader(documentHeader: SdfDocumentHeader, docume
       comments = Option(resource.comment).filter(_.nonEmpty),
       entityTypes = Option(resource.entityTypes).filter(_.nonEmpty),
       id = id,
-      name = resource.name.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"step participant ${id} missing required name property", documentPath)),
+      name = resource.name.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required name property", documentPath)),
       references = Option(resource.reference).filter(_.nonEmpty),
       refvar = resource.refvar.headOption,
-      role = resource.role.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"step participant ${id} missing required role property", documentPath))
+      role = resource.role.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required role property", documentPath))
     )
   }
 
@@ -91,11 +92,11 @@ final class ZeroDot8cSdfDocumentReader(documentHeader: SdfDocumentHeader, docume
       maxDuration = resource.maxDuration.map(Duration(_)).headOption,
       minDuration = resource.minDuration.map(Duration(_)).headOption,
       id = id,
-      name = resource.name.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"step ${id} missing required name property", documentPath)),
+      name = resource.name.headOption.getOrElse(throw ValidationException(s"step ${id} missing required name property", documentPath)),
       participants = Option(resource.participants.map(Rdf.read[StepParticipant](_))).filter(_.nonEmpty),
       references = Option(resource.reference).filter(_.nonEmpty),
       requires = Option(resource.requires).filter(_.nonEmpty),
-      `type` = Uri.parse(resource.types.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"step ${id} missing type", documentPath)).getURI)
+      `type` = Uri.parse(resource.types.headOption.getOrElse(throw ValidationException(s"step ${id} missing type", documentPath)).getURI)
     )
   }
 
@@ -107,7 +108,7 @@ final class ZeroDot8cSdfDocumentReader(documentHeader: SdfDocumentHeader, docume
       description = resource.description.headOption.getOrElse(s"schema ${id} missing required description property"),
       entityRelations = resource.entityRelations.map(Rdf.read[EntityRelation](_)),
       id = id,
-      name = resource.name.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"schema ${id} missing required name property", documentPath)),
+      name = resource.name.headOption.getOrElse(throw ValidationException(s"schema ${id} missing required name property", documentPath)),
       order = resource.order.map(resource => Rdf.read[StepOrder](resource)),
       references = Option(resource.reference).filter(_.nonEmpty),
       sdfDocumentId = documentId,
@@ -115,7 +116,7 @@ final class ZeroDot8cSdfDocumentReader(documentHeader: SdfDocumentHeader, docume
       steps = resource.steps.map(resource => Rdf.read[Step](resource)),
       `super` = resource.`super`.headOption,
       ta2 = false,
-      version = resource.version.headOption.getOrElse(throw new MalformedSchemaDataFormatDocumentException(s"schema ${id} missing version property", documentPath))
+      version = resource.version.headOption.getOrElse(throw ValidationException(s"schema ${id} missing version property", documentPath))
     )
   }
 
@@ -124,7 +125,8 @@ final class ZeroDot8cSdfDocumentReader(documentHeader: SdfDocumentHeader, docume
       id = documentId,
       schemas = documentHeader.rootResource.schemas.map(Rdf.read[Schema](_)),
       sdfVersion = ZeroDot8cSdfDocumentReader.SdfVersion,
-      sourceJson = documentSourceJson
+      sourceJson = documentSourceJson,
+      validationMessages = List()
     )
   }
 }

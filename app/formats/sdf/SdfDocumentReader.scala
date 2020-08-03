@@ -7,41 +7,90 @@ import formats.sdf.versions.ZeroDot8cSdfDocumentReader
 import formats.sdf.vocabulary.KAIROS
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import models.schema.SchemaPath
+import models.validation.{ValidationException, ValidationMessage, ValidationMessageType}
 import org.apache.jena.rdf.model.{Model, ModelFactory, Resource}
-import org.apache.jena.riot.Lang
+import org.apache.jena.riot.{Lang, RiotException}
 
 import scala.io.Source
 
 /**
  * Schema Data Format (SDF) document reader
  *
- * @param documentId URI for the document. If absent a URI will be generated from the document source.
- * @param documentSource source to read Schema Data Format JSON documents
+ * @param source source to read Schema Data Format JSON documents
+ * @param sourceUri URI of the source, such as a file: URI; only used if the document can't be parsed
  */
-final class SdfDocumentReader(documentSource: Source) extends AutoCloseable {
+final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoCloseable {
   override def close(): Unit =
-    documentSource.close()
+    source.close()
 
   def read(): SdfDocument = {
-    val documentSourceJson = documentSource.mkString
+    val sourceJson = source.mkString
 
     val model = ModelFactory.createDefaultModel()
-    model.read(new StringReader(documentSourceJson), "", Lang.JSONLD.getName)
+    try {
+      model.read(new StringReader(sourceJson), "", Lang.JSONLD.getName)
+    } catch {
+      case e: RiotException => {
+        return SdfDocument(
+          id = sourceUri,
+          schemas = List(),
+          sdfVersion = "",
+          sourceJson = sourceJson,
+          validationMessages = List(
+            ValidationMessage(
+              message = e.getMessage,
+              path = SchemaPath(sdfDocumentId = sourceUri),
+              `type` = ValidationMessageType.Fatal
+            )
+          )
+        )
+
+      }
+    }
 
 //    model.write(System.out, Lang.TTL.getName)
 
-    val documentHeader = new SdfDocumentHeader(model)
+    var header: SdfDocumentHeader = null
+    try {
+      header = new SdfDocumentHeader(model, sourceUri)
+    } catch {
+      case e: ValidationException => {
+        return SdfDocument(
+            id = e.messages.map(_.path.sdfDocumentId).headOption.getOrElse(sourceUri),
+            schemas = List(),
+            sdfVersion = "",
+            sourceJson = sourceJson,
+            validationMessages = e.messages
+        )
+      }
+    }
 
-    documentHeader.sdfVersion match {
-      case ZeroDot8cSdfDocumentReader.SdfVersion => new ZeroDot8cSdfDocumentReader(documentHeader, documentSourceJson).read()
-      case sdfVersion => throw new MalformedSchemaDataFormatDocumentException(s"unrecognized SDF version ${sdfVersion}", SchemaPath(sdfDocumentId = documentHeader.id))
+    try {
+      header.sdfVersion match {
+        case ZeroDot8cSdfDocumentReader.SdfVersion => new ZeroDot8cSdfDocumentReader(header, sourceJson).read()
+        case sdfVersion =>
+          throw ValidationException(
+            message = s"unrecognized SDF version ${sdfVersion}",
+            path = SchemaPath(sdfDocumentId = header.id),
+            `type` = ValidationMessageType.Fatal
+          )
+      }
+    } catch {
+      case e: ValidationException =>
+        SdfDocument(
+          id = header.id,
+          schemas = List(),
+          sdfVersion = header.sdfVersion,
+          sourceJson = sourceJson,
+          validationMessages = e.messages
+        )
     }
   }
 }
 
 object SdfDocumentReader extends WithResource {
-  def read(documentJson: String): SdfDocument =
-    withResource(new SdfDocumentReader(Source.fromString(documentJson))) { reader =>
+  def read(sourceJson: String, sourceUri: Uri): SdfDocument =
+    withResource(new SdfDocumentReader(Source.fromString(sourceJson), sourceUri)) { reader =>
       reader.read()
     }
 }
