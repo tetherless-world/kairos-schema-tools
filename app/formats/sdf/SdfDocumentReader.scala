@@ -17,8 +17,9 @@ import scala.io.Source
  * Schema Data Format (SDF) document reader
  *
  * @param source source to read Schema Data Format JSON documents
+ * @param sourceUri URI of the source, such as a file: URI; only used if the document can't be parsed
  */
-final class SdfDocumentReader(source: Source) extends AutoCloseable {
+final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoCloseable {
   override def close(): Unit =
     source.close()
 
@@ -31,14 +32,14 @@ final class SdfDocumentReader(source: Source) extends AutoCloseable {
     } catch {
       case e: RiotException => {
         return SdfDocument(
-          id = SdfDocumentHeader.DummyId,
+          id = sourceUri,
           schemas = List(),
           sdfVersion = "",
           sourceJson = sourceJson,
           validationMessages = List(
             ValidationMessage(
               message = e.getMessage,
-              path = SdfDocumentHeader.DummyPath,
+              path = SchemaPath(sdfDocumentId = sourceUri),
               `type` = ValidationMessageType.Fatal
             )
           )
@@ -51,11 +52,11 @@ final class SdfDocumentReader(source: Source) extends AutoCloseable {
 
     var header: SdfDocumentHeader = null
     try {
-      header = new SdfDocumentHeader(model)
+      header = new SdfDocumentHeader(model, sourceUri)
     } catch {
       case e: ValidationException => {
         return SdfDocument(
-            id = e.messages.map(_.path.sdfDocumentId).head,
+            id = e.messages.map(_.path.sdfDocumentId).headOption.getOrElse(sourceUri),
             schemas = List(),
             sdfVersion = "",
             sourceJson = sourceJson,
@@ -88,8 +89,8 @@ final class SdfDocumentReader(source: Source) extends AutoCloseable {
 }
 
 object SdfDocumentReader extends WithResource {
-  def read(documentJson: String): SdfDocument =
-    withResource(new SdfDocumentReader(Source.fromString(documentJson))) { reader =>
+  def read(sourceJson: String, sourceUri: Uri): SdfDocument =
+    withResource(new SdfDocumentReader(Source.fromString(sourceJson), sourceUri)) { reader =>
       reader.read()
     }
 }

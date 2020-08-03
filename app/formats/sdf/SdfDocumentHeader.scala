@@ -6,16 +6,16 @@ import models.schema.SchemaPath
 import models.validation.{ValidationException, ValidationMessage, ValidationMessageType}
 import org.apache.jena.rdf.model.{Model, Resource}
 
-final class SdfDocumentHeader(model: Model) {
+final class SdfDocumentHeader(model: Model, sourceId: Uri) {
   private def readRootResource: Resource = {
     val versionStatements = model.listStatements(null, KAIROS.sdfVersion, null)
     if (!versionStatements.hasNext) {
-      throw ValidationException(message = "missing sdfVersion statement", path = SdfDocumentHeader.DummyPath, `type` = ValidationMessageType.Fatal)
+      throw ValidationException(message = "missing sdfVersion statement", path = SchemaPath(sdfDocumentId = sourceId), `type` = ValidationMessageType.Fatal)
     }
     val versionStatement = versionStatements.next()
     val rootResource = versionStatement.getSubject
     if (rootResource.getURI == null) {
-      throw ValidationException(message = "document root missing id", path = SdfDocumentHeader.DummyPath, `type` = ValidationMessageType.Fatal)
+      throw ValidationException(message = "document root missing id", path = SchemaPath(sdfDocumentId = sourceId), `type` = ValidationMessageType.Fatal)
     }
     rootResource
   }
@@ -37,9 +37,4 @@ final class SdfDocumentHeader(model: Model) {
     versionStatement.getObject.asLiteral().getString
   }
   val sdfVersion = readSdfVersion(id, rootResource)
-}
-
-object SdfDocumentHeader {
-  val DummyId = Uri.parse("http://example.com")
-  val DummyPath = SchemaPath(sdfDocumentId = DummyId)
 }

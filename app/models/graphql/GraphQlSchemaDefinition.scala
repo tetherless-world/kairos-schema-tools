@@ -1,5 +1,8 @@
 package models.graphql
 
+import java.util.UUID
+
+import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.{SdfDocument, SdfDocumentReader}
 import io.github.tetherlessworld.twxplore.lib.base.models.graphql.BaseGraphQlSchemaDefinition
 import models.schema._
@@ -89,7 +92,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
     Field("search", SearchResultsObjectType, arguments = LimitArgument :: OffsetArgument :: QueryArgument :: Nil, resolve = ctx => ctx.ctx.store.search(limit = ctx.args.arg(LimitArgument), offset = ctx.args.arg(OffsetArgument), query = ctx.args.arg(QueryArgument))),
     Field("validateSdfDocument", ListType(ValidationMessageObjectType), arguments = JsonArgument :: Nil, resolve = ctx => {
         val sdfDocumentJson = ctx.args.arg(JsonArgument)
-        val sdfDocument = SdfDocumentReader.read(sdfDocumentJson)
+        val sdfDocument = SdfDocumentReader.read(sdfDocumentJson, Uri.parse("urn:uuid:" + UUID.randomUUID().toString))
         if (sdfDocument.validationMessages.nonEmpty) {
           sdfDocument.validationMessages
         } else {
