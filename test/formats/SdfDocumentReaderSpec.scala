@@ -1,15 +1,31 @@
 package formats
 
+import java.util.UUID
+
+import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.SdfDocumentReader
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, OverlapsStepOrder}
+import models.validation.ValidationMessageType
 import org.scalatest.{Matchers, WordSpec}
 import stores.ConfData
 
 import scala.io.Source
 
 class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
-  "Schema data format reader" can {
+  "Schema data format document reader" can {
+    "return a valid document even if JSON parsing fails" in {
+      val sourceUri = Uri.parse("urn:uuid:" + UUID.randomUUID().toString)
+      withResource(new SdfDocumentReader(Source.fromString(""), sourceUri)) { reader =>
+        val document = reader.read()
+        document.id should equal(sourceUri)
+        document.validationMessages.size should be > 0
+        val validationMessage = document.validationMessages(0)
+        validationMessage.`type` should equal(ValidationMessageType.Fatal)
+        validationMessage.message should not be empty
+      }
+    }
+
     "read the coordinated bombing attack TA1 example" in {
       val testDocument = ConfData.coordinatedBombingAttackTa1
       withResource(new SdfDocumentReader(Source.fromString(testDocument.sourceJson), testDocument.id)) { reader =>
