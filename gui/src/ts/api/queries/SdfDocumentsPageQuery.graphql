@@ -7,5 +7,6 @@ query SdfDocumentsPageQuery {
             name
         }
         sdfVersion
+        validationMessageTypes
     }
 }

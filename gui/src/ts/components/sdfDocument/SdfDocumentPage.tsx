@@ -54,7 +54,13 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
               </Grid>
               <Grid item>
                 <div hidden={tab !== "table"}>
-                  <SdfDocumentCard {...sdfDocument} />
+                  <SdfDocumentCard
+                    {...Object.assign({}, sdfDocument, {
+                      validationMessageTypes: sdfDocument.validationMessages.map(
+                        (message) => message.type
+                      ),
+                    })}
+                  />
                 </div>
                 <div hidden={tab !== "source"}>
                   <SdfDocumentEditor

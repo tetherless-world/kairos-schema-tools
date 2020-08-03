@@ -13,6 +13,9 @@ import {
 import {Hrefs} from "Hrefs";
 import {SchemasTable} from "components/schema/SchemasTable";
 import {Link} from "components/Link";
+import {ValidationMessageType} from "api/graphqlGlobalTypes";
+import ErrorIcon from "@material-ui/icons/Error";
+import WarningIcon from "@material-ui/icons/Warning";
 
 export const SdfDocumentCard: React.FunctionComponent<{
   id: string;
@@ -23,7 +26,8 @@ export const SdfDocumentCard: React.FunctionComponent<{
     sdfDocumentId: string;
   }[];
   sdfVersion: string;
-}> = ({id, name, schemas, sdfVersion}) => {
+  validationMessageTypes: ValidationMessageType[];
+}> = ({id, name, schemas, sdfVersion, validationMessageTypes}) => {
   return (
     <Card data-cy={"sdf-document-card-" + id}>
       <CardHeader
@@ -67,6 +71,25 @@ export const SdfDocumentCard: React.FunctionComponent<{
             </Typography>
             <SchemasTable schemas={schemas} />
           </Grid>
+          {validationMessageTypes.length > 0 ? (
+            <Grid item>
+              <Typography variant="h6">
+                {validationMessageTypes.map((type) => (
+                  <React.Fragment key={type}>
+                    {type === ValidationMessageType.Warning ? (
+                      <WarningIcon />
+                    ) : (
+                      <ErrorIcon />
+                    )}
+                  </React.Fragment>
+                ))}
+                &nbsp;&nbsp;
+                <Link to={Hrefs.sdfDocuments.sdfDocument({id}).tab("source")}>
+                  Validation errors
+                </Link>
+              </Typography>
+            </Grid>
+          ) : null}
         </Grid>
       </CardContent>
     </Card>

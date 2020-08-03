@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { ValidationMessageType } from "./../../graphqlGlobalTypes";
+
 // ====================================================
 // GraphQL query operation: SdfDocumentsPageQuery
 // ====================================================
@@ -18,6 +20,7 @@ export interface SdfDocumentsPageQuery_sdfDocuments {
   name: string;
   schemas: SdfDocumentsPageQuery_sdfDocuments_schemas[];
   sdfVersion: string;
+  validationMessageTypes: ValidationMessageType[];
 }
 
 export interface SdfDocumentsPageQuery {
