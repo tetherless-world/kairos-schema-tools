@@ -1,10 +1,10 @@
 package models.graphql
 
-import formats.sdf.{MalformedSchemaDataFormatDocumentException, SdfDocument, SdfDocumentReader}
+import formats.sdf.{SdfDocument, SdfDocumentReader}
 import io.github.tetherlessworld.twxplore.lib.base.models.graphql.BaseGraphQlSchemaDefinition
 import models.schema._
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
-import models.validation.{ValidationMessage, ValidationMessageType}
+import models.validation.{ValidationException, ValidationMessage, ValidationMessageType}
 import sangria.macros.derive._
 import sangria.schema.{Argument, Field, InterfaceType, ListType, ObjectType, OptionType, Schema, StringType, fields}
 
@@ -51,34 +51,34 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val SchemaObjectType = deriveObjectType[GraphQlSchemaContext, models.schema.Schema](
     ReplaceField("order", Field("order", ListType(StepOrderInterfaceType), resolve = _.value.order))
   )
+  implicit val SchemaPathObjectType = deriveObjectType[GraphQlSchemaContext, SchemaPath](
+//    AddFields(
+//      Field("schema", OptionType(SchemaObjectType), resolve = ctx => ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_))),
+//      Field("slot", OptionType(SlotObjectType), resolve = ctx => {
+//        if (ctx.value.slotId.isDefined) {
+//          ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_)).flatMap(_.slots.find(_.id == ctx.value.slotId.get))
+//        } else {
+//          None
+//        }
+//      }),
+//      Field("step", OptionType(StepObjectType), resolve = ctx => {
+//        if (ctx.value.stepId.isDefined) {
+//          ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_)).flatMap(_.steps.find(_.id == ctx.value.stepId.get))
+//        } else {
+//          None
+//        }
+//      }),
+//      Field("sdfDocument", OptionType(SdfDocumentObjectType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.sdfDocumentId)),
+//    )
+  )
+  implicit val ValidationMessageObjectType = deriveObjectType[GraphQlSchemaContext, ValidationMessage]()
   implicit val SdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocument](
     AddFields(
       Field("name", StringType, resolve = _.value.name)
     )
   )
-  implicit val SchemaPathObjectType = deriveObjectType[GraphQlSchemaContext, SchemaPath](
-    AddFields(
-      Field("schema", OptionType(SchemaObjectType), resolve = ctx => ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_))),
-      Field("slot", OptionType(SlotObjectType), resolve = ctx => {
-        if (ctx.value.slotId.isDefined) {
-          ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_)).flatMap(_.slots.find(_.id == ctx.value.slotId.get))
-        } else {
-          None
-        }
-      }),
-      Field("step", OptionType(StepObjectType), resolve = ctx => {
-        if (ctx.value.stepId.isDefined) {
-          ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_)).flatMap(_.steps.find(_.id == ctx.value.stepId.get))
-        } else {
-          None
-        }
-      }),
-      Field("sdfDocument", OptionType(SdfDocumentObjectType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.sdfDocumentId)),
-    )
-  )
   implicit val SearchDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SearchDocument]()
   implicit val SearchResultsObjectType = deriveObjectType[GraphQlSchemaContext, SearchResults]()
-  implicit val ValidationMessageObjectType = deriveObjectType[GraphQlSchemaContext, ValidationMessage]()
 
   // Root query
   val RootQueryType = ObjectType("RootQuery",  fields[GraphQlSchemaContext, Unit](
@@ -89,11 +89,11 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
     Field("search", SearchResultsObjectType, arguments = LimitArgument :: OffsetArgument :: QueryArgument :: Nil, resolve = ctx => ctx.ctx.store.search(limit = ctx.args.arg(LimitArgument), offset = ctx.args.arg(OffsetArgument), query = ctx.args.arg(QueryArgument))),
     Field("validateSdfDocument", ListType(ValidationMessageObjectType), arguments = JsonArgument :: Nil, resolve = ctx => {
         val sdfDocumentJson = ctx.args.arg(JsonArgument)
-        try {
-          val sdfDocument = SdfDocumentReader.read(sdfDocumentJson)
+        val sdfDocument = SdfDocumentReader.read(sdfDocumentJson)
+        if (sdfDocument.validationMessages.nonEmpty) {
+          sdfDocument.validationMessages
+        } else {
           ctx.ctx.validators.validateSdfDocument(sdfDocument)
-        } catch {
-          case e: MalformedSchemaDataFormatDocumentException => Future.successful(List(ValidationMessage(message = e.getMessage, path = e.path, `type` = ValidationMessageType.Error)))
         }
     })
   ))

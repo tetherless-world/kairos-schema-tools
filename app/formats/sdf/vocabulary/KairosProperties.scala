@@ -1,8 +1,8 @@
 package formats.sdf.vocabulary
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.sdf.MalformedSchemaDataFormatDocumentException
 import models.schema.EntityType
+import models.validation.ValidationException
 import org.apache.jena.datatypes.xsd.XSDDuration
 import org.apache.jena.rdf.model.Resource
 

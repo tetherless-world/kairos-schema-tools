@@ -18,7 +18,7 @@ final class StoresModule extends AbstractModule {
 
     val dataDirectoryPaths = List(
       Paths.get("/data"),
-      Paths.get("conf").resolve("data").resolve("examples")
+      Paths.get("conf").resolve("data")
     )
     for (dataDirectoryPath <- dataDirectoryPaths) {
       if (Files.isDirectory(dataDirectoryPath)) {

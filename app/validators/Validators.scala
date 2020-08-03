@@ -1,6 +1,6 @@
 package validators
 
-import formats.sdf.{MalformedSchemaDataFormatDocumentException, SdfDocument, SdfDocumentReader}
+import formats.sdf.{SdfDocument, SdfDocumentReader}
 import javax.inject.{Inject, Singleton}
 import models.schema.SchemaPath
 import models.validation.{ValidationMessage, ValidationMessageType}
