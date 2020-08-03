@@ -51,26 +51,30 @@ export const SdfDocumentCard: React.FunctionComponent<{
                   <TableCell>Identifier</TableCell>
                   <TableCell data-cy="sdf-document-id">{id}</TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell>Version</TableCell>
-                  <TableCell data-cy="sdf-document-version">
-                    {sdfVersion}
-                  </TableCell>
-                </TableRow>
+                {sdfVersion.length > 0 ? (
+                  <TableRow>
+                    <TableCell>Version</TableCell>
+                    <TableCell data-cy="sdf-document-version">
+                      {sdfVersion}
+                    </TableCell>
+                  </TableRow>
+                ) : null}
               </TableBody>
             </Table>
           </Grid>
-          <Grid item data-cy="sdf-document-schemas">
-            <Typography variant="h6">
-              <Link
-                dataCy="sdf-document-schemas-header"
-                to={Hrefs.sdfDocuments.sdfDocument({id}).schemas.toString()}
-              >
-                Schemas
-              </Link>
-            </Typography>
-            <SchemasTable schemas={schemas} />
-          </Grid>
+          {schemas.length > 0 ? (
+            <Grid item data-cy="sdf-document-schemas">
+              <Typography variant="h6">
+                <Link
+                  dataCy="sdf-document-schemas-header"
+                  to={Hrefs.sdfDocuments.sdfDocument({id}).schemas.toString()}
+                >
+                  Schemas
+                </Link>
+              </Typography>
+              <SchemasTable schemas={schemas} />
+            </Grid>
+          ) : null}
           {validationMessageTypes.length > 0 ? (
             <Grid item>
               <Typography variant="h6">
