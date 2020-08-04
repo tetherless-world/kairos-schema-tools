@@ -24,7 +24,7 @@ final class StoresModule extends AbstractModule {
     for (dataDirectoryPath <- dataDirectoryPaths) {
       if (Files.isDirectory(dataDirectoryPath)) {
         bind(classOf[Path]).annotatedWith(Names.named("fsStoreDataDirectoryPath")).toInstance(dataDirectoryPath)
-        bind(classOf[Store]).to(classOf[FsStore])
+        bind(classOf[Store]).to(classOf[FsStore]).asEagerSingleton()
         logger.info("using data at {}", dataDirectoryPath)
         return
       }
