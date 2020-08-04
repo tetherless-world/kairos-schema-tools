@@ -11,6 +11,7 @@ import {NoRoute} from "components/error/NoRoute";
 import {Grid, Tab, Tabs} from "@material-ui/core";
 import {SdfDocumentEditor} from "components/sdfDocument/SdfDocumentEditor";
 import {useQueryParam} from "use-query-params";
+import {SdfDocumentPageFragment} from "api/queries/types/SdfDocumentPageFragment";
 
 export const SdfDocumentPage: React.FunctionComponent = () => {
   const {sdfDocumentId} = _.mapValues(
@@ -22,8 +23,13 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
     tab = "table";
   }
   const query = useQuery<SdfDocumentPageQuery>(SdfDocumentPageQueryDocument, {
+    fetchPolicy: "network-only",
     variables: {id: sdfDocumentId},
   });
+  const [
+    sdfDocument,
+    setSdfDocument,
+  ] = React.useState<SdfDocumentPageFragment | null>(null);
 
   return (
     <Frame {...query}>
@@ -31,13 +37,10 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
         if (!data.sdfDocumentById) {
           return <NoRoute />;
         }
-
-        const sdfDocument = Object.assign({}, data.sdfDocumentById, {
-          id: sdfDocumentId,
-          schemas: data.sdfDocumentById.schemas.map((schema) =>
-            Object.assign({}, schema, {sdfDocumentId})
-          ),
-        });
+        if (sdfDocument === null) {
+          setSdfDocument(data.sdfDocumentById);
+          return;
+        }
 
         return (
           <StandardLayout
@@ -55,17 +58,16 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
               <Grid item>
                 <div hidden={tab !== "table"}>
                   <SdfDocumentCard
-                    {...Object.assign({}, sdfDocument, {
-                      validationMessageTypes: sdfDocument.validationMessages.map(
-                        (message) => message.type
-                      ),
-                    })}
+                    {...sdfDocument}
+                    validationMessageTypes={sdfDocument.validationMessages.map(
+                      (message) => message.type
+                    )}
                   />
                 </div>
                 <div hidden={tab !== "source"}>
                   <SdfDocumentEditor
-                    initialValidationMessages={sdfDocument.validationMessages}
-                    sourceJson={sdfDocument.sourceJson}
+                    onChange={setSdfDocument}
+                    sdfDocument={sdfDocument}
                   />
                 </div>
               </Grid>

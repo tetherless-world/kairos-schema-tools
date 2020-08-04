@@ -5,36 +5,28 @@
 import { ValidationMessageType } from "./../../graphqlGlobalTypes";
 
 // ====================================================
-// GraphQL query operation: SdfDocumentPageQuery
+// GraphQL fragment: SdfDocumentPageFragment
 // ====================================================
 
-export interface SdfDocumentPageQuery_sdfDocumentById_schemas {
+export interface SdfDocumentPageFragment_schemas {
   __typename: "Schema";
   id: string;
   name: string;
   sdfDocumentId: string;
 }
 
-export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages {
+export interface SdfDocumentPageFragment_validationMessages {
   __typename: "ValidationMessage";
   message: string;
   type: ValidationMessageType;
 }
 
-export interface SdfDocumentPageQuery_sdfDocumentById {
+export interface SdfDocumentPageFragment {
   __typename: "SdfDocument";
   id: string;
   name: string;
-  schemas: SdfDocumentPageQuery_sdfDocumentById_schemas[];
+  schemas: SdfDocumentPageFragment_schemas[];
   sdfVersion: string;
   sourceJson: string;
-  validationMessages: SdfDocumentPageQuery_sdfDocumentById_validationMessages[];
-}
-
-export interface SdfDocumentPageQuery {
-  sdfDocumentById: SdfDocumentPageQuery_sdfDocumentById | null;
-}
-
-export interface SdfDocumentPageQueryVariables {
-  id: string;
+  validationMessages: SdfDocumentPageFragment_validationMessages[];
 }

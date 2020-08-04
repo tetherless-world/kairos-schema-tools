@@ -1,5 +1,4 @@
 import {ValidationMessageFragment} from "api/queries/types/ValidationMessageFragment";
-import {SdfDocumentEditorQuery_validateSdfDocument} from "api/queries/types/SdfDocumentEditorQuery";
 import {
   Card,
   CardContent,
@@ -42,10 +41,10 @@ const ValidationMessagesCard: React.FunctionComponent<{
 );
 
 export const ValidationMessagesTable: React.FunctionComponent<{
-  validationMessages: ValidationMessageFragment[];
+  validationMessages: readonly ValidationMessageFragment[];
 }> = ({validationMessages}) => {
   const validationMessagesByType: {
-    [index: string]: SdfDocumentEditorQuery_validateSdfDocument[];
+    [index: string]: ValidationMessageFragment[];
   } = {};
   for (const validationMessage of validationMessages) {
     let validationMessagesForType =

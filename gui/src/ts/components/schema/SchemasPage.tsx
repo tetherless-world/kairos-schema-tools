@@ -18,6 +18,7 @@ export const SchemasPage: React.FunctionComponent = () => {
   }
 
   const query = useQuery<SchemasPageQuery>(SchemasPageQueryDocument, {
+    fetchPolicy: "network-only",
     variables: {
       sdfDocumentId: sdfDocumentId ?? "",
       withSdfDocument: !!sdfDocumentId,

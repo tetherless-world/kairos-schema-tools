@@ -6,6 +6,9 @@ import models.schema.Schema
 import models.search.{SearchDocument, SearchResults}
 
 trait Store {
+  def deleteSdfDocumentById(id: Uri): Unit
+  def deleteSdfDocuments(): Unit
+
   def getSchemaById(id: Uri): Option[Schema]
   def getSchemas: List[Schema]
 
@@ -13,6 +16,7 @@ trait Store {
   def getSdfDocuments: List[SdfDocument]
 
   def putSdfDocument(sdfDocument: SdfDocument)
+
   def putSdfDocuments(sdfDocuments: List[SdfDocument])
 
   def search(limit: Int, offset: Int, query: String): SearchResults

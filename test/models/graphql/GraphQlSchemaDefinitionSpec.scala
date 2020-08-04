@@ -5,11 +5,10 @@ import play.api.libs.json.{JsObject, Json}
 import play.api.test.FakeRequest
 import sangria.ast.Document
 import sangria.execution.Executor
-import sangria.marshalling.playJson._
-import stores.{ConfData, TestStore}
 import sangria.macros._
+import sangria.marshalling.playJson._
+import stores.{ConfData, MemStore, Store, TestStore}
 import validators.Validators
-import validators.ksfValidationApi.DummyKsfValidationApi
 
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -105,7 +104,7 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
       result must include(sdfDocument.id.toString)
     }
 
-    "validate SDF document" in {
+    "validate a SDF document" in {
       val query =
         graphql"""
           query ValidateSdfDocumentQuery($$json: String!) {
@@ -118,16 +117,33 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
       val sdfDocument = ConfData.sdfDocuments(0)
       val result = Json.stringify(executeQuery(query, vars = Json.obj("json" -> sdfDocument.sourceJson)))
     }
+
+    "put a valid SDF document" in {
+      val store = new MemStore  // Use an empty store
+      val sdfDocument = ConfData.sdfDocuments(0)
+      store.getSdfDocumentById(sdfDocument.id) must be(None)
+      val query =
+        graphql"""
+          mutation PutSdfDocumentMutation($$json: String!) {
+            putSdfDocument(json: $$json) {
+              id
+            }
+          }
+          """
+      val result = Json.stringify(executeQuery(query, store = Some(store), vars = Json.obj("json" -> sdfDocument.sourceJson)))
+      result must include(sdfDocument.id.toString)
+      store.getSdfDocumentById(sdfDocument.id).get.id must be(sdfDocument.id)
+    }
   }
 
-  def executeQuery(query: Document, vars: JsObject = Json.obj()) = {
+  def executeQuery(query: Document, store: Option[Store] = None, vars: JsObject = Json.obj()) = {
     val futureResult = Executor.execute(GraphQlSchemaDefinition.schema, query,
       variables = vars,
       userContext =
         new GraphQlSchemaContext(
           request = FakeRequest(),
-          store = new TestStore,
-          validators = new Validators(new DummyKsfValidationApi),
+          store = store.getOrElse(new TestStore),
+          validators = new Validators(List()),
         )
     )
     Await.result(futureResult, 10.seconds)

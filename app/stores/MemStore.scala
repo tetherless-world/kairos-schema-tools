@@ -8,15 +8,29 @@ import models.search.{SearchDocument, SearchResults}
 import scala.collection.mutable
 
 class MemStore extends Store {
-  private val schemasById = new mutable.HashMap[Uri, Schema]
   private val sdfDocumentsById = new mutable.HashMap[Uri, SdfDocument]
   private val searchEngine = new SearchEngine
 
+  final override def deleteSdfDocumentById(id: Uri): Unit = {
+    val removedSdfDocument = sdfDocumentsById.remove(id)
+    if (!removedSdfDocument.isDefined) {
+      return
+    }
+    // Just clear and repopulate the index rather than trying to delete parts of it.
+    searchEngine.deleteAll()
+    sdfDocumentsById.values.foreach(searchEngine.putSdfDocument(_))
+  }
+
+  final override def deleteSdfDocuments(): Unit = {
+    sdfDocumentsById.clear()
+    searchEngine.deleteAll()
+  }
+
   final override def getSchemaById(id: Uri): Option[Schema] =
-    schemasById.get(id)
+    getSchemas.find(_.id == id)
 
   final override def getSchemas: List[Schema] =
-    schemasById.values.toList
+    sdfDocumentsById.values.flatMap(_.schemas).toList
 
   final override def getSdfDocumentById(id: Uri): Option[SdfDocument] =
     sdfDocumentsById.get(id)
@@ -24,15 +38,13 @@ class MemStore extends Store {
   final override def getSdfDocuments: List[SdfDocument] =
     sdfDocumentsById.values.toList
 
-  private def putSchema(schema: Schema): Unit =
-    schemasById.update(schema.id, schema)
-
-  private def putSchemas(schemas: List[Schema]): Unit =
-    schemas.foreach(putSchema(_))
-
   final override def putSdfDocument(sdfDocument: SdfDocument): Unit = {
+    deleteSdfDocumentById(sdfDocument.id)  // Clear out any old schemas
+    putSdfDocumentImpl(sdfDocument)
+  }
+
+  private def putSdfDocumentImpl(sdfDocument: SdfDocument): Unit = {
     sdfDocumentsById.update(sdfDocument.id, sdfDocument)
-    putSchemas(sdfDocument.schemas)
     searchEngine.putSdfDocument(sdfDocument)
   }
 

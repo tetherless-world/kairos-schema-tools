@@ -8,7 +8,9 @@ import {SdfDocumentCard} from "components/sdfDocument/SdfDocumentCard";
 import {StandardLayout} from "components/layout/StandardLayout";
 
 export const SdfDocumentsPage: React.FunctionComponent = () => {
-  const query = useQuery<SdfDocumentsPageQuery>(SdfDocumentsPageQueryDocument);
+  const query = useQuery<SdfDocumentsPageQuery>(SdfDocumentsPageQueryDocument, {
+    fetchPolicy: "network-only",
+  });
 
   return (
     <Frame {...query}>

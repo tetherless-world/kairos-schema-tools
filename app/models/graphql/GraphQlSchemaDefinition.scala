@@ -9,9 +9,15 @@ import models.schema._
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 import models.validation.{ValidationMessage, ValidationMessageType}
 import sangria.macros.derive._
-import sangria.schema.{Argument, Field, InterfaceType, ListType, ObjectType, OptionType, Schema, StringType, fields}
+import sangria.schema.{Argument, Field, InterfaceType, ListType, ObjectType, OptionInputType, OptionType, Schema, StringType, fields}
+
+import scala.util.{Success, Try}
 
 object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
+  // Helper methods
+  private def newUuidUri: Uri =
+    Uri.parse("urn:uuid:" + UUID.randomUUID().toString)
+
   // Scalar arguments
   val IdArgument = Argument("id", UriType)
   val JsonArgument = Argument("json", StringType)
@@ -98,19 +104,39 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
     Field("sdfDocuments", ListType(SdfDocumentObjectType), resolve = _.ctx.store.getSdfDocuments),
     Field("search", SearchResultsObjectType, arguments = LimitArgument :: OffsetArgument :: QueryArgument :: Nil, resolve = ctx => ctx.ctx.store.search(limit = ctx.args.arg(LimitArgument), offset = ctx.args.arg(OffsetArgument), query = ctx.args.arg(QueryArgument))),
     Field("validateSdfDocument", ListType(ValidationMessageObjectType), arguments = JsonArgument :: Nil, resolve = ctx => {
-      val sdfDocumentJson = ctx.args.arg(JsonArgument)
-      val sdfDocument = SdfDocumentReader.read(sdfDocumentJson, Uri.parse("urn:uuid:" + UUID.randomUUID().toString))
-      if (sdfDocument.validationMessages.nonEmpty) {
-        sdfDocument.validationMessages
-      } else {
-        ctx.ctx.validators.validateSdfDocument(sdfDocument)
-      }
-    })
+      implicit val ec = ctx.ctx.executionContext
+      SdfDocument.readAndValidate(
+        sourceJson = ctx.args.arg(JsonArgument),
+        sourceUri = newUuidUri,
+        validators = ctx.ctx.validators
+      ).map(_.validationMessages)
+    }
+    )
   ))
+
+  // Root mutation
+  val RootMutationType = ObjectType("RootMutation", fields[GraphQlSchemaContext, Unit](
+    Field("putSdfDocument", SdfDocumentObjectType, arguments = JsonArgument :: Nil, resolve = ctx => {
+      implicit val ec = ctx.ctx.executionContext
+      SdfDocument.readAndValidate(
+        sourceJson = ctx.args.arg(JsonArgument),
+        sourceUri = newUuidUri,
+        validators = ctx.ctx.validators
+      ).andThen {
+        case Success(sdfDocument) => {
+          if (!sdfDocument.validationMessages.exists(_.`type` == ValidationMessageType.Fatal)) {
+            ctx.ctx.store.putSdfDocument(sdfDocument)
+          }
+        }
+      }
+    }
+    ))
+  )
 
   // Schema
   val schema = Schema(
     RootQueryType,
+    Some(RootMutationType),
     additionalTypes = BeforeAfterStepOrderObjectType :: ContainerContainedStepOrderObjectType :: OverlapsStepOrderObjectType :: Nil
   )
 }
