@@ -24,7 +24,7 @@ export const SdfDocumentEditor: React.FunctionComponent<{
   >(SdfDocumentEditorQueryDocument);
 
   return (
-    <Grid container direction="row" spacing={4}>
+    <Grid container data-cy="sdf-document-editor" direction="row" spacing={4}>
       <Grid item xs={8}>
         <Grid container direction="column" spacing={4}>
           <Grid item>
@@ -40,6 +40,7 @@ export const SdfDocumentEditor: React.FunctionComponent<{
           <Grid item>
             <Button
               color="primary"
+              data-cy="validate-button"
               onClick={() => {
                 validateSdfDocument({variables: {json: sourceJson}});
               }}
