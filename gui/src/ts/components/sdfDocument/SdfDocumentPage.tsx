@@ -48,8 +48,8 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
             <Grid container direction="column" spacing={4}>
               <Grid item>
                 <Tabs onChange={(_, newValue) => setTab(newValue)} value={tab}>
-                  <Tab label="Table" value="table" />
-                  <Tab label="Source" value="source" />
+                  <Tab data-cy="table-tab" label="Table" value="table" />
+                  <Tab data-cy="source-tab" label="Source" value="source" />
                 </Tabs>
               </Grid>
               <Grid item>
