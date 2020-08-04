@@ -90,7 +90,10 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
 
 object SdfDocumentReader extends WithResource {
   def read(sourceJson: String, sourceUri: Uri): SdfDocument =
-    withResource(new SdfDocumentReader(Source.fromString(sourceJson), sourceUri)) { reader =>
+    read(Source.fromString(sourceJson), sourceUri)
+
+  def read(source: Source, sourceUri: Uri): SdfDocument =
+    withResource(new SdfDocumentReader(source, sourceUri)) { reader =>
       reader.read()
     }
 }

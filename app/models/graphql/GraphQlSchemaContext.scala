@@ -4,4 +4,6 @@ import play.api.mvc.Request
 import validators.Validators
 import stores.Store
 
-final class GraphQlSchemaContext(request: Request[_], val store: Store, val validators: Validators)
+import scala.concurrent.ExecutionContext
+
+final class GraphQlSchemaContext(request: Request[_], val store: Store, val validators: Validators)(implicit val executionContext: ExecutionContext)

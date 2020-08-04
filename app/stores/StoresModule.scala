@@ -3,6 +3,7 @@ package stores
 import java.nio.file.{Files, Path, Paths}
 
 import com.google.inject.AbstractModule
+import com.google.inject.name.Names
 import org.slf4j.LoggerFactory
 
 final class StoresModule extends AbstractModule {
@@ -22,9 +23,9 @@ final class StoresModule extends AbstractModule {
     )
     for (dataDirectoryPath <- dataDirectoryPaths) {
       if (Files.isDirectory(dataDirectoryPath)) {
-        val store = new FsStore(dataDirectoryPath)
-        bind(classOf[Store]).toInstance(store)
-        logger.info("using data at {}: {} SDF documents", dataDirectoryPath, store.getSdfDocuments.size)
+        bind(classOf[Path]).annotatedWith(Names.named("fsStoreDataDirectoryPath")).toInstance(dataDirectoryPath)
+        bind(classOf[Store]).to(classOf[FsStore])
+        logger.info("using data at {}", dataDirectoryPath)
         return
       }
     }

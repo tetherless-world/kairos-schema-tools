@@ -1,5 +1,6 @@
 package models.graphql
 
+import javax.inject.Inject
 import org.scalatestplus.play.PlaySpec
 import play.api.libs.json.{JsObject, Json}
 import play.api.test.FakeRequest
@@ -127,7 +128,7 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
         new GraphQlSchemaContext(
           request = FakeRequest(),
           store = new TestStore,
-          validators = new Validators(new DummyKsfValidationApi),
+          validators = new Validators(List()),
         )
     )
     Await.result(futureResult, 10.seconds)
