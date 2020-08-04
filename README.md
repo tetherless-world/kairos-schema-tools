@@ -27,7 +27,7 @@ Then open a browser to [http://localhost:8080](http://localhost:8080).
 
 By default the server uses example data in the repository. To use alternative data, set an environment variable to a directory with SDF documents:
 
-    script/server ./conf/data/examples
+    script/server ./conf/data
 
 A relative path must start with `./`. The directory must be writeable.
 
