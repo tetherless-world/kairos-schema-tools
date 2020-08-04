@@ -25,16 +25,17 @@ import {
   SdfDocumentEditorValidationQuery,
   SdfDocumentEditorValidationQueryVariables,
 } from "api/queries/types/SdfDocumentEditorValidationQuery";
-import {SdfDocumentFragment} from "api/queries/types/SdfDocumentFragment";
 import {
   SdfDocumentEditorSaveMutation,
   SdfDocumentEditorSaveMutationVariables,
 } from "api/mutations/types/SdfDocumentEditorSaveMutation";
 import CloseIcon from "@material-ui/icons/Close";
+import {SdfDocumentPageFragment} from "api/queries/types/SdfDocumentPageFragment";
 
 export const SdfDocumentEditor: React.FunctionComponent<{
-  sdfDocument: SdfDocumentFragment;
-}> = ({sdfDocument: initialSdfDocument}) => {
+  onChange?: (sdfDocument: SdfDocumentPageFragment) => void;
+  sdfDocument: SdfDocumentPageFragment;
+}> = ({onChange, sdfDocument: initialSdfDocument}) => {
   const apolloClient = useApolloClient();
   const [
     snackbarMessage,
@@ -61,6 +62,9 @@ export const SdfDocumentEditor: React.FunctionComponent<{
       })
       .then((result) => {
         if (result.data) {
+          if (onChange) {
+            onChange(result.data.putSdfDocument);
+          }
           setSnackbarMessage("Saved");
           setValidationMessages(result.data.putSdfDocument.validationMessages);
         } else if (result.errors) {

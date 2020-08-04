@@ -12,6 +12,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas {
   __typename: "Schema";
   id: string;
   name: string;
+  sdfDocumentId: string;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages {
@@ -22,6 +23,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages {
 
 export interface SdfDocumentPageQuery_sdfDocumentById {
   __typename: "SdfDocument";
+  id: string;
   name: string;
   schemas: SdfDocumentPageQuery_sdfDocumentById_schemas[];
   sdfVersion: string;

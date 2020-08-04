@@ -12,6 +12,7 @@ export interface SdfDocumentEditorSaveMutation_putSdfDocument_schemas {
   __typename: "Schema";
   id: string;
   name: string;
+  sdfDocumentId: string;
 }
 
 export interface SdfDocumentEditorSaveMutation_putSdfDocument_validationMessages {
@@ -22,6 +23,7 @@ export interface SdfDocumentEditorSaveMutation_putSdfDocument_validationMessages
 
 export interface SdfDocumentEditorSaveMutation_putSdfDocument {
   __typename: "SdfDocument";
+  id: string;
   name: string;
   schemas: SdfDocumentEditorSaveMutation_putSdfDocument_schemas[];
   sdfVersion: string;
