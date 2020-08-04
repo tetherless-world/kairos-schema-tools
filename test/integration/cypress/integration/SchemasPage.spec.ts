@@ -3,7 +3,7 @@ import {SdfDocumentsPage} from "../support/pages/SdfDocumentsPage";
 import {SchemasPage} from "../support/pages/SchemasPage";
 import {SdfDocumentPage} from "../support/pages/SdfDocumentPage";
 
-context("SDF document schemas page", () => {
+context("Schemas page", () => {
   const sdfDocument = TestData.sdfDocument;
   const page = new SchemasPage({
     sdfDocumentId: sdfDocument.id,
