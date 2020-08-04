@@ -1,0 +1,14 @@
+#import "./ValidationMessageFragment.graphql"
+
+fragment SdfDocumentFragment on SdfDocument {
+    name
+    schemas {
+        id
+        name
+    }
+    sdfVersion
+    sourceJson
+    validationMessages {
+        ... ValidationMessageFragment
+    }
+}
