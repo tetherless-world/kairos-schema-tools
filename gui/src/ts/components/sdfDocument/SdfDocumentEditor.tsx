@@ -21,7 +21,7 @@ export const SdfDocumentEditor: React.FunctionComponent<{
 
   const [validateSdfDocument, {data: validateSdfDocumentData}] = useLazyQuery<
     SdfDocumentEditorQuery
-  >(SdfDocumentEditorQueryDocument);
+  >(SdfDocumentEditorQueryDocument, {fetchPolicy: "network-only"});
 
   return (
     <Grid container data-cy="sdf-document-editor" direction="row" spacing={4}>

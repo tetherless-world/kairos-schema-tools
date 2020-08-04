@@ -22,6 +22,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
     tab = "table";
   }
   const query = useQuery<SdfDocumentPageQuery>(SdfDocumentPageQueryDocument, {
+    fetchPolicy: "network-only",
     variables: {id: sdfDocumentId},
   });
 
