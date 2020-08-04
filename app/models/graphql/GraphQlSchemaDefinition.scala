@@ -21,7 +21,6 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   // Scalar arguments
   val IdArgument = Argument("id", UriType)
   val JsonArgument = Argument("json", StringType)
-  val OptionalIdArgument = Argument("id", OptionInputType(UriType))
   val QueryArgument = Argument("query", StringType)
 
   // Enum types
@@ -117,11 +116,11 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
 
   // Root mutation
   val RootMutationType = ObjectType("RootMutation", fields[GraphQlSchemaContext, Unit](
-    Field("putSdfDocument", SdfDocumentObjectType, arguments = JsonArgument :: OptionalIdArgument :: Nil, resolve = ctx => {
+    Field("putSdfDocument", SdfDocumentObjectType, arguments = JsonArgument :: Nil, resolve = ctx => {
       implicit val ec = ctx.ctx.executionContext
       SdfDocument.readAndValidate(
         sourceJson = ctx.args.arg(JsonArgument),
-        sourceUri = ctx.args.arg(OptionalIdArgument).getOrElse(newUuidUri),
+        sourceUri = newUuidUri,
         validators = ctx.ctx.validators
       ).andThen {
         case Success(sdfDocument) => {
