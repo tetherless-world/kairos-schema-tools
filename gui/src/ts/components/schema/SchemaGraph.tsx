@@ -139,7 +139,7 @@ export const SchemaGraph: React.FunctionComponent<{
 
         return (
           <Graph
-            id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
+            id="schema-graph" // id is mandatory, if no id is defined rd3g will throw an error
             data={{nodes, links}}
             config={config}
             onClickNode={onClickNode}

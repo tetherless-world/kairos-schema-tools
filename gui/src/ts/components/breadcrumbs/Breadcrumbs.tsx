@@ -34,7 +34,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
         dataCy="schemas-breadcrumb"
         to={
           sdfDocument
-            ? Hrefs.sdfDocuments.sdfDocument(sdfDocument).toString()
+            ? Hrefs.sdfDocuments.sdfDocument(sdfDocument).schemas.toString()
             : Hrefs.schemas.toString()
         }
       >

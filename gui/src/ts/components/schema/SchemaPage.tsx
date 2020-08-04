@@ -69,8 +69,8 @@ export const SchemaPage: React.FunctionComponent = () => {
             <Grid container direction="column" spacing={4}>
               <Grid item>
                 <Tabs onChange={(_, newValue) => setTab(newValue)} value={tab}>
-                  <Tab label="Table" value="table" />
-                  <Tab label="Graph" value="graph" />
+                  <Tab data-cy="table-tab" label="Table" value="table" />
+                  <Tab data-cy="graph-tab" label="Graph" value="graph" />
                 </Tabs>
               </Grid>
               <Grid item>
