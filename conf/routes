@@ -3,6 +3,10 @@ GET         /api/graphql                    controllers.graphql.GraphQlControlle
 POST        /api/graphql                    controllers.graphql.GraphQlController.graphqlBody
 GET         /api/graphql-schema             controllers.graphql.GraphQlController.renderSchema
 
+# REST
+GET         /api/rest/schema/:id        controllers.rest.RestController.schema(id: String)
+GET         /api/rest/sdfdocument/:id   controllers.rest.RestController.sdfDocument(id: String)
+
 # Assets
 GET         /             controllers.Assets.at(path="/public", file="index.html")
 GET         /$path<.*>    controllers.assets.AssetsController.frontEndPath(path)
