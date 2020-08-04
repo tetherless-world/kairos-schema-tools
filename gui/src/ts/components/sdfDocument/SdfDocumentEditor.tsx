@@ -7,21 +7,43 @@ import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-min-noconflict/ext-searchbox";
 import "ace-builds/src-min-noconflict/ext-language_tools";
 import {Button, Grid} from "@material-ui/core";
-import {useLazyQuery} from "@apollo/react-hooks";
-import * as SdfDocumentEditorQueryDocument from "api/queries/SdfDocumentEditorQuery.graphql";
-import {SdfDocumentEditorQuery} from "api/queries/types/SdfDocumentEditorQuery";
-import {ValidationMessageFragment} from "api/queries/types/ValidationMessageFragment";
+import {useApolloClient} from "@apollo/react-hooks";
 import {ValidationMessagesTable} from "components/validation/ValidationMessagesTable";
+import * as SdfDocumentEditorValidationQueryDocument from "api/queries/SdfDocumentEditorValidationQuery.graphql";
+import {SdfDocumentPageQuery_sdfDocumentById} from "api/queries/types/SdfDocumentPageQuery";
+import {ValidationMessageFragment} from "api/queries/types/ValidationMessageFragment";
+import {
+  SdfDocumentEditorValidationQuery,
+  SdfDocumentEditorValidationQueryVariables,
+} from "api/queries/types/SdfDocumentEditorValidationQuery";
 
 export const SdfDocumentEditor: React.FunctionComponent<{
-  initialValidationMessages: ValidationMessageFragment[];
-  sourceJson: string;
-}> = ({initialValidationMessages, sourceJson: initialSourceJson}) => {
-  const [sourceJson, setSourceJson] = useState<string>(initialSourceJson);
+  sdfDocument: SdfDocumentPageQuery_sdfDocumentById;
+}> = ({sdfDocument: initialSdfDocument}) => {
+  const apolloClient = useApolloClient();
+  const [sourceJson, setSourceJson] = useState<string>(
+    initialSdfDocument.sourceJson
+  );
+  const [validationMessages, setValidationMessages] = useState<
+    readonly ValidationMessageFragment[]
+  >(initialSdfDocument.validationMessages);
 
-  const [validateSdfDocument, {data: validateSdfDocumentData}] = useLazyQuery<
-    SdfDocumentEditorQuery
-  >(SdfDocumentEditorQueryDocument, {fetchPolicy: "network-only"});
+  const validate = () => {
+    apolloClient
+      .query<
+        SdfDocumentEditorValidationQuery,
+        SdfDocumentEditorValidationQueryVariables
+      >({
+        fetchPolicy: "network-only",
+        query: SdfDocumentEditorValidationQueryDocument,
+        variables: {json: sourceJson},
+      })
+      .then((result) => {
+        if (result.data) {
+          setValidationMessages(result.data.validateSdfDocument);
+        }
+      });
+  };
 
   return (
     <Grid container data-cy="sdf-document-editor" direction="row" spacing={4}>
@@ -41,9 +63,7 @@ export const SdfDocumentEditor: React.FunctionComponent<{
             <Button
               color="primary"
               data-cy="validate-button"
-              onClick={() => {
-                validateSdfDocument({variables: {json: sourceJson}});
-              }}
+              onClick={() => validate()}
               size="large"
               variant="contained"
             >
@@ -53,13 +73,7 @@ export const SdfDocumentEditor: React.FunctionComponent<{
         </Grid>
       </Grid>
       <Grid item xs={4}>
-        <ValidationMessagesTable
-          validationMessages={
-            validateSdfDocumentData
-              ? validateSdfDocumentData.validateSdfDocument
-              : initialValidationMessages
-          }
-        />
+        <ValidationMessagesTable validationMessages={validationMessages} />
       </Grid>
     </Grid>
   );

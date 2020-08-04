@@ -5,19 +5,19 @@
 import { ValidationMessageType } from "./../../graphqlGlobalTypes";
 
 // ====================================================
-// GraphQL query operation: SdfDocumentEditorQuery
+// GraphQL query operation: SdfDocumentEditorValidationQuery
 // ====================================================
 
-export interface SdfDocumentEditorQuery_validateSdfDocument {
+export interface SdfDocumentEditorValidationQuery_validateSdfDocument {
   __typename: "ValidationMessage";
   message: string;
   type: ValidationMessageType;
 }
 
-export interface SdfDocumentEditorQuery {
-  validateSdfDocument: SdfDocumentEditorQuery_validateSdfDocument[];
+export interface SdfDocumentEditorValidationQuery {
+  validateSdfDocument: SdfDocumentEditorValidationQuery_validateSdfDocument[];
 }
 
-export interface SdfDocumentEditorQueryVariables {
+export interface SdfDocumentEditorValidationQueryVariables {
   json: string;
 }
