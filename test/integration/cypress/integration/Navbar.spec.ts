@@ -3,11 +3,19 @@ import {SdfDocumentPage} from "../support/pages/SdfDocumentPage";
 import {SchemasPage} from "../support/pages/SchemasPage";
 import {TestData} from "../support/TestData";
 import {SearchResultsPage} from "../support/pages/SearchResultsPage";
+import {SdfDocument} from "../support/models/SdfDocument";
 
 context("Navbar", () => {
-  const sdfDocument = TestData.sdfDocument;
   const homePage = new SdfDocumentsPage();
-  const otherPage = new SdfDocumentPage(sdfDocument.id);
+  let otherPage: SdfDocumentPage;
+  let sdfDocument: SdfDocument;
+
+  before(() => {
+    TestData.sdfDocument.then((sdfDocument_) => {
+      sdfDocument = sdfDocument_;
+      otherPage = new SdfDocumentPage(sdfDocument.id);
+    });
+  });
 
   it("should link to schemas", () => {
     homePage.visit();

@@ -2,10 +2,18 @@ import {TestData} from "../support/TestData";
 import {SearchResultsPage} from "../support/pages/SearchResultsPage";
 import {SdfDocumentPage} from "../support/pages/SdfDocumentPage";
 import {SchemaPage} from "../support/pages/SchemaPage";
+import {SdfDocument} from "../support/models/SdfDocument";
 
 context("Search results page", () => {
-  const sdfDocument = TestData.sdfDocument;
-  const page = new SearchResultsPage(sdfDocument.name);
+  let page: SearchResultsPage;
+  let sdfDocument: SdfDocument;
+
+  before(() => {
+    TestData.sdfDocument.then((sdfDocument_) => {
+      sdfDocument = sdfDocument_;
+      page = new SearchResultsPage(sdfDocument.name);
+    });
+  });
 
   beforeEach(() => page.visit());
 

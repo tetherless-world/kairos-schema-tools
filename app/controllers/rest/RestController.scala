@@ -61,4 +61,15 @@ class RestController @Inject() (store: Store) extends InjectedController {
       NotFound("Not Found")
     }
   }
+
+  def sdfDocuments = Action { implicit request =>
+    val sdfDocuments = store.getSdfDocuments
+    render {
+      case Accepts.Json() => Ok(Json.toJson(sdfDocuments))
+      //        case AcceptsJsonLd => Ok(sdfDocument.get.sourceJson)
+      //        case _ => UnsupportedMediaType("Unsupported media type")
+      case _ => Ok(s"""[${sdfDocuments.map(_.sourceJson).mkString(", ")}]""").as(MimeTypeJsonLd)
+    }
+  }
+
 }

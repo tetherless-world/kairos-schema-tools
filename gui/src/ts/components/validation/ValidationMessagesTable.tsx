@@ -17,8 +17,9 @@ import * as React from "react";
 const ValidationMessagesCard: React.FunctionComponent<{
   messages: ValidationMessageFragment[];
   title: string;
-}> = ({messages, title}) => (
-  <Card>
+  type: ValidationMessageType;
+}> = ({messages, title, type}) => (
+  <Card data-cy={type.toLowerCase() + "-validation-messages"}>
     <CardHeader title={title} />
     <CardContent>
       <Table>
@@ -26,7 +27,10 @@ const ValidationMessagesCard: React.FunctionComponent<{
           {messages.map((message, messageIndex) => (
             <TableRow key={messageIndex.toString()}>
               <TableCell>{messageIndex + 1}</TableCell>
-              <TableCell style={{overflowWrap: "break-word"}}>
+              <TableCell
+                data-cy={`${type.toLowerCase()}-validation-message-${messageIndex}`}
+                style={{overflowWrap: "break-word"}}
+              >
                 {message.message}
               </TableCell>
             </TableRow>
@@ -55,12 +59,18 @@ export const ValidationMessagesTable: React.FunctionComponent<{
   }
 
   return (
-    <Grid container direction="column" spacing={8}>
+    <Grid
+      container
+      data-cy="validation-messages"
+      direction="column"
+      spacing={8}
+    >
       {validationMessagesByType[ValidationMessageType.Fatal] ? (
         <Grid item>
           <ValidationMessagesCard
             messages={validationMessagesByType[ValidationMessageType.Fatal]}
             title="Fatal"
+            type={ValidationMessageType.Fatal}
           />
         </Grid>
       ) : null}
@@ -69,6 +79,7 @@ export const ValidationMessagesTable: React.FunctionComponent<{
           <ValidationMessagesCard
             messages={validationMessagesByType[ValidationMessageType.Error]}
             title="Errors"
+            type={ValidationMessageType.Error}
           />
         </Grid>
       ) : null}
@@ -77,12 +88,15 @@ export const ValidationMessagesTable: React.FunctionComponent<{
           <ValidationMessagesCard
             messages={validationMessagesByType[ValidationMessageType.Warning]}
             title="Warnings"
+            type={ValidationMessageType.Warning}
           />
         </Grid>
       ) : null}
       {_.isEmpty(validationMessagesByType) ? (
         <Grid item>
-          <h2>No validation errors detected.</h2>
+          <h2 data-cy="no-validation-messages">
+            No validation errors detected.
+          </h2>
         </Grid>
       ) : null}
     </Grid>

@@ -1,19 +1,36 @@
 import {SdfDocument} from "./models/SdfDocument";
-import {Schema} from "./models/Schema";
 
 export class TestData {
-  static readonly schema: Schema = {
-    id: "https://caci.com/kairos/Schemas/CoordinatedBombingAttack",
-    name: "Coordinated Bombing Attack",
-  };
+  static readonly sdfDocumentId =
+    "https://caci.com/kairos/Submissions/TA1/12345";
 
-  static readonly schemas = [TestData.schema];
+  static get sdfDocument(): Cypress.Chainable<SdfDocument> {
+    return cy
+      .request(
+        `/api/rest/sdfdocument/${encodeURIComponent(TestData.sdfDocumentId)}`
+      )
+      .then((response) => {
+        const sdfDocument: SdfDocument = response.body;
+        sdfDocument.name = TestData.getSdfDocumentName(sdfDocument);
+        return sdfDocument;
+      });
+  }
 
-  static readonly sdfDocument: SdfDocument = {
-    id: "https://caci.com/kairos/Submissions/TA1/12345",
-    name: TestData.schema.name,
-    schemas: [TestData.schema],
-  };
+  private static getSdfDocumentName(sdfDocument: SdfDocument): string {
+    if (sdfDocument.schemas.length > 0) {
+      return sdfDocument.schemas[0].name;
+    } else {
+      return sdfDocument.id;
+    }
+  }
 
-  static readonly sdfDocuments = [TestData.sdfDocument];
+  static get sdfDocuments(): Cypress.Chainable<readonly SdfDocument[]> {
+    return cy.request(`/api/rest/sdfdocument/`).then((response) => {
+      const sdfDocuments: SdfDocument[] = response.body;
+      for (const sdfDocument of sdfDocuments) {
+        sdfDocument.name = TestData.getSdfDocumentName(sdfDocument);
+      }
+      return sdfDocuments;
+    });
+  }
 }

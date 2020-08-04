@@ -1,5 +1,6 @@
 import {Page} from "./Page";
 import {SdfDocumentCard} from "./SdfDocumentCard";
+import {SdfDocumentEditor} from "./SdfDocumentEditor";
 
 export class SdfDocumentPage extends Page {
   constructor(readonly id: string) {
@@ -9,7 +10,9 @@ export class SdfDocumentPage extends Page {
 
   get sourceTab() {
     cy.get("[data-cy=source-tab]").click();
-    return {};
+    return {
+      editor: new SdfDocumentEditor(),
+    };
   }
 
   get tableTab() {

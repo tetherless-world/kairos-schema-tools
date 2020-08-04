@@ -5,6 +5,7 @@ GET         /api/graphql-schema             controllers.graphql.GraphQlControlle
 
 # REST
 GET         /api/rest/schema/:id        controllers.rest.RestController.schema(id: String)
+GET         /api/rest/sdfdocument/      controllers.rest.RestController.sdfDocuments
 GET         /api/rest/sdfdocument/:id   controllers.rest.RestController.sdfDocument(id: String)
 
 # Assets

@@ -3,10 +3,17 @@ import {SdfDocumentsPage} from "../support/pages/SdfDocumentsPage";
 import {SdfDocumentPage} from "../support/pages/SdfDocumentPage";
 import {SchemaPage} from "../support/pages/SchemaPage";
 import {SchemasPage} from "../support/pages/SchemasPage";
+import {SdfDocument} from "../support/models/SdfDocument";
 
 context("SDF documents page", () => {
-  const sdfDocuments = TestData.sdfDocuments;
   const page = new SdfDocumentsPage();
+  let sdfDocuments: readonly SdfDocument[];
+
+  before(() => {
+    TestData.sdfDocuments.then((sdfDocuments_) => {
+      sdfDocuments = sdfDocuments_;
+    });
+  });
 
   beforeEach(() => page.visit());
 
@@ -26,10 +33,11 @@ context("SDF documents page", () => {
     }
   });
 
-  it("should link each document's page", () => {
+  it("should link to each document's page", () => {
     for (const sdfDocument of sdfDocuments) {
       page.sdfDocument(sdfDocument.id).sdfDocumentName.click();
       new SdfDocumentPage(sdfDocument.id).assertLoaded();
+      page.visit();
     }
   });
 
@@ -52,6 +60,7 @@ context("SDF documents page", () => {
     for (const sdfDocument of sdfDocuments) {
       page.sdfDocument(sdfDocument.id).schemasHeader.click();
       new SchemasPage({sdfDocumentId: sdfDocument.id}).assertLoaded();
+      page.visit();
     }
   });
 
@@ -67,6 +76,7 @@ context("SDF documents page", () => {
         schemaId: schema.id,
         sdfDocumentId: sdfDocument.id,
       }).assertLoaded();
+      page.visit();
     }
   });
 });

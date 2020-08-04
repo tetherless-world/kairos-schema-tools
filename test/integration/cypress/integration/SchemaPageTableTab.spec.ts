@@ -1,12 +1,22 @@
 import {TestData} from "../support/TestData";
 import {SchemaPage} from "../support/pages/SchemaPage";
+import {Schema} from "../support/models/Schema";
+import {SdfDocument} from "../support/models/SdfDocument";
 
 context("Schema page table tab", () => {
-  const sdfDocument = TestData.sdfDocument;
-  const schema = sdfDocument.schemas[0];
-  const page = new SchemaPage({
-    schemaId: schema.id,
-    sdfDocumentId: sdfDocument.id,
+  let page: SchemaPage;
+  let schema: Schema;
+  let sdfDocument: SdfDocument;
+
+  before(() => {
+    TestData.sdfDocument.then((sdfDocument_) => {
+      sdfDocument = sdfDocument_;
+      schema = sdfDocument.schemas[0];
+      page = new SchemaPage({
+        schemaId: schema.id,
+        sdfDocumentId: sdfDocument.id,
+      });
+    });
   });
 
   beforeEach(() => page.visit());
