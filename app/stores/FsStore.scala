@@ -21,6 +21,17 @@ import scala.io.Source
 class FsStore @Inject()(@Named("fsStoreDataDirectoryPath") val dataDirectoryPath: Path, validators: Validators)(implicit ec: ExecutionContext) extends Store with WithResource {
   private val searchEngine = new SearchEngine
 
+  private def deleteSdfDocumentByFileName(fileName: String) = {
+    val filePath = dataDirectoryPath.resolve(fileName)
+    Files.delete(filePath)
+  }
+
+  final override def deleteSdfDocumentById(id: Uri): Unit =
+    getSdfDocumentsByFileName.find(entry => entry._2.id == id).map(_._1).foreach(deleteSdfDocumentByFileName(_))
+
+  final override def deleteSdfDocuments(): Unit =
+    getSdfDocumentsByFileName.map(_._1).foreach(deleteSdfDocumentByFileName(_))
+
   final override def getSchemaById(id: Uri): Option[Schema] =
     getSchemas.find(_.id == id)
 
@@ -56,7 +67,7 @@ class FsStore @Inject()(@Named("fsStoreDataDirectoryPath") val dataDirectoryPath
     searchEngine.putSdfDocument(sdfDocument)
   }
 
-  final override def putSdfDocuments(sdfDocuments: List[SdfDocument]): Unit =
+  override def putSdfDocuments(sdfDocuments: List[SdfDocument]): Unit =
     sdfDocuments.foreach(putSdfDocument(_))
 
   private def readSdfDocumentFile(filePath: Path): SdfDocument =

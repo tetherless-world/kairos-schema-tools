@@ -27,6 +27,9 @@ final class SearchEngine {
     val `type` = lucene.create.field[String](name = "type", fieldType = FieldType.Untokenized)
   }
 
+  final def deleteAll(): Unit =
+    lucene.deleteAll()
+
   final def putSdfDocument(sdfDocument: SdfDocument): Unit = {
     def putSchema(schema: Schema): Unit = {
       def putSlot(slot: Slot): Unit =

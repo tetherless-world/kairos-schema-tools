@@ -63,5 +63,36 @@ trait StoreBehaviors extends Matchers { this: WordSpec =>
       ) should be(true)
     }
 
+    "put an SDF document" in {
+      val store = storeFactory()
+      store.getSdfDocumentById(testSdfDocument1.id) should be(None)
+      store.putSdfDocument(testSdfDocument1)
+      store.getSdfDocumentById(testSdfDocument1.id).get.id should be(testSdfDocument1.id)
+    }
+
+    "put multiple SDF documents" in {
+      val store = storeFactory()
+      store.getSdfDocumentById(testSdfDocument1.id) should be(None)
+      store.putSdfDocuments(List(testSdfDocument1))
+      store.getSdfDocumentById(testSdfDocument1.id).get.id should be(testSdfDocument1.id)
+    }
+
+    "delete an SDF document" in {
+      val store = storeFactory()
+      store.getSdfDocumentById(testSdfDocument1.id) should be(None)
+      store.putSdfDocument(testSdfDocument1)
+      store.getSdfDocumentById(testSdfDocument1.id).get.id should be(testSdfDocument1.id)
+      store.deleteSdfDocumentById(testSdfDocument1.id)
+      store.getSdfDocumentById(testSdfDocument1.id) should be(None)
+    }
+
+    "delete all SDF documents" in {
+      val store = storeFactory()
+      store.getSdfDocumentById(testSdfDocument1.id) should be(None)
+      store.putSdfDocument(testSdfDocument1)
+      store.getSdfDocumentById(testSdfDocument1.id).get.id should be(testSdfDocument1.id)
+      store.deleteSdfDocuments()
+      store.getSdfDocumentById(testSdfDocument1.id) should be(None)
+    }
   }
 }
