@@ -112,7 +112,7 @@ export const SchemaPartsGrid: React.FunctionComponent<{
   return (
     <Grid container direction="column" spacing={8}>
       <Grid item>
-        <List>
+        <List data-cy="schema-toc">
           {schemaParts.map((schemaPart) => (
             <React.Fragment key={schemaPart.id}>
               <ListItem>
@@ -120,7 +120,10 @@ export const SchemaPartsGrid: React.FunctionComponent<{
                   <FolderIcon />
                 </ListItemIcon>
                 <ListItemText>
-                  <Link to={hrefs.home + "#" + schemaPart.id}>
+                  <Link
+                    dataCy={`schema-toc-${schemaPart.id}-link`}
+                    to={hrefs.home + "#" + schemaPart.id}
+                  >
                     {schemaPart.title}
                   </Link>
                 </ListItemText>
@@ -167,7 +170,7 @@ export const SchemaPartsGrid: React.FunctionComponent<{
         </List>
       </Grid>
       {schemaParts.map((schemaPart) => (
-        <Grid key={schemaPart.id} item>
+        <Grid data-cy={`schema-${schemaPart.id}`} key={schemaPart.id} item>
           <Grid container direction="column" id={schemaPart.id} spacing={4}>
             <Grid item>
               <Typography variant="h4">{schemaPart.title}</Typography>

@@ -21,4 +21,12 @@ context("Schema page", () => {
     page.standardLayout.breadcrumbs.schema.click();
     page.assertLoaded();
   });
+
+  it("should show the schema name in the title", () => {
+    page.standardLayout.title.should("have.text", "Schema: " + schema.name);
+  });
+
+  it("should show the schema identifier in the subtitle", () => {
+    page.standardLayout.subtitle.should("have.text", schema.id);
+  });
 });
