@@ -22,25 +22,29 @@ class RestKsfValidationApi @Inject()(ws: WSClient)(implicit ec: ExecutionContext
   implicit val resultsDecoder: Decoder[KsfValidationApiResults] = deriveDecoder
   private val logger = LoggerFactory.getLogger(getClass)
 
-  override def validateSdfDocument(sdfDocument: SdfDocument): Future[List[ValidationMessage]] =
-    ws.url(Url)
-      .addHttpHeaders("Accept" -> Accept, "Content-Type" -> ContentType)
-      .post(sdfDocument.sourceJson).flatMap(response => {
-        val parseResult = parse(response.body)
-        parseResult match {
-          case Left(parsingFailure) => {
-            logger.warn("error KSF validation API results JSON: {}", parsingFailure)
-            Future.failed(parsingFailure)
-          }
-          case Right(json) =>
-            resultsDecoder.decodeJson(json) match {
-              case Left(decodingFailure) =>
-                Future.failed(decodingFailure)
-              case Right(results) => Future.successful(
-                results.errorsList.map(message => ValidationMessage(message = message, path = SchemaPath(sdfDocumentId = sdfDocument.id), `type` = ValidationMessageType.Error)) ++
-                results.warningsList.map(message => ValidationMessage(message = message, path = SchemaPath(sdfDocumentId = sdfDocument.id), `type` = ValidationMessageType.Warning))
-              )
-            }
-          }
-        })
+  override def validateSdfDocument(sdfDocument: SdfDocument): Future[List[ValidationMessage]] = {
+    // 20200806 API calls are disrupting the CACI server and have been disabled
+    Future.successful(List())
+  }
+
+  //    ws.url(Url)
+//      .addHttpHeaders("Accept" -> Accept, "Content-Type" -> ContentType)
+//      .post(sdfDocument.sourceJson).flatMap(response => {
+//        val parseResult = parse(response.body)
+//        parseResult match {
+//          case Left(parsingFailure) => {
+//            logger.warn("error KSF validation API results JSON: {}", parsingFailure)
+//            Future.failed(parsingFailure)
+//          }
+//          case Right(json) =>
+//            resultsDecoder.decodeJson(json) match {
+//              case Left(decodingFailure) =>
+//                Future.failed(decodingFailure)
+//              case Right(results) => Future.successful(
+//                results.errorsList.map(message => ValidationMessage(message = message, path = SchemaPath(sdfDocumentId = sdfDocument.id), `type` = ValidationMessageType.Error)) ++
+//                results.warningsList.map(message => ValidationMessage(message = message, path = SchemaPath(sdfDocumentId = sdfDocument.id), `type` = ValidationMessageType.Warning))
+//              )
+//            }
+//          }
+//        })
 }
