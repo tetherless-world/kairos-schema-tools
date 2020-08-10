@@ -33,7 +33,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
       <Link
         color="inherit"
         data-cy="sdf-document-source-breadcrumb"
-        to={Hrefs.sdfDocuments.sdfDocument(sdfDocument).source}
+        to={Hrefs.sdfDocuments.sdfDocument(sdfDocument).source()}
       >
         Source
       </Link>

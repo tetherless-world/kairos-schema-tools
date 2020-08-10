@@ -1,4 +1,5 @@
 import AceEditor from "react-ace";
+import ReactAce from "react-ace";
 import * as React from "react";
 import {useState} from "react";
 import "ace-builds/src-noconflict/mode-json";
@@ -31,16 +32,26 @@ import {
 } from "api/mutations/types/SdfDocumentEditorSaveMutation";
 import CloseIcon from "@material-ui/icons/Close";
 import {SdfDocumentPageFragment} from "api/queries/types/SdfDocumentPageFragment";
-import {SchemaPathFragment} from "api/queries/types/SchemaPathFragment";
-import ReactAce from "react-ace";
+import {useQueryParam} from "use-query-params";
+import {SourcePath} from "components/link/SourcePath";
 
 export const SdfDocumentEditor: React.FunctionComponent<{
-  goToSchemaPath?: SchemaPathFragment;
   onChange?: (sdfDocument: SdfDocumentPageFragment) => void;
   sdfDocument: SdfDocumentPageFragment;
 }> = ({onChange, sdfDocument: initialSdfDocument}) => {
+  const [goToSchemaId] = useQueryParam<string>("schemaId");
+  const [goToSlotId] = useQueryParam<string>("slotId");
+  const [goToStepId] = useQueryParam<string>("stepId");
+  const goToPath: SourcePath = {
+    schemaId: goToSchemaId ? goToSchemaId : undefined,
+    sdfDocumentId: initialSdfDocument.id,
+    slotId: goToSlotId ? goToSlotId : undefined,
+    stepId: goToStepId ? goToStepId : undefined,
+  };
+  console.info("Path: " + JSON.stringify(goToPath));
+
   const aceEditorRef = React.useCallback((aceEditor: ReactAce) => {
-    console.log("Got ace editor");
+    console.log("Got ace editor " + JSON.stringify(goToPath));
   }, []);
 
   const apolloClient = useApolloClient();

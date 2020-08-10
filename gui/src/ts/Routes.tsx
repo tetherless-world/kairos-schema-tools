@@ -52,7 +52,7 @@ export const Routes: React.FunctionComponent = () => (
             {/*Document source*/}
             <Route
               exact
-              path={Hrefs.sdfDocuments.sdfDocument(sdfDocumentIdParam).source}
+              path={Hrefs.sdfDocuments.sdfDocument(sdfDocumentIdParam).source()}
               component={SdfDocumentSourcePage}
             />
 

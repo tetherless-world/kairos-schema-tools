@@ -43,7 +43,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
               </Link>
             </Grid>
             <Grid item xs={4} style={{textAlign: "right"}}>
-              <SourceLink to={Hrefs.sdfDocuments.sdfDocument({id}).source} />
+              <SourceLink to={{sdfDocumentId: id}} />
             </Grid>
           </Grid>
         }
@@ -94,7 +94,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
                   </React.Fragment>
                 ))}
                 &nbsp;&nbsp;
-                <Link to={Hrefs.sdfDocuments.sdfDocument({id}).source}>
+                <Link to={Hrefs.sdfDocuments.sdfDocument({id}).source()}>
                   Validation errors
                 </Link>
               </Typography>
