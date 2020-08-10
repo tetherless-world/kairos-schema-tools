@@ -1,6 +1,7 @@
 package models.schema
 
 import edu.rpi.tw.twks.uri.Uri
+import models.json.JsonNodeLocation
 
 final case class StepParticipant(
                        aka: Option[List[String]],
@@ -11,4 +12,5 @@ final case class StepParticipant(
                        references: Option[List[String]],
                        refvar: Option[String],
                        role: Uri,
+                       sourceJsonNodeLocation: JsonNodeLocation,
                      )

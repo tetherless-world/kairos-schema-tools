@@ -9,4 +9,5 @@ fragment SchemaPathFragment on SchemaPath {
     sdfDocumentId
     slotId
     stepId
+    stepParticipantId
 }
