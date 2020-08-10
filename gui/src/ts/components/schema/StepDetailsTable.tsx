@@ -53,6 +53,12 @@ export const StepDetailsTable: React.FunctionComponent<{
       />
       <StringListFieldTableRow
         direction="column"
+        name="Provenance"
+        values={step.provenances}
+        valuesDataCy="step-provenances"
+      />
+      <StringListFieldTableRow
+        direction="column"
         name="References"
         values={step.references}
         valuesDataCy="step-references"

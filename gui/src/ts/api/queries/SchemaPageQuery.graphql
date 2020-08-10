@@ -60,6 +60,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
                 refvar
                 role
             }
+            provenances
             references
             requires
             type

@@ -26,6 +26,7 @@ trait KairosProperties extends PropertyGetters {
   def order: List[Resource] = getPropertyObjectResources(KAIROS.order)
   def overlaps: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.overlaps)
   def participants: List[Resource] = getPropertyObjectUriResourceList(KAIROS.participants)
+  def provenance: List[String] = getPropertyObjectStrings(KAIROS.provenance)
   def reference: List[String] = getPropertyObjects(KAIROS.reference).map(node => if (node.isLiteral) node.asLiteral().getString else if (node.isURIResource) node.asResource().getURI else throw new UnsupportedOperationException)
   def relationObject: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.relationObject)
   def relations: List[Resource] = getPropertyObjectResources(KAIROS.relations)

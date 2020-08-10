@@ -94,6 +94,7 @@ final class ZeroDot8cSdfDocumentReader(documentHeader: SdfDocumentHeader, docume
       id = id,
       name = resource.name.headOption.getOrElse(throw ValidationException(s"step ${id} missing required name property", documentPath)),
       participants = Option(resource.participants.map(Rdf.read[StepParticipant](_))).filter(_.nonEmpty),
+      provenances = Option(resource.provenance).filter(_.nonEmpty),
       references = Option(resource.reference).filter(_.nonEmpty),
       requires = Option(resource.requires).filter(_.nonEmpty),
       `type` = Uri.parse(resource.types.headOption.getOrElse(throw ValidationException(s"step ${id} missing type", documentPath)).getURI)
