@@ -1,4 +1,4 @@
-export interface SourcePath {
+export interface SdfDocumentSourcePath {
   schemaId?: string | null;
   sdfDocumentId: string;
   slotId?: string | null;

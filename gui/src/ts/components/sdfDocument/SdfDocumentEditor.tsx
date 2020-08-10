@@ -33,7 +33,8 @@ import {
 import CloseIcon from "@material-ui/icons/Close";
 import {SdfDocumentPageFragment} from "api/queries/types/SdfDocumentPageFragment";
 import {useQueryParam} from "use-query-params";
-import {SourcePath} from "components/link/SourcePath";
+import {SdfDocumentSourcePath} from "models/sdfDocument/SdfDocumentSourcePath";
+import * as parseJsonToAst from "json-to-ast";
 
 export const SdfDocumentEditor: React.FunctionComponent<{
   onChange?: (sdfDocument: SdfDocumentPageFragment) => void;
@@ -42,17 +43,12 @@ export const SdfDocumentEditor: React.FunctionComponent<{
   const [goToSchemaId] = useQueryParam<string>("schemaId");
   const [goToSlotId] = useQueryParam<string>("slotId");
   const [goToStepId] = useQueryParam<string>("stepId");
-  const goToPath: SourcePath = {
+  const goToPath: SdfDocumentSourcePath = {
     schemaId: goToSchemaId ? goToSchemaId : undefined,
     sdfDocumentId: initialSdfDocument.id,
     slotId: goToSlotId ? goToSlotId : undefined,
     stepId: goToStepId ? goToStepId : undefined,
   };
-  console.info("Path: " + JSON.stringify(goToPath));
-
-  const aceEditorRef = React.useCallback((aceEditor: ReactAce) => {
-    console.log("Got ace editor " + JSON.stringify(goToPath));
-  }, []);
 
   const apolloClient = useApolloClient();
 
@@ -66,6 +62,15 @@ export const SdfDocumentEditor: React.FunctionComponent<{
   const [validationMessages, setValidationMessages] = useState<
     readonly ValidationMessageFragment[]
   >(initialSdfDocument.validationMessages);
+
+  const aceEditorRef = React.useCallback(
+    (aceEditor: ReactAce) => {
+      console.log("Got ace editor " + JSON.stringify(goToPath));
+      // @ts-ignore
+      const valueNode = parseJsonToAst(sourceJson);
+    },
+    [sourceJson]
+  );
 
   const onSnackbarClose = () => setSnackbarMessage((prevState) => null);
 

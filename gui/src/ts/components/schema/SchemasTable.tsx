@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import {Hrefs} from "Hrefs";
 import {Link} from "components/link/Link";
-import {SourceLink} from "components/link/SourceLink";
+import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 
 export const SchemasTable: React.FunctionComponent<{
   schemas: {id: string; name: string; sdfDocumentId: string}[];
@@ -36,7 +36,7 @@ export const SchemasTable: React.FunctionComponent<{
               <Link to={schemaHref}>{schema.name}</Link>
             </TableCell>
             <TableCell data-cy="schema-source">
-              <SourceLink
+              <SdfDocumentSourceLink
                 to={{schemaId: schema.id, sdfDocumentId: schema.sdfDocumentId}}
               />
             </TableCell>

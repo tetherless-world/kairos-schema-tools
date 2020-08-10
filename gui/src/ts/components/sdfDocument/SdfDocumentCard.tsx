@@ -16,7 +16,7 @@ import {Link} from "components/link/Link";
 import {ValidationMessageType} from "api/graphqlGlobalTypes";
 import ErrorIcon from "@material-ui/icons/Error";
 import WarningIcon from "@material-ui/icons/Warning";
-import {SourceLink} from "components/link/SourceLink";
+import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 
 export const SdfDocumentCard: React.FunctionComponent<{
   id: string;
@@ -43,7 +43,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
               </Link>
             </Grid>
             <Grid item xs={4} style={{textAlign: "right"}}>
-              <SourceLink to={{sdfDocumentId: id}} />
+              <SdfDocumentSourceLink to={{sdfDocumentId: id}} />
             </Grid>
           </Grid>
         }

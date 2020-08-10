@@ -3,10 +3,10 @@ import CodeIcon from "@material-ui/icons/Code";
 import * as React from "react";
 import {Button} from "@material-ui/core";
 import {Hrefs} from "Hrefs";
-import {SourcePath} from "components/link/SourcePath";
+import {SdfDocumentSourcePath} from "models/sdfDocument/SdfDocumentSourcePath";
 
-export const SourceLink: React.FunctionComponent<{
-  to: SourcePath;
+export const SdfDocumentSourceLink: React.FunctionComponent<{
+  to: SdfDocumentSourcePath;
 }> = ({to}) => {
   return (
     <Link
