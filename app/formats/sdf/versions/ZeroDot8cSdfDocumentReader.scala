@@ -83,12 +83,12 @@ final class ZeroDot8cSdfDocumentReader(header: SdfDocumentHeader, sourceJson: St
       slots = mapResourcesToObjectJsonNodes(
         jsonNodes = jsonNode.map.get("slots").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
-        resources = header.rootResource.slots,
+        resources = resource.slots,
       ).map(entry => readSlot(jsonNode = entry._1, parentPath = path, resource =entry._2)),
       steps = mapResourcesToObjectJsonNodes(
         jsonNodes = jsonNode.map.get("steps").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
-        resources = header.rootResource.steps,
+        resources = resource.steps,
       ).map(entry => readStep(jsonNode = entry._1, parentPath = path, resource =entry._2)),
       `super` = resource.`super`.headOption,
       ta2 = false,
@@ -159,9 +159,9 @@ final class ZeroDot8cSdfDocumentReader(header: SdfDocumentHeader, sourceJson: St
       id = id,
       name = resource.name.headOption.getOrElse(throw ValidationException(s"step ${id} missing required name property", path)),
       participants = Option(mapResourcesToObjectJsonNodes(
-        jsonNodes = sourceJsonNode.asInstanceOf[ObjectJsonNode].map.get("participants").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
+        jsonNodes = jsonNode.map.get("participants").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
-        resources = header.rootResource.participants
+        resources = resource.participants
       ).map(entry => readStepParticipant(jsonNode = entry._1, parentPath = path, resource = entry._2))).filter(_.nonEmpty),
       provenances = Option(resource.provenance).filter(_.nonEmpty),
       references = Option(resource.reference).filter(_.nonEmpty),
