@@ -12,6 +12,7 @@ lazy val app = (project in file("."))
       "com.outr" %% "lucene4s" % "1.9.1",
       "io.github.tetherless-world" %% "twxplore-base" % twxploreVersion,
       "io.github.tetherless-world" %% "twxplore-test" % twxploreVersion % Test,
+      "org.antlr" % "antlr4-runtime" % "4.8-1"
     ),
     maintainer := "gordom6@rpi.edu",
     name := "kairos-schema-tools-app",
