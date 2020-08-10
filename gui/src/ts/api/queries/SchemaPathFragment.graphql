@@ -1,0 +1,12 @@
+fragment SchemaPathFragment on SchemaPath {
+    schema {
+        name
+    }
+    schemaId
+    sdfDocument {
+        name
+    }
+    sdfDocumentId
+    slotId
+    stepId
+}
