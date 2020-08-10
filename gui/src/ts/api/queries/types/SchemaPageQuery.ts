@@ -89,6 +89,7 @@ export interface SchemaPageQuery_schemaById_steps {
   minDuration: SchemaPageQuery_schemaById_steps_minDuration | null;
   name: string;
   participants: SchemaPageQuery_schemaById_steps_participants[] | null;
+  provenances: string[] | null;
   references: string[] | null;
   requires: string[] | null;
   type: string;
