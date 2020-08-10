@@ -34,7 +34,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import {SdfDocumentPageFragment} from "api/queries/types/SdfDocumentPageFragment";
 import {useQueryParam} from "use-query-params";
 import {SdfDocumentSourcePath} from "models/sdfDocument/SdfDocumentSourcePath";
-import * as parseJsonToAst from "json-to-ast";
 
 export const SdfDocumentEditor: React.FunctionComponent<{
   onChange?: (sdfDocument: SdfDocumentPageFragment) => void;
@@ -66,8 +65,8 @@ export const SdfDocumentEditor: React.FunctionComponent<{
   const aceEditorRef = React.useCallback(
     (aceEditor: ReactAce) => {
       console.log("Got ace editor " + JSON.stringify(goToPath));
-      // @ts-ignore
-      const valueNode = parseJsonToAst(sourceJson);
+      // const ast = parseSdfDocumentJson(sourceJson);
+      // console.log(JSON.stringify(ast));
     },
     [sourceJson]
   );
