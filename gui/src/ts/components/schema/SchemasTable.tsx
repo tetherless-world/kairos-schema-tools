@@ -7,7 +7,7 @@ import {
   TableRow,
 } from "@material-ui/core";
 import {Hrefs} from "Hrefs";
-import {Link} from "components/Link";
+import {Link} from "components/link/Link";
 
 export const SchemasTable: React.FunctionComponent<{
   schemas: {id: string; name: string; sdfDocumentId: string}[];

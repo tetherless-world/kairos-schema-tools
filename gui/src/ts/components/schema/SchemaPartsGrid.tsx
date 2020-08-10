@@ -17,7 +17,7 @@ import FolderIcon from "@material-ui/icons/Folder";
 import WorkIcon from "@material-ui/icons/Work";
 import {SchemaHrefs} from "Hrefs";
 import {makeStyles} from "@material-ui/core/styles";
-import {Link} from "components/Link";
+import {Link} from "components/link/Link";
 
 const useStyles = makeStyles((theme) => ({
   nestedListItem: {

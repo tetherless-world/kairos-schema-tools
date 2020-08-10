@@ -4,7 +4,7 @@ import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {Hrefs} from "Hrefs";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {SchemaPageSchema} from "components/schema/SchemaPageSchema";
-import {Link} from "components/Link";
+import {Link} from "components/link/Link";
 
 export const SchemaDetailsTable: React.FunctionComponent<{
   schema: SchemaPageSchema;

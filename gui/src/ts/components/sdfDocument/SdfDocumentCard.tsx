@@ -12,10 +12,11 @@ import {
 } from "@material-ui/core";
 import {Hrefs} from "Hrefs";
 import {SchemasTable} from "components/schema/SchemasTable";
-import {Link} from "components/Link";
+import {Link} from "components/link/Link";
 import {ValidationMessageType} from "api/graphqlGlobalTypes";
 import ErrorIcon from "@material-ui/icons/Error";
 import WarningIcon from "@material-ui/icons/Warning";
+import {SourceLink} from "components/link/SourceLink";
 
 export const SdfDocumentCard: React.FunctionComponent<{
   id: string;
@@ -32,14 +33,19 @@ export const SdfDocumentCard: React.FunctionComponent<{
     <Card data-cy={"sdf-document-card-" + id}>
       <CardHeader
         title={
-          <React.Fragment>
-            <Link
-              dataCy="sdf-document-name"
-              to={Hrefs.sdfDocuments.sdfDocument({id}).toString()}
-            >
-              {name}
-            </Link>
-          </React.Fragment>
+          <Grid container>
+            <Grid item xs={8}>
+              <Link
+                dataCy="sdf-document-name"
+                to={Hrefs.sdfDocuments.sdfDocument({id}).toString()}
+              >
+                {name}
+              </Link>
+            </Grid>
+            <Grid item xs={4} style={{textAlign: "right"}}>
+              <SourceLink to={Hrefs.sdfDocuments.sdfDocument({id}).source} />
+            </Grid>
+          </Grid>
         }
       />
       <CardContent>
@@ -88,7 +94,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
                   </React.Fragment>
                 ))}
                 &nbsp;&nbsp;
-                <Link to={Hrefs.sdfDocuments.sdfDocument({id}).tab("source")}>
+                <Link to={Hrefs.sdfDocuments.sdfDocument({id}).source}>
                   Validation errors
                 </Link>
               </Typography>

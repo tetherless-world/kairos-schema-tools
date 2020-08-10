@@ -10,6 +10,7 @@ import {SearchResultsPage} from "components/search/SearchResultsPage";
 import {QueryParamProvider} from "use-query-params";
 import {createBrowserHistory as createHistory} from "history";
 import {ScrollManager, WindowScroller} from "react-scroll-manager";
+import {SdfDocumentSourcePage} from "components/sdfDocument/SdfDocumentSourcePage";
 
 const schemaIdParam = {id: ":schemaId", idEncoded: true};
 const sdfDocumentIdParam = {id: ":sdfDocumentId", idEncoded: true};
@@ -32,12 +33,14 @@ export const Routes: React.FunctionComponent = () => (
               component={SchemasPage}
             />
 
+            {/*All documents*/}
             <Route
               exact
               path={Hrefs.sdfDocuments.toString()}
               component={SdfDocumentsPage}
             />
 
+            {/*One document*/}
             <Route
               exact
               path={Hrefs.sdfDocuments
@@ -46,7 +49,14 @@ export const Routes: React.FunctionComponent = () => (
               component={SdfDocumentPage}
             />
 
-            {/*Document scemas*/}
+            {/*Document source*/}
+            <Route
+              exact
+              path={Hrefs.sdfDocuments.sdfDocument(sdfDocumentIdParam).source}
+              component={SdfDocumentSourcePage}
+            />
+
+            {/*Document schemas*/}
             <Route
               exact
               path={Hrefs.sdfDocuments

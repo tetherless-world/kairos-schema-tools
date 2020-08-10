@@ -14,7 +14,7 @@ import * as ReactDOM from "react-dom";
 import {Hrefs} from "Hrefs";
 import {SearchDocumentType} from "api/graphqlGlobalTypes";
 import {invariant} from "ts-invariant";
-import {Link} from "components/Link";
+import {Link} from "components/link/Link";
 
 const columns: MUIDataTableColumn[] = [
   {

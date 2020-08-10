@@ -9,7 +9,7 @@ import {Hrefs} from "Hrefs";
 import {SchemasTable} from "components/schema/SchemasTable";
 import {NoRoute} from "components/error/NoRoute";
 import {BreadcrumbsProps} from "components/breadcrumbs/BreadcrumbsProps";
-import {Link} from "components/Link";
+import {Link} from "components/link/Link";
 
 export const SchemasPage: React.FunctionComponent = () => {
   let {sdfDocumentId} = useParams<{sdfDocumentId?: string}>();
