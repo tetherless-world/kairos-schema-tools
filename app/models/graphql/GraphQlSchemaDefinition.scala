@@ -5,6 +5,7 @@ import java.util.UUID
 import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.{SdfDocument, SdfDocumentReader}
 import io.github.tetherlessworld.twxplore.lib.base.models.graphql.BaseGraphQlSchemaDefinition
+import models.json.JsonNodeLocation
 import models.schema._
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 import models.validation.{ValidationMessage, ValidationMessageType}
@@ -40,6 +41,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
     )
 
   // Object types
+  implicit val JsonNodeLocationObjectType = deriveObjectType[GraphQlSchemaContext, JsonNodeLocation]()
   implicit val DurationObjectType = deriveObjectType[GraphQlSchemaContext, Duration]()
   implicit val EntityRelationRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelationRelation]()
   implicit val EntityRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelation]()
