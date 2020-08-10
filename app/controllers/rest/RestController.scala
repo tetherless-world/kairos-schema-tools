@@ -3,6 +3,7 @@ package controllers.rest
 import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.SdfDocument
 import javax.inject.{Inject, Singleton}
+import models.json.JsonNodeLocation
 import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Schema, SchemaPath, Slot, Step, StepOrder, StepOrderFlag, StepParticipant}
 import models.validation.{ValidationMessage, ValidationMessageType}
 import play.api.http.MimeTypes
@@ -17,6 +18,7 @@ import play.api.mvc._
 class RestController @Inject() (store: Store) extends InjectedController {
   private val MimeTypeJsonLd = "application/ld+json"
 //  private val AcceptsJsonLd = Accepting(MimeTypeJsonLd)
+  private implicit val jsonNodeLocationWrites = Json.writes[JsonNodeLocation]
   private implicit val uriJsonWrites: json.Writes[Uri] = (uri) => JsString(uri.toString)
   private implicit val durationJsonWrites = Json.writes[Duration]
   private implicit val entityRelationRelationJsonWrites = Json.writes[EntityRelationRelation]

@@ -16,6 +16,9 @@ object JsonParser {
     val parser = new JSONParser(tokenStream)
     val parseTree = parser.json()
     new JSONBaseVisitor[JsonNode] {
+      private def stripStringQuotes(string: String): String =
+        string.substring(1, string.length - 1)
+
       override def visitArr(ctx: JSONParser.ArrContext): ArrayJsonNode = {
         var list = new mutable.ListBuffer[JsonNode]
         ctx.children.forEach(child => {
@@ -32,7 +35,7 @@ object JsonParser {
         ctx.children.forEach(child => {
           if (child.isInstanceOf[JSONParser.PairContext]) {
             val pair = child.asInstanceOf[JSONParser.PairContext]
-            val key = pair.STRING().getText
+            val key = stripStringQuotes(pair.STRING().getText)
             val value = super.visit(pair.value())
             map.update(key, value)
           }
@@ -50,7 +53,7 @@ object JsonParser {
         } else if (child.isInstanceOf[TerminalNode]) {
           val terminalNode = child.asInstanceOf[TerminalNode]
           if (terminalNode.getSymbol.getType == JSONParser.STRING) {
-            StringValueJsonNode(location = JsonNodeLocation(startToken = ctx.start, stopToken = ctx.stop), value = terminalNode.getText)
+            StringValueJsonNode(location = JsonNodeLocation(startToken = ctx.start, stopToken = ctx.stop), value = stripStringQuotes(terminalNode.getText))
           } else if (terminalNode.getSymbol.getText == JSONParser.NUMBER) {
             NumberValueJsonNode(location = JsonNodeLocation(startToken = ctx.start, stopToken = ctx.stop), value = terminalNode.getText.toDouble)
           } else {
