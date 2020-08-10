@@ -3,10 +3,10 @@ package formats.sdf.versions
 import java.io.StringWriter
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.json.JsonNode
 import formats.sdf.{SdfDocument, SdfDocumentHeader}
 import formats.sdf.vocabulary.{KAIROS, KairosProperties, SCHEMA_ORG, SchemaOrgProperties}
 import io.github.tetherlessworld.scena.{Rdf, RdfProperties, RdfReader}
+import models.json.JsonNode
 import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Schema, SchemaPath, Slot, Step, StepOrder, StepOrderFlag, StepParticipant}
 import models.validation.ValidationException
 import org.apache.jena.rdf.model.Resource
