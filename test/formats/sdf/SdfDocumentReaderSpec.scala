@@ -1,9 +1,8 @@
-package formats
+package formats.sdf
 
 import java.util.UUID
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.sdf.SdfDocumentReader
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, OverlapsStepOrder}
 import models.validation.ValidationMessageType
