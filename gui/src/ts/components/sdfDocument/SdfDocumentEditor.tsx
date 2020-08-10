@@ -31,12 +31,20 @@ import {
 } from "api/mutations/types/SdfDocumentEditorSaveMutation";
 import CloseIcon from "@material-ui/icons/Close";
 import {SdfDocumentPageFragment} from "api/queries/types/SdfDocumentPageFragment";
+import {SchemaPathFragment} from "api/queries/types/SchemaPathFragment";
+import ReactAce from "react-ace";
 
 export const SdfDocumentEditor: React.FunctionComponent<{
+  goToSchemaPath?: SchemaPathFragment;
   onChange?: (sdfDocument: SdfDocumentPageFragment) => void;
   sdfDocument: SdfDocumentPageFragment;
 }> = ({onChange, sdfDocument: initialSdfDocument}) => {
+  const aceEditorRef = React.useCallback((aceEditor: ReactAce) => {
+    console.log("Got ace editor");
+  }, []);
+
   const apolloClient = useApolloClient();
+
   const [
     snackbarMessage,
     setSnackbarMessage,
@@ -117,6 +125,7 @@ export const SdfDocumentEditor: React.FunctionComponent<{
                 enableSnippets={false}
                 mode="json"
                 onChange={setSourceJson}
+                ref={aceEditorRef}
                 style={{width: "100%"}}
                 theme="github"
                 value={sourceJson}
