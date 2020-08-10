@@ -3,6 +3,7 @@ package formats.sdf
 import java.io.{Reader, StringReader}
 
 import edu.rpi.tw.twks.uri.Uri
+import formats.json.JsonParser
 import formats.sdf.versions.ZeroDot8cSdfDocumentReader
 import formats.sdf.vocabulary.KAIROS
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
@@ -65,9 +66,11 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
       }
     }
 
+    val sourceJsonNode = JsonParser.parse(sourceJson)
+
     try {
       header.sdfVersion match {
-        case ZeroDot8cSdfDocumentReader.SdfVersion => new ZeroDot8cSdfDocumentReader(header, sourceJson).read()
+        case ZeroDot8cSdfDocumentReader.SdfVersion => new ZeroDot8cSdfDocumentReader(header, sourceJson, sourceJsonNode).read()
         case sdfVersion =>
           throw ValidationException(
             message = s"unrecognized SDF version ${sdfVersion}",
