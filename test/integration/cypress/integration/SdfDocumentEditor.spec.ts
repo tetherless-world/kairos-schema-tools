@@ -16,21 +16,21 @@ context("SDF document editor tab", () => {
   beforeEach(() => page.visit());
 
   it("should show the document source in a text area", () => {
-    page.sourceTab.editor.textarea;
+    page.editor.textarea;
   });
 
   it("should indicate no validation messages by default", () => {
-    page.sourceTab.editor.validationMessages.noValidationMessages;
+    page.editor.validationMessages.noValidationMessages;
   });
 
   it("should validate the document unchanged", () => {
-    page.sourceTab.editor.validateButton.click();
+    page.editor.validateButton.click();
   });
 
   it("should show a validation message when invalid text is inserted", () => {
-    page.sourceTab.editor.textarea.type("invalid text", {force: true});
-    page.sourceTab.editor.validateButton.click();
-    page.sourceTab.editor.validationMessages.fatal
+    page.editor.textarea.type("invalid text", {force: true});
+    page.editor.validateButton.click();
+    page.editor.validationMessages.fatal
       .validationMessage(0)
       .should("contain", "Unrecognized token");
   });
