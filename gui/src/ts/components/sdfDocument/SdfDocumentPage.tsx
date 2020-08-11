@@ -42,6 +42,49 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
 import {Hrefs} from "Hrefs";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
+import {JsonNodeLocationFragment} from "api/queries/types/JsonNodeLocationFragment";
+
+const getJsonNodeLocation = (
+  sdfDocument: SdfDocumentSourceFragment,
+  sdfDocumentSourcePath: SdfDocumentSourcePath
+): JsonNodeLocationFragment | undefined => {
+  if (!sdfDocumentSourcePath.schemaId) {
+    return undefined;
+  }
+  const schema = sdfDocument.schemas.find(
+    (schema) => schema.id === sdfDocumentSourcePath.schemaId
+  );
+  if (!schema) {
+    return undefined;
+  }
+  let result = schema.sourceJsonNodeLocation;
+  if (sdfDocumentSourcePath.slotId) {
+    const slot = schema.slots.find(
+      (slot) => slot.id === sdfDocumentSourcePath.slotId
+    );
+    if (slot) {
+      result = slot.sourceJsonNodeLocation;
+    }
+  } else if (sdfDocumentSourcePath.stepId) {
+    const step = schema.steps.find(
+      (step) => step.id === sdfDocumentSourcePath.stepId
+    );
+    if (!step) {
+      return result;
+    }
+    result = step.sourceJsonNodeLocation;
+    if (sdfDocumentSourcePath.stepParticipantId) {
+      const stepParticipant = step.participants?.find(
+        (participant) =>
+          participant.id === sdfDocumentSourcePath.stepParticipantId
+      );
+      if (stepParticipant) {
+        result = stepParticipant.sourceJsonNodeLocation;
+      }
+    }
+  }
+  return result;
+};
 
 export const SdfDocumentPage: React.FunctionComponent = () => {
   const apolloClient = useApolloClient();
@@ -55,7 +98,6 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
   const [goToSlotId] = useQueryParam<string>("slotId");
   const [goToStepId] = useQueryParam<string>("stepId");
   const [goToStepParticipantId] = useQueryParam<string>("stepParticipantId");
-  // @ts-ignore
   const goToPath: SdfDocumentSourcePath | undefined =
     goToSchemaId || goToSlotId || goToStepId || goToStepParticipantId
       ? {
@@ -68,7 +110,6 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
             : undefined,
         }
       : undefined;
-
   const query = useQuery<SdfDocumentPageQuery>(SdfDocumentPageQueryDocument, {
     fetchPolicy: "network-only",
     variables: {id: sdfDocumentId},
@@ -209,6 +250,11 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                   <Grid container direction="column" spacing={4}>
                     <Grid item>
                       <SdfDocumentEditor
+                        goToJsonNodeLocation={
+                          goToPath
+                            ? getJsonNodeLocation(savedSdfDocument, goToPath)
+                            : undefined
+                        }
                         onChange={(sourceJson) =>
                           setState((prevState) => ({
                             ...prevState,
