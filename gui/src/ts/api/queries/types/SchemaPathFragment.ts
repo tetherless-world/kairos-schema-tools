@@ -24,4 +24,5 @@ export interface SchemaPathFragment {
   sdfDocumentId: string | null;
   slotId: string | null;
   stepId: string | null;
+  stepParticipantId: string | null;
 }

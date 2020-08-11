@@ -31,7 +31,8 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
           <StandardLayout
             breadcrumbs={{sdfDocument}}
             rowItemStyle={{flexGrow: 1}}
-            title="Schema Data Format Document"
+            title={"Schema Data Format Document: " + sdfDocument.name}
+            subtitle={sdfDocument.id}
           >
             <SdfDocumentCard
               {...sdfDocument}

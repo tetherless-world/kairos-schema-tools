@@ -1,28 +1,30 @@
 import * as React from "react";
-import * as SdfDocumentPageQueryDocument from "api/queries/SdfDocumentPageQuery.graphql";
+import * as SdfDocumentSourcePageQueryDocument from "api/queries/SdfDocumentSourcePageQuery.graphql";
 import {useQuery} from "@apollo/react-hooks";
 import {useParams} from "react-router-dom";
 import {Frame} from "components/frame/Frame";
 import {StandardLayout} from "components/layout/StandardLayout";
-import {SdfDocumentPageQuery} from "api/queries/types/SdfDocumentPageQuery";
+import {SdfDocumentSourcePageQuery} from "api/queries/types/SdfDocumentPageQuery";
 import * as _ from "lodash";
 import {NoRoute} from "components/error/NoRoute";
 import {SdfDocumentEditor} from "components/sdfDocument/SdfDocumentEditor";
-import {SdfDocumentPageFragment} from "api/queries/types/SdfDocumentPageFragment";
 
 export const SdfDocumentSourcePage: React.FunctionComponent = () => {
   const {sdfDocumentId} = _.mapValues(
     useParams<{sdfDocumentId: string}>(),
     decodeURIComponent
   );
-  const query = useQuery<SdfDocumentPageQuery>(SdfDocumentPageQueryDocument, {
-    fetchPolicy: "network-only",
-    variables: {id: sdfDocumentId},
-  });
+  const query = useQuery<SdfDocumentSourcePageQuery>(
+    SdfDocumentSourcePageQueryDocument,
+    {
+      fetchPolicy: "network-only",
+      variables: {id: sdfDocumentId},
+    }
+  );
   const [
     sdfDocument,
     setSdfDocument,
-  ] = React.useState<SdfDocumentPageFragment | null>(null);
+  ] = React.useState<SdfDocumentSourceFragment | null>(null);
 
   return (
     <Frame {...query}>

@@ -1,0 +1,7 @@
+#import "./SdfDocumentPageFragment.graphql"
+
+query SdfDocumentSourcePageQuery($id: String!) {
+    sdfDocumentById(id: $id) {
+        ... SdfDocumentSourceFragment
+    }
+}

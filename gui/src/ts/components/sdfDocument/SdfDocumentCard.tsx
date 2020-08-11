@@ -19,16 +19,20 @@ import WarningIcon from "@material-ui/icons/Warning";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 
 export const SdfDocumentCard: React.FunctionComponent<{
-  id: string;
-  name: string;
-  schemas: {
+  sdfDocument: {
     id: string;
     name: string;
-    sdfDocumentId: string;
-  }[];
-  sdfVersion: string;
-  validationMessageTypes: ValidationMessageType[];
-}> = ({id, name, schemas, sdfVersion, validationMessageTypes}) => {
+    schemas: {
+      id: string;
+      name: string;
+      sdfDocumentId: string;
+    }[];
+    sdfVersion: string;
+    validationMessageTypes: ValidationMessageType[];
+  };
+}> = ({
+  sdfDocument: {id, name, schemas, sdfVersion, validationMessageTypes},
+}) => {
   return (
     <Card data-cy={"sdf-document-card-" + id}>
       <CardHeader
