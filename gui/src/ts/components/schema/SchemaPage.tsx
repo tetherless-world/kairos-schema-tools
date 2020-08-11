@@ -79,14 +79,7 @@ export const SchemaPage: React.FunctionComponent = () => {
                 <div hidden={tab !== "table"}>
                   <Grid container direction="column">
                     <Grid item>
-                      <SchemaTableOfContents
-                        getSchemaSectionHref={(sectionId) =>
-                          hrefs.section(sectionId)
-                        }
-                        getSlotHref={(slotId) => hrefs.slot({id: slotId})}
-                        getStepHref={(stepId) => hrefs.step({id: stepId})}
-                        schema={schema}
-                      />
+                      <SchemaTableOfContents hrefs={hrefs} schema={schema} />
                       <Grid item>
                         <SchemaSectionContentsGrid
                           hrefs={hrefs}

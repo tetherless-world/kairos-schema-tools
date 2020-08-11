@@ -39,6 +39,9 @@ import {ValidationMessagesTable} from "components/validation/ValidationMessagesT
 import CloseIcon from "@material-ui/icons/Close";
 import {invariant} from "ts-invariant";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
+import {Hrefs} from "Hrefs";
+import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 
 export const SdfDocumentPage: React.FunctionComponent = () => {
   const apolloClient = useApolloClient();
@@ -244,16 +247,64 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                   </Grid>
                 </Grid>
                 <Grid item xs={4}>
-                  <Accordion>
-                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                      <h2>Validation messages ({validationMessages.length})</h2>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <ValidationMessagesTable
-                        validationMessages={validationMessages}
-                      />
-                    </AccordionDetails>
-                  </Accordion>
+                  <Grid container direction="column" spacing={8}>
+                    <Grid item>
+                      <Accordion>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                          <h2>Table of contents</h2>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <Grid container direction="column">
+                            {savedSdfDocument.schemas.map((schema) => (
+                              <Grid item key={schema.id}>
+                                <Accordion>
+                                  <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                  >
+                                    <h3>Schema: {schema.name}</h3>
+                                  </AccordionSummary>
+                                  <AccordionDetails>
+                                    <Grid container direction="column">
+                                      <Grid item>
+                                        <SdfDocumentSourceLink
+                                          to={{
+                                            sdfDocumentId,
+                                            schemaId: schema.id,
+                                          }}
+                                        />
+                                      </Grid>
+                                      <Grid item>
+                                        <SchemaTableOfContents
+                                          hrefs={Hrefs.sdfDocuments
+                                            .sdfDocument(savedSdfDocument)
+                                            .schemas.schema(schema)}
+                                          schema={schema}
+                                        />
+                                      </Grid>
+                                    </Grid>
+                                  </AccordionDetails>
+                                </Accordion>
+                              </Grid>
+                            ))}
+                          </Grid>
+                        </AccordionDetails>
+                      </Accordion>
+                    </Grid>
+                    <Grid item>
+                      <Accordion>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                          <h2>
+                            Validation messages ({validationMessages.length})
+                          </h2>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <ValidationMessagesTable
+                            validationMessages={validationMessages}
+                          />
+                        </AccordionDetails>
+                      </Accordion>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </StandardLayout>

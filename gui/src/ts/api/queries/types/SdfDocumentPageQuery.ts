@@ -17,6 +17,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_sourceJsonNo
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots {
   __typename: "Slot";
   id: string;
+  roleName: string;
   sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_sourceJsonNodeLocation;
 }
 
@@ -35,6 +36,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants {
   __typename: "StepParticipant";
   id: string;
+  name: string;
   sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants_sourceJsonNodeLocation;
 }
 
@@ -47,6 +49,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_sourceJsonNo
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps {
   __typename: "Step";
   id: string;
+  name: string;
   participants: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants[] | null;
   sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_sourceJsonNodeLocation;
 }

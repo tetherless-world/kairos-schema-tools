@@ -10,6 +10,7 @@ fragment SdfDocumentSourceFragment on SdfDocument {
         sdfDocumentId
         slots {
             id
+            roleName
             sourceJsonNodeLocation {
                 ...JsonNodeLocationFragment
             }
@@ -19,8 +20,10 @@ fragment SdfDocumentSourceFragment on SdfDocument {
         }
         steps {
             id
+            name
             participants {
                 id
+                name
                 sourceJsonNodeLocation {
                     ...JsonNodeLocationFragment
                 }
