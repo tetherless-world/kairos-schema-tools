@@ -56,6 +56,7 @@ class SdfDocumentHrefs extends SubHrefs {
       schemaId: path.schemaId,
       slotId: path.slotId,
       stepId: path.stepId,
+      stepParticipantId: path.stepParticipantId,
     };
     return this.home + qs.stringify(pathCopy, {addQueryPrefix: true});
   }
