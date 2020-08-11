@@ -1,18 +1,11 @@
-import {
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Snackbar as MuiSnackbar,
-} from "@material-ui/core";
+import {IconButton, Snackbar as MuiSnackbar} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import * as React from "react";
-import {GraphQLError} from "graphql";
 
 export const Snackbar: React.FunctionComponent<{
   message: React.ReactNode | null;
   onClose: () => void;
-}> = ({message, onClose}) => {
+}> = ({message, onClose}) => (
   <MuiSnackbar
     anchorOrigin={{
       vertical: "bottom",
@@ -32,20 +25,5 @@ export const Snackbar: React.FunctionComponent<{
         <CloseIcon fontSize="small" />
       </IconButton>
     }
-  />;
-};
-
-const getSnackbarMessageFrom = (errors: ReadonlyArray<GraphQLError>) => {
-  setState((prevState) => ({
-    ...prevState,
-    snackbarMessage: (
-      <List>
-        {errors.map((error, errorIndex) => (
-          <ListItem key={errorIndex}>
-            <ListItemText>GraphQL error: {error.message}</ListItemText>
-          </ListItem>
-        ))}
-      </List>
-    ),
-  }));
-};
+  />
+);
