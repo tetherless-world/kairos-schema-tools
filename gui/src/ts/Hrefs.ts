@@ -71,18 +71,14 @@ class SdfDocumentHrefs extends SubHrefs {
     return new SdfDocumentSchemasHrefs(this.home + "schema/");
   }
 
-  source(path?: Omit<SdfDocumentSourcePath, "sdfDocumentId">) {
-    let href = this.home + "source";
-    if (path) {
-      // Copy out only the properties we want
-      const pathCopy: Omit<SdfDocumentSourcePath, "sdfDocumentId"> = {
-        schemaId: path.schemaId,
-        slotId: path.slotId,
-        stepId: path.stepId,
-      };
-      href += qs.stringify(pathCopy, {addQueryPrefix: true});
-    }
-    return href;
+  sourcePath(path: Omit<SdfDocumentSourcePath, "sdfDocumentId">) {
+    // Copy out only the properties we want
+    const pathCopy: Omit<SdfDocumentSourcePath, "sdfDocumentId"> = {
+      schemaId: path.schemaId,
+      slotId: path.slotId,
+      stepId: path.stepId,
+    };
+    return this.home + qs.stringify(pathCopy, {addQueryPrefix: true});
   }
 }
 

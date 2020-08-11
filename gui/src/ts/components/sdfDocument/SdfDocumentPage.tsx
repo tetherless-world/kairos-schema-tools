@@ -19,6 +19,7 @@ import {
 import * as SdfDocumentSaveMutationDocument from "api/mutations/SdfDocumentSaveMutation.graphql";
 import {GraphQLError} from "graphql";
 import {
+  AccordionSummary,
   Button,
   Grid,
   IconButton,
@@ -26,6 +27,8 @@ import {
   ListItem,
   ListItemText,
   Snackbar,
+  Accordion,
+  AccordionDetails,
 } from "@material-ui/core";
 import {
   SdfDocumentValidationQuery,
@@ -35,6 +38,7 @@ import * as SdfDocumentValidationQueryDocument from "api/queries/SdfDocumentVali
 import {ValidationMessagesTable} from "components/validation/ValidationMessagesTable";
 import CloseIcon from "@material-ui/icons/Close";
 import {invariant} from "ts-invariant";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 export const SdfDocumentPage: React.FunctionComponent = () => {
   const apolloClient = useApolloClient();
@@ -198,7 +202,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                 direction="row"
                 spacing={4}
               >
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                   <Grid container direction="column" spacing={4}>
                     <Grid item>
                       <SdfDocumentEditor
@@ -239,10 +243,17 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                  <ValidationMessagesTable
-                    validationMessages={validationMessages}
-                  />
+                <Grid item xs={6}>
+                  <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                      <h2>Validation messages ({validationMessages.length})</h2>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <ValidationMessagesTable
+                        validationMessages={validationMessages}
+                      />
+                    </AccordionDetails>
+                  </Accordion>
                 </Grid>
               </Grid>
             </StandardLayout>

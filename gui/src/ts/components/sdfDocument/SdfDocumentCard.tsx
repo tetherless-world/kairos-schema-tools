@@ -98,7 +98,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
                   </React.Fragment>
                 ))}
                 &nbsp;&nbsp;
-                <Link to={Hrefs.sdfDocuments.sdfDocument({id}).source()}>
+                <Link to={Hrefs.sdfDocuments.sdfDocument({id}).toString()}>
                   Validation errors
                 </Link>
               </Typography>
