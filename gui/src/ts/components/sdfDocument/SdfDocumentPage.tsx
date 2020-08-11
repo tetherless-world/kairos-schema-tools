@@ -202,7 +202,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                 direction="row"
                 spacing={4}
               >
-                <Grid item xs={6}>
+                <Grid item xs={8}>
                   <Grid container direction="column" spacing={4}>
                     <Grid item>
                       <SdfDocumentEditor
@@ -243,7 +243,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                   <Accordion>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                       <h2>Validation messages ({validationMessages.length})</h2>
