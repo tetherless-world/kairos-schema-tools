@@ -27,7 +27,11 @@ export const SchemaTableOfContents: React.FunctionComponent<{
     id: string;
     slots: readonly {id: string; roleName: string}[];
     sdfDocumentId: string;
-    steps: readonly {id: string; name: string}[];
+    steps: readonly {
+      id: string;
+      name: string;
+      participants: readonly {id: string; name: string}[] | null;
+    }[];
   };
 }> = ({hrefs, includeSourceLinks, schema}) => {
   const classes = useStyles();
@@ -91,26 +95,33 @@ export const SchemaTableOfContents: React.FunctionComponent<{
                         <WorkIcon />
                       </ListItemIcon>
                       <ListItemText>
-                        <Grid
-                          container
-                          spacing={2}
-                          style={{alignItems: "center"}}
-                        >
+                        <Grid container direction="column">
                           <Grid item>
-                            <Link to={hrefs.step({id: step.id})}>
-                              Step: {step.name}
-                            </Link>
-                          </Grid>
-                          {includeSourceLinks ? (
-                            <Grid item>
-                              <SdfDocumentSourceLink
-                                to={{
-                                  schemaId: schema.id,
-                                  sdfDocumentId: schema.sdfDocumentId,
-                                  stepId: step.id,
-                                }}
-                              />
+                            <Grid
+                              container
+                              spacing={2}
+                              style={{alignItems: "center"}}
+                            >
+                              <Grid item>
+                                <Link to={hrefs.step({id: step.id})}>
+                                  Step: {step.name}
+                                </Link>
+                              </Grid>
+                              {includeSourceLinks ? (
+                                <Grid item>
+                                  <SdfDocumentSourceLink
+                                    to={{
+                                      schemaId: schema.id,
+                                      sdfDocumentId: schema.sdfDocumentId,
+                                      stepId: step.id,
+                                    }}
+                                  />
+                                </Grid>
+                              ) : null}
                             </Grid>
+                          </Grid>
+                          {step.participants ? (
+                            <Grid item>Step participants</Grid>
                           ) : null}
                         </Grid>
                       </ListItemText>

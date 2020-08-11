@@ -78,7 +78,7 @@ final class ZeroDot8cSdfDocumentReader(header: SdfDocumentHeader, sourceJson: St
       name = resource.name.headOption.getOrElse(throw ValidationException(s"schema ${id} missing required name property", path)),
       order = resource.order.map(readStepOrder(path, _)),
       references = Option(resource.reference).filter(_.nonEmpty),
-      sdfDocumentId = id,
+      sdfDocumentId = header.id,
       sourceJsonNodeLocation = jsonNode.location,
       slots = mapResourcesToObjectJsonNodes(
         jsonNodes = jsonNode.map.get("slots").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
