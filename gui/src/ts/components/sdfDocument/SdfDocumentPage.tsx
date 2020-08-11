@@ -180,7 +180,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
         }
       : undefined;
   const query = useQuery<SdfDocumentPageQuery>(SdfDocumentPageQueryDocument, {
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
     variables: {id: sdfDocumentId},
   });
 
@@ -253,7 +253,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
   const validate = () => {
     apolloClient
       .query<SdfDocumentValidationQuery, SdfDocumentValidationQueryVariables>({
-        fetchPolicy: "network-only",
+        fetchPolicy: "no-cache",
         query: SdfDocumentValidationQueryDocument,
         variables: {json: volatileSourceJson!},
       })

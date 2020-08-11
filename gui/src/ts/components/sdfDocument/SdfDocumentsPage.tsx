@@ -9,7 +9,7 @@ import {StandardLayout} from "components/layout/StandardLayout";
 
 export const SdfDocumentsPage: React.FunctionComponent = () => {
   const query = useQuery<SdfDocumentsPageQuery>(SdfDocumentsPageQueryDocument, {
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
   });
 
   return (

@@ -220,14 +220,14 @@ export const SearchResultsPage: React.FunctionComponent = () => {
     SearchResultsPageQuery,
     SearchResultsPageQueryVariables
   >(SearchResultsPageQueryDocument, {
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
     variables: {limit, offset: 0, query: queryText},
   });
 
   const onChange = (variables: SearchResultsPageQueryVariables) => {
     apolloClient
       .query<SearchResultsPageQuery, SearchResultsPageQueryVariables>({
-        fetchPolicy: "network-only",
+        fetchPolicy: "no-cache",
         query: SearchResultsPageQueryDocument,
         variables,
       })
