@@ -4,5 +4,4 @@ export interface BreadcrumbsProps {
     id: string;
     name: string;
   };
-  sdfDocumentSource?: boolean;
 }

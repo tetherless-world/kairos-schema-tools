@@ -1,6 +1,6 @@
 #import "./ValidationMessageFragment.graphql"
 
-query SdfDocumentEditorValidationQuery($json: String!) {
+query SdfDocumentValidationQuery($json: String!) {
     validateSdfDocument(json: $json) {
         ... ValidationMessageFragment
     }

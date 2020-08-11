@@ -1,3 +1,4 @@
+#import "./JsonNodeLocationFragment.graphql"
 #import "./ValidationMessageFragment.graphql"
 
 fragment SdfDocumentSourceFragment on SdfDocument {
@@ -7,6 +8,27 @@ fragment SdfDocumentSourceFragment on SdfDocument {
         id
         name
         sdfDocumentId
+        slots {
+            id
+            sourceJsonNodeLocation {
+                ...JsonNodeLocationFragment
+            }
+        }
+        sourceJsonNodeLocation {
+            ...JsonNodeLocationFragment
+        }
+        steps {
+            id
+            participants {
+                id
+                sourceJsonNodeLocation {
+                    ...JsonNodeLocationFragment
+                }
+            }
+            sourceJsonNodeLocation {
+                ...JsonNodeLocationFragment
+            }
+        }
     }
     sdfVersion
     sourceJson

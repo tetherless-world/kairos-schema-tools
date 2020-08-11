@@ -8,7 +8,6 @@ import {Link} from "components/link/Link";
 export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
   schema,
   sdfDocument,
-  sdfDocumentSource,
 }) => (
   <MuiBreadcrumbs aria-label="breadcrumb" data-cy="breadcrumbs">
     {sdfDocument ? (
@@ -27,15 +26,6 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
         to={Hrefs.sdfDocuments.sdfDocument(sdfDocument).toString()}
       >
         {sdfDocument.name}
-      </Link>
-    ) : null}
-    {sdfDocumentSource ? (
-      <Link
-        color="inherit"
-        data-cy="sdf-document-source-breadcrumb"
-        to={Hrefs.sdfDocuments.sdfDocument(sdfDocument).source()}
-      >
-        Source
       </Link>
     ) : null}
     {schema ? (
