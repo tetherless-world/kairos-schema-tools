@@ -31,13 +31,13 @@ import {
   SdfDocumentEditorSaveMutationVariables,
 } from "api/mutations/types/SdfDocumentEditorSaveMutation";
 import CloseIcon from "@material-ui/icons/Close";
-import {SdfDocumentPageFragment} from "api/queries/types/SdfDocumentPageFragment";
+import {SdfDocumentSourceFragment} from "api/queries/types/SdfDocumentSourceFragment";
 import {useQueryParam} from "use-query-params";
 import {SdfDocumentSourcePath} from "models/sdfDocument/SdfDocumentSourcePath";
 
 export const SdfDocumentEditor: React.FunctionComponent<{
-  onChange?: (sdfDocument: SdfDocumentPageFragment) => void;
-  sdfDocument: SdfDocumentPageFragment;
+  onChange?: (sdfDocument: SdfDocumentSourceFragment) => void;
+  sdfDocument: SdfDocumentSourceFragment;
 }> = ({onChange, sdfDocument: initialSdfDocument}) => {
   const [goToSchemaId] = useQueryParam<string>("schemaId");
   const [goToSlotId] = useQueryParam<string>("slotId");

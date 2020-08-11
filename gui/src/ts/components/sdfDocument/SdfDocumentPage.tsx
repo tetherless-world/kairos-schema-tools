@@ -3,11 +3,12 @@ import * as SdfDocumentPageQueryDocument from "api/queries/SdfDocumentPageQuery.
 import {useQuery} from "@apollo/react-hooks";
 import {useParams} from "react-router-dom";
 import {Frame} from "components/frame/Frame";
-import {SdfDocumentCard} from "components/sdfDocument/SdfDocumentCard";
 import {StandardLayout} from "components/layout/StandardLayout";
 import {SdfDocumentPageQuery} from "api/queries/types/SdfDocumentPageQuery";
 import * as _ from "lodash";
 import {NoRoute} from "components/error/NoRoute";
+import {SdfDocumentEditor} from "components/sdfDocument/SdfDocumentEditor";
+import {SdfDocumentSourceFragment} from "api/queries/types/SdfDocumentSourceFragment";
 
 export const SdfDocumentPage: React.FunctionComponent = () => {
   const {sdfDocumentId} = _.mapValues(
@@ -18,6 +19,10 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
     fetchPolicy: "network-only",
     variables: {id: sdfDocumentId},
   });
+  const [
+    sdfDocument,
+    setSdfDocument,
+  ] = React.useState<SdfDocumentSourceFragment | null>(null);
 
   return (
     <Frame {...query}>
@@ -25,20 +30,20 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
         if (!data.sdfDocumentById) {
           return <NoRoute />;
         }
-        const sdfDocument = data.sdfDocumentById;
+        if (sdfDocument === null) {
+          setSdfDocument(data.sdfDocumentById);
+          return;
+        }
 
         return (
           <StandardLayout
-            breadcrumbs={{sdfDocument}}
+            breadcrumbs={{sdfDocument, sdfDocumentSource: true}}
             rowItemStyle={{flexGrow: 1}}
-            title={"Schema Data Format Document: " + sdfDocument.name}
-            subtitle={sdfDocument.id}
+            title="Schema Data Format Document"
           >
-            <SdfDocumentCard
-              {...sdfDocument}
-              validationMessageTypes={sdfDocument.validationMessages.map(
-                (message) => message.type
-              )}
+            <SdfDocumentEditor
+              onChange={setSdfDocument}
+              sdfDocument={sdfDocument}
             />
           </StandardLayout>
         );

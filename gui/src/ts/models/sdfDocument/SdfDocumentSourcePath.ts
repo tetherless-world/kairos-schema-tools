@@ -3,4 +3,5 @@ export interface SdfDocumentSourcePath {
   sdfDocumentId: string;
   slotId?: string | null;
   stepId?: string | null;
+  stepParticipantId?: string | null;
 }
