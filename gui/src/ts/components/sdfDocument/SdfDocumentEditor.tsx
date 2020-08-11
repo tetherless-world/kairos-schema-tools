@@ -15,7 +15,7 @@ export const SdfDocumentEditor: React.FunctionComponent<{
 }> = ({goToJsonNodeLocation, onChange, sourceJson}) => {
   const aceEditorRef = React.useCallback(
     (aceEditor: ReactAce) => {
-      if (goToJsonNodeLocation) {
+      if (aceEditor && goToJsonNodeLocation) {
         aceEditor.editor.gotoLine(
           goToJsonNodeLocation.line,
           goToJsonNodeLocation.column,

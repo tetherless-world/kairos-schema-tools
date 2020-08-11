@@ -41,13 +41,13 @@ export const ValidationMessagesTable: React.FunctionComponent<{
         const validationMessages =
           validationMessagesByType[validationMessageType];
         return (
-          <Grid item>
+          <Grid item key={validationMessageType}>
             <Accordion>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <h3>{`${validationMessageType} (${validationMessages.length})`}</h3>
               </AccordionSummary>
               <AccordionDetails>
-                <Table key={validationMessageType}>
+                <Table>
                   <TableBody>
                     {validationMessages.map((message, messageIndex) => (
                       <TableRow key={messageIndex.toString()}>

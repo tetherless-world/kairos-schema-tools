@@ -8,7 +8,10 @@ import {SdfDocumentPageQuery} from "api/queries/types/SdfDocumentPageQuery";
 import * as _ from "lodash";
 import {NoRoute} from "components/error/NoRoute";
 import {SdfDocumentEditor} from "components/sdfDocument/SdfDocumentEditor";
-import {SdfDocumentSourceFragment} from "api/queries/types/SdfDocumentSourceFragment";
+import {
+  SdfDocumentSourceFragment,
+  SdfDocumentSourceFragment_schemas,
+} from "api/queries/types/SdfDocumentSourceFragment";
 import {useQueryParam} from "use-query-params";
 import {SdfDocumentSourcePath} from "models/sdfDocument/SdfDocumentSourcePath";
 import {ValidationMessageFragment} from "api/queries/types/ValidationMessageFragment";
@@ -19,16 +22,12 @@ import {
 import * as SdfDocumentSaveMutationDocument from "api/mutations/SdfDocumentSaveMutation.graphql";
 import {GraphQLError} from "graphql";
 import {
+  Accordion,
+  AccordionDetails,
   AccordionSummary,
   Button,
   Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
   Snackbar,
-  Accordion,
-  AccordionDetails,
 } from "@material-ui/core";
 import {
   SdfDocumentValidationQuery,
@@ -36,13 +35,13 @@ import {
 } from "api/queries/types/SdfDocumentValidationQuery";
 import * as SdfDocumentValidationQueryDocument from "api/queries/SdfDocumentValidationQuery.graphql";
 import {ValidationMessagesTable} from "components/validation/ValidationMessagesTable";
-import CloseIcon from "@material-ui/icons/Close";
 import {invariant} from "ts-invariant";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
 import {Hrefs} from "Hrefs";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 import {JsonNodeLocationFragment} from "api/queries/types/JsonNodeLocationFragment";
+import {GraphQlErrorsList} from "components/error/GraphQlErrorsList";
 
 const getJsonNodeLocation = (
   sdfDocument: SdfDocumentSourceFragment,
@@ -85,6 +84,76 @@ const getJsonNodeLocation = (
   }
   return result;
 };
+
+const RightPanelAccordion: React.FunctionComponent<React.PropsWithChildren<{
+  title: string;
+}>> = ({children, title}) => (
+  <Accordion>
+    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <h2>{title}</h2>
+    </AccordionSummary>
+    <AccordionDetails>{children}</AccordionDetails>
+  </Accordion>
+);
+
+const SaveButton: React.FunctionComponent<{onClick: () => void}> = ({
+  onClick,
+}) => (
+  <Button
+    color="primary"
+    data-cy="save-button"
+    onClick={onClick}
+    size="large"
+    variant="contained"
+  >
+    Save
+  </Button>
+);
+
+const SchemaAccordion: React.FunctionComponent<{
+  schema: SdfDocumentSourceFragment_schemas;
+}> = ({schema}) => (
+  <Accordion>
+    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <h3>Schema: {schema.name}</h3>
+    </AccordionSummary>
+    <AccordionDetails>
+      <Grid container direction="column">
+        <Grid item>
+          <SdfDocumentSourceLink
+            to={{
+              sdfDocumentId: schema.sdfDocumentId,
+              schemaId: schema.id,
+            }}
+          />
+        </Grid>
+        <Grid item>
+          <SchemaTableOfContents
+            hrefs={Hrefs.sdfDocuments
+              .sdfDocument({id: schema.sdfDocumentId})
+              .schemas.schema(schema)}
+            includeSourceLinks={true}
+            schema={schema}
+          />
+        </Grid>
+      </Grid>
+    </AccordionDetails>
+  </Accordion>
+);
+
+const ValidateButton: React.FunctionComponent<{onClick: () => void}> = ({
+  onClick,
+}) => (
+  <Button
+    color="secondary"
+    data-cy="validate-button"
+    onClick={onClick}
+    size="large"
+    variant="contained"
+  >
+    Validate
+  </Button>
+);
 
 export const SdfDocumentPage: React.FunctionComponent = () => {
   const apolloClient = useApolloClient();
@@ -177,15 +246,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
   ) => {
     setState((prevState) => ({
       ...prevState,
-      snackbarMessage: (
-        <List>
-          {errors.map((error, errorIndex) => (
-            <ListItem key={errorIndex}>
-              <ListItemText>GraphQL error: {error.message}</ListItemText>
-            </ListItem>
-          ))}
-        </List>
-      ),
+      snackbarMessage: <GraphQlErrorsList errors={errors} />,
     }));
   };
 
@@ -267,26 +328,10 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                     <Grid item>
                       <Grid container spacing={8}>
                         <Grid item>
-                          <Button
-                            color="primary"
-                            data-cy="save-button"
-                            onClick={() => save()}
-                            size="large"
-                            variant="contained"
-                          >
-                            Save
-                          </Button>
+                          <SaveButton onClick={save} />
                         </Grid>
                         <Grid item>
-                          <Button
-                            color="secondary"
-                            data-cy="validate-button"
-                            onClick={() => validate()}
-                            size="large"
-                            variant="contained"
-                          >
-                            Validate
-                          </Button>
+                          <ValidateButton onClick={validate} />
                         </Grid>
                       </Grid>
                     </Grid>
@@ -295,60 +340,24 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                 <Grid item xs={4}>
                   <Grid container direction="column" spacing={8}>
                     <Grid item>
-                      <Accordion>
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                          <h2>Table of contents</h2>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                          <Grid container direction="column">
-                            {savedSdfDocument.schemas.map((schema) => (
-                              <Grid item key={schema.id}>
-                                <Accordion>
-                                  <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                  >
-                                    <h3>Schema: {schema.name}</h3>
-                                  </AccordionSummary>
-                                  <AccordionDetails>
-                                    <Grid container direction="column">
-                                      <Grid item>
-                                        <SdfDocumentSourceLink
-                                          to={{
-                                            sdfDocumentId,
-                                            schemaId: schema.id,
-                                          }}
-                                        />
-                                      </Grid>
-                                      <Grid item>
-                                        <SchemaTableOfContents
-                                          hrefs={Hrefs.sdfDocuments
-                                            .sdfDocument(savedSdfDocument)
-                                            .schemas.schema(schema)}
-                                          schema={schema}
-                                        />
-                                      </Grid>
-                                    </Grid>
-                                  </AccordionDetails>
-                                </Accordion>
-                              </Grid>
-                            ))}
-                          </Grid>
-                        </AccordionDetails>
-                      </Accordion>
+                      <RightPanelAccordion title="Table of contents">
+                        <Grid container direction="column">
+                          {savedSdfDocument.schemas.map((schema) => (
+                            <Grid item key={schema.id}>
+                              <SchemaAccordion schema={schema} />
+                            </Grid>
+                          ))}
+                        </Grid>
+                      </RightPanelAccordion>
                     </Grid>
                     <Grid item>
-                      <Accordion>
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                          <h2>
-                            Validation messages ({validationMessages.length})
-                          </h2>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                          <ValidationMessagesTable
-                            validationMessages={validationMessages}
-                          />
-                        </AccordionDetails>
-                      </Accordion>
+                      <RightPanelAccordion
+                        title={`Validation messages (${validationMessages.length})`}
+                      >
+                        <ValidationMessagesTable
+                          validationMessages={validationMessages}
+                        />
+                      </RightPanelAccordion>
                     </Grid>
                   </Grid>
                 </Grid>
@@ -357,26 +366,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
           );
         }}
       </Frame>
-      <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        open={snackbarMessage != null}
-        autoHideDuration={2000}
-        onClose={onSnackbarClose}
-        message={snackbarMessage}
-        action={
-          <IconButton
-            size="small"
-            aria-label="close"
-            color="inherit"
-            onClick={onSnackbarClose}
-          >
-            <CloseIcon fontSize="small" />
-          </IconButton>
-        }
-      />
+      <Snackbar message={snackbarMessage} onClose={onSnackbarClose} />
     </>
   );
 };
