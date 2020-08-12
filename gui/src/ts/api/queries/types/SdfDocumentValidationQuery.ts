@@ -8,9 +8,19 @@ import { ValidationMessageType } from "./../../graphqlGlobalTypes";
 // GraphQL query operation: SdfDocumentValidationQuery
 // ====================================================
 
+export interface SdfDocumentValidationQuery_validateSdfDocument_path {
+  __typename: "SchemaPath";
+  schemaId: string | null;
+  sdfDocumentId: string;
+  slotId: string | null;
+  stepId: string | null;
+  stepParticipantId: string | null;
+}
+
 export interface SdfDocumentValidationQuery_validateSdfDocument {
   __typename: "ValidationMessage";
   message: string;
+  path: SdfDocumentValidationQuery_validateSdfDocument_path;
   type: ValidationMessageType;
 }
 

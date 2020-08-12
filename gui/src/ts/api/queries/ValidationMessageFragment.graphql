@@ -1,4 +1,11 @@
 fragment ValidationMessageFragment on ValidationMessage {
     message
+    path {
+        schemaId
+        sdfDocumentId
+        slotId
+        stepId
+        stepParticipantId
+    }
     type
 }

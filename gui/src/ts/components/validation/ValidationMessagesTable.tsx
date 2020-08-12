@@ -1,4 +1,7 @@
-import {ValidationMessageFragment} from "api/queries/types/ValidationMessageFragment";
+import {
+  ValidationMessageFragment,
+  ValidationMessageFragment_path,
+} from "api/queries/types/ValidationMessageFragment";
 import {
   Accordion,
   AccordionDetails,
@@ -12,6 +15,7 @@ import {
 import * as _ from "lodash";
 import * as React from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 
 export const ValidationMessagesTable: React.FunctionComponent<{
   validationMessages: readonly ValidationMessageFragment[];
@@ -40,6 +44,17 @@ export const ValidationMessagesTable: React.FunctionComponent<{
       {Object.keys(validationMessagesByType).map((validationMessageType) => {
         const validationMessages =
           validationMessagesByType[validationMessageType];
+        const isValidationMessagePathEmpty = (
+          path: ValidationMessageFragment_path
+        ) => {
+          // @ts-ignore
+          const {sdfDocumentId, ...other} = path;
+          return _.isEmpty(other);
+        };
+        const includePath = validationMessages.some(
+          (validationMessage) =>
+            !isValidationMessagePathEmpty(validationMessage.path)
+        );
         return (
           <Grid item key={validationMessageType}>
             <Accordion>
@@ -54,10 +69,17 @@ export const ValidationMessagesTable: React.FunctionComponent<{
                         <TableCell>{messageIndex + 1}</TableCell>
                         <TableCell
                           data-cy={`${validationMessageType.toLowerCase()}-validation-message-${messageIndex}`}
-                          style={{overflowWrap: "break-word"}}
+                          style={{wordBreak: "break-all"}}
                         >
                           {message.message}
                         </TableCell>
+                        {includePath ? (
+                          <TableCell>
+                            {!isValidationMessagePathEmpty(message.path) ? (
+                              <SdfDocumentSourceLink to={message.path} />
+                            ) : null}
+                          </TableCell>
+                        ) : null}
                       </TableRow>
                     ))}
                   </TableBody>

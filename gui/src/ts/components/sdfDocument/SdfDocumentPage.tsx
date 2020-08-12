@@ -40,50 +40,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
 import {Hrefs} from "Hrefs";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
-import {JsonNodeLocationFragment} from "api/queries/types/JsonNodeLocationFragment";
 import {GraphQlErrorsList} from "components/error/GraphQlErrorsList";
-
-const getJsonNodeLocation = (
-  sdfDocument: SdfDocumentSourceFragment,
-  sdfDocumentSourcePath: SdfDocumentSourcePath
-): JsonNodeLocationFragment | undefined => {
-  if (!sdfDocumentSourcePath.schemaId) {
-    return undefined;
-  }
-  const schema = sdfDocument.schemas.find(
-    (schema) => schema.id === sdfDocumentSourcePath.schemaId
-  );
-  if (!schema) {
-    return undefined;
-  }
-  let result = schema.sourceJsonNodeLocation;
-  if (sdfDocumentSourcePath.slotId) {
-    const slot = schema.slots.find(
-      (slot) => slot.id === sdfDocumentSourcePath.slotId
-    );
-    if (slot) {
-      result = slot.sourceJsonNodeLocation;
-    }
-  } else if (sdfDocumentSourcePath.stepId) {
-    const step = schema.steps.find(
-      (step) => step.id === sdfDocumentSourcePath.stepId
-    );
-    if (!step) {
-      return result;
-    }
-    result = step.sourceJsonNodeLocation;
-    if (sdfDocumentSourcePath.stepParticipantId) {
-      const stepParticipant = step.participants?.find(
-        (participant) =>
-          participant.id === sdfDocumentSourcePath.stepParticipantId
-      );
-      if (stepParticipant) {
-        result = stepParticipant.sourceJsonNodeLocation;
-      }
-    }
-  }
-  return result;
-};
+import {getJsonNodeLocationFromSdfDocumentSourcePath} from "models/sdfDocument/getJsonNodeLocationFromSdfDocumentSourcePath";
 
 const RightPanelAccordion: React.FunctionComponent<React.PropsWithChildren<{
   title: string;
@@ -313,7 +271,10 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                       <SdfDocumentEditor
                         goToJsonNodeLocation={
                           goToPath
-                            ? getJsonNodeLocation(savedSdfDocument, goToPath)
+                            ? getJsonNodeLocationFromSdfDocumentSourcePath(
+                                savedSdfDocument,
+                                goToPath
+                              )
                             : undefined
                         }
                         onChange={(sourceJson) =>
@@ -322,7 +283,9 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                             volatileSourceJson: sourceJson,
                           }))
                         }
-                        sourceJson={volatileSourceJson!}
+                        savedSdfDocument={savedSdfDocument}
+                        validationMessages={validationMessages}
+                        volatileSourceJson={volatileSourceJson!}
                       />
                     </Grid>
                     <Grid item>

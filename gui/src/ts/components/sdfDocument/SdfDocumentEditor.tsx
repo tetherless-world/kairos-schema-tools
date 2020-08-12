@@ -7,23 +7,58 @@ import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-min-noconflict/ext-searchbox";
 import "ace-builds/src-min-noconflict/ext-language_tools";
 import {JsonNodeLocationFragment} from "api/queries/types/JsonNodeLocationFragment";
+import {ValidationMessageFragment} from "api/queries/types/ValidationMessageFragment";
+import {SdfDocumentSourceFragment} from "api/queries/types/SdfDocumentSourceFragment";
+import {getJsonNodeLocationFromSdfDocumentSourcePath} from "models/sdfDocument/getJsonNodeLocationFromSdfDocumentSourcePath";
 
 export const SdfDocumentEditor: React.FunctionComponent<{
   goToJsonNodeLocation?: JsonNodeLocationFragment;
-  onChange?: (sourceJson: string) => void;
-  sourceJson: string;
-}> = ({goToJsonNodeLocation, onChange, sourceJson}) => {
+  onChange?: (volatileSourceJson: string) => void;
+  savedSdfDocument: SdfDocumentSourceFragment;
+  validationMessages: readonly ValidationMessageFragment[];
+  volatileSourceJson: string;
+}> = ({
+  goToJsonNodeLocation,
+  onChange,
+  savedSdfDocument,
+  validationMessages,
+  volatileSourceJson,
+}) => {
   const aceEditorRef = React.useCallback(
     (aceEditor: ReactAce) => {
-      if (aceEditor && goToJsonNodeLocation) {
+      if (!aceEditor) {
+        return;
+      }
+
+      if (goToJsonNodeLocation) {
         aceEditor.editor.gotoLine(
           goToJsonNodeLocation.line,
           goToJsonNodeLocation.column,
           true
         );
       }
+
+      aceEditor.editor.setOption("useWorker", false);
+      if (validationMessages.length > 0) {
+        aceEditor.editor.session.setAnnotations(
+          validationMessages.map((validationMessage) => {
+            const jsonNodeLocation = validationMessage.path
+              ? getJsonNodeLocationFromSdfDocumentSourcePath(
+                  savedSdfDocument,
+                  validationMessage.path
+                )
+              : undefined;
+            return {
+              column: jsonNodeLocation?.column,
+              row: jsonNodeLocation?.line,
+              text: validationMessage.message,
+              type: validationMessage.type.toLowerCase(),
+            };
+          })
+        );
+      }
     },
-    [goToJsonNodeLocation, sourceJson]
+    [goToJsonNodeLocation, validationMessages]
   );
 
   return (
@@ -35,7 +70,7 @@ export const SdfDocumentEditor: React.FunctionComponent<{
         ref={aceEditorRef}
         style={{width: "100%"}}
         theme="github"
-        value={sourceJson}
+        value={volatileSourceJson}
       ></AceEditor>
     </div>
   );

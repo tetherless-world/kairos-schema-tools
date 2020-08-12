@@ -23,7 +23,7 @@ export interface SearchResultsPageQuery_search_documents_path {
   schema: SearchResultsPageQuery_search_documents_path_schema | null;
   schemaId: string | null;
   sdfDocument: SearchResultsPageQuery_search_documents_path_sdfDocument | null;
-  sdfDocumentId: string | null;
+  sdfDocumentId: string;
   slotId: string | null;
   stepId: string | null;
   stepParticipantId: string | null;

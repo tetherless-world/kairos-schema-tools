@@ -64,9 +64,19 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas {
   steps: SdfDocumentPageQuery_sdfDocumentById_schemas_steps[];
 }
 
+export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path {
+  __typename: "SchemaPath";
+  schemaId: string | null;
+  sdfDocumentId: string;
+  slotId: string | null;
+  stepId: string | null;
+  stepParticipantId: string | null;
+}
+
 export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages {
   __typename: "ValidationMessage";
   message: string;
+  path: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path;
   type: ValidationMessageType;
 }
 
