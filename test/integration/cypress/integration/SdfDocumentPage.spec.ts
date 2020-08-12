@@ -25,4 +25,8 @@ context("SDF document page", () => {
     page.standardLayout.breadcrumbs.sdfDocument.click();
     page.assertLoaded();
   });
+
+  it("should show the source editor", () => {
+    page.editor.textarea;
+  });
 });
