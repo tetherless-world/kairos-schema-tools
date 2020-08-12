@@ -1,7 +1,0 @@
-#import "../queries/SdfDocumentPageFragment.graphql"
-
-mutation SdfDocumentEditorSaveMutation($json: String!) {
-    putSdfDocument(json: $json) {
-        ... SdfDocumentPageFragment
-    }
-}

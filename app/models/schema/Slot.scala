@@ -1,6 +1,7 @@
 package models.schema
 
 import edu.rpi.tw.twks.uri.Uri
+import models.json.JsonNodeLocation
 
 final case class Slot(
                        aka: Option[List[String]],
@@ -10,4 +11,5 @@ final case class Slot(
                        references: Option[List[String]],
                        refvar: Option[String],
                        roleName: String,
+                       sourceJsonNodeLocation: JsonNodeLocation,
                      )

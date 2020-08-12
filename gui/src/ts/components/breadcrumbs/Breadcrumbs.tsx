@@ -3,7 +3,7 @@ import {Breadcrumbs as MuiBreadcrumbs} from "@material-ui/core";
 import {BreadcrumbsProps} from "components/breadcrumbs/BreadcrumbsProps";
 import {Hrefs} from "Hrefs";
 import * as React from "react";
-import {Link} from "components/Link";
+import {Link} from "components/link/Link";
 
 export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
   schema,

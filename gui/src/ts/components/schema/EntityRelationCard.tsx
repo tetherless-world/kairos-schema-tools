@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import * as React from "react";
 import {SchemaHrefs} from "Hrefs";
-import {Link} from "components/Link";
+import {Link} from "components/link/Link";
 
 export const EntityRelationCard: React.FunctionComponent<{
   entityRelation: SchemaPageQuery_schemaById_entityRelations;

@@ -9,7 +9,7 @@ import {StandardLayout} from "components/layout/StandardLayout";
 
 export const SdfDocumentsPage: React.FunctionComponent = () => {
   const query = useQuery<SdfDocumentsPageQuery>(SdfDocumentsPageQueryDocument, {
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
   });
 
   return (
@@ -20,7 +20,7 @@ export const SdfDocumentsPage: React.FunctionComponent = () => {
             {data.sdfDocuments.map((sdfDocument) => (
               <Grid item key={sdfDocument.id}>
                 <SdfDocumentCard
-                  {...Object.assign({}, sdfDocument, {
+                  sdfDocument={Object.assign({}, sdfDocument, {
                     schemas: sdfDocument.schemas.map((schema) =>
                       Object.assign({}, schema, {sdfDocumentId: sdfDocument.id})
                     ),

@@ -16,7 +16,7 @@ import {
 import * as React from "react";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {SchemaHrefs} from "Hrefs";
-import {Link} from "components/Link";
+import {Link} from "components/link/Link";
 
 export const StepListTableRow: React.FunctionComponent<{
   hrefs: SchemaHrefs;

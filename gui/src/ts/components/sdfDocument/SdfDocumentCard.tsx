@@ -12,34 +12,44 @@ import {
 } from "@material-ui/core";
 import {Hrefs} from "Hrefs";
 import {SchemasTable} from "components/schema/SchemasTable";
-import {Link} from "components/Link";
+import {Link} from "components/link/Link";
 import {ValidationMessageType} from "api/graphqlGlobalTypes";
 import ErrorIcon from "@material-ui/icons/Error";
 import WarningIcon from "@material-ui/icons/Warning";
+import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 
 export const SdfDocumentCard: React.FunctionComponent<{
-  id: string;
-  name: string;
-  schemas: {
+  sdfDocument: {
     id: string;
     name: string;
-    sdfDocumentId: string;
-  }[];
-  sdfVersion: string;
-  validationMessageTypes: ValidationMessageType[];
-}> = ({id, name, schemas, sdfVersion, validationMessageTypes}) => {
+    schemas: {
+      id: string;
+      name: string;
+      sdfDocumentId: string;
+    }[];
+    sdfVersion: string;
+    validationMessageTypes: ValidationMessageType[];
+  };
+}> = ({
+  sdfDocument: {id, name, schemas, sdfVersion, validationMessageTypes},
+}) => {
   return (
     <Card data-cy={"sdf-document-card-" + id}>
       <CardHeader
         title={
-          <React.Fragment>
-            <Link
-              dataCy="sdf-document-name"
-              to={Hrefs.sdfDocuments.sdfDocument({id}).toString()}
-            >
-              {name}
-            </Link>
-          </React.Fragment>
+          <Grid container>
+            <Grid item xs={8}>
+              <Link
+                dataCy="sdf-document-name"
+                to={Hrefs.sdfDocuments.sdfDocument({id}).toString()}
+              >
+                {name}
+              </Link>
+            </Grid>
+            <Grid item xs={4} style={{textAlign: "right"}}>
+              <SdfDocumentSourceLink to={{sdfDocumentId: id}} />
+            </Grid>
+          </Grid>
         }
       />
       <CardContent>
@@ -88,7 +98,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
                   </React.Fragment>
                 ))}
                 &nbsp;&nbsp;
-                <Link to={Hrefs.sdfDocuments.sdfDocument({id}).tab("source")}>
+                <Link to={Hrefs.sdfDocuments.sdfDocument({id}).toString()}>
                   Validation errors
                 </Link>
               </Typography>

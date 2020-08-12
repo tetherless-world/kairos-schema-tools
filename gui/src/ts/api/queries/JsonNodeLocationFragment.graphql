@@ -1,0 +1,4 @@
+fragment JsonNodeLocationFragment on JsonNodeLocation {
+    column
+    line
+}

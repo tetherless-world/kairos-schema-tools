@@ -8,10 +8,11 @@ import {StandardLayout} from "components/layout/StandardLayout";
 import {NoRoute} from "components/error/NoRoute";
 import {Hrefs} from "Hrefs";
 import * as _ from "lodash";
-import {SchemaPartsGrid} from "components/schema/SchemaPartsGrid";
+import {SchemaSectionContentsGrid} from "components/schema/SchemaSectionContentsGrid";
 import {useQueryParam} from "use-query-params";
 import {Grid, Tab, Tabs} from "@material-ui/core";
 import {SchemaGraph} from "components/schema/SchemaGraph";
+import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
 
 export const SchemaPage: React.FunctionComponent = () => {
   const {schemaId, sdfDocumentId} = _.mapValues(
@@ -23,7 +24,7 @@ export const SchemaPage: React.FunctionComponent = () => {
   );
 
   const query = useQuery<SchemaPageQuery>(SchemaPageQueryDocument, {
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
     variables: {
       schemaId,
       sdfDocumentId: sdfDocumentId ?? "",
@@ -76,7 +77,17 @@ export const SchemaPage: React.FunctionComponent = () => {
               </Grid>
               <Grid item>
                 <div hidden={tab !== "table"}>
-                  <SchemaPartsGrid hrefs={hrefs} schema={schema} />
+                  <Grid container direction="column">
+                    <Grid item>
+                      <SchemaTableOfContents hrefs={hrefs} schema={schema} />
+                      <Grid item>
+                        <SchemaSectionContentsGrid
+                          hrefs={hrefs}
+                          schema={schema}
+                        />
+                      </Grid>
+                    </Grid>
+                  </Grid>
                 </div>
                 <div
                   hidden={tab !== "graph"}

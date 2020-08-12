@@ -14,7 +14,7 @@ import * as ReactDOM from "react-dom";
 import {Hrefs} from "Hrefs";
 import {SearchDocumentType} from "api/graphqlGlobalTypes";
 import {invariant} from "ts-invariant";
-import {Link} from "components/Link";
+import {Link} from "components/link/Link";
 
 const columns: MUIDataTableColumn[] = [
   {
@@ -220,14 +220,14 @@ export const SearchResultsPage: React.FunctionComponent = () => {
     SearchResultsPageQuery,
     SearchResultsPageQueryVariables
   >(SearchResultsPageQueryDocument, {
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
     variables: {limit, offset: 0, query: queryText},
   });
 
   const onChange = (variables: SearchResultsPageQueryVariables) => {
     apolloClient
       .query<SearchResultsPageQuery, SearchResultsPageQueryVariables>({
-        fetchPolicy: "network-only",
+        fetchPolicy: "no-cache",
         query: SearchResultsPageQueryDocument,
         variables,
       })

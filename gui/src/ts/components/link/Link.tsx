@@ -1,14 +1,22 @@
 import * as React from "react";
-import {PropsWithChildren} from "react";
 import {Link as MuiLink} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
+import {PropsWithChildren} from "react";
 
 export const Link: React.FunctionComponent<PropsWithChildren<{
-  color?: string;
+  color?:
+    | "inherit"
+    | "initial"
+    | "primary"
+    | "secondary"
+    | "textPrimary"
+    | "textSecondary"
+    | "error"
+    | undefined;
   dataCy?: string;
   to: string;
 }>> = ({children, color, dataCy, to}) => (
-  <MuiLink component={RouterLink} data-cy={dataCy} to={to}>
+  <MuiLink color={color} component={RouterLink} data-cy={dataCy} to={to}>
     {children}
   </MuiLink>
 );

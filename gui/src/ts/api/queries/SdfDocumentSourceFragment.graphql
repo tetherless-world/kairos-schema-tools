@@ -1,0 +1,41 @@
+#import "./JsonNodeLocationFragment.graphql"
+#import "./ValidationMessageFragment.graphql"
+
+fragment SdfDocumentSourceFragment on SdfDocument {
+    id
+    name
+    schemas {
+        id
+        name
+        sdfDocumentId
+        slots {
+            id
+            roleName
+            sourceJsonNodeLocation {
+                ...JsonNodeLocationFragment
+            }
+        }
+        sourceJsonNodeLocation {
+            ...JsonNodeLocationFragment
+        }
+        steps {
+            id
+            name
+            participants {
+                id
+                name
+                sourceJsonNodeLocation {
+                    ...JsonNodeLocationFragment
+                }
+            }
+            sourceJsonNodeLocation {
+                ...JsonNodeLocationFragment
+            }
+        }
+    }
+    sdfVersion
+    sourceJson
+    validationMessages {
+        ... ValidationMessageFragment
+    }
+}

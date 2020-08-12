@@ -26,6 +26,7 @@ export interface SearchResultsPageQuery_search_documents_path {
   sdfDocumentId: string | null;
   slotId: string | null;
   stepId: string | null;
+  stepParticipantId: string | null;
 }
 
 export interface SearchResultsPageQuery_search_documents {

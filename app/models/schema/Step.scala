@@ -1,6 +1,7 @@
 package models.schema
 
 import edu.rpi.tw.twks.uri.Uri
+import models.json.JsonNodeLocation
 
 final case class Step(
                        achieves: Option[List[String]],
@@ -14,5 +15,6 @@ final case class Step(
                        provenances: Option[List[String]],
                        requires: Option[List[String]],
                        references: Option[List[String]],
+                       sourceJsonNodeLocation: JsonNodeLocation,
                        `type`: Uri
                      )

@@ -1,44 +1,17 @@
 import {ValidationMessageFragment} from "api/queries/types/ValidationMessageFragment";
 import {
-  Card,
-  CardContent,
-  CardHeader,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Grid,
   Table,
   TableBody,
   TableCell,
   TableRow,
 } from "@material-ui/core";
-import {ValidationMessageType} from "api/graphqlGlobalTypes";
 import * as _ from "lodash";
 import * as React from "react";
-
-const ValidationMessagesCard: React.FunctionComponent<{
-  messages: ValidationMessageFragment[];
-  title: string;
-  type: ValidationMessageType;
-}> = ({messages, title, type}) => (
-  <Card data-cy={type.toLowerCase() + "-validation-messages"}>
-    <CardHeader title={title} />
-    <CardContent>
-      <Table>
-        <TableBody>
-          {messages.map((message, messageIndex) => (
-            <TableRow key={messageIndex.toString()}>
-              <TableCell>{messageIndex + 1}</TableCell>
-              <TableCell
-                data-cy={`${type.toLowerCase()}-validation-message-${messageIndex}`}
-                style={{overflowWrap: "break-word"}}
-              >
-                {message.message}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </CardContent>
-  </Card>
-);
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 export const ValidationMessagesTable: React.FunctionComponent<{
   validationMessages: readonly ValidationMessageFragment[];
@@ -64,33 +37,36 @@ export const ValidationMessagesTable: React.FunctionComponent<{
       direction="column"
       spacing={8}
     >
-      {validationMessagesByType[ValidationMessageType.Fatal] ? (
-        <Grid item>
-          <ValidationMessagesCard
-            messages={validationMessagesByType[ValidationMessageType.Fatal]}
-            title="Fatal"
-            type={ValidationMessageType.Fatal}
-          />
-        </Grid>
-      ) : null}
-      {validationMessagesByType[ValidationMessageType.Error] ? (
-        <Grid item>
-          <ValidationMessagesCard
-            messages={validationMessagesByType[ValidationMessageType.Error]}
-            title="Errors"
-            type={ValidationMessageType.Error}
-          />
-        </Grid>
-      ) : null}
-      {validationMessagesByType[ValidationMessageType.Warning] ? (
-        <Grid item>
-          <ValidationMessagesCard
-            messages={validationMessagesByType[ValidationMessageType.Warning]}
-            title="Warnings"
-            type={ValidationMessageType.Warning}
-          />
-        </Grid>
-      ) : null}
+      {Object.keys(validationMessagesByType).map((validationMessageType) => {
+        const validationMessages =
+          validationMessagesByType[validationMessageType];
+        return (
+          <Grid item key={validationMessageType}>
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <h3>{`${validationMessageType} (${validationMessages.length})`}</h3>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Table>
+                  <TableBody>
+                    {validationMessages.map((message, messageIndex) => (
+                      <TableRow key={messageIndex.toString()}>
+                        <TableCell>{messageIndex + 1}</TableCell>
+                        <TableCell
+                          data-cy={`${validationMessageType.toLowerCase()}-validation-message-${messageIndex}`}
+                          style={{overflowWrap: "break-word"}}
+                        >
+                          {message.message}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+        );
+      })}
       {_.isEmpty(validationMessagesByType) ? (
         <Grid item>
           <h2 data-cy="no-validation-messages">
