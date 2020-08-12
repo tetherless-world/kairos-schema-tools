@@ -64,9 +64,19 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas {
   steps: SdfDocumentSaveMutation_putSdfDocument_schemas_steps[];
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path {
+  __typename: "SchemaPath";
+  schemaId: string | null;
+  sdfDocumentId: string;
+  slotId: string | null;
+  stepId: string | null;
+  stepParticipantId: string | null;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages {
   __typename: "ValidationMessage";
   message: string;
+  path: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path;
   type: ValidationMessageType;
 }
 

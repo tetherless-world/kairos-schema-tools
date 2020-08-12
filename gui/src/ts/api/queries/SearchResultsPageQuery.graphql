@@ -1,12 +1,20 @@
-#import "./SchemaPathFragment.graphql"
-
 query SearchResultsPageQuery($limit: Int!, $offset: Int!, $query: String!) {
     search(limit: $limit, offset: $offset, query: $query) {
         documents {
             id
             label
             path {
-                ... SchemaPathFragment
+                schema {
+                    name
+                }
+                schemaId
+                sdfDocument {
+                    name
+                }
+                sdfDocumentId
+                slotId
+                stepId
+                stepParticipantId
             }
             type
         }

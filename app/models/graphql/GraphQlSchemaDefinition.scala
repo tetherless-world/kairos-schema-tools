@@ -80,7 +80,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
     }),
     Field("stepId", OptionType(UriType), resolve = _.value.stepId),
     Field("sdfDocument", OptionType(SdfDocumentObjectType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.sdfDocumentId)),
-    Field("sdfDocumentId", OptionType(UriType), resolve = _.value.sdfDocumentId),
+    Field("sdfDocumentId", UriType, resolve = _.value.sdfDocumentId),
     Field("stepParticipantId", OptionType(UriType), resolve = _.value.stepParticipantId)
   )
   )
