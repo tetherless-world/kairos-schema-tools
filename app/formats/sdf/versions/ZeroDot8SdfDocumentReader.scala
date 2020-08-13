@@ -15,7 +15,7 @@ import org.apache.jena.riot.Lang
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 
-final class ZeroDot8cSdfDocumentReader(header: SdfDocumentHeader, sourceJson: String, sourceJsonNode: JsonNode) {
+final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: String, sourceJsonNode: JsonNode) {
   private val nsPrefixMap = header.rootResource.getModel.getNsPrefixMap.asScala
   private val validationMessages = new mutable.ListBuffer[ValidationMessage]()
 
@@ -258,13 +258,13 @@ final class ZeroDot8cSdfDocumentReader(header: SdfDocumentHeader, sourceJson: St
             None
           }
         }),
-      sdfVersion = ZeroDot8cSdfDocumentReader.SdfVersion,
+      sdfVersion = ZeroDot8SdfDocumentReader.SdfVersion,
       sourceJson = sourceJson,
       validationMessages = validationMessages.toList
     )
   }
 }
 
-object ZeroDot8cSdfDocumentReader {
-  val SdfVersion = "0.8c"
+object ZeroDot8SdfDocumentReader {
+  val SdfVersion = "0.8"
 }
