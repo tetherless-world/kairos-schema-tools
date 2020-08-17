@@ -87,6 +87,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
 
   private def readEntityRelationRelation(parentPath: SchemaPath, resource: Resource) =
     EntityRelationRelation(
+      name = resource.name.headOption,
       relationObjects = resource.relationObject,
       relationPredicate = resource.relationPredicate.headOption.getOrElse(throw ValidationException(s"entity relation missing relation predicate: ${resource.toTtlString()}", parentPath))
     )

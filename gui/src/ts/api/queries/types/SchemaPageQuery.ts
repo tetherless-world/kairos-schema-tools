@@ -10,6 +10,7 @@ import { StepOrderFlag, EntityType } from "./../../graphqlGlobalTypes";
 
 export interface SchemaPageQuery_schemaById_entityRelations_relations {
   __typename: "EntityRelationRelation";
+  name: string | null;
   relationPredicate: string;
   relationObjects: string[];
 }
