@@ -7,7 +7,7 @@ export const StepParticipantCard: React.FunctionComponent<{
   participant: SchemaPageQuery_schemaById_steps_participants;
 }> = ({participant}) => (
   <Card>
-    <CardHeader>{participant.label}</CardHeader>
+    <CardHeader title={"Participant: " + participant.label} />
     <CardContent>
       <StepParticipantDetailsTable participant={participant} />
     </CardContent>
