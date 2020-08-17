@@ -37,8 +37,8 @@ class RestKsfValidationApi @Inject()(ws: WSClient)(implicit ec: ExecutionContext
               case Left(decodingFailure) =>
                 Future.failed(decodingFailure)
               case Right(results) => Future.successful(
-                results.errorsList.map(message => ValidationMessage(message = message, path = SdfDocumentPath(sdfDocumentId = sdfDocument.id), `type` = ValidationMessageType.Error)) ++
-                results.warningsList.map(message => ValidationMessage(message = message, path = SdfDocumentPath(sdfDocumentId = sdfDocument.id), `type` = ValidationMessageType.Warning))
+                results.errorsList.map(message => ValidationMessage(message = message, path = SdfDocumentPath.builder(sdfDocument.id).build, `type` = ValidationMessageType.Error)) ++
+                results.warningsList.map(message => ValidationMessage(message = message, path = SdfDocumentPath.builder(sdfDocument.id).build, `type` = ValidationMessageType.Warning))
               )
             }
           }

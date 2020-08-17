@@ -1,11 +1,11 @@
 package stores
 
-import com.outr.lucene4s._
-import com.outr.lucene4s.DirectLucene
+import com.outr.lucene4s.{DirectLucene, _}
 import com.outr.lucene4s.field.FieldType
+import com.outr.lucene4s.field.value.FieldAndValue
 import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.SdfDocument
-import models.schema.{Schema, SdfDocumentPath, SchemaSlot, Step}
+import models.schema.{Schema, SchemaSlot, SdfDocumentPath, Step}
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 
 final class SearchEngine {
@@ -38,11 +38,7 @@ final class SearchEngine {
           comments = slot.comments,
           id = slot.id,
           label = slot.label,
-          path = SdfDocumentPath(
-            schemaId = Some(schema.id),
-            sdfDocumentId = sdfDocument.id,
-            schemaSlotId = Some(slot.id),
-          ),
+          path = SdfDocumentPath.builder(sdfDocument.id).schema(schema.id).slot(slot.id),
           `type` = SearchDocumentType.Slot))
 
       def putStep(step: Step): Unit =
@@ -51,11 +47,7 @@ final class SearchEngine {
           comments = step.comments,
           id = step.id,
           label = step.label,
-          path = SdfDocumentPath(
-            schemaId = Some(schema.id),
-            sdfDocumentId = sdfDocument.id,
-            stepId = Some(step.id),
-          ),
+          path = SdfDocumentPath.builder(sdfDocument.id).schema(schema.id).step(step.id).build,
           `type` = SearchDocumentType.Step
         ))
 
@@ -64,10 +56,7 @@ final class SearchEngine {
         comments = schema.comments,
         id = schema.id,
         label = schema.label,
-        path = SdfDocumentPath(
-          schemaId = Some(schema.id),
-          sdfDocumentId = sdfDocument.id,
-        ),
+        path = SdfDocumentPath.builder(sdfDocument.id).schema(schema.id).build,
         `type` = SearchDocumentType.Schema))
       schema.slots.foreach(putSlot(_))
       schema.steps.foreach(putStep(_))
@@ -80,14 +69,22 @@ final class SearchEngine {
           (List(
             Fields.id(searchDocument.id.toString),
             Fields.label(searchDocument.label),
-            Fields.sdfDocumentId(searchDocument.path.sdfDocumentId.toString),
+            Fields.sdfDocumentId(searchDocument.path.id.toString),
             Fields.`type`(searchDocument.`type`.value)
           ) ++
             searchDocument.aka.map(aka => Fields.aka(aka.mkString(" "))).toList ++
             searchDocument.comments.map(comments => Fields.comments(comments.mkString(" "))).toList ++
-            searchDocument.path.schemaId.map(schemaId => Fields.schemaId(schemaId.toString)).toList ++
-            searchDocument.path.schemaSlotId.map(slotId => Fields.schemaSlotId(slotId.toString)).toList ++
-            searchDocument.path.stepId.map(stepId => Fields.stepId(stepId.toString)).toList
+            searchDocument.path.schema.toList.flatMap(schema => {
+              var schemaFields: List[FieldAndValue[String]] = List()
+              schemaFields = schemaFields :+ Fields.schemaId(schema.id.toString)
+              if (schema.slot.isDefined) {
+                schemaFields = schemaFields :+ Fields.schemaSlotId(schema.slot.get.id.toString)
+              }
+              if (schema.step.isDefined) {
+                schemaFields = schemaFields :+ Fields.stepId(schema.step.get.id.toString)
+              }
+              schemaFields
+            })
             ): _*)
         .index()
     }
@@ -95,9 +92,7 @@ final class SearchEngine {
     putSearchDocument(SearchDocument(
       id = sdfDocument.id,
       label = sdfDocument.label,
-      path = SdfDocumentPath(
-        sdfDocumentId = sdfDocument.id,
-      ),
+      path = SdfDocumentPath.builder(sdfDocument.id).build,
       `type` = SearchDocumentType.SdfDocument
     ))
     sdfDocument.schemas.foreach(putSchema(_))
@@ -107,18 +102,31 @@ final class SearchEngine {
   final def search(limit: Int, offset: Int, query: String): SearchResults = {
     val luceneResults = lucene.query().filter(string2ParsableSearchTerm(query)).limit(limit).offset(offset).search()
     SearchResults(
-      documents = luceneResults.results.toList.map(result =>
+      documents = luceneResults.results.toList.map(result => {
+        val schemaId = Option(result(Fields.schemaId)).map(Uri.parse(_))
+        val sdfDocumentId = Uri.parse(result(Fields.sdfDocumentId))
+        val schemaSlotId = Option(result(Fields.schemaSlotId)).map(Uri.parse(_))
+        val stepId = Option(result(Fields.stepId)).map(Uri.parse(_))
+
+        val pathBuilder = SdfDocumentPath.builder(sdfDocumentId)
+        val path =
+          if (schemaId.isDefined) {
+            if (schemaSlotId.isDefined) {
+              pathBuilder.schema(schemaId.get).slot(schemaSlotId.get)
+            } else {
+              pathBuilder.schema(schemaId.get).build
+            }
+          } else {
+            pathBuilder.build
+          }
+
         SearchDocument(
           id = Uri.parse(result(Fields.id)),
           label = result(Fields.label),
-          path = SdfDocumentPath(
-            schemaId = Option(result(Fields.schemaId)).map(Uri.parse(_)),
-            sdfDocumentId = Uri.parse(result(Fields.sdfDocumentId)),
-            schemaSlotId = Option(result(Fields.schemaSlotId)).map(Uri.parse(_)),
-            stepId = Option(result(Fields.stepId)).map(Uri.parse(_)),
-          ),
+          path = path,
           `type` = SearchDocumentType.values.find(result(Fields.`type`) == _.value).get
-        )),
+        )}
+      ),
       total = luceneResults.total.intValue()
     )
   }
