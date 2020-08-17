@@ -5,7 +5,7 @@ import com.outr.lucene4s.DirectLucene
 import com.outr.lucene4s.field.FieldType
 import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.SdfDocument
-import models.schema.{Schema, SchemaPath, Slot, Step}
+import models.schema.{Schema, SchemaPath, SchemaSlot, Step}
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 
 final class SearchEngine {
@@ -32,7 +32,7 @@ final class SearchEngine {
 
   final def putSdfDocument(sdfDocument: SdfDocument): Unit = {
     def putSchema(schema: Schema): Unit = {
-      def putSlot(slot: Slot): Unit =
+      def putSlot(slot: SchemaSlot): Unit =
         putSearchDocument(SearchDocument(
           aka = slot.aka,
           comments = slot.comments,

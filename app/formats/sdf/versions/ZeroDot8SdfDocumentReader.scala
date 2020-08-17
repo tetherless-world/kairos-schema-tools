@@ -7,7 +7,7 @@ import formats.sdf.{SdfDocument, SdfDocumentHeader}
 import formats.sdf.vocabulary.{KAIROS, KairosProperties, SCHEMA_ORG, SchemaOrgProperties}
 import io.github.tetherlessworld.scena.{Rdf, RdfProperties, RdfReader}
 import models.json.{ArrayJsonNode, JsonNode, ObjectJsonNode, StringValueJsonNode}
-import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Schema, SchemaPath, Slot, Step, StepOrder, StepOrderFlag, StepParticipant}
+import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Schema, SchemaPath, SchemaSlot, Step, StepOrder, StepOrderFlag, StepParticipant}
 import models.validation.{ValidationException, ValidationMessage, ValidationMessageType}
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.riot.Lang
@@ -162,7 +162,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
   private def readSlot(jsonNode: ObjectJsonNode, parentPath: SchemaPath, resource: Resource) = {
     val id = Uri.parse(resource.getURI)
     val path = parentPath.copy(slotId = Some(id))
-    Slot(
+    SchemaSlot(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
       entityTypes = Option(resource.entityTypes).filter(_.nonEmpty),

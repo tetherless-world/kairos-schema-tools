@@ -45,7 +45,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val DurationObjectType = deriveObjectType[GraphQlSchemaContext, Duration]()
   implicit val EntityRelationRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelationRelation]()
   implicit val EntityRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelation]()
-  implicit val SlotObjectType = deriveObjectType[GraphQlSchemaContext, Slot](
+  implicit val SlotObjectType = deriveObjectType[GraphQlSchemaContext, SchemaSlot](
     AddFields(
       Field("label", StringType, resolve = _.value.label),
     )

@@ -4,7 +4,7 @@ import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.SdfDocument
 import javax.inject.{Inject, Singleton}
 import models.json.JsonNodeLocation
-import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Schema, SchemaPath, Slot, Step, StepOrder, StepOrderFlag, StepParticipant}
+import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Schema, SchemaPath, SchemaSlot, Step, StepOrder, StepOrderFlag, StepParticipant}
 import models.validation.{ValidationMessage, ValidationMessageType}
 import play.api.http.MimeTypes
 import play.api.libs.json
@@ -24,7 +24,7 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val entityRelationRelationJsonWrites = Json.writes[EntityRelationRelation]
   private implicit val entityRelationJsonWrites = Json.writes[EntityRelation]
   private implicit val entityTypeJsonWrites: json.Writes[EntityType] = (entityType) => JsString(entityType.value)
-  private implicit val slotJsonWrites = Json.writes[Slot]
+  private implicit val slotJsonWrites = Json.writes[SchemaSlot]
   private implicit val stepParticipantJsonWrites = Json.writes[StepParticipant]
   private implicit val stepJsonWrites = Json.writes[Step]
   private implicit val stepOrderFlagJsonWrites: json.Writes[StepOrderFlag] = (flag) => JsString(flag.value)
