@@ -59,7 +59,7 @@ export const RefvarTable: React.FunctionComponent<{
                           <ListItem key={participant.id}>
                             <ListItemText>
                               <Link to={hrefs.stepParticipant(participant)}>
-                                {participant.label}
+                                Participant: {participant.label}
                               </Link>
                             </ListItemText>
                           </ListItem>
