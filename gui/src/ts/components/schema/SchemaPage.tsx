@@ -11,7 +11,6 @@ import * as _ from "lodash";
 import {SchemaSectionContentsGrid} from "components/schema/SchemaSectionContentsGrid";
 import {useQueryParam} from "use-query-params";
 import {Grid, Tab, Tabs} from "@material-ui/core";
-import {SchemaGraph} from "components/schema/SchemaGraph";
 import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
 
 export const SchemaPage: React.FunctionComponent = () => {
@@ -72,7 +71,7 @@ export const SchemaPage: React.FunctionComponent = () => {
               <Grid item>
                 <Tabs onChange={(_, newValue) => setTab(newValue)} value={tab}>
                   <Tab data-cy="table-tab" label="Table" value="table" />
-                  <Tab data-cy="graph-tab" label="Graph" value="graph" />
+                  {/*<Tab data-cy="graph-tab" label="Graph" value="graph" />*/}
                 </Tabs>
               </Grid>
               <Grid item>
@@ -89,12 +88,12 @@ export const SchemaPage: React.FunctionComponent = () => {
                     </Grid>
                   </Grid>
                 </div>
-                <div
-                  hidden={tab !== "graph"}
-                  style={{minHeight: 600, minWidth: 800}}
-                >
-                  <SchemaGraph hrefs={hrefs} schema={schema} />
-                </div>
+                {/*<div*/}
+                {/*  hidden={tab !== "graph"}*/}
+                {/*  style={{minHeight: 600, minWidth: 800}}*/}
+                {/*>*/}
+                {/*  <SchemaGraph hrefs={hrefs} schema={schema} />*/}
+                {/*</div>*/}
               </Grid>
             </Grid>
           </StandardLayout>
