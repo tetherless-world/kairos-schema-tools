@@ -12,6 +12,7 @@ import {SchemaSectionContentsGrid} from "components/schema/SchemaSectionContents
 import {useQueryParam} from "use-query-params";
 import {Grid, Tab, Tabs} from "@material-ui/core";
 import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
+import {RefvarTable} from "components/schema/RefvarTable";
 
 export const SchemaPage: React.FunctionComponent = () => {
   const {schemaId, sdfDocumentId} = _.mapValues(
@@ -71,7 +72,7 @@ export const SchemaPage: React.FunctionComponent = () => {
               <Grid item>
                 <Tabs onChange={(_, newValue) => setTab(newValue)} value={tab}>
                   <Tab data-cy="table-tab" label="Table" value="table" />
-                  {/*<Tab data-cy="graph-tab" label="Graph" value="graph" />*/}
+                  <Tab data-cy="refvar-tab" label="Refvar" value="refvar" />
                 </Tabs>
               </Grid>
               <Grid item>
@@ -88,12 +89,12 @@ export const SchemaPage: React.FunctionComponent = () => {
                     </Grid>
                   </Grid>
                 </div>
-                {/*<div*/}
-                {/*  hidden={tab !== "graph"}*/}
-                {/*  style={{minHeight: 600, minWidth: 800}}*/}
-                {/*>*/}
-                {/*  <SchemaGraph hrefs={hrefs} schema={schema} />*/}
-                {/*</div>*/}
+                <div
+                  hidden={tab !== "refvar"}
+                  style={{minHeight: 600, minWidth: 800}}
+                >
+                  <RefvarTable hrefs={hrefs} schema={schema} />
+                </div>
               </Grid>
             </Grid>
           </StandardLayout>
