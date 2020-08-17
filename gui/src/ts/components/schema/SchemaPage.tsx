@@ -13,6 +13,7 @@ import {useQueryParam} from "use-query-params";
 import {Grid, Tab, Tabs} from "@material-ui/core";
 import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
 import {RefvarTable} from "components/schema/RefvarTable";
+import {StepOrdersGraph} from "components/schema/StepOrdersGraph";
 
 export const SchemaPage: React.FunctionComponent = () => {
   const {schemaId, sdfDocumentId} = _.mapValues(
@@ -32,7 +33,13 @@ export const SchemaPage: React.FunctionComponent = () => {
     },
   });
 
-  let [tab, setTab] = useQueryParam<string>("tab");
+  type TabValue = "table" | "refvar" | "order";
+  const tabDefinitions: readonly {label: string; value: TabValue}[] = [
+    {label: "Table", value: "table"},
+    {label: "Refvar", value: "refvar"},
+    {label: "Order", value: "order"},
+  ];
+  let [tab, setTab] = useQueryParam<TabValue>("tab");
   if (!tab) {
     tab = "table";
   }
@@ -71,8 +78,14 @@ export const SchemaPage: React.FunctionComponent = () => {
             <Grid container direction="column" spacing={4}>
               <Grid item>
                 <Tabs onChange={(_, newValue) => setTab(newValue)} value={tab}>
-                  <Tab data-cy="table-tab" label="Table" value="table" />
-                  <Tab data-cy="refvar-tab" label="Refvar" value="refvar" />
+                  {tabDefinitions.map((tabDefinition) => (
+                    <Tab
+                      data-cy={`${tabDefinition.value}-tab`}
+                      key={tabDefinition.value}
+                      label={tabDefinition.label}
+                      value={tabDefinition.value}
+                    />
+                  ))}
                 </Tabs>
               </Grid>
               <Grid item>
@@ -89,11 +102,14 @@ export const SchemaPage: React.FunctionComponent = () => {
                     </Grid>
                   </Grid>
                 </div>
+                <div hidden={tab !== "refvar"}>
+                  <RefvarTable hrefs={hrefs} schema={schema} />
+                </div>
                 <div
-                  hidden={tab !== "refvar"}
+                  hidden={tab !== "order"}
                   style={{minHeight: 600, minWidth: 800}}
                 >
-                  <RefvarTable hrefs={hrefs} schema={schema} />
+                  <StepOrdersGraph hrefs={hrefs} schema={schema} />
                 </div>
               </Grid>
             </Grid>
