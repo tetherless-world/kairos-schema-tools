@@ -17,7 +17,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_sourceJson
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots {
   __typename: "Slot";
   id: string;
-  roleName: string;
+  label: string;
   sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_sourceJsonNodeLocation;
 }
 
@@ -36,7 +36,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participan
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants {
   __typename: "StepParticipant";
   id: string;
-  name: string;
+  label: string;
   sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_sourceJsonNodeLocation;
 }
 
@@ -49,7 +49,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_sourceJson
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps {
   __typename: "Step";
   id: string;
-  name: string;
+  label: string;
   participants: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants[] | null;
   sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_sourceJsonNodeLocation;
 }
@@ -57,7 +57,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps {
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas {
   __typename: "Schema";
   id: string;
-  name: string;
+  label: string;
   sdfDocumentId: string;
   slots: SdfDocumentSaveMutation_putSdfDocument_schemas_slots[];
   sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_schemas_sourceJsonNodeLocation;
@@ -83,7 +83,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages {
 export interface SdfDocumentSaveMutation_putSdfDocument {
   __typename: "SdfDocument";
   id: string;
-  name: string;
+  label: string;
   schemas: SdfDocumentSaveMutation_putSdfDocument_schemas[];
   sdfVersion: string;
   sourceJson: string;

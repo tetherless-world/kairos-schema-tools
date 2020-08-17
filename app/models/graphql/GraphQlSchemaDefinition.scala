@@ -45,7 +45,11 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val DurationObjectType = deriveObjectType[GraphQlSchemaContext, Duration]()
   implicit val EntityRelationRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelationRelation]()
   implicit val EntityRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelation]()
-  implicit val SlotObjectType = deriveObjectType[GraphQlSchemaContext, Slot]()
+  implicit val SlotObjectType = deriveObjectType[GraphQlSchemaContext, Slot](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label),
+    )
+  )
   implicit val BeforeAfterStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, BeforeAfterStepOrder](
     Interfaces(StepOrderInterfaceType)
   )
@@ -55,9 +59,20 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val OverlapsStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, OverlapsStepOrder](
     Interfaces(StepOrderInterfaceType)
   )
-  implicit val StepParticipantObjectType = deriveObjectType[GraphQlSchemaContext, StepParticipant]()
-  implicit val StepObjectType = deriveObjectType[GraphQlSchemaContext, Step]()
+  implicit val StepParticipantObjectType = deriveObjectType[GraphQlSchemaContext, StepParticipant](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label),
+    )
+  )
+  implicit val StepObjectType = deriveObjectType[GraphQlSchemaContext, Step](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label),
+    )
+  )
   implicit val SchemaObjectType = deriveObjectType[GraphQlSchemaContext, models.schema.Schema](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label),
+    ),
     ReplaceField("order", Field("order", ListType(StepOrderInterfaceType), resolve = _.value.order))
   )
   implicit lazy val SchemaPathObjectType: ObjectType[GraphQlSchemaContext, SchemaPath] = ObjectType("SchemaPath", () => fields[GraphQlSchemaContext, SchemaPath](
@@ -92,7 +107,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   )
   implicit lazy val SdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocument](
     AddFields(
-      Field("name", StringType, resolve = _.value.name),
+      Field("label", StringType, resolve = _.value.label),
       Field("validationMessageTypes", ListType(ValidationMessageTypeEnumType), resolve = _.value.validationMessages.map(_.`type`).distinct)
     )
   )

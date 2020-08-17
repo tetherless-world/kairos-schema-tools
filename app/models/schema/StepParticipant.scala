@@ -13,4 +13,6 @@ final case class StepParticipant(
                        refvar: Option[String],
                        role: Uri,
                        sourceJsonNodeLocation: JsonNodeLocation,
-                     )
+                     ) {
+  def label = name
+}

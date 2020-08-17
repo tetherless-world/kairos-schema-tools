@@ -67,7 +67,7 @@ const columns: MUIDataTableColumn[] = [
             dataCy="sdf-document-link"
             to={Hrefs.sdfDocuments.sdfDocument({id: sdfDocumentId}).toString()}
           >
-            {sdfDocument ? sdfDocument.name : sdfDocumentId}
+            {sdfDocument ? sdfDocument.label : sdfDocumentId}
           </Link>
         );
       },
@@ -100,7 +100,7 @@ const columns: MUIDataTableColumn[] = [
               .schemas.schema({id: schemaId})
               .toString()}
           >
-            {schema ? schema.name : schemaId}
+            {schema ? schema.label : schemaId}
           </Link>
         );
       },

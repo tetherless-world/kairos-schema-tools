@@ -58,13 +58,13 @@ export const SchemaPage: React.FunctionComponent = () => {
           <StandardLayout
             breadcrumbs={{
               schema,
-              sdfDocument: {id: sdfDocumentId, name: sdfDocument!.name},
+              sdfDocument: {id: sdfDocumentId, label: sdfDocument!.label},
             }}
             rowItemStyle={{flexGrow: 1}}
             subtitle={schema.id}
             title={
               <span>
-                Schema: <strong data-cy="schema-name">{schema.name}</strong>
+                Schema: <strong data-cy="schema-name">{schema.label}</strong>
               </span>
             }
           >

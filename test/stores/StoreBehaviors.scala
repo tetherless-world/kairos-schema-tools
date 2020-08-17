@@ -42,10 +42,10 @@ trait StoreBehaviors extends Matchers { this: WordSpec =>
     "search for an SDF document" in {
       val store = storeFactory()
       store.putSdfDocument(testSdfDocument1)
-      val results = store.search(limit = 10, offset = 0, query = "\"" + testSdfDocument1.name + "\"")
+      val results = store.search(limit = 10, offset = 0, query = "\"" + testSdfDocument1.label + "\"")
       results.total should be > 0
       results.documents.size should be > 0
-      results.documents.exists(document => document.`type` == SearchDocumentType.SdfDocument && document.label == testSdfDocument1.name && document.path.sdfDocumentId == testSdfDocument1.id) should be(true)
+      results.documents.exists(document => document.`type` == SearchDocumentType.SdfDocument && document.label == testSdfDocument1.label && document.path.sdfDocumentId == testSdfDocument1.id) should be(true)
     }
 
     "search for a schema" in {
@@ -57,7 +57,7 @@ trait StoreBehaviors extends Matchers { this: WordSpec =>
       results.documents.exists(
         document =>
           document.`type` == SearchDocumentType.Schema &&
-            document.label == testSchema1.name &&
+            document.label == testSchema1.label &&
             document.path.sdfDocumentId == testSchema1.sdfDocumentId &&
             document.path.schemaId == Some(testSchema1.id)
       ) should be(true)

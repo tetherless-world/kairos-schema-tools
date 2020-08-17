@@ -52,6 +52,7 @@ export interface SchemaPageQuery_schemaById_slots {
   comments: string[] | null;
   entityTypes: EntityType[] | null;
   id: string;
+  label: string;
   references: string[] | null;
   refvar: string | null;
   roleName: string;
@@ -73,6 +74,7 @@ export interface SchemaPageQuery_schemaById_steps_participants {
   comments: string[] | null;
   entityTypes: EntityType[] | null;
   id: string;
+  label: string;
   name: string;
   references: string[] | null;
   refvar: string | null;
@@ -85,6 +87,7 @@ export interface SchemaPageQuery_schemaById_steps {
   aka: string[] | null;
   comments: string[] | null;
   id: string;
+  label: string;
   maxDuration: SchemaPageQuery_schemaById_steps_maxDuration | null;
   minDuration: SchemaPageQuery_schemaById_steps_minDuration | null;
   name: string;
@@ -101,6 +104,7 @@ export interface SchemaPageQuery_schemaById {
   comments: string[] | null;
   description: string;
   entityRelations: SchemaPageQuery_schemaById_entityRelations[];
+  label: string;
   name: string;
   order: SchemaPageQuery_schemaById_order[];
   references: string[] | null;
@@ -114,7 +118,7 @@ export interface SchemaPageQuery_schemaById {
 
 export interface SchemaPageQuery_sdfDocumentById {
   __typename: "SdfDocument";
-  name: string;
+  label: string;
 }
 
 export interface SchemaPageQuery {

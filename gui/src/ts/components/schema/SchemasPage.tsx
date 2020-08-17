@@ -29,7 +29,7 @@ export const SchemasPage: React.FunctionComponent = () => {
     <Frame {...query}>
       {({data}) => {
         let breadcrumbs: BreadcrumbsProps | undefined;
-        type Schema = {id: string; name: string; sdfDocumentId: string};
+        type Schema = {id: string; label: string; sdfDocumentId: string};
         let schemas: Schema[];
         let subtitle: React.ReactNode | undefined;
         if (sdfDocumentId) {
@@ -38,7 +38,7 @@ export const SchemasPage: React.FunctionComponent = () => {
             return <NoRoute />;
           }
           breadcrumbs = {
-            sdfDocument: {id: sdfDocumentId, name: sdfDocument.name},
+            sdfDocument: {id: sdfDocumentId, label: sdfDocument.label},
           };
           schemas = sdfDocument!.schemas.map((schema) =>
             Object.assign({}, schema, {sdfDocumentId: sdfDocumentId!})
@@ -52,7 +52,7 @@ export const SchemasPage: React.FunctionComponent = () => {
                   .sdfDocument({id: sdfDocumentId})
                   .toString()}
               >
-                {sdfDocument.name}
+                {sdfDocument.label}
               </Link>
             </span>
           );

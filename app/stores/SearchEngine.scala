@@ -37,7 +37,7 @@ final class SearchEngine {
           aka = slot.aka,
           comments = slot.comments,
           id = slot.id,
-          label = slot.roleName,
+          label = slot.label,
           path = SchemaPath(
             schemaId = Some(schema.id),
             sdfDocumentId = sdfDocument.id,
@@ -49,8 +49,8 @@ final class SearchEngine {
         putSearchDocument(SearchDocument(
           aka = step.aka,
           comments = step.comments,
-          label = step.name,
           id = step.id,
+          label = step.label,
           path = SchemaPath(
             schemaId = Some(schema.id),
             sdfDocumentId = sdfDocument.id,
@@ -62,8 +62,8 @@ final class SearchEngine {
       putSearchDocument(SearchDocument(
         aka = schema.aka,
         comments = schema.comments,
-        label = schema.name,
         id = schema.id,
+        label = schema.label,
         path = SchemaPath(
           schemaId = Some(schema.id),
           sdfDocumentId = sdfDocument.id,
@@ -93,8 +93,8 @@ final class SearchEngine {
     }
 
     putSearchDocument(SearchDocument(
-      label = sdfDocument.name,
       id = sdfDocument.id,
+      label = sdfDocument.label,
       path = SchemaPath(
         sdfDocumentId = sdfDocument.id,
       ),

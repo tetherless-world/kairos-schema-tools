@@ -37,7 +37,7 @@ export const StepListTableRow: React.FunctionComponent<{
             <ListItemText key={value}>
               <Link to={hrefs.step({id: value})}>
                 Step:&nbsp;
-                {steps.find((step) => step.id === value)?.name ?? value}
+                {steps.find((step) => step.id === value)?.label ?? value}
               </Link>
             </ListItemText>
           ))}

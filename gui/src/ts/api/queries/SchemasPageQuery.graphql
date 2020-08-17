@@ -1,15 +1,15 @@
 query SchemasPageQuery($sdfDocumentId: String!, $withSdfDocument: Boolean!) {
     schemas @skip(if: $withSdfDocument) {
         id
-        name
+        label
         sdfDocumentId
     }
 
     sdfDocumentById(id: $sdfDocumentId) @include(if: $withSdfDocument) {
-        name
+        label
         schemas {
             id
-            name
+            label
         }
     }
 }

@@ -12,4 +12,6 @@ final case class Slot(
                        refvar: Option[String],
                        roleName: String,
                        sourceJsonNodeLocation: JsonNodeLocation,
-                     )
+                     ) {
+  def label = s"${roleName}${entityTypes.map(entityTypes => s" (${entityTypes.map(_.label).mkString(", ")})").getOrElse("")}"
+}

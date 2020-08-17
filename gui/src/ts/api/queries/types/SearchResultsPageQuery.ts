@@ -10,12 +10,12 @@ import { SearchDocumentType } from "./../../graphqlGlobalTypes";
 
 export interface SearchResultsPageQuery_search_documents_path_schema {
   __typename: "Schema";
-  name: string;
+  label: string;
 }
 
 export interface SearchResultsPageQuery_search_documents_path_sdfDocument {
   __typename: "SdfDocument";
-  name: string;
+  label: string;
 }
 
 export interface SearchResultsPageQuery_search_documents_path {

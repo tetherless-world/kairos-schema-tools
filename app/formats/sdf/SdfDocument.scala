@@ -13,9 +13,9 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 
 case class SdfDocument(id: Uri, schemas: List[Schema], sdfVersion: String, sourceJson: String, validationMessages: List[ValidationMessage]) {
-  def name: String =
+  def label =
     if (!schemas.isEmpty) {
-      schemas(0).name
+      schemas(0).label
     } else {
       id.toString
     }

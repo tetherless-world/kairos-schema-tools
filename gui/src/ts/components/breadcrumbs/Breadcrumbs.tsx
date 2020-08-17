@@ -25,7 +25,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
         dataCy="sdf-document-breadcrumb"
         to={Hrefs.sdfDocuments.sdfDocument(sdfDocument).toString()}
       >
-        {sdfDocument.name}
+        {sdfDocument.label}
       </Link>
     ) : null}
     {schema ? (
@@ -50,7 +50,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
           .schemas.schema(schema)
           .toString()}
       >
-        {schema.name}
+        {schema.label}
       </Link>
     ) : null}
   </MuiBreadcrumbs>

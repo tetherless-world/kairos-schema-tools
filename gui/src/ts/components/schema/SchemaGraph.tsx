@@ -74,7 +74,7 @@ export const SchemaGraph: React.FunctionComponent<{
     color: "red",
     href: hrefs.home,
     id: schema.id,
-    label: `Schema: ${schema.name}`,
+    label: `Schema: ${schema.label}`,
     __typename: "Schema",
   });
 
@@ -83,7 +83,7 @@ export const SchemaGraph: React.FunctionComponent<{
       color: "blue",
       href: hrefs.slot({id: slot.id}),
       id: slot.id,
-      label: `Slot: ${slot.roleName}`,
+      label: `Slot: ${slot.label}`,
       __typename: "Slot",
     });
     links.push({source: schema.id, target: slot.id});
@@ -93,7 +93,7 @@ export const SchemaGraph: React.FunctionComponent<{
       color: "darkgreen",
       href: hrefs.step({id: step.id}),
       id: step.id,
-      label: `Step: ${step.name}`,
+      label: `Step: ${step.label}`,
       __typename: "Step",
     });
     links.push({source: schema.id, target: step.id});
@@ -102,7 +102,7 @@ export const SchemaGraph: React.FunctionComponent<{
     //   nodes.push({
     //     color: "lightgreen",
     //     id: participant.id,
-    //     label: `Step participant: ${participant.name}`,
+    //     label: `Step participant: ${participant.label}`,
     //     __typename: "StepParticipant",
     //   });
     //   links.push({source: step.id, target: participant.id});
