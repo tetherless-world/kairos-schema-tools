@@ -57,7 +57,7 @@ trait StoreBehaviors extends Matchers { this: WordSpec =>
       results.documents.exists(
         document =>
           document.`type` == SearchDocumentType.Schema &&
-            document.label == testSchema1.name &&
+            document.label == testSchema1.label &&
             document.path.sdfDocumentId == testSchema1.sdfDocumentId &&
             document.path.schemaId == Some(testSchema1.id)
       ) should be(true)
