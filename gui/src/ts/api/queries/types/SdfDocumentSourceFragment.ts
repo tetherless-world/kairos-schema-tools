@@ -17,7 +17,7 @@ export interface SdfDocumentSourceFragment_schemas_slots_sourceJsonNodeLocation 
 export interface SdfDocumentSourceFragment_schemas_slots {
   __typename: "Slot";
   id: string;
-  roleName: string;
+  label: string;
   sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_slots_sourceJsonNodeLocation;
 }
 
@@ -36,7 +36,7 @@ export interface SdfDocumentSourceFragment_schemas_steps_participants_sourceJson
 export interface SdfDocumentSourceFragment_schemas_steps_participants {
   __typename: "StepParticipant";
   id: string;
-  name: string;
+  label: string;
   sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_steps_participants_sourceJsonNodeLocation;
 }
 
@@ -49,7 +49,7 @@ export interface SdfDocumentSourceFragment_schemas_steps_sourceJsonNodeLocation 
 export interface SdfDocumentSourceFragment_schemas_steps {
   __typename: "Step";
   id: string;
-  name: string;
+  label: string;
   participants: SdfDocumentSourceFragment_schemas_steps_participants[] | null;
   sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_steps_sourceJsonNodeLocation;
 }
@@ -57,7 +57,7 @@ export interface SdfDocumentSourceFragment_schemas_steps {
 export interface SdfDocumentSourceFragment_schemas {
   __typename: "Schema";
   id: string;
-  name: string;
+  label: string;
   sdfDocumentId: string;
   slots: SdfDocumentSourceFragment_schemas_slots[];
   sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_sourceJsonNodeLocation;
@@ -83,7 +83,7 @@ export interface SdfDocumentSourceFragment_validationMessages {
 export interface SdfDocumentSourceFragment {
   __typename: "SdfDocument";
   id: string;
-  name: string;
+  label: string;
   schemas: SdfDocumentSourceFragment_schemas[];
   sdfVersion: string;
   sourceJson: string;

@@ -1,26 +1,13 @@
 import * as React from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@material-ui/core";
+import {Table, TableBody, TableCell, TableRow} from "@material-ui/core";
 import {Hrefs} from "Hrefs";
 import {Link} from "components/link/Link";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 
 export const SchemasTable: React.FunctionComponent<{
-  schemas: {id: string; name: string; sdfDocumentId: string}[];
+  schemas: {id: string; label: string; sdfDocumentId: string}[];
 }> = ({schemas}) => (
   <Table data-cy="schemas-table">
-    <TableHead>
-      <TableRow>
-        <TableCell>Identifier</TableCell>
-        <TableCell>Name</TableCell>
-        <TableCell>Source</TableCell>
-      </TableRow>
-    </TableHead>
     <TableBody>
       {schemas.map((schema) => {
         const schemaHref = Hrefs.sdfDocuments
@@ -33,7 +20,7 @@ export const SchemasTable: React.FunctionComponent<{
               <Link to={schemaHref}>{schema.id}</Link>
             </TableCell>
             <TableCell data-cy="schema-name">
-              <Link to={schemaHref}>{schema.name}</Link>
+              <Link to={schemaHref}>{schema.label}</Link>
             </TableCell>
             <TableCell data-cy="schema-source">
               <SdfDocumentSourceLink

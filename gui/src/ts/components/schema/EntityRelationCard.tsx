@@ -25,7 +25,7 @@ export const EntityRelationCard: React.FunctionComponent<{
   const entityLink = (entityId: string): React.ReactNode => {
     const slot = slots.find((slot) => slot.id === entityId);
     if (slot) {
-      return <Link to={hrefs.slot(slot)}>"Slot: " + slot.roleName</Link>;
+      return <Link to={hrefs.slot(slot)}>"Slot: " + slot.label</Link>;
     } else {
       return <span>{entityId}</span>;
     }

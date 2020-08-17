@@ -11,13 +11,13 @@ import { ValidationMessageType } from "./../../graphqlGlobalTypes";
 export interface SdfDocumentsPageQuery_sdfDocuments_schemas {
   __typename: "Schema";
   id: string;
-  name: string;
+  label: string;
 }
 
 export interface SdfDocumentsPageQuery_sdfDocuments {
   __typename: "SdfDocument";
   id: string;
-  name: string;
+  label: string;
   schemas: SdfDocumentsPageQuery_sdfDocuments_schemas[];
   sdfVersion: string;
   validationMessageTypes: ValidationMessageType[];

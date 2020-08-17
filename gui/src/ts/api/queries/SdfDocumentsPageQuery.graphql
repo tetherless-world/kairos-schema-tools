@@ -1,10 +1,10 @@
 query SdfDocumentsPageQuery {
     sdfDocuments {
         id
-        name
+        label
         schemas {
             id
-            name
+            label
         }
         sdfVersion
         validationMessageTypes

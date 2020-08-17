@@ -73,7 +73,7 @@ const SchemaAccordion: React.FunctionComponent<{
 }> = ({schema}) => (
   <Accordion>
     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-      <h3>Schema: {schema.name}</h3>
+      <h3>Schema: {schema.label}</h3>
     </AccordionSummary>
     <AccordionDetails>
       <Grid container direction="column">
@@ -257,7 +257,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
               breadcrumbs={{sdfDocument: savedSdfDocument}}
               rowItemStyle={{flexGrow: 1}}
               subtitle={savedSdfDocument.id}
-              title={savedSdfDocument.name}
+              title={savedSdfDocument.label}
             >
               <Grid
                 container

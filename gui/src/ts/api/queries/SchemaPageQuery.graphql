@@ -11,6 +11,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
             }
             relationSubject
         }
+        label
         name
         order {
             comments
@@ -34,6 +35,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
             comments
             entityTypes
             id
+            label
             references
             refvar
             roleName
@@ -43,6 +45,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
             aka
             comments
             id
+            label
             maxDuration {
                 string
             }
@@ -55,6 +58,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
                 comments
                 entityTypes
                 id
+                label
                 name
                 references
                 refvar
@@ -71,6 +75,6 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
     }
 
     sdfDocumentById(id: $sdfDocumentId) @include(if: $withSdfDocument) {
-        name
+        label
     }
 }

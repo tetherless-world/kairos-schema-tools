@@ -20,21 +20,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface SchemaTableOfContentsSlot {
+interface SchemaTableOfContentsEntry {
   id: string;
-  roleName: string;
+  label: string;
 }
 
-interface SchemaTableOfContentsStep {
-  id: string;
-  name: string;
+interface SchemaTableOfContentsSlot extends SchemaTableOfContentsEntry {}
+
+interface SchemaTableOfContentsStep extends SchemaTableOfContentsEntry {
   participants: readonly SchemaTableOfContentsStepParticipant[] | null;
 }
 
-interface SchemaTableOfContentsStepParticipant {
-  id: string;
-  name: string;
-}
+interface SchemaTableOfContentsStepParticipant
+  extends SchemaTableOfContentsEntry {}
 
 export const SchemaTableOfContents: React.FunctionComponent<{
   hrefs: SchemaHrefs;
@@ -60,9 +58,7 @@ export const SchemaTableOfContents: React.FunctionComponent<{
           <ListItemText>
             <Grid container spacing={2} style={{alignItems: "center"}}>
               <Grid item>
-                <Link to={hrefs.slot({id: slot.id})}>
-                  Slot: {slot.roleName}
-                </Link>
+                <Link to={hrefs.slot({id: slot.id})}>Slot: {slot.label}</Link>
               </Grid>
               {includeSourceLinks ? (
                 <Grid item>
@@ -96,7 +92,7 @@ export const SchemaTableOfContents: React.FunctionComponent<{
             <Grid container spacing={2} style={{alignItems: "center"}}>
               <Grid item>
                 <Link to={hrefs.step({id: stepId})}>
-                  Participant: {participant.name}
+                  Participant: {participant.label}
                 </Link>
               </Grid>
               {includeSourceLinks ? (
@@ -130,7 +126,7 @@ export const SchemaTableOfContents: React.FunctionComponent<{
                 <Grid container spacing={2} style={{alignItems: "center"}}>
                   <Grid item>
                     <Link to={hrefs.step({id: step.id})}>
-                      Step: {step.name}
+                      Step: {step.label}
                     </Link>
                   </Grid>
                   {includeSourceLinks ? (

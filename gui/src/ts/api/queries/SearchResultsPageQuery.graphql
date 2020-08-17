@@ -5,11 +5,11 @@ query SearchResultsPageQuery($limit: Int!, $offset: Int!, $query: String!) {
             label
             path {
                 schema {
-                    name
+                    label
                 }
                 schemaId
                 sdfDocument {
-                    name
+                    label
                 }
                 sdfDocumentId
                 slotId

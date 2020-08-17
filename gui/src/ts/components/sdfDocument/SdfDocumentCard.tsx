@@ -21,17 +21,17 @@ import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 export const SdfDocumentCard: React.FunctionComponent<{
   sdfDocument: {
     id: string;
-    name: string;
+    label: string;
     schemas: {
       id: string;
-      name: string;
+      label: string;
       sdfDocumentId: string;
     }[];
     sdfVersion: string;
     validationMessageTypes: ValidationMessageType[];
   };
 }> = ({
-  sdfDocument: {id, name, schemas, sdfVersion, validationMessageTypes},
+  sdfDocument: {id, label, schemas, sdfVersion, validationMessageTypes},
 }) => {
   return (
     <Card data-cy={"sdf-document-card-" + id}>
@@ -43,7 +43,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
                 dataCy="sdf-document-name"
                 to={Hrefs.sdfDocuments.sdfDocument({id}).toString()}
               >
-                {name}
+                {label}
               </Link>
             </Grid>
             <Grid item xs={4} style={{textAlign: "right"}}>

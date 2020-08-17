@@ -3,14 +3,14 @@
 
 fragment SdfDocumentSourceFragment on SdfDocument {
     id
-    name
+    label
     schemas {
         id
-        name
+        label
         sdfDocumentId
         slots {
             id
-            roleName
+            label
             sourceJsonNodeLocation {
                 ...JsonNodeLocationFragment
             }
@@ -20,10 +20,10 @@ fragment SdfDocumentSourceFragment on SdfDocument {
         }
         steps {
             id
-            name
+            label
             participants {
                 id
-                name
+                label
                 sourceJsonNodeLocation {
                     ...JsonNodeLocationFragment
                 }

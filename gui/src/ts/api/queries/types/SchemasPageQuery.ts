@@ -9,19 +9,19 @@
 export interface SchemasPageQuery_schemas {
   __typename: "Schema";
   id: string;
-  name: string;
+  label: string;
   sdfDocumentId: string;
 }
 
 export interface SchemasPageQuery_sdfDocumentById_schemas {
   __typename: "Schema";
   id: string;
-  name: string;
+  label: string;
 }
 
 export interface SchemasPageQuery_sdfDocumentById {
   __typename: "SdfDocument";
-  name: string;
+  label: string;
   schemas: SchemasPageQuery_sdfDocumentById_schemas[];
 }
 
