@@ -45,7 +45,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val DurationObjectType = deriveObjectType[GraphQlSchemaContext, Duration]()
   implicit val EntityRelationRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelationRelation]()
   implicit val EntityRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelation]()
-  implicit val SlotObjectType = deriveObjectType[GraphQlSchemaContext, SchemaSlot](
+  implicit val SchemaSlotObjectType = deriveObjectType[GraphQlSchemaContext, SchemaSlot](
     AddFields(
       Field("label", StringType, resolve = _.value.label),
     )
@@ -75,17 +75,17 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
     ),
     ReplaceField("order", Field("order", ListType(StepOrderInterfaceType), resolve = _.value.order))
   )
-  implicit lazy val SchemaPathObjectType: ObjectType[GraphQlSchemaContext, SchemaPath] = ObjectType("SchemaPath", () => fields[GraphQlSchemaContext, SchemaPath](
+  implicit lazy val SdfDocumentPathObjectType: ObjectType[GraphQlSchemaContext, SdfDocumentPath] = ObjectType("SchemaPath", () => fields[GraphQlSchemaContext, SdfDocumentPath](
     Field("schema", OptionType(SchemaObjectType), resolve = ctx => ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_))),
     Field("schemaId", OptionType(UriType), resolve = _.value.schemaId),
-    Field("slot", OptionType(SlotObjectType), resolve = ctx => {
-      if (ctx.value.slotId.isDefined) {
-        ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_)).flatMap(_.slots.find(_.id == ctx.value.slotId.get))
+    Field("schemaSlot", OptionType(SchemaSlotObjectType), resolve = ctx => {
+      if (ctx.value.schemaSlotId.isDefined) {
+        ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_)).flatMap(_.slots.find(_.id == ctx.value.schemaSlotId.get))
       } else {
         None
       }
     }),
-    Field("slotId", OptionType(UriType), resolve = _.value.slotId),
+    Field("schemaSlotId", OptionType(UriType), resolve = _.value.schemaSlotId),
     Field("step", OptionType(StepObjectType), resolve = ctx => {
       if (ctx.value.stepId.isDefined) {
         ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_)).flatMap(_.steps.find(_.id == ctx.value.stepId.get))
@@ -101,7 +101,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   )
   implicit lazy val ValidationMessageObjectType: ObjectType[GraphQlSchemaContext, ValidationMessage] = ObjectType("ValidationMessage", () => fields[GraphQlSchemaContext, ValidationMessage](
     Field("message", StringType, resolve = _.value.message),
-    Field("path", SchemaPathObjectType, resolve = _.value.path),
+    Field("path", SdfDocumentPathObjectType, resolve = _.value.path),
     Field("type", ValidationMessageTypeEnumType, resolve = _.value.`type`)
   )
   )

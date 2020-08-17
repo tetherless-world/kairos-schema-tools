@@ -4,7 +4,7 @@ import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.SdfDocument
 import javax.inject.{Inject, Singleton}
 import models.json.JsonNodeLocation
-import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Schema, SchemaPath, SchemaSlot, Step, StepOrder, StepOrderFlag, StepParticipant}
+import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Schema, SdfDocumentPath, SchemaSlot, Step, StepOrder, StepOrderFlag, StepParticipant}
 import models.validation.{ValidationMessage, ValidationMessageType}
 import play.api.http.MimeTypes
 import play.api.libs.json
@@ -33,7 +33,7 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val overlapsStepOrderJsonWrites = Json.writes[OverlapsStepOrder]
   private implicit val stepOrderJsonWrites = Json.writes[StepOrder] // json.Writes[StepOrder]
   private implicit val schemaJsonWrites = Json.writes[Schema]
-  private implicit val schemaPathJsonWrites = Json.writes[SchemaPath]
+  private implicit val schemaPathJsonWrites = Json.writes[SdfDocumentPath]
   private implicit val validationMessageTypeJsonWrites: json.Writes[ValidationMessageType] = (`type`) => JsString(`type`.value)
   private implicit val validationMessageJsonWrites = Json.writes[ValidationMessage]
   private implicit val sdfDocumentJsonWrites = Json.writes[SdfDocument]

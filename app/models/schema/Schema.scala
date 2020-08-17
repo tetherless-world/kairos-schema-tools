@@ -3,7 +3,7 @@ package models.schema
 import edu.rpi.tw.twks.uri.Uri
 import models.json.JsonNodeLocation
 
-case class Schema(
+final case class Schema(
                    aka: Option[List[String]],
                    comments: Option[List[String]],
                    description: String,
