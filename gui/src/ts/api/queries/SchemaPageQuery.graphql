@@ -6,6 +6,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
         entityRelations {
             comments
             relations {
+                name
                 relationPredicate
                 relationObjects
             }

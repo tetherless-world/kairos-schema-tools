@@ -6,6 +6,9 @@ import {
   Card,
   CardContent,
   CardHeader,
+  List,
+  ListItem,
+  ListItemText,
   Table,
   TableBody,
   TableCell,
@@ -41,6 +44,7 @@ export const EntityRelationCard: React.FunctionComponent<{
               <TableCell>Subject</TableCell>
               <TableCell>Predicate</TableCell>
               <TableCell>Object</TableCell>
+              <TableCell>Name</TableCell>
               <TableCell>Comments</TableCell>
             </TableRow>
           </TableHead>
@@ -57,6 +61,19 @@ export const EntityRelationCard: React.FunctionComponent<{
                       </TableCell>
                       <TableCell>{relation.relationPredicate}</TableCell>
                       <TableCell>{entityLink(relationObject)}</TableCell>
+                      <TableCell>{relation.name}</TableCell>
+                      <TableCell>
+                        {entityRelation.comments &&
+                        entityRelation.comments.length > 0 ? (
+                          <List>
+                            {entityRelation.comments.map((comment) => (
+                              <ListItem>
+                                <ListItemText>{comment}</ListItemText>
+                              </ListItem>
+                            ))}
+                          </List>
+                        ) : null}
+                      </TableCell>
                     </TableRow>
                   )
                 )}
