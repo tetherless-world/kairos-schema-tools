@@ -76,7 +76,7 @@ class FsStore @Inject()(@Named("fsStoreDataDirectoryPath") val dataDirectoryPath
 
   private def readSdfDocumentFile(filePath: Path): SdfDocument =
     withResource(Source.fromFile(filePath.toFile)) { source =>
-      Await.result(SdfDocument.readAndValidate(source, Uri.parse(filePath.toUri.toString), validators), 10.seconds)
+      SdfDocument.read(source, Uri.parse(filePath.toUri.toString))
     }
 
   final override def search(limit: Int, offset: Int, query: String): SearchResults =
