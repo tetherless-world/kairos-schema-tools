@@ -37,6 +37,14 @@ export class SchemaHrefs extends SubHrefs {
   stepId(step: {id: string}) {
     return `step-${this.sanitizeId(step.id)}`;
   }
+
+  stepParticipant(stepParticipant: {id: string}) {
+    return `${this.home}#${this.stepParticipantId(stepParticipant)}`;
+  }
+
+  stepParticipantId(stepParticipant: {id: string}) {
+    return `step-participant-${this.sanitizeId(stepParticipant.id)}`;
+  }
 }
 
 class SdfDocumentSchemasHrefs extends SubHrefs {

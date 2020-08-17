@@ -62,7 +62,7 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
           <Grid container direction="column" spacing={4}>
             {schema.steps.map((step) => (
               <Grid item id={hrefs.stepId(step)} key={step.id}>
-                <StepCard step={step} />
+                <StepCard hrefs={hrefs} step={step} />
               </Grid>
             ))}
           </Grid>

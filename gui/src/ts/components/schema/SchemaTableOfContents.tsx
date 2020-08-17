@@ -84,14 +84,18 @@ export const SchemaTableOfContents: React.FunctionComponent<{
   }> = ({participants, stepId}) => (
     <List component="div" disablePadding>
       {participants.map((participant) => (
-        <ListItem className={classes.nestedListItem} key={participant.id}>
+        <ListItem
+          component="div"
+          className={classes.nestedListItem}
+          key={participant.id}
+        >
           <ListItemIcon>
             <WorkIcon />
           </ListItemIcon>
           <ListItemText>
             <Grid container spacing={2} style={{alignItems: "center"}}>
               <Grid item>
-                <Link to={hrefs.step({id: stepId})}>
+                <Link to={hrefs.stepParticipant(participant)}>
                   Participant: {participant.label}
                 </Link>
               </Grid>

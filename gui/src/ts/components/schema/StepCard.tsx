@@ -1,40 +1,35 @@
 import {SchemaPageQuery_schemaById_steps} from "api/queries/types/SchemaPageQuery";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Card,
-  CardContent,
-  CardHeader,
-  Grid,
-} from "@material-ui/core";
+import {Card, CardContent, CardHeader, Grid} from "@material-ui/core";
 import {StepDetailsTable} from "components/schema/StepDetailsTable";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {StepParticipantDetailsTable} from "components/schema/StepParticipantDetailsTable";
 import * as React from "react";
+import {SchemaHrefs} from "Hrefs";
+import {StepParticipantCard} from "components/schema/StepParticipantCard";
 
 export const StepCard: React.FunctionComponent<{
+  hrefs: SchemaHrefs;
   step: SchemaPageQuery_schemaById_steps;
-}> = ({step}) => (
+}> = ({hrefs, step}) => (
   <Card>
     <CardHeader title={"Step: " + step.label} />
     <CardContent>
       <StepDetailsTable step={step} />
       {step.participants && step.participants.length > 0 ? (
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            Participants
-          </AccordionSummary>
-          <AccordionDetails>
+        <Card>
+          <CardHeader title="Participants"></CardHeader>
+          <CardContent>
             <Grid container direction="column" spacing={6}>
               {step.participants.map((participant) => (
-                <Grid key={participant.id} item>
-                  <StepParticipantDetailsTable participant={participant} />
+                <Grid
+                  id={hrefs.stepParticipantId(participant)}
+                  key={participant.id}
+                  item
+                >
+                  <StepParticipantCard participant={participant} />
                 </Grid>
               ))}
             </Grid>
-          </AccordionDetails>
-        </Accordion>
+          </CardContent>
+        </Card>
       ) : null}
     </CardContent>
   </Card>

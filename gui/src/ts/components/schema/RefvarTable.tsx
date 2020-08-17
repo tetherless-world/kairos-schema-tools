@@ -44,7 +44,7 @@ export const RefvarTable: React.FunctionComponent<{
       <TableBody>
         {[...refvars].map((refvar) => {
           return (
-            <TableRow>
+            <TableRow key={refvar}>
               <TableCell>{refvar}</TableCell>
               {schema.steps.map((step) => {
                 const participantsWithRefvar = step.participants?.filter(
@@ -57,7 +57,11 @@ export const RefvarTable: React.FunctionComponent<{
                       <List>
                         {participantsWithRefvar.map((participant) => (
                           <ListItem key={participant.id}>
-                            <ListItemText><Link to={hrefs.step(step).}{participant.label}</ListItemText>
+                            <ListItemText>
+                              <Link to={hrefs.stepParticipant(participant)}>
+                                {participant.label}
+                              </Link>
+                            </ListItemText>
                           </ListItem>
                         ))}
                       </List>
