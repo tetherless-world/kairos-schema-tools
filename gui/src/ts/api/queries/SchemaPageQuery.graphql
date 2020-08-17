@@ -72,6 +72,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
         }
         super
         ta2
+        template
         version
     }
 

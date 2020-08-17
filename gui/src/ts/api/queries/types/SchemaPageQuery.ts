@@ -114,6 +114,7 @@ export interface SchemaPageQuery_schemaById {
   steps: SchemaPageQuery_schemaById_steps[];
   super: string | null;
   ta2: boolean;
+  template: string | null;
   version: string;
 }
 

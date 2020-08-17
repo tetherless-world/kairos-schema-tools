@@ -154,6 +154,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       ),
       `super` = resource.`super`.headOption,
       ta2 = false,
+      template = resource.template.headOption,
       version = resource.version.headOption.getOrElse(throw ValidationException(s"schema ${id} missing version property", path))
     )
   }

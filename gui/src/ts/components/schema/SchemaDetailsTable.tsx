@@ -64,6 +64,11 @@ export const SchemaDetailsTable: React.FunctionComponent<{
         valuesDataCy="schema-references"
       />
       <StringFieldTableRow
+        name="Template"
+        value={schema.template}
+        valueDataCy="schema-template"
+      />
+      <StringFieldTableRow
         name="Version"
         value={schema.version}
         valueDataCy="schema-version"

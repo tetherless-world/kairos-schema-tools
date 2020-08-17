@@ -18,6 +18,7 @@ case class Schema(
   steps: List[Step],
   `super`: Option[Uri],
   ta2: Boolean,
+  template: Option[String],
   version: String
 ) {
   def label = name
