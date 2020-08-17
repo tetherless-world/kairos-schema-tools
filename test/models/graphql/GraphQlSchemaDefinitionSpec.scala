@@ -99,8 +99,8 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
           }
           """
       val sdfDocument = ConfData.sdfDocuments(0)
-      val result = Json.stringify(executeQuery(query, vars = Json.obj("query" -> sdfDocument.name)))
-      result must include(sdfDocument.name)
+      val result = Json.stringify(executeQuery(query, vars = Json.obj("query" -> sdfDocument.label)))
+      result must include(sdfDocument.label)
       result must include(sdfDocument.id.toString)
     }
 

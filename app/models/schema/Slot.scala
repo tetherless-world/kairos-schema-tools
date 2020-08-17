@@ -12,4 +12,6 @@ final case class Slot(
                        refvar: Option[String],
                        roleName: String,
                        sourceJsonNodeLocation: JsonNodeLocation,
-                     )
+                     ) {
+  def label = roleName
+}

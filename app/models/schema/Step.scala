@@ -17,4 +17,6 @@ final case class Step(
                        references: Option[List[String]],
                        sourceJsonNodeLocation: JsonNodeLocation,
                        `type`: Uri
-                     )
+                     ) {
+  def label = name
+}

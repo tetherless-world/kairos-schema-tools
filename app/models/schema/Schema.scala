@@ -19,4 +19,6 @@ case class Schema(
   `super`: Option[Uri],
   ta2: Boolean,
   version: String
-)
+) {
+  def label = name
+}
