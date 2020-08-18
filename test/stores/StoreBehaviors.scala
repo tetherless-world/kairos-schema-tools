@@ -9,6 +9,14 @@ trait StoreBehaviors extends Matchers { this: WordSpec =>
   val testSchema1 = testSdfDocument1.schemas(0)
 
   def store(storeFactory: () => Store): Unit = {
+    "get a primitive by id" in {
+      val store = storeFactory()
+      store.getPrimitiveById(testSchema1.id) should equal(None)
+      store.putSdfDocument(testSdfDocument1)
+      store.getSchemaById(testSchema1.id).get.id should equal(testSchema1.id)
+      store.getSchemaById(Uri.parse("http://example.com/other")) should equal(None)
+    }
+
     "get a schema by id" in {
       val store = storeFactory()
       store.getSchemaById(testSchema1.id) should equal(None)

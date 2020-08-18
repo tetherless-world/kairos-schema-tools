@@ -10,7 +10,7 @@ import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.{SdfDocument, SdfDocumentReader}
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import javax.inject.{Inject, Named, Singleton}
-import models.schema.Schema
+import models.schema.{Primitive, Schema}
 import models.search.{SearchDocument, SearchResults}
 import validators.Validators
 
@@ -20,27 +20,23 @@ import scala.concurrent.{Await, ExecutionContext}
 import scala.io.Source
 
 @Singleton
-class FsStore @Inject()(@Named("fsStoreDataDirectoryPath") val dataDirectoryPath: Path, validators: Validators)(implicit ec: ExecutionContext) extends Store with WithResource {
+class FsStore @Inject()(@Named("fsStoreDataDirectoryPath") val dataDirectoryPath: Path, validators: Validators)(implicit ec: ExecutionContext) extends AbstractStore with WithResource {
   private val searchEngine = new SearchEngine
 
   private def deleteSdfDocumentByFilePath(filePath: Path) = {
     Files.delete(filePath)
   }
 
-  final override def deleteSdfDocumentById(id: Uri): Unit =
+  final override def deleteSdfDocumentById(id: Uri): Unit = {
     getSdfDocumentsByFilePath.find(entry => entry._2.id == id).map(_._1).foreach(deleteSdfDocumentByFilePath(_))
+    searchEngine.deleteAll()
+    getSdfDocuments.foreach(putSdfDocument(_))
+  }
 
-  final override def deleteSdfDocuments(): Unit =
+  final override def deleteSdfDocuments(): Unit = {
     getSdfDocumentsByFilePath.map(_._1).foreach(deleteSdfDocumentByFilePath(_))
-
-  final override def getSchemaById(id: Uri): Option[Schema] =
-    getSchemas.find(_.id == id)
-
-  final override def getSchemas: List[Schema] =
-    getSdfDocuments.flatMap(sdfDocument => sdfDocument.schemas)
-
-  final override def getSdfDocumentById(id: Uri): Option[SdfDocument] =
-    getSdfDocuments.find(_.id == id)
+    searchEngine.deleteAll()
+  }
 
   final override def getSdfDocuments: List[SdfDocument] =
     getSdfDocumentsByFilePath.values.toList

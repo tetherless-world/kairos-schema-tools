@@ -34,6 +34,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
       case e: RiotException => {
         return SdfDocument(
           id = sourceUri,
+          primitives = List(),
           schemas = List(),
           sdfVersion = "",
           sourceJson = sourceJson,
@@ -58,6 +59,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
       case e: ValidationException => {
         return SdfDocument(
             id = e.messages.map(_.path.id).headOption.getOrElse(sourceUri),
+            primitives = List(),
             schemas = List(),
             sdfVersion = "",
             sourceJson = sourceJson,
@@ -82,6 +84,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
       case e: ValidationException =>
         SdfDocument(
           id = header.id,
+          primitives = List(),
           schemas = List(),
           sdfVersion = header.sdfVersion,
           sourceJson = sourceJson,

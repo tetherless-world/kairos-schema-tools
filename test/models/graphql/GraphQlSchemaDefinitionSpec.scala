@@ -90,7 +90,8 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
               documents {
                 label
                 path {
-                  sdfDocumentId
+                  id
+                  label
                 }
                 type
               }

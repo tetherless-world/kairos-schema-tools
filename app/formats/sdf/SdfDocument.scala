@@ -4,7 +4,7 @@ import java.util.UUID
 
 import edu.rpi.tw.twks.uri.Uri
 import models.graphql.GraphQlSchemaDefinition.JsonArgument
-import models.schema.Schema
+import models.schema.{Primitive, Schema}
 import models.validation.ValidationMessage
 import org.apache.jena.rdf.model.Resource
 import validators.Validators
@@ -12,7 +12,7 @@ import validators.Validators
 import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 
-case class SdfDocument(id: Uri, schemas: List[Schema], sdfVersion: String, sourceJson: String, validationMessages: List[ValidationMessage]) {
+case class SdfDocument(id: Uri, primitives: List[Primitive], schemas: List[Schema], sdfVersion: String, sourceJson: String, validationMessages: List[ValidationMessage]) {
   def label =
     if (!schemas.isEmpty) {
       schemas(0).label

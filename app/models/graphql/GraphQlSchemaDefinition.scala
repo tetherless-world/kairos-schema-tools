@@ -59,6 +59,8 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val OverlapsStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, OverlapsStepOrder](
     Interfaces(StepOrderInterfaceType)
   )
+  implicit val PrimitiveSlotObjectType = deriveObjectType[GraphQlSchemaContext, PrimitiveSlot]()
+  implicit val PrimitiveObjectType = deriveObjectType[GraphQlSchemaContext, Primitive]()
   implicit val StepParticipantObjectType = deriveObjectType[GraphQlSchemaContext, StepParticipant](
     AddFields(
       Field("label", StringType, resolve = _.value.label),
@@ -81,7 +83,11 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val SdfDocumentPathSchemaObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPathSchema]()
   implicit val SdfDocumentPathPrimitiveSlotObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPathPrimitiveSlot]()
   implicit val SdfDocumentPathPrimitiveObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPathPrimitive]()
-  implicit val SdfDocumentPathObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPath]()
+  implicit val SdfDocumentPathObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPath](
+    AddFields(
+      Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.id).map(_.label))
+    )
+  )
 //  implicit lazy val SdfDocumentPathSchemaSlotObjectType: ObjectType[GraphQlSchemaContext, SdfDocumentPathSchema] = ObjectType("SdfDocumentPathSchema", () => fields[GraphQlSchemaContext, SdfDocumentPathSchema](
 //    Field("id", UriType, resolve = _.value.id),
 //    Field("resolve", OptionType(SchemaObjectType), resolve = ctx => ctx.ctx.store.getSchemaById(ctx.value.id))
