@@ -43,6 +43,7 @@ object SdfDocumentPath {
     }
 
     def build = SdfDocumentPath(id = sdfDocumentId, primitive = None, schema = None)
+    def primitive(id: Uri) = new SdfDocumentPathPrimitiveBuilder(primitiveId = id)
     def schema(id: Uri) = new SdfDocumentPathSchemaBuilder(schemaId = id)
   }
 

@@ -1,6 +1,7 @@
 import * as qs from "qs";
 import {SchemaSectionId} from "models/schema/SchemaSectionId";
 import {SdfDocumentPath} from "models/sdfDocument/SdfDocumentPath";
+import {SdfDocument} from "../../../test/integration/cypress/support/models/SdfDocument";
 
 const encodeId = (kwds: {id: string; idEncoded?: boolean}) =>
   kwds.idEncoded ? kwds.id : encodeURIComponent(kwds.id);
@@ -8,8 +9,22 @@ const encodeId = (kwds: {id: string; idEncoded?: boolean}) =>
 class SubHrefs {
   constructor(readonly home: string) {}
 
+  protected sanitizeId(id: string) {
+    return id.replace(/[^a-z]/gi, "");
+  }
+
   toString() {
     return this.home;
+  }
+}
+
+export class PrimitiveHrefs extends SubHrefs {
+  slot(slot: {id: string}) {
+    return `${this.home}#${this.slotId(slot)}`;
+  }
+
+  slotId(slot: {id: string}) {
+    return `slot-${this.sanitizeId(slot.id)}`;
   }
 }
 
@@ -20,10 +35,6 @@ export class SchemaHrefs extends SubHrefs {
 
   slotId(slot: {id: string}) {
     return `slot-${this.sanitizeId(slot.id)}`;
-  }
-
-  private sanitizeId(id: string) {
-    return id.replace(/[^a-z]/gi, "");
   }
 
   section(id: SchemaSectionId) {
@@ -47,6 +58,12 @@ export class SchemaHrefs extends SubHrefs {
   }
 }
 
+class SdfDocumentPrimitivesHrefs extends SubHrefs {
+  primitive(kwds: {id: string; idEncoded?: boolean}) {
+    return new PrimitiveHrefs(this.home + encodeId(kwds));
+  }
+}
+
 class SdfDocumentSchemasHrefs extends SubHrefs {
   schema(kwds: {id: string; idEncoded?: boolean}) {
     return new SchemaHrefs(this.home + encodeId(kwds));
@@ -54,6 +71,10 @@ class SdfDocumentSchemasHrefs extends SubHrefs {
 }
 
 class SdfDocumentHrefs extends SubHrefs {
+  get primitives() {
+    return new SdfDocumentPrimitivesHrefs(this.home + "primitives/");
+  }
+
   get schemas() {
     return new SdfDocumentSchemasHrefs(this.home + "schema/");
   }
@@ -78,6 +99,37 @@ export class Hrefs {
   static readonly home = "/";
   static readonly schemas = "/schema/";
   static readonly sdfDocuments = new SdfDocumentsHrefs("/sdfdocument/");
+
+  static sdfDocumentPath(path: SdfDocumentPath) {
+    const sdfDocumentHrefs = Hrefs.sdfDocuments.sdfDocument({id: path.id});
+    if (path.primitive) {
+      const primitiveHrefs = sdfDocumentHrefs.primitives.primitive({
+        id: path.primitive.id,
+      });
+      if (path.primitive.slot) {
+        return primitiveHrefs.slot({id: path.primitive.slot.id});
+      } else {
+        return primitiveHrefs.toString();
+      }
+    } else if (path.schema) {
+      const schemaHrefs = sdfDocumentHrefs.schemas.schema({id: path.schema.id});
+      if (path.schema.slot) {
+        return schemaHrefs.slot({id: path.schema.slot.id});
+      } else if (path.schema.step) {
+        if (path.schema.step.participant) {
+          return schemaHrefs.stepParticipant({
+            id: path.schema.step.participant.id,
+          });
+        } else {
+          return schemaHrefs.step({id: path.schema.step.id});
+        }
+      } else {
+        return schemaHrefs.toString();
+      }
+    } else {
+      return sdfDocumentHrefs.toString();
+    }
+  }
 
   static search(kwds?: {query: string}) {
     return Hrefs.home + "search" + qs.stringify(kwds, {addQueryPrefix: true});

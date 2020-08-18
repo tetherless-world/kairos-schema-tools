@@ -12,9 +12,8 @@ import {
 } from "api/queries/types/SearchResultsPageQuery";
 import * as ReactDOM from "react-dom";
 import {Hrefs} from "Hrefs";
-import {SearchDocumentType} from "api/graphqlGlobalTypes";
-import {invariant} from "ts-invariant";
 import {Link} from "components/link/Link";
+import {SdfDocumentPath} from "models/sdfDocument/SdfDocumentPath";
 
 const columns: MUIDataTableColumn[] = [
   {
@@ -29,8 +28,15 @@ const columns: MUIDataTableColumn[] = [
       },
     },
   },
+  // id needed to add the data-cy attribute
   {
     name: "id",
+    options: {
+      display: "false",
+    },
+  },
+  {
+    name: "path",
     options: {
       display: "false",
     },
@@ -45,68 +51,6 @@ const columns: MUIDataTableColumn[] = [
     },
   },
   {
-    name: "path.sdfDocument",
-    options: {
-      display: "false",
-    },
-  },
-  {
-    name: "path.sdfDocumentId",
-    label: "SDF document",
-    options: {
-      customBodyRender(_, tableMeta): any {
-        // @ts-ignore
-        const rowData = (tableMeta.tableData[
-          tableMeta.rowIndex
-        ] as unknown) as any[];
-        const sdfDocumentId: string =
-          rowData[getPropertyColumnIndex("path.sdfDocumentId")];
-        const sdfDocument = rowData[getPropertyColumnIndex("path.sdfDocument")];
-        return (
-          <Link
-            dataCy="sdf-document-link"
-            to={Hrefs.sdfDocuments.sdfDocument({id: sdfDocumentId}).toString()}
-          >
-            {sdfDocument ? sdfDocument.label : sdfDocumentId}
-          </Link>
-        );
-      },
-    },
-  },
-  {
-    name: "path.schema",
-    options: {
-      display: "false",
-    },
-  },
-  {
-    name: "path.schemaId",
-    label: "Schema",
-    options: {
-      customBodyRender(_, tableMeta): any {
-        // @ts-ignore
-        const rowData = (tableMeta.tableData[
-          tableMeta.rowIndex
-        ] as unknown) as any[];
-        const schema = rowData[getPropertyColumnIndex("path.schema")];
-        const schemaId = rowData[getPropertyColumnIndex("path.schemaId")];
-        const sdfDocumentId: string =
-          rowData[getPropertyColumnIndex("path.sdfDocumentId")];
-        return (
-          <Link
-            dataCy="schema-link"
-            to={Hrefs.sdfDocuments
-              .sdfDocument({id: sdfDocumentId})
-              .schemas.schema({id: schemaId})
-              .toString()}
-          >
-            {schema ? schema.label : schemaId}
-          </Link>
-        );
-      },
-    },
-  },
-  {
     name: "label",
     label: "Link",
     options: {
@@ -114,87 +58,14 @@ const columns: MUIDataTableColumn[] = [
         const rowData = (tableMeta.tableData[
           tableMeta.rowIndex
         ] as unknown) as any[];
-        const schemaId: string =
-          rowData[getPropertyColumnIndex("path.schemaId")];
-        const sdfDocumentId: string =
-          rowData[getPropertyColumnIndex("path.sdfDocumentId")];
-        const slotId: string = rowData[getPropertyColumnIndex("path.slotId")];
-        const stepId: string = rowData[getPropertyColumnIndex("path.stepId")];
-        const type: SearchDocumentType =
-          rowData[getPropertyColumnIndex("type")];
+        const path: SdfDocumentPath = rowData[getPropertyColumnIndex("path")];
 
-        const dataCy = "label-link";
-        switch (type) {
-          case SearchDocumentType.Schema:
-            invariant(schemaId, "schema id must be defined");
-            return (
-              <Link
-                dataCy={dataCy}
-                to={Hrefs.sdfDocuments
-                  .sdfDocument({id: sdfDocumentId})
-                  .schemas.schema({id: schemaId!})
-                  .toString()}
-              >
-                Schema: {label}
-              </Link>
-            );
-          case SearchDocumentType.SdfDocument:
-            return (
-              <Link
-                dataCy={dataCy}
-                to={Hrefs.sdfDocuments
-                  .sdfDocument({id: sdfDocumentId})
-                  .toString()}
-              >
-                SDF document: {label}
-              </Link>
-            );
-          case SearchDocumentType.Slot:
-            invariant(schemaId, "schema id must be defined");
-            invariant(slotId, "slot id must be defined");
-            return (
-              <Link
-                dataCy={dataCy}
-                to={Hrefs.sdfDocuments
-                  .sdfDocument({id: sdfDocumentId})
-                  .schemas.schema({id: schemaId})
-                  .slot({id: slotId})
-                  .toString()}
-              >
-                Slot: {label}
-              </Link>
-            );
-          case SearchDocumentType.Step:
-            invariant(schemaId, "schema id must be defined");
-            invariant(stepId, "step id must be defined");
-            return (
-              <Link
-                dataCy={dataCy}
-                to={Hrefs.sdfDocuments
-                  .sdfDocument({id: sdfDocumentId})
-                  .schemas.schema({id: schemaId})
-                  .step({id: stepId})
-                  .toString()}
-              >
-                Step: {label}
-              </Link>
-            );
-          default:
-            return <span data-cy={dataCy}>{label}</span>;
-        }
+        return (
+          <Link dataCy={"label-link"} to={Hrefs.sdfDocumentPath(path)}>
+            {label}
+          </Link>
+        );
       },
-    },
-  },
-  {
-    name: "path.slotId",
-    options: {
-      display: "false",
-    },
-  },
-  {
-    name: "path.stepId",
-    options: {
-      display: "false",
     },
   },
 ];
@@ -263,7 +134,7 @@ export const SearchResultsPage: React.FunctionComponent = () => {
               columns={columns}
               options={{
                 count: searchResults.total,
-                enableNestedDataAccess: ".", // allows nested data separated by "." (see column names and the data structure above)
+                // enableNestedDataAccess: ".", // allows nested data separated by "." (see column names and the data structure above)
                 filter: false,
                 rowsPerPageOptions: [],
                 serverSide: true,
