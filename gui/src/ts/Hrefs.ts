@@ -1,7 +1,6 @@
 import * as qs from "qs";
 import {SchemaSectionId} from "models/schema/SchemaSectionId";
 import {SdfDocumentPath} from "models/sdfDocument/SdfDocumentPath";
-import {SdfDocument} from "../../../test/integration/cypress/support/models/SdfDocument";
 
 const encodeId = (kwds: {id: string; idEncoded?: boolean}) =>
   kwds.idEncoded ? kwds.id : encodeURIComponent(kwds.id);
