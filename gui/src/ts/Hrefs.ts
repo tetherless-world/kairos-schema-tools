@@ -1,6 +1,6 @@
 import * as qs from "qs";
-import {SdfDocumentSourcePath} from "models/sdfDocument/SdfDocumentSourcePath";
 import {SchemaSectionId} from "models/schema/SchemaSectionId";
+import {SdfDocumentPath} from "models/sdfDocument/SdfDocumentPath";
 
 const encodeId = (kwds: {id: string; idEncoded?: boolean}) =>
   kwds.idEncoded ? kwds.id : encodeURIComponent(kwds.id);
@@ -58,15 +58,8 @@ class SdfDocumentHrefs extends SubHrefs {
     return new SdfDocumentSchemasHrefs(this.home + "schema/");
   }
 
-  sourcePath(path: Omit<SdfDocumentSourcePath, "sdfDocumentId">) {
-    // Copy out only the properties we want
-    const pathCopy: Omit<SdfDocumentSourcePath, "sdfDocumentId"> = {
-      schemaId: path.schemaId,
-      slotId: path.slotId,
-      stepId: path.stepId,
-      stepParticipantId: path.stepParticipantId,
-    };
-    return this.home + qs.stringify(pathCopy, {addQueryPrefix: true});
+  sourcePath(path: Omit<SdfDocumentPath, "id">) {
+    return this.home + qs.stringify({path: JSON.stringify(path)});
   }
 }
 

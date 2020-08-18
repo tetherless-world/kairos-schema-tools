@@ -8,6 +8,33 @@ import { ValidationMessageType } from "./../../graphqlGlobalTypes";
 // GraphQL mutation operation: SdfDocumentSaveMutation
 // ====================================================
 
+export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_sourceJsonNodeLocation {
+  __typename: "JsonNodeLocation";
+  column: number;
+  line: number;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots {
+  __typename: "PrimitiveSlot";
+  id: string;
+  label: string;
+  sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_sourceJsonNodeLocation;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_primitives_sourceJsonNodeLocation {
+  __typename: "JsonNodeLocation";
+  column: number;
+  line: number;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_primitives {
+  __typename: "Primitive";
+  id: string;
+  label: string;
+  slots: SdfDocumentSaveMutation_putSdfDocument_primitives_slots[];
+  sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_primitives_sourceJsonNodeLocation;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
   column: number;
@@ -106,6 +133,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_
 
 export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path {
   __typename: "SdfDocumentPath";
+  id: string;
   primitive: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_schema | null;
 }
@@ -121,6 +149,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument {
   __typename: "SdfDocument";
   id: string;
   label: string;
+  primitives: SdfDocumentSaveMutation_putSdfDocument_primitives[];
   schemas: SdfDocumentSaveMutation_putSdfDocument_schemas[];
   sdfVersion: string;
   sourceJson: string;

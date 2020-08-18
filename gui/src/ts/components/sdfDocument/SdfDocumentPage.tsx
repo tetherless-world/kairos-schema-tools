@@ -13,7 +13,6 @@ import {
   SdfDocumentSourceFragment_schemas,
 } from "api/queries/types/SdfDocumentSourceFragment";
 import {useQueryParam} from "use-query-params";
-import {SdfDocumentSourcePath} from "models/sdfDocument/SdfDocumentSourcePath";
 import {ValidationMessageFragment} from "api/queries/types/ValidationMessageFragment";
 import {
   SdfDocumentSaveMutation,
@@ -41,7 +40,9 @@ import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
 import {Hrefs} from "Hrefs";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 import {GraphQlErrorsList} from "components/error/GraphQlErrorsList";
-import {getJsonNodeLocationFromSdfDocumentSourcePath} from "models/sdfDocument/getJsonNodeLocationFromSdfDocumentSourcePath";
+import {getJsonNodeLocationFromSdfDocumentPath} from "models/sdfDocument/getJsonNodeLocationFromSdfDocumentPath";
+import {SdfDocumentPath} from "models/sdfDocument/SdfDocumentPath";
+import {JsonQueryParamConfig} from "JsonQueryParamConfig";
 
 const RightPanelAccordion: React.FunctionComponent<React.PropsWithChildren<{
   title: string;
@@ -80,8 +81,8 @@ const SchemaAccordion: React.FunctionComponent<{
         <Grid item>
           <SdfDocumentSourceLink
             to={{
-              sdfDocumentId: schema.sdfDocumentId,
-              schemaId: schema.id,
+              id: schema.sdfDocumentId,
+              schema: {id: schema.id},
             }}
           />
         </Grid>
@@ -121,22 +122,10 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
     decodeURIComponent
   );
 
-  const [goToSchemaId] = useQueryParam<string>("schemaId");
-  const [goToSlotId] = useQueryParam<string>("slotId");
-  const [goToStepId] = useQueryParam<string>("stepId");
-  const [goToStepParticipantId] = useQueryParam<string>("stepParticipantId");
-  const goToPath: SdfDocumentSourcePath | undefined =
-    goToSchemaId || goToSlotId || goToStepId || goToStepParticipantId
-      ? {
-          schemaId: goToSchemaId ? goToSchemaId : undefined,
-          sdfDocumentId,
-          slotId: goToSlotId ? goToSlotId : undefined,
-          stepId: goToStepId ? goToStepId : undefined,
-          stepParticipantId: goToStepParticipantId
-            ? goToStepParticipantId
-            : undefined,
-        }
-      : undefined;
+  const [sdfDocumentPath] = useQueryParam<SdfDocumentPath>(
+    "path",
+    new JsonQueryParamConfig<SdfDocumentPath>()
+  );
   const query = useQuery<SdfDocumentPageQuery>(SdfDocumentPageQueryDocument, {
     fetchPolicy: "no-cache",
     variables: {id: sdfDocumentId},
@@ -270,10 +259,10 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                     <Grid item>
                       <SdfDocumentEditor
                         goToJsonNodeLocation={
-                          goToPath
-                            ? getJsonNodeLocationFromSdfDocumentSourcePath(
+                          sdfDocumentPath
+                            ? getJsonNodeLocationFromSdfDocumentPath(
                                 savedSdfDocument,
-                                goToPath
+                                sdfDocumentPath
                               )
                             : undefined
                         }

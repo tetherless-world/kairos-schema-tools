@@ -50,6 +50,7 @@ export interface ValidationMessageFragment_path_schema {
 
 export interface ValidationMessageFragment_path {
   __typename: "SdfDocumentPath";
+  id: string;
   primitive: ValidationMessageFragment_path_primitive | null;
   schema: ValidationMessageFragment_path_schema | null;
 }

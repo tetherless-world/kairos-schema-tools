@@ -47,7 +47,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
               </Link>
             </Grid>
             <Grid item xs={4} style={{textAlign: "right"}}>
-              <SdfDocumentSourceLink to={{sdfDocumentId: id}} />
+              <SdfDocumentSourceLink to={{id}} />
             </Grid>
           </Grid>
         }

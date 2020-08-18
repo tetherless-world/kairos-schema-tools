@@ -1,4 +1,5 @@
 fragment SdfDocumentPathFragment on SdfDocumentPath {
+    id
     primitive {
         id
         label

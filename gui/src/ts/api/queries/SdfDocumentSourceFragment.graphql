@@ -4,6 +4,20 @@
 fragment SdfDocumentSourceFragment on SdfDocument {
     id
     label
+    primitives {
+        id
+        label
+        slots {
+            id
+            label
+            sourceJsonNodeLocation {
+                ...JsonNodeLocationFragment
+            }
+        }
+        sourceJsonNodeLocation {
+            ...JsonNodeLocationFragment
+        }
+    }
     schemas {
         id
         label

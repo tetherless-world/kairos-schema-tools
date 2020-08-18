@@ -9,7 +9,7 @@ import "ace-builds/src-min-noconflict/ext-language_tools";
 import {JsonNodeLocationFragment} from "api/queries/types/JsonNodeLocationFragment";
 import {ValidationMessageFragment} from "api/queries/types/ValidationMessageFragment";
 import {SdfDocumentSourceFragment} from "api/queries/types/SdfDocumentSourceFragment";
-import {getJsonNodeLocationFromSdfDocumentSourcePath} from "models/sdfDocument/getJsonNodeLocationFromSdfDocumentSourcePath";
+import {getJsonNodeLocationFromSdfDocumentPath} from "models/sdfDocument/getJsonNodeLocationFromSdfDocumentPath";
 
 export const SdfDocumentEditor: React.FunctionComponent<{
   goToJsonNodeLocation?: JsonNodeLocationFragment;
@@ -43,7 +43,7 @@ export const SdfDocumentEditor: React.FunctionComponent<{
         aceEditor.editor.session.setAnnotations(
           validationMessages.map((validationMessage) => {
             const jsonNodeLocation = validationMessage.path
-              ? getJsonNodeLocationFromSdfDocumentSourcePath(
+              ? getJsonNodeLocationFromSdfDocumentPath(
                   savedSdfDocument,
                   validationMessage.path
                 )

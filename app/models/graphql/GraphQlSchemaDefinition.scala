@@ -59,8 +59,16 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val OverlapsStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, OverlapsStepOrder](
     Interfaces(StepOrderInterfaceType)
   )
-  implicit val PrimitiveSlotObjectType = deriveObjectType[GraphQlSchemaContext, PrimitiveSlot]()
-  implicit val PrimitiveObjectType = deriveObjectType[GraphQlSchemaContext, Primitive]()
+  implicit val PrimitiveSlotObjectType = deriveObjectType[GraphQlSchemaContext, PrimitiveSlot](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label),
+    )
+  )
+  implicit val PrimitiveObjectType = deriveObjectType[GraphQlSchemaContext, Primitive](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label),
+    )
+  )
   implicit val StepParticipantObjectType = deriveObjectType[GraphQlSchemaContext, StepParticipant](
     AddFields(
       Field("label", StringType, resolve = _.value.label),
@@ -112,43 +120,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.id).map(_.label))
     )
   )
-//  implicit lazy val SdfDocumentPathSchemaSlotObjectType: ObjectType[GraphQlSchemaContext, SdfDocumentPathSchema] = ObjectType("SdfDocumentPathSchema", () => fields[GraphQlSchemaContext, SdfDocumentPathSchema](
-//    Field("id", UriType, resolve = _.value.id),
-//    Field("resolve", OptionType(SchemaObjectType), resolve = ctx => ctx.ctx.store.getSchemaById(ctx.value.id))
-//  ))
-//  implicit lazy val SdfDocumentPathSchemaObjectType: ObjectType[GraphQlSchemaContext, SdfDocumentPathSchema] = ObjectType("SdfDocumentPathSchema", () => fields[GraphQlSchemaContext, SdfDocumentPathSchema](
-//    Field("id", UriType, resolve = _.value.id),
-//    Field("resolve", OptionType(SchemaObjectType), resolve = ctx => ctx.ctx.store.getSchemaById(ctx.value.id))
-//  ))
-//  implicit lazy val SdfDocumentPathObjectType: ObjectType[GraphQlSchemaContext, SdfDocumentPath] = ObjectType("SdfDocumentPath", () => fields[GraphQlSchemaContext, SdfDocumentPath](
-//    Field("schemaId", OptionType(UriType), resolve = _.value.schemaId),
-//    Field("schemaSlot", OptionType(SchemaSlotObjectType), resolve = ctx => {
-//      if (ctx.value.schemaSlotId.isDefined) {
-//        ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_)).flatMap(_.slots.find(_.id == ctx.value.schemaSlotId.get))
-//      } else {
-//        None
-//      }
-//    }),
-//    Field("schemaSlotId", OptionType(UriType), resolve = _.value.schemaSlotId),
-//    Field("step", OptionType(StepObjectType), resolve = ctx => {
-//      if (ctx.value.stepId.isDefined) {
-//        ctx.value.schemaId.flatMap(ctx.ctx.store.getSchemaById(_)).flatMap(_.steps.find(_.id == ctx.value.stepId.get))
-//      } else {
-//        None
-//      }
-//    }),
-//    Field("stepId", OptionType(UriType), resolve = _.value.stepId),
-//    Field("sdfDocument", OptionType(SdfDocumentObjectType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.sdfDocumentId)),
-//    Field("sdfDocumentId", UriType, resolve = _.value.sdfDocumentId),
-//    Field("stepParticipantId", OptionType(UriType), resolve = _.value.stepParticipantId)
-//  )
-//  )
-  implicit lazy val ValidationMessageObjectType: ObjectType[GraphQlSchemaContext, ValidationMessage] = ObjectType("ValidationMessage", () => fields[GraphQlSchemaContext, ValidationMessage](
-    Field("message", StringType, resolve = _.value.message),
-    Field("path", SdfDocumentPathObjectType, resolve = _.value.path),
-    Field("type", ValidationMessageTypeEnumType, resolve = _.value.`type`)
-  )
-  )
+  implicit val ValidationMessageObjectType = deriveObjectType[GraphQlSchemaContext, ValidationMessage]()
   implicit lazy val SdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocument](
     AddFields(
       Field("label", StringType, resolve = _.value.label),

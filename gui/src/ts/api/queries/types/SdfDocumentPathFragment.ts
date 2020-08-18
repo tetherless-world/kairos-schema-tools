@@ -48,6 +48,7 @@ export interface SdfDocumentPathFragment_schema {
 
 export interface SdfDocumentPathFragment {
   __typename: "SdfDocumentPath";
+  id: string;
   primitive: SdfDocumentPathFragment_primitive | null;
   schema: SdfDocumentPathFragment_schema | null;
 }

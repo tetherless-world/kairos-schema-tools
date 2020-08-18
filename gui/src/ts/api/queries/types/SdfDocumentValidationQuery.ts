@@ -50,6 +50,7 @@ export interface SdfDocumentValidationQuery_validateSdfDocument_path_schema {
 
 export interface SdfDocumentValidationQuery_validateSdfDocument_path {
   __typename: "SdfDocumentPath";
+  id: string;
   primitive: SdfDocumentValidationQuery_validateSdfDocument_path_primitive | null;
   schema: SdfDocumentValidationQuery_validateSdfDocument_path_schema | null;
 }

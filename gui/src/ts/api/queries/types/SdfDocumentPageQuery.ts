@@ -8,6 +8,33 @@ import { ValidationMessageType } from "./../../graphqlGlobalTypes";
 // GraphQL query operation: SdfDocumentPageQuery
 // ====================================================
 
+export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_sourceJsonNodeLocation {
+  __typename: "JsonNodeLocation";
+  column: number;
+  line: number;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots {
+  __typename: "PrimitiveSlot";
+  id: string;
+  label: string;
+  sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_sourceJsonNodeLocation;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_primitives_sourceJsonNodeLocation {
+  __typename: "JsonNodeLocation";
+  column: number;
+  line: number;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_primitives {
+  __typename: "Primitive";
+  id: string;
+  label: string;
+  slots: SdfDocumentPageQuery_sdfDocumentById_primitives_slots[];
+  sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_primitives_sourceJsonNodeLocation;
+}
+
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
   column: number;
@@ -106,6 +133,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sc
 
 export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path {
   __typename: "SdfDocumentPath";
+  id: string;
   primitive: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_schema | null;
 }
@@ -121,6 +149,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById {
   __typename: "SdfDocument";
   id: string;
   label: string;
+  primitives: SdfDocumentPageQuery_sdfDocumentById_primitives[];
   schemas: SdfDocumentPageQuery_sdfDocumentById_schemas[];
   sdfVersion: string;
   sourceJson: string;

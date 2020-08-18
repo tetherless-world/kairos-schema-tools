@@ -50,6 +50,7 @@ export interface SearchResultsPageQuery_search_documents_path_schema {
 
 export interface SearchResultsPageQuery_search_documents_path {
   __typename: "SdfDocumentPath";
+  id: string;
   primitive: SearchResultsPageQuery_search_documents_path_primitive | null;
   schema: SearchResultsPageQuery_search_documents_path_schema | null;
 }
