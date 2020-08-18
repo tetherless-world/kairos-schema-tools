@@ -246,6 +246,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     val path = SdfDocumentPath.builder(id).build
     SdfDocument(
       id = id,
+      primitives = List(),
       schemas = mapResourcesToObjectJsonNodes(
         jsonNodes = sourceJsonNode.asInstanceOf[ObjectJsonNode].map.get("schemas").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
