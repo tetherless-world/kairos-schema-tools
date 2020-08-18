@@ -70,7 +70,6 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
             requires
             type
         }
-        super
         ta2
         template
         version
