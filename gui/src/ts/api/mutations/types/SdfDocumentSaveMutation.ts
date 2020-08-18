@@ -15,7 +15,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_sourceJson
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots {
-  __typename: "Slot";
+  __typename: "SchemaSlot";
   id: string;
   label: string;
   sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_sourceJsonNodeLocation;
@@ -64,13 +64,50 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas {
   steps: SdfDocumentSaveMutation_putSdfDocument_schemas_steps[];
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_primitive_slot {
+  __typename: "SdfDocumentPathPrimitiveSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_primitive {
+  __typename: "SdfDocumentPathPrimitive";
+  id: string;
+  label: string | null;
+  slot: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_primitive_slot | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_schema_slot {
+  __typename: "SdfDocumentPathSchemaSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_schema_step_participant {
+  __typename: "SdfDocumentPathStepParticipant";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_schema_step {
+  __typename: "SdfDocumentPathStep";
+  id: string;
+  label: string | null;
+  participant: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_schema_step_participant | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_schema {
+  __typename: "SdfDocumentPathSchema";
+  id: string;
+  label: string | null;
+  slot: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_schema_slot | null;
+  step: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_schema_step | null;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path {
-  __typename: "SchemaPath";
-  schemaId: string | null;
-  sdfDocumentId: string;
-  slotId: string | null;
-  stepId: string | null;
-  stepParticipantId: string | null;
+  __typename: "SdfDocumentPath";
+  primitive: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_primitive | null;
+  schema: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_schema | null;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages {

@@ -48,7 +48,7 @@ export interface SchemaPageQuery_schemaById_order_OverlapsStepOrder {
 export type SchemaPageQuery_schemaById_order = SchemaPageQuery_schemaById_order_BeforeAfterStepOrder | SchemaPageQuery_schemaById_order_ContainerContainedStepOrder | SchemaPageQuery_schemaById_order_OverlapsStepOrder;
 
 export interface SchemaPageQuery_schemaById_slots {
-  __typename: "Slot";
+  __typename: "SchemaSlot";
   aka: string[] | null;
   comments: string[] | null;
   entityTypes: EntityType[] | null;
@@ -112,7 +112,6 @@ export interface SchemaPageQuery_schemaById {
   sdfDocumentId: string;
   slots: SchemaPageQuery_schemaById_slots[];
   steps: SchemaPageQuery_schemaById_steps[];
-  super: string | null;
   ta2: boolean;
   template: string | null;
   version: string;

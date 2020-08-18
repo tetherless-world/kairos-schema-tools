@@ -8,25 +8,50 @@ import { SearchDocumentType } from "./../../graphqlGlobalTypes";
 // GraphQL query operation: SearchResultsPageQuery
 // ====================================================
 
-export interface SearchResultsPageQuery_search_documents_path_schema {
-  __typename: "Schema";
-  label: string;
+export interface SearchResultsPageQuery_search_documents_path_primitive_slot {
+  __typename: "SdfDocumentPathPrimitiveSlot";
+  id: string;
+  label: string | null;
 }
 
-export interface SearchResultsPageQuery_search_documents_path_sdfDocument {
-  __typename: "SdfDocument";
-  label: string;
+export interface SearchResultsPageQuery_search_documents_path_primitive {
+  __typename: "SdfDocumentPathPrimitive";
+  id: string;
+  label: string | null;
+  slot: SearchResultsPageQuery_search_documents_path_primitive_slot | null;
+}
+
+export interface SearchResultsPageQuery_search_documents_path_schema_slot {
+  __typename: "SdfDocumentPathSchemaSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SearchResultsPageQuery_search_documents_path_schema_step_participant {
+  __typename: "SdfDocumentPathStepParticipant";
+  id: string;
+  label: string | null;
+}
+
+export interface SearchResultsPageQuery_search_documents_path_schema_step {
+  __typename: "SdfDocumentPathStep";
+  id: string;
+  label: string | null;
+  participant: SearchResultsPageQuery_search_documents_path_schema_step_participant | null;
+}
+
+export interface SearchResultsPageQuery_search_documents_path_schema {
+  __typename: "SdfDocumentPathSchema";
+  id: string;
+  label: string | null;
+  slot: SearchResultsPageQuery_search_documents_path_schema_slot | null;
+  step: SearchResultsPageQuery_search_documents_path_schema_step | null;
 }
 
 export interface SearchResultsPageQuery_search_documents_path {
-  __typename: "SchemaPath";
+  __typename: "SdfDocumentPath";
+  primitive: SearchResultsPageQuery_search_documents_path_primitive | null;
   schema: SearchResultsPageQuery_search_documents_path_schema | null;
-  schemaId: string | null;
-  sdfDocument: SearchResultsPageQuery_search_documents_path_sdfDocument | null;
-  sdfDocumentId: string;
-  slotId: string | null;
-  stepId: string | null;
-  stepParticipantId: string | null;
 }
 
 export interface SearchResultsPageQuery_search_documents {

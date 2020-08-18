@@ -15,7 +15,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_sourceJsonNo
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots {
-  __typename: "Slot";
+  __typename: "SchemaSlot";
   id: string;
   label: string;
   sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_sourceJsonNodeLocation;
@@ -64,13 +64,50 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas {
   steps: SdfDocumentPageQuery_sdfDocumentById_schemas_steps[];
 }
 
+export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_primitive_slot {
+  __typename: "SdfDocumentPathPrimitiveSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_primitive {
+  __typename: "SdfDocumentPathPrimitive";
+  id: string;
+  label: string | null;
+  slot: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_primitive_slot | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_schema_slot {
+  __typename: "SdfDocumentPathSchemaSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_schema_step_participant {
+  __typename: "SdfDocumentPathStepParticipant";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_schema_step {
+  __typename: "SdfDocumentPathStep";
+  id: string;
+  label: string | null;
+  participant: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_schema_step_participant | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_schema {
+  __typename: "SdfDocumentPathSchema";
+  id: string;
+  label: string | null;
+  slot: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_schema_slot | null;
+  step: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_schema_step | null;
+}
+
 export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path {
-  __typename: "SchemaPath";
-  schemaId: string | null;
-  sdfDocumentId: string;
-  slotId: string | null;
-  stepId: string | null;
-  stepParticipantId: string | null;
+  __typename: "SdfDocumentPath";
+  primitive: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_primitive | null;
+  schema: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_schema | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages {

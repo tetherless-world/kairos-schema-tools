@@ -1,0 +1,26 @@
+fragment SdfDocumentPathFragment on SdfDocumentPath {
+    primitive {
+        id
+        label
+        slot {
+            id
+            label
+        }
+    }
+    schema {
+        id
+        label
+        slot {
+            id
+            label
+        }
+        step {
+            id
+            label
+            participant {
+                id
+                label
+            }
+        }
+    }
+}
