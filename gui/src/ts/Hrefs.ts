@@ -59,7 +59,10 @@ class SdfDocumentHrefs extends SubHrefs {
   }
 
   sourcePath(path: Omit<SdfDocumentPath, "id">) {
-    return this.home + qs.stringify({path: JSON.stringify(path)});
+    return (
+      this.home +
+      qs.stringify({path: JSON.stringify(path)}, {addQueryPrefix: true})
+    );
   }
 }
 
