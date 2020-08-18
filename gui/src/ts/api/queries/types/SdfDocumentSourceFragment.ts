@@ -8,6 +8,33 @@ import { ValidationMessageType } from "./../../graphqlGlobalTypes";
 // GraphQL fragment: SdfDocumentSourceFragment
 // ====================================================
 
+export interface SdfDocumentSourceFragment_primitives_slots_sourceJsonNodeLocation {
+  __typename: "JsonNodeLocation";
+  column: number;
+  line: number;
+}
+
+export interface SdfDocumentSourceFragment_primitives_slots {
+  __typename: "PrimitiveSlot";
+  id: string;
+  label: string;
+  sourceJsonNodeLocation: SdfDocumentSourceFragment_primitives_slots_sourceJsonNodeLocation;
+}
+
+export interface SdfDocumentSourceFragment_primitives_sourceJsonNodeLocation {
+  __typename: "JsonNodeLocation";
+  column: number;
+  line: number;
+}
+
+export interface SdfDocumentSourceFragment_primitives {
+  __typename: "Primitive";
+  id: string;
+  label: string;
+  slots: SdfDocumentSourceFragment_primitives_slots[];
+  sourceJsonNodeLocation: SdfDocumentSourceFragment_primitives_sourceJsonNodeLocation;
+}
+
 export interface SdfDocumentSourceFragment_schemas_slots_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
   column: number;
@@ -15,7 +42,7 @@ export interface SdfDocumentSourceFragment_schemas_slots_sourceJsonNodeLocation 
 }
 
 export interface SdfDocumentSourceFragment_schemas_slots {
-  __typename: "Slot";
+  __typename: "SchemaSlot";
   id: string;
   label: string;
   sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_slots_sourceJsonNodeLocation;
@@ -64,13 +91,51 @@ export interface SdfDocumentSourceFragment_schemas {
   steps: SdfDocumentSourceFragment_schemas_steps[];
 }
 
+export interface SdfDocumentSourceFragment_validationMessages_path_primitive_slot {
+  __typename: "SdfDocumentPathPrimitiveSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSourceFragment_validationMessages_path_primitive {
+  __typename: "SdfDocumentPathPrimitive";
+  id: string;
+  label: string | null;
+  slot: SdfDocumentSourceFragment_validationMessages_path_primitive_slot | null;
+}
+
+export interface SdfDocumentSourceFragment_validationMessages_path_schema_slot {
+  __typename: "SdfDocumentPathSchemaSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSourceFragment_validationMessages_path_schema_step_participant {
+  __typename: "SdfDocumentPathStepParticipant";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSourceFragment_validationMessages_path_schema_step {
+  __typename: "SdfDocumentPathStep";
+  id: string;
+  label: string | null;
+  participant: SdfDocumentSourceFragment_validationMessages_path_schema_step_participant | null;
+}
+
+export interface SdfDocumentSourceFragment_validationMessages_path_schema {
+  __typename: "SdfDocumentPathSchema";
+  id: string;
+  label: string | null;
+  slot: SdfDocumentSourceFragment_validationMessages_path_schema_slot | null;
+  step: SdfDocumentSourceFragment_validationMessages_path_schema_step | null;
+}
+
 export interface SdfDocumentSourceFragment_validationMessages_path {
-  __typename: "SchemaPath";
-  schemaId: string | null;
-  sdfDocumentId: string;
-  slotId: string | null;
-  stepId: string | null;
-  stepParticipantId: string | null;
+  __typename: "SdfDocumentPath";
+  id: string;
+  primitive: SdfDocumentSourceFragment_validationMessages_path_primitive | null;
+  schema: SdfDocumentSourceFragment_validationMessages_path_schema | null;
 }
 
 export interface SdfDocumentSourceFragment_validationMessages {
@@ -84,6 +149,7 @@ export interface SdfDocumentSourceFragment {
   __typename: "SdfDocument";
   id: string;
   label: string;
+  primitives: SdfDocumentSourceFragment_primitives[];
   schemas: SdfDocumentSourceFragment_schemas[];
   sdfVersion: string;
   sourceJson: string;

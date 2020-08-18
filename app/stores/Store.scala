@@ -2,18 +2,26 @@ package stores
 
 import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.SdfDocument
-import models.schema.Schema
+import models.schema.{Primitive, PrimitiveSlot, Schema, SchemaSlot, Step, StepParticipant}
 import models.search.{SearchDocument, SearchResults}
 
 trait Store {
   def deleteSdfDocumentById(id: Uri): Unit
   def deleteSdfDocuments(): Unit
 
+  def getPrimitiveById(id: Uri): Option[Primitive]
+  def getPrimitives: List[Primitive]
+  def getPrimitiveSlotById(id: Uri): Option[PrimitiveSlot]
+
   def getSchemaById(id: Uri): Option[Schema]
   def getSchemas: List[Schema]
+  def getSchemaSlotById(id: Uri): Option[SchemaSlot]
 
   def getSdfDocumentById(id: Uri): Option[SdfDocument]
   def getSdfDocuments: List[SdfDocument]
+
+  def getStepById(id: Uri): Option[Step]
+  def getStepParticipantById(id: Uri): Option[StepParticipant]
 
   def putSdfDocument(sdfDocument: SdfDocument)
 

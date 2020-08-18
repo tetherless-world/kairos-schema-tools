@@ -4,7 +4,7 @@ import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.SdfDocument
 import javax.inject.{Inject, Singleton}
 import models.json.JsonNodeLocation
-import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Schema, SchemaPath, Slot, Step, StepOrder, StepOrderFlag, StepParticipant}
+import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Primitive, PrimitiveSlot, Schema, SchemaSlot, SdfDocumentPath, SdfDocumentPathPrimitive, SdfDocumentPathPrimitiveSlot, SdfDocumentPathSchema, SdfDocumentPathSchemaSlot, SdfDocumentPathStep, SdfDocumentPathStepParticipant, Step, StepOrder, StepOrderFlag, StepParticipant}
 import models.validation.{ValidationMessage, ValidationMessageType}
 import play.api.http.MimeTypes
 import play.api.libs.json
@@ -24,7 +24,9 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val entityRelationRelationJsonWrites = Json.writes[EntityRelationRelation]
   private implicit val entityRelationJsonWrites = Json.writes[EntityRelation]
   private implicit val entityTypeJsonWrites: json.Writes[EntityType] = (entityType) => JsString(entityType.value)
-  private implicit val slotJsonWrites = Json.writes[Slot]
+  private implicit val primitiveSlotJsonWrites: json.Writes[PrimitiveSlot] = Json.writes[PrimitiveSlot]
+  private implicit val primitiveJsonWrites: json.Writes[Primitive] = Json.writes[Primitive]
+  private implicit val schemaSlotJsonWrites = Json.writes[SchemaSlot]
   private implicit val stepParticipantJsonWrites = Json.writes[StepParticipant]
   private implicit val stepJsonWrites = Json.writes[Step]
   private implicit val stepOrderFlagJsonWrites: json.Writes[StepOrderFlag] = (flag) => JsString(flag.value)
@@ -33,7 +35,13 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val overlapsStepOrderJsonWrites = Json.writes[OverlapsStepOrder]
   private implicit val stepOrderJsonWrites = Json.writes[StepOrder] // json.Writes[StepOrder]
   private implicit val schemaJsonWrites = Json.writes[Schema]
-  private implicit val schemaPathJsonWrites = Json.writes[SchemaPath]
+  private implicit val sdfDocumentPathPrimitiveSlotJsonWrites = Json.writes[SdfDocumentPathPrimitiveSlot]
+  private implicit val sdfDocumentPathPrimitiveJsonWrites = Json.writes[SdfDocumentPathPrimitive]
+  private implicit val sdfDocumentPathSchemaSlotJsonWrites = Json.writes[SdfDocumentPathSchemaSlot]
+  private implicit val sdfDocumentPathStepParticipantJsonWrites = Json.writes[SdfDocumentPathStepParticipant]
+  private implicit val sdfDocumentPathStepJsonWrites = Json.writes[SdfDocumentPathStep]
+  private implicit val sdfDocumentPathSchemaJsonWrites = Json.writes[SdfDocumentPathSchema]
+  private implicit val sdfDocumentPathJsonWrites = Json.writes[SdfDocumentPath]
   private implicit val validationMessageTypeJsonWrites: json.Writes[ValidationMessageType] = (`type`) => JsString(`type`.value)
   private implicit val validationMessageJsonWrites = Json.writes[ValidationMessage]
   private implicit val sdfDocumentJsonWrites = Json.writes[SdfDocument]

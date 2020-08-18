@@ -3,15 +3,11 @@ package models.schema
 import edu.rpi.tw.twks.uri.Uri
 import models.json.JsonNodeLocation
 
-final case class Slot(
-                       aka: Option[List[String]],
-                       comments: Option[List[String]],
-                       entityTypes: Option[List[EntityType]],
-                       id: Uri,
-                       references: Option[List[String]],
-                       refvar: Option[String],
-                       roleName: String,
-                       sourceJsonNodeLocation: JsonNodeLocation,
-                     ) {
-  def label = s"${roleName}${entityTypes.map(entityTypes => s" (${entityTypes.map(_.label).mkString(", ")})").getOrElse("")}"
+trait Slot {
+  val aka: Option[List[String]]
+  val comments: Option[List[String]]
+  val entityTypes: Option[List[EntityType]]
+  val id: Uri
+  val references: Option[List[String]]
+  val sourceJsonNodeLocation: JsonNodeLocation
 }

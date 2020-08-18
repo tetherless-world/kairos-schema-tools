@@ -24,7 +24,7 @@ export const SchemasTable: React.FunctionComponent<{
             </TableCell>
             <TableCell data-cy="schema-source">
               <SdfDocumentSourceLink
-                to={{schemaId: schema.id, sdfDocumentId: schema.sdfDocumentId}}
+                to={{id: schema.sdfDocumentId, schema: {id: schema.id}}}
               />
             </TableCell>
           </TableRow>

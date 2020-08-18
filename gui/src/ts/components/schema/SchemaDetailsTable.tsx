@@ -1,10 +1,8 @@
 import * as React from "react";
 import {Table, TableBody, TableCell, TableRow} from "@material-ui/core";
 import {StringFieldTableRow} from "components/table/StringFieldTableRow";
-import {Hrefs} from "Hrefs";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {SchemaPageSchema} from "components/schema/SchemaPageSchema";
-import {Link} from "components/link/Link";
 
 export const SchemaDetailsTable: React.FunctionComponent<{
   schema: SchemaPageSchema;
@@ -21,21 +19,21 @@ export const SchemaDetailsTable: React.FunctionComponent<{
         value={schema.id}
         valueDataCy="schema-id"
       />
-      {schema.super ? (
-        <TableRow>
-          <TableCell>Super</TableCell>
-          <TableCell data-cy="schema-super">
-            <Link
-              to={Hrefs.sdfDocuments
-                .sdfDocument({id: schema.sdfDocumentId})
-                .schemas.schema({id: schema.super})
-                .toString()}
-            >
-              {schema.super}
-            </Link>
-          </TableCell>
-        </TableRow>
-      ) : null}
+      {/*{schema.super ? (*/}
+      {/*  <TableRow>*/}
+      {/*    <TableCell>Super</TableCell>*/}
+      {/*    <TableCell data-cy="schema-super">*/}
+      {/*      <Link*/}
+      {/*        to={Hrefs.sdfDocuments*/}
+      {/*          .sdfDocument({id: schema.sdfDocumentId})*/}
+      {/*          .schemas.schema({id: schema.super})*/}
+      {/*          .toString()}*/}
+      {/*      >*/}
+      {/*        {schema.super}*/}
+      {/*      </Link>*/}
+      {/*    </TableCell>*/}
+      {/*  </TableRow>*/}
+      {/*) : null}*/}
       <TableRow>
         <TableCell>Performers</TableCell>
         <TableCell>{schema.ta2 ? "TA2" : "TA1"}</TableCell>

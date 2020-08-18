@@ -20,7 +20,7 @@ context("Search results page", () => {
   it("should show the document in the results", () => {
     const row = page.table.row(sdfDocument.id);
     row.type.should("have.text", "SdfDocument");
-    row.labelLink.should("have.text", `SDF document: ${sdfDocument.name}`);
+    row.labelLink.should("have.text", `${sdfDocument.name}`);
     row.labelLink.click();
     new SdfDocumentPage(sdfDocument.id).assertLoaded();
   });
@@ -29,7 +29,7 @@ context("Search results page", () => {
     const schema = sdfDocument.schemas[0];
     const row = page.table.row(schema.id);
     row.type.should("have.text", "Schema");
-    row.labelLink.should("have.text", `Schema: ${schema.name}`);
+    row.labelLink.should("have.text", `${schema.name}`);
     row.labelLink.click();
     new SchemaPage({
       schemaId: schema.id,

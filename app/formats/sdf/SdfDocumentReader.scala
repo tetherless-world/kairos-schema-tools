@@ -7,7 +7,7 @@ import formats.json.JsonParser
 import formats.sdf.versions.ZeroDot8SdfDocumentReader
 import formats.sdf.vocabulary.KAIROS
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
-import models.schema.SchemaPath
+import models.schema.SdfDocumentPath
 import models.validation.{ValidationException, ValidationMessage, ValidationMessageType}
 import org.apache.jena.rdf.model.{Model, ModelFactory, Resource}
 import org.apache.jena.riot.{Lang, RiotException}
@@ -34,13 +34,14 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
       case e: RiotException => {
         return SdfDocument(
           id = sourceUri,
+          primitives = List(),
           schemas = List(),
           sdfVersion = "",
           sourceJson = sourceJson,
           validationMessages = List(
             ValidationMessage(
               message = e.getMessage,
-              path = SchemaPath(sdfDocumentId = sourceUri),
+              path = SdfDocumentPath.builder(sourceUri).build,
               `type` = ValidationMessageType.Fatal
             )
           )
@@ -57,7 +58,8 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
     } catch {
       case e: ValidationException => {
         return SdfDocument(
-            id = e.messages.map(_.path.sdfDocumentId).headOption.getOrElse(sourceUri),
+            id = e.messages.map(_.path.id).headOption.getOrElse(sourceUri),
+            primitives = List(),
             schemas = List(),
             sdfVersion = "",
             sourceJson = sourceJson,
@@ -74,7 +76,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
         case sdfVersion =>
           throw ValidationException(
             message = s"unrecognized SDF version ${sdfVersion}",
-            path = SchemaPath(sdfDocumentId = header.id),
+            path = SdfDocumentPath.builder(header.id).build,
             `type` = ValidationMessageType.Fatal
           )
       }
@@ -82,6 +84,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
       case e: ValidationException =>
         SdfDocument(
           id = header.id,
+          primitives = List(),
           schemas = List(),
           sdfVersion = header.sdfVersion,
           sourceJson = sourceJson,

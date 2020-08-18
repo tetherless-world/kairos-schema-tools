@@ -8,11 +8,11 @@ final case class StepParticipant(
                        comments: Option[List[String]],
                        entityTypes: Option[List[EntityType]],
                        id: Uri,
-                       name: String, // name is required for step-level slots (participants), unlike top-level slots
+                       name: String, // name is required for step-level slots (participants), unlike schema-level slots
                        references: Option[List[String]],
                        refvar: Option[String],
                        role: Uri,
                        sourceJsonNodeLocation: JsonNodeLocation,
-                     ) {
+                     ) extends Slot {
   def label = name
 }

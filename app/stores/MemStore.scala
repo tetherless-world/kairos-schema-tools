@@ -7,7 +7,7 @@ import models.search.{SearchDocument, SearchResults}
 
 import scala.collection.mutable
 
-class MemStore extends Store {
+class MemStore extends AbstractStore {
   private val sdfDocumentsById = new mutable.HashMap[Uri, SdfDocument]
   private val searchEngine = new SearchEngine
 
@@ -25,12 +25,6 @@ class MemStore extends Store {
     sdfDocumentsById.clear()
     searchEngine.deleteAll()
   }
-
-  final override def getSchemaById(id: Uri): Option[Schema] =
-    getSchemas.find(_.id == id)
-
-  final override def getSchemas: List[Schema] =
-    sdfDocumentsById.values.flatMap(_.schemas).toList
 
   final override def getSdfDocumentById(id: Uri): Option[SdfDocument] =
     sdfDocumentsById.get(id)

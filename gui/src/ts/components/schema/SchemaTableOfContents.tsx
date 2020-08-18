@@ -64,9 +64,8 @@ export const SchemaTableOfContents: React.FunctionComponent<{
                 <Grid item>
                   <SdfDocumentSourceLink
                     to={{
-                      schemaId: schema.id,
-                      sdfDocumentId: schema.sdfDocumentId,
-                      slotId: slot.id,
+                      id: schema.sdfDocumentId,
+                      schema: {id: schema.id, slot: {id: slot.id}},
                     }}
                   />
                 </Grid>
@@ -103,10 +102,11 @@ export const SchemaTableOfContents: React.FunctionComponent<{
                 <Grid item>
                   <SdfDocumentSourceLink
                     to={{
-                      schemaId: schema.id,
-                      sdfDocumentId: schema.sdfDocumentId,
-                      stepId: stepId,
-                      stepParticipantId: participant.id,
+                      id: schema.sdfDocumentId,
+                      schema: {
+                        id: schema.id,
+                        step: {id: stepId, participant: {id: participant.id}},
+                      },
                     }}
                   />
                 </Grid>
@@ -137,9 +137,8 @@ export const SchemaTableOfContents: React.FunctionComponent<{
                     <Grid item>
                       <SdfDocumentSourceLink
                         to={{
-                          schemaId: schema.id,
-                          sdfDocumentId: schema.sdfDocumentId,
-                          stepId: step.id,
+                          id: schema.sdfDocumentId,
+                          schema: {id: schema.id, step: {id: step.id}},
                         }}
                       />
                     </Grid>
