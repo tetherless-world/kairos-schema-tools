@@ -13,5 +13,6 @@ final case class SchemaSlot(
                           roleName: String,
                           sourceJsonNodeLocation: JsonNodeLocation,
                         ) extends Slot {
-  def label = s"${roleName}${entityTypes.map(entityTypes => s" (${entityTypes.map(_.label).mkString(", ")})").getOrElse("")}"
+//  def label = s"${roleName}${entityTypes.map(entityTypes => s" (${entityTypes.map(_.label).mkString(", ")})").getOrElse("")}"
+  def label = roleName
 }
