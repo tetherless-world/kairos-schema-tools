@@ -16,7 +16,7 @@ final case class StepParticipant(
                      ) extends Slot {
   def label = {
     val roleParts = role.toString.split('/')
-    if (!roleParts(roleParts.length - 1).isBlank) {
+    if (!roleParts(roleParts.length - 1).isEmpty) {
       s"${name} (${roleParts(roleParts.length - 1)})"
     } else {
       name
