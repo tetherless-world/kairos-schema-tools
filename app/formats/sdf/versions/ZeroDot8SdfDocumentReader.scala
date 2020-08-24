@@ -3,11 +3,12 @@ package formats.sdf.versions
 import java.io.StringWriter
 
 import edu.rpi.tw.twks.uri.Uri
+import formats.sdf.vocabulary.{KairosProperties, SchemaOrgProperties}
 import formats.sdf.{SdfDocument, SdfDocumentHeader}
-import formats.sdf.vocabulary.{KAIROS, KairosProperties, SCHEMA_ORG, SchemaOrgProperties}
-import io.github.tetherlessworld.scena.{Rdf, RdfProperties, RdfReader}
+import io.github.tetherlessworld.scena.RdfProperties
 import models.json.{ArrayJsonNode, JsonNode, ObjectJsonNode, StringValueJsonNode}
-import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Schema, SdfDocumentPath, SchemaSlot, Step, StepOrder, StepOrderFlag, StepParticipant}
+import models.schema._
+import models.search.SearchDocumentType.Primitive
 import models.validation.{ValidationException, ValidationMessage, ValidationMessageType}
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.riot.Lang
@@ -92,6 +93,27 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       relationPredicate = resource.relationPredicate.headOption.getOrElse(throw ValidationException(s"entity relation missing relation predicate: ${resource.toTtlString()}", parentPath))
     )
 
+  private def readPrimitive(jsonNode: ObjectJsonNode, parentPath: SdfDocumentPath, resource: Resource) = {
+    val id = Uri.parse(resource.getURI)
+    val path = SdfDocumentPath.builder(parentPath.id).primitive(id).build
+    models.schema.Primitive(
+      aka = Option(resource.aka).filter(_.nonEmpty),
+      comments = Option(resource.comment).filter(_.nonEmpty),
+      description = resource.description.headOption.getOrElse(s"primitive ${id} missing required description property"),
+      id = id,
+      maxDuration = resource.maxDuration.map(Duration(_)).headOption,
+      minDuration = resource.minDuration.map(Duration(_)).headOption,
+      name = resource.name.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required name property", path)),
+      path = path,
+      references = Option(resource.reference).filter(_.nonEmpty),
+      slots = List(),
+      sourceJsonNodeLocation = jsonNode.location,
+      `super` = resource.`super`.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required super property", path)),
+      template = resource.template.headOption,
+      version = resource.version.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing requirde version property", path))
+    )
+  }
+
   private def readSchema(jsonNode: ObjectJsonNode, parentPath: SdfDocumentPath, resource: Resource) = {
     val id = Uri.parse(resource.getURI)
     val path = SdfDocumentPath.builder(parentPath.id).schema(id).build
@@ -121,9 +143,8 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
           }
         }
       ),
+      path = path,
       references = Option(resource.reference).filter(_.nonEmpty),
-      sdfDocumentId = header.id,
-      sourceJsonNodeLocation = jsonNode.location,
       slots = mapResourcesToObjectJsonNodes(
         jsonNodes = jsonNode.map.get("slots").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
@@ -138,6 +159,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
           }
         }
       ),
+      sourceJsonNodeLocation = jsonNode.location,
       steps = mapResourcesToObjectJsonNodes(
         jsonNodes = jsonNode.map.get("steps").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
@@ -166,6 +188,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       comments = Option(resource.comment).filter(_.nonEmpty),
       entityTypes = Option(resource.entityTypes).filter(_.nonEmpty),
       id = id,
+      path = path,
       references = Option(resource.reference).filter(_.nonEmpty),
       refvar = resource.refvar.headOption,
       roleName = resource.roleName.headOption.getOrElse(throw ValidationException(s"slot ${id} missing required roleName property", path)),
@@ -200,9 +223,9 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       achieves = Option(resource.achieves).filter(_.nonEmpty),
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
+      id = id,
       maxDuration = resource.maxDuration.map(Duration(_)).headOption,
       minDuration = resource.minDuration.map(Duration(_)).headOption,
-      id = id,
       name = resource.name.headOption.getOrElse(throw ValidationException(s"step ${id} missing required name property", path)),
       participants = Option(mapResourcesToObjectJsonNodes(
         jsonNodes = jsonNode.map.get("participants").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
@@ -217,6 +240,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
             None
           }
         })).filter(_.nonEmpty),
+      path = path,
       provenances = Option(resource.provenance).filter(_.nonEmpty),
       references = Option(resource.reference).filter(_.nonEmpty),
       requires = Option(resource.requires).filter(_.nonEmpty),
@@ -234,6 +258,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       entityTypes = Option(resource.entityTypes).filter(_.nonEmpty),
       id = id,
       name = resource.name.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required name property", path)),
+      path = path,
       references = Option(resource.reference).filter(_.nonEmpty),
       refvar = resource.refvar.headOption,
       role = resource.role.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required role property", path)),
