@@ -20,11 +20,11 @@ const useStyles = makeStyles((theme) =>
       zIndex: 0, // Override z-index so search autcomplete will be on top navbar
     },
     brand: {
-      marginRight: theme.spacing(2),
       color: theme.palette.primary.contrastText,
     },
     navButton: {
       color: theme.palette.primary.contrastText,
+      marginLeft: theme.spacing(4),
     },
     searchFormSpacer: {
       marginLeft: theme.spacing(4),

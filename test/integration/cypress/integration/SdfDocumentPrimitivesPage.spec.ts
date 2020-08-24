@@ -1,17 +1,17 @@
 import {TestData} from "../support/TestData";
 import {SdfDocumentsPage} from "../support/pages/SdfDocumentsPage";
-import {SchemasPage} from "../support/pages/SchemasPage";
+import {SdfDocumentPrimitivesPage} from "../support/pages/SdfDocumentPrimitivesPage";
 import {SdfDocumentPage} from "../support/pages/SdfDocumentPage";
 import {SdfDocument} from "../support/models/SdfDocument";
 
-context("Schemas page", () => {
+context("SDF document primitives page", () => {
   let sdfDocument: SdfDocument;
-  let page: SchemasPage;
+  let page: SdfDocumentPrimitivesPage;
 
   before(() => {
     TestData.sdfDocument.then((sdfDocument_) => {
       sdfDocument = sdfDocument_;
-      page = new SchemasPage({sdfDocumentId: sdfDocument.id});
+      page = new SdfDocumentPrimitivesPage({sdfDocumentId: sdfDocument.id});
     });
   });
 
@@ -33,10 +33,14 @@ context("Schemas page", () => {
     new SdfDocumentPage(sdfDocument.id).assertLoaded();
   });
 
-  it("should list the document's schemas", () => {
-    for (const schema of sdfDocument.schemas) {
-      page.schemasTable.schema(schema.id).id.should("have.text", schema.id);
-      page.schemasTable.schema(schema.id).name.should("have.text", schema.name);
+  it("should list the document's primitives", () => {
+    for (const primitive of sdfDocument.primitives) {
+      page.primitivesTable
+        .primitive(primitive.id)
+        .id.should("have.text", primitive.id);
+      page.primitivesTable
+        .primitive(primitive.id)
+        .name.should("have.text", primitive.name);
     }
   });
 });

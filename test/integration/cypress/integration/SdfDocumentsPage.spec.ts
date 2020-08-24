@@ -2,7 +2,7 @@ import {TestData} from "../support/TestData";
 import {SdfDocumentsPage} from "../support/pages/SdfDocumentsPage";
 import {SdfDocumentPage} from "../support/pages/SdfDocumentPage";
 import {SchemaPage} from "../support/pages/SchemaPage";
-import {SchemasPage} from "../support/pages/SchemasPage";
+import {SdfDocumentSchemasPage} from "../support/pages/SdfDocumentSchemasPage";
 import {SdfDocument} from "../support/models/SdfDocument";
 
 context("SDF documents page", () => {
@@ -59,7 +59,9 @@ context("SDF documents page", () => {
   it("should link to another page with all of each document's schemas", () => {
     for (const sdfDocument of sdfDocuments) {
       page.sdfDocument(sdfDocument.id).schemasHeader.click();
-      new SchemasPage({sdfDocumentId: sdfDocument.id}).assertLoaded();
+      new SdfDocumentSchemasPage({
+        sdfDocumentId: sdfDocument.id,
+      }).assertLoaded();
       page.visit();
     }
   });

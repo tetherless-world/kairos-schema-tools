@@ -1,22 +1,11 @@
 #import "./DefinitionPathFragment.graphql"
 
-query SchemasPageQuery($sdfDocumentId: String!, $withSdfDocument: Boolean!) {
-    schemas @skip(if: $withSdfDocument) {
+query SchemasPageQuery {
+    schemas {
         id
         label
         path {
             ...DefinitionPathFragment
-        }
-    }
-
-    sdfDocumentById(id: $sdfDocumentId) @include(if: $withSdfDocument) {
-        label
-        schemas {
-            id
-            label
-            path {
-                ...DefinitionPathFragment
-            }
         }
     }
 }

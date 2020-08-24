@@ -11,6 +11,8 @@ import {QueryParamProvider} from "use-query-params";
 import {createBrowserHistory as createHistory} from "history";
 import {ScrollManager, WindowScroller} from "react-scroll-manager";
 import {PrimitivesPage} from "components/schema/PrimitivesPage";
+import {SdfDocumentSchemasPage} from "components/sdfDocument/SdfDocumentSchemasPage";
+import {SdfDocumentPrimitivesPage} from "../../../test/integration/cypress/support/pages/SdfDocumentPrimitivesPage";
 
 const schemaIdParam = {id: ":schemaId", idEncoded: true};
 const sdfDocumentIdParam = {id: ":sdfDocumentId", idEncoded: true};
@@ -62,7 +64,7 @@ export const Routes: React.FunctionComponent = () => (
               path={Hrefs.sdfDocuments
                 .sdfDocument(sdfDocumentIdParam)
                 .primitives.toString()}
-              component={PrimitivesPage}
+              component={SdfDocumentPrimitivesPage}
             />
 
             {/*Document schemas*/}
@@ -71,7 +73,7 @@ export const Routes: React.FunctionComponent = () => (
               path={Hrefs.sdfDocuments
                 .sdfDocument(sdfDocumentIdParam)
                 .schemas.toString()}
-              component={SchemasPage}
+              component={SdfDocumentSchemasPage}
             />
 
             {/*Document schema*/}

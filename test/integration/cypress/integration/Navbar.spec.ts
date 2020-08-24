@@ -1,9 +1,10 @@
 import {SdfDocumentsPage} from "../support/pages/SdfDocumentsPage";
 import {SdfDocumentPage} from "../support/pages/SdfDocumentPage";
-import {SchemasPage} from "../support/pages/SchemasPage";
 import {TestData} from "../support/TestData";
 import {SearchResultsPage} from "../support/pages/SearchResultsPage";
 import {SdfDocument} from "../support/models/SdfDocument";
+import {SchemasPage} from "../support/pages/SchemasPage";
+import {PrimitivesPage} from "../support/pages/PrimitivesPage";
 
 context("Navbar", () => {
   const homePage = new SdfDocumentsPage();
@@ -15,6 +16,12 @@ context("Navbar", () => {
       sdfDocument = sdfDocument_;
       otherPage = new SdfDocumentPage(sdfDocument.id);
     });
+  });
+
+  it("should link to primitives", () => {
+    homePage.visit();
+    homePage.frame.navbar.primitivesLink.click();
+    new PrimitivesPage().assertLoaded();
   });
 
   it("should link to schemas", () => {
