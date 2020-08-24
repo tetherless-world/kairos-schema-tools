@@ -15,7 +15,7 @@ export const SchemasPage: React.FunctionComponent = () => {
     <Frame {...query}>
       {({data}) => {
         return (
-          <StandardLayout title="Schemas">
+          <StandardLayout subtitle="All documents" title="Schemas">
             <SchemasTable schemas={data.schemas} />
           </StandardLayout>
         );

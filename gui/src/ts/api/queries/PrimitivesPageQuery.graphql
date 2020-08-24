@@ -1,22 +1,11 @@
 #import "./DefinitionPathFragment.graphql"
 
-query PrimitivesPageQuery($sdfDocumentId: String!, $withSdfDocument: Boolean!) {
-    primitives @skip(if: $withSdfDocument) {
+query PrimitivesPageQuery {
+    primitives {
         id
         label
         path {
             ...DefinitionPathFragment
-        }
-    }
-
-    sdfDocumentById(id: $sdfDocumentId) @include(if: $withSdfDocument) {
-        label
-        primitives {
-            id
-            label
-            path {
-                ...DefinitionPathFragment
-            }
         }
     }
 }

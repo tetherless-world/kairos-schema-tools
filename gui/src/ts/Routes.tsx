@@ -10,9 +10,9 @@ import {SearchResultsPage} from "components/search/SearchResultsPage";
 import {QueryParamProvider} from "use-query-params";
 import {createBrowserHistory as createHistory} from "history";
 import {ScrollManager, WindowScroller} from "react-scroll-manager";
-import {PrimitivesPage} from "components/schema/PrimitivesPage";
+import {PrimitivesPage} from "components/primitive/PrimitivesPage";
 import {SdfDocumentSchemasPage} from "components/sdfDocument/SdfDocumentSchemasPage";
-import {SdfDocumentPrimitivesPage} from "../../../test/integration/cypress/support/pages/SdfDocumentPrimitivesPage";
+import {SdfDocumentPrimitivesPage} from "components/sdfDocument/SdfDocumentPrimitivesPage";
 
 const schemaIdParam = {id: ":schemaId", idEncoded: true};
 const sdfDocumentIdParam = {id: ":sdfDocumentId", idEncoded: true};
