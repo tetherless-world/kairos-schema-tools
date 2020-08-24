@@ -12,7 +12,7 @@ final case class Schema(
                    name: String,
                    order: List[StepOrder],
                    references: Option[List[String]],
-                   sdfDocumentId: Uri,
+                   path: SdfDocumentPath,
                    slots: List[SchemaSlot],
                    sourceJsonNodeLocation: JsonNodeLocation,
                    steps: List[Step],

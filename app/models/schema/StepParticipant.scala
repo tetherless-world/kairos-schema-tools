@@ -9,6 +9,7 @@ final case class StepParticipant(
                        entityTypes: Option[List[EntityType]],
                        id: Uri,
                        name: String, // name is required for step-level slots (participants), unlike schema-level slots
+                       path: SdfDocumentPath,
                        references: Option[List[String]],
                        refvar: Option[String],
                        role: Uri,

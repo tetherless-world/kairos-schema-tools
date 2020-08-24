@@ -8,6 +8,7 @@ final case class SchemaSlot(
                           comments: Option[List[String]],
                           entityTypes: Option[List[EntityType]],
                           id: Uri,
+                          path: SdfDocumentPath,
                           references: Option[List[String]],
                           refvar: Option[String],
                           roleName: String,

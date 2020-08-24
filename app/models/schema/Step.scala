@@ -12,6 +12,7 @@ final case class Step(
                        minDuration: Option[Duration],
                        name: String,
                        participants: Option[List[StepParticipant]],
+                       path: SdfDocumentPath,
                        provenances: Option[List[String]],
                        requires: Option[List[String]],
                        references: Option[List[String]],

@@ -8,6 +8,7 @@ trait Slot {
   val comments: Option[List[String]]
   val entityTypes: Option[List[EntityType]]
   val id: Uri
+  val path: SdfDocumentPath
   val references: Option[List[String]]
   val sourceJsonNodeLocation: JsonNodeLocation
 }
