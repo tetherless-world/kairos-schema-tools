@@ -22,6 +22,7 @@ object KAIROS {
   val order = ResourceFactory.createProperty(URI + "order")
   val overlaps = ResourceFactory.createProperty(URI + "overlaps")
   val participants = ResourceFactory.createProperty(URI + "participants")
+  val primitives = ResourceFactory.createProperty(URI + "primitives")
   val privateData = ResourceFactory.createProperty(URI + "privateData")
   val provenance = ResourceFactory.createProperty(URI + "provenance")
   val reference = ResourceFactory.createProperty(URI + "reference")
