@@ -148,6 +148,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
 
   // Root query
   val RootQueryType = ObjectType("RootQuery", fields[GraphQlSchemaContext, Unit](
+    Field("primitiveById", OptionType(PrimitiveObjectType), arguments = IdArgument :: Nil, resolve = ctx => ctx.ctx.store.getPrimitiveById(ctx.args.arg(IdArgument))),
     Field("primitives", ListType(PrimitiveObjectType), resolve = _.ctx.store.getPrimitives),
     Field("schemas", ListType(SchemaObjectType), resolve = _.ctx.store.getSchemas),
     Field("schemaById", OptionType(SchemaObjectType), arguments = IdArgument :: Nil, resolve = ctx => ctx.ctx.store.getSchemaById(ctx.args.arg(IdArgument))),

@@ -33,6 +33,22 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
       }
     }
 
+    "get primitive by id" in {
+      val query =
+        graphql"""
+          query PrimitiveByIdQuery($$id: String!) {
+            primitiveById(id: $$id) {
+              name
+            }
+          }
+          """
+      val expected = ConfData.primitives(0)
+      executeQuery(query, vars = Json.obj("id" -> expected.id.toString)) must be(Json.parse(
+        s"""
+           |{"data":{"primitiveById":{"name":"${expected.name}"}}}
+           |""".stripMargin))
+    }
+
     "get schemas" in {
       val query =
         graphql"""
