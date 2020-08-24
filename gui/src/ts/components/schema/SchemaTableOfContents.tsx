@@ -13,6 +13,7 @@ import WorkIcon from "@material-ui/icons/Work";
 import {makeStyles} from "@material-ui/core/styles";
 import {SchemaHrefs} from "Hrefs";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
+import {DefinitionPath} from "models/definition/DefinitionPath";
 
 const useStyles = makeStyles((theme) => ({
   nestedListItem: {
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 interface SchemaTableOfContentsEntry {
   id: string;
   label: string;
+  path: DefinitionPath;
 }
 
 interface SchemaTableOfContentsSlot extends SchemaTableOfContentsEntry {}
@@ -40,7 +42,7 @@ export const SchemaTableOfContents: React.FunctionComponent<{
   schema: {
     id: string;
     slots: readonly SchemaTableOfContentsSlot[];
-    sdfDocumentId: string;
+    path: DefinitionPath;
     steps: readonly SchemaTableOfContentsStep[];
   };
 }> = ({hrefs, includeSourceLinks, schema}) => {
@@ -62,12 +64,7 @@ export const SchemaTableOfContents: React.FunctionComponent<{
               </Grid>
               {includeSourceLinks ? (
                 <Grid item>
-                  <SdfDocumentSourceLink
-                    to={{
-                      id: schema.sdfDocumentId,
-                      schema: {id: schema.id, slot: {id: slot.id}},
-                    }}
-                  />
+                  <SdfDocumentSourceLink to={slot.path} />
                 </Grid>
               ) : null}
             </Grid>
@@ -100,15 +97,7 @@ export const SchemaTableOfContents: React.FunctionComponent<{
               </Grid>
               {includeSourceLinks ? (
                 <Grid item>
-                  <SdfDocumentSourceLink
-                    to={{
-                      id: schema.sdfDocumentId,
-                      schema: {
-                        id: schema.id,
-                        step: {id: stepId, participant: {id: participant.id}},
-                      },
-                    }}
-                  />
+                  <SdfDocumentSourceLink to={participant.path} />
                 </Grid>
               ) : null}
             </Grid>
@@ -135,12 +124,7 @@ export const SchemaTableOfContents: React.FunctionComponent<{
                   </Grid>
                   {includeSourceLinks ? (
                     <Grid item>
-                      <SdfDocumentSourceLink
-                        to={{
-                          id: schema.sdfDocumentId,
-                          schema: {id: schema.id, step: {id: step.id}},
-                        }}
-                      />
+                      <SdfDocumentSourceLink to={step.path} />
                     </Grid>
                   ) : null}
                 </Grid>

@@ -9,7 +9,11 @@ export const SdfDocumentSourceLink: React.FunctionComponent<{
   to: DefinitionPath;
 }> = ({to}) => {
   return (
-    <Link to={Hrefs.sdfDocuments.sdfDocument({id: to.id}).sourcePath(to)}>
+    <Link
+      to={Hrefs.sdfDocuments
+        .sdfDocument({id: to.sdfDocument.id})
+        .sourcePath(to)}
+    >
       <Button variant="contained" startIcon={<CodeIcon />}>
         Source
       </Button>

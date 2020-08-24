@@ -1,3 +1,5 @@
+#import "./DefinitionPathFragment.graphql"
+
 query SdfDocumentsPageQuery {
     sdfDocuments {
         id
@@ -5,6 +7,9 @@ query SdfDocumentsPageQuery {
         schemas {
             id
             label
+            path {
+                ...DefinitionPathFragment
+            }
         }
         sdfVersion
         validationMessageTypes

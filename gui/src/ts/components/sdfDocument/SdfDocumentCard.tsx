@@ -17,6 +17,7 @@ import {ValidationMessageType} from "api/graphqlGlobalTypes";
 import ErrorIcon from "@material-ui/icons/Error";
 import WarningIcon from "@material-ui/icons/Warning";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
+import {DefinitionPath} from "models/definition/DefinitionPath";
 
 export const SdfDocumentCard: React.FunctionComponent<{
   sdfDocument: {
@@ -25,7 +26,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
     schemas: {
       id: string;
       label: string;
-      sdfDocumentId: string;
+      path: DefinitionPath;
     }[];
     sdfVersion: string;
     validationMessageTypes: ValidationMessageType[];
@@ -47,7 +48,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
               </Link>
             </Grid>
             <Grid item xs={4} style={{textAlign: "right"}}>
-              <SdfDocumentSourceLink to={{id}} />
+              <SdfDocumentSourceLink to={{sdfDocument: {id}}} />
             </Grid>
           </Grid>
         }

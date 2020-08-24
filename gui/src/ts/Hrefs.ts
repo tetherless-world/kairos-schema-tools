@@ -78,7 +78,7 @@ class SdfDocumentHrefs extends SubHrefs {
     return new SdfDocumentSchemasHrefs(this.home + "schema/");
   }
 
-  sourcePath(path: Omit<DefinitionPath, "id">) {
+  sourcePath(path: DefinitionPath) {
     return (
       this.home +
       qs.stringify({path: JSON.stringify(path)}, {addQueryPrefix: true})
@@ -100,27 +100,31 @@ export class Hrefs {
   static readonly sdfDocuments = new SdfDocumentsHrefs("/sdfdocument/");
 
   static definitionPath(path: DefinitionPath) {
-    const sdfDocumentHrefs = Hrefs.sdfDocuments.sdfDocument({id: path.id});
-    if (path.primitive) {
+    const sdfDocumentHrefs = Hrefs.sdfDocuments.sdfDocument({
+      id: path.sdfDocument.id,
+    });
+    if (path.sdfDocument.primitive) {
       const primitiveHrefs = sdfDocumentHrefs.primitives.primitive({
-        id: path.primitive.id,
+        id: path.sdfDocument.primitive.id,
       });
-      if (path.primitive.slot) {
-        return primitiveHrefs.slot({id: path.primitive.slot.id});
+      if (path.sdfDocument.primitive.slot) {
+        return primitiveHrefs.slot({id: path.sdfDocument.primitive.slot.id});
       } else {
         return primitiveHrefs.toString();
       }
-    } else if (path.schema) {
-      const schemaHrefs = sdfDocumentHrefs.schemas.schema({id: path.schema.id});
-      if (path.schema.slot) {
-        return schemaHrefs.slot({id: path.schema.slot.id});
-      } else if (path.schema.step) {
-        if (path.schema.step.participant) {
+    } else if (path.sdfDocument.schema) {
+      const schemaHrefs = sdfDocumentHrefs.schemas.schema({
+        id: path.sdfDocument.schema.id,
+      });
+      if (path.sdfDocument.schema.slot) {
+        return schemaHrefs.slot({id: path.sdfDocument.schema.slot.id});
+      } else if (path.sdfDocument.schema.step) {
+        if (path.sdfDocument.schema.step.participant) {
           return schemaHrefs.stepParticipant({
-            id: path.schema.step.participant.id,
+            id: path.sdfDocument.schema.step.participant.id,
           });
         } else {
-          return schemaHrefs.step({id: path.schema.step.id});
+          return schemaHrefs.step({id: path.sdfDocument.schema.step.id});
         }
       } else {
         return schemaHrefs.toString();

@@ -10,6 +10,7 @@ import {SchemasTable} from "components/schema/SchemasTable";
 import {NoRoute} from "components/error/NoRoute";
 import {BreadcrumbsProps} from "components/breadcrumbs/BreadcrumbsProps";
 import {Link} from "components/link/Link";
+import {DefinitionPath} from "models/definition/DefinitionPath";
 
 export const SchemasPage: React.FunctionComponent = () => {
   let {sdfDocumentId} = useParams<{sdfDocumentId?: string}>();
@@ -29,7 +30,7 @@ export const SchemasPage: React.FunctionComponent = () => {
     <Frame {...query}>
       {({data}) => {
         let breadcrumbs: BreadcrumbsProps | undefined;
-        type Schema = {id: string; label: string; sdfDocumentId: string};
+        type Schema = {id: string; label: string; path: DefinitionPath};
         let schemas: Schema[];
         let subtitle: React.ReactNode | undefined;
         if (sdfDocumentId) {

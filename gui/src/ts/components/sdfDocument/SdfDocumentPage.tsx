@@ -79,17 +79,12 @@ const SchemaAccordion: React.FunctionComponent<{
     <AccordionDetails>
       <Grid container direction="column">
         <Grid item>
-          <SdfDocumentSourceLink
-            to={{
-              id: schema.sdfDocumentId,
-              schema: {id: schema.id},
-            }}
-          />
+          <SdfDocumentSourceLink to={schema.path} />
         </Grid>
         <Grid item>
           <SchemaTableOfContents
             hrefs={Hrefs.sdfDocuments
-              .sdfDocument({id: schema.sdfDocumentId})
+              .sdfDocument({id: schema.path.sdfDocument.id})
               .schemas.schema(schema)}
             includeSourceLinks={true}
             schema={schema}
@@ -261,8 +256,8 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                         goToJsonNodeLocation={
                           definitionPath
                             ? getJsonNodeLocationFromDefinitionPath(
-                                savedSdfDocument,
-                                definitionPath
+                                definitionPath,
+                                savedSdfDocument
                               )
                             : undefined
                         }

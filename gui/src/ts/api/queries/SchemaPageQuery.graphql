@@ -1,3 +1,5 @@
+#import "./DefinitionPathFragment.graphql"
+
 query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocument: Boolean!) {
     schemaById(id: $schemaId) {
         aka
@@ -30,9 +32,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
             }
         }
         path {
-            sdfDocument {
-                id
-            }
+            ...DefinitionPathFragment
         }
         references
         slots {
@@ -41,6 +41,9 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
             entityTypes
             id
             label
+            path {
+                ...DefinitionPathFragment
+            }
             references
             refvar
             roleName
@@ -65,9 +68,15 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
                 id
                 label
                 name
+                path {
+                    ...DefinitionPathFragment
+                }
                 references
                 refvar
                 role
+            }
+            path {
+                ...DefinitionPathFragment
             }
             provenances
             references
