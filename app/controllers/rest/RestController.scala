@@ -18,14 +18,26 @@ import play.api.mvc._
 class RestController @Inject() (store: Store) extends InjectedController {
   private val MimeTypeJsonLd = "application/ld+json"
 //  private val AcceptsJsonLd = Accepting(MimeTypeJsonLd)
+  // Models with no dependencies on other models
+  private implicit val durationJsonWrites = Json.writes[Duration]
   private implicit val jsonNodeLocationWrites = Json.writes[JsonNodeLocation]
   private implicit val uriJsonWrites: json.Writes[Uri] = (uri) => JsString(uri.toString)
-  private implicit val durationJsonWrites = Json.writes[Duration]
+  // SdfDocumentPath
+  private implicit val sdfDocumentPathPrimitiveSlotJsonWrites = Json.writes[SdfDocumentPathPrimitiveSlot]
+  private implicit val sdfDocumentPathPrimitiveJsonWrites = Json.writes[SdfDocumentPathPrimitive]
+  private implicit val sdfDocumentPathSchemaSlotJsonWrites = Json.writes[SdfDocumentPathSchemaSlot]
+  private implicit val sdfDocumentPathStepParticipantJsonWrites = Json.writes[SdfDocumentPathStepParticipant]
+  private implicit val sdfDocumentPathStepJsonWrites = Json.writes[SdfDocumentPathStep]
+  private implicit val sdfDocumentPathSchemaJsonWrites = Json.writes[SdfDocumentPathSchema]
+  private implicit val sdfDocumentPathJsonWrites = Json.writes[SdfDocumentPath]
+  // Entity relations
   private implicit val entityRelationRelationJsonWrites = Json.writes[EntityRelationRelation]
   private implicit val entityRelationJsonWrites = Json.writes[EntityRelation]
   private implicit val entityTypeJsonWrites: json.Writes[EntityType] = (entityType) => JsString(entityType.value)
+  // Primitive
   private implicit val primitiveSlotJsonWrites: json.Writes[PrimitiveSlot] = Json.writes[PrimitiveSlot]
   private implicit val primitiveJsonWrites: json.Writes[Primitive] = Json.writes[Primitive]
+  // Schema
   private implicit val schemaSlotJsonWrites = Json.writes[SchemaSlot]
   private implicit val stepParticipantJsonWrites = Json.writes[StepParticipant]
   private implicit val stepJsonWrites = Json.writes[Step]
@@ -35,15 +47,10 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val overlapsStepOrderJsonWrites = Json.writes[OverlapsStepOrder]
   private implicit val stepOrderJsonWrites = Json.writes[StepOrder] // json.Writes[StepOrder]
   private implicit val schemaJsonWrites = Json.writes[Schema]
-  private implicit val sdfDocumentPathPrimitiveSlotJsonWrites = Json.writes[SdfDocumentPathPrimitiveSlot]
-  private implicit val sdfDocumentPathPrimitiveJsonWrites = Json.writes[SdfDocumentPathPrimitive]
-  private implicit val sdfDocumentPathSchemaSlotJsonWrites = Json.writes[SdfDocumentPathSchemaSlot]
-  private implicit val sdfDocumentPathStepParticipantJsonWrites = Json.writes[SdfDocumentPathStepParticipant]
-  private implicit val sdfDocumentPathStepJsonWrites = Json.writes[SdfDocumentPathStep]
-  private implicit val sdfDocumentPathSchemaJsonWrites = Json.writes[SdfDocumentPathSchema]
-  private implicit val sdfDocumentPathJsonWrites = Json.writes[SdfDocumentPath]
+  // Validation message
   private implicit val validationMessageTypeJsonWrites: json.Writes[ValidationMessageType] = (`type`) => JsString(`type`.value)
   private implicit val validationMessageJsonWrites = Json.writes[ValidationMessage]
+  // SDF document
   private implicit val sdfDocumentJsonWrites = Json.writes[SdfDocument]
 
   def schema(id: String) = Action { implicit request =>

@@ -41,50 +41,11 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
     )
 
   // Object types
+  // Models that don't depend on other models
   implicit val JsonNodeLocationObjectType = deriveObjectType[GraphQlSchemaContext, JsonNodeLocation]()
   implicit val DurationObjectType = deriveObjectType[GraphQlSchemaContext, Duration]()
-  implicit val EntityRelationRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelationRelation]()
-  implicit val EntityRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelation]()
-  implicit val SchemaSlotObjectType = deriveObjectType[GraphQlSchemaContext, SchemaSlot](
-    AddFields(
-      Field("label", StringType, resolve = _.value.label),
-    )
-  )
-  implicit val BeforeAfterStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, BeforeAfterStepOrder](
-    Interfaces(StepOrderInterfaceType)
-  )
-  implicit val ContainerContainedStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, ContainerContainedStepOrder](
-    Interfaces(StepOrderInterfaceType)
-  )
-  implicit val OverlapsStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, OverlapsStepOrder](
-    Interfaces(StepOrderInterfaceType)
-  )
-  implicit val PrimitiveSlotObjectType = deriveObjectType[GraphQlSchemaContext, PrimitiveSlot](
-    AddFields(
-      Field("label", StringType, resolve = _.value.label),
-    )
-  )
-  implicit val PrimitiveObjectType = deriveObjectType[GraphQlSchemaContext, Primitive](
-    AddFields(
-      Field("label", StringType, resolve = _.value.label),
-    )
-  )
-  implicit val StepParticipantObjectType = deriveObjectType[GraphQlSchemaContext, StepParticipant](
-    AddFields(
-      Field("label", StringType, resolve = _.value.label),
-    )
-  )
-  implicit val StepObjectType = deriveObjectType[GraphQlSchemaContext, Step](
-    AddFields(
-      Field("label", StringType, resolve = _.value.label),
-    )
-  )
-  implicit val SchemaObjectType = deriveObjectType[GraphQlSchemaContext, models.schema.Schema](
-    AddFields(
-      Field("label", StringType, resolve = _.value.label),
-    ),
-    ReplaceField("order", Field("order", ListType(StepOrderInterfaceType), resolve = _.value.order))
-  )
+
+  // SdfDocumentPath
   implicit val SdfDocumentPathSchemaSlotObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPathSchemaSlot](
     AddFields(
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSchemaSlotById(ctx.value.id).map(_.label))
@@ -120,13 +81,67 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.id).map(_.label))
     )
   )
+
+  // Entity relations
+  implicit val EntityRelationRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelationRelation]()
+  implicit val EntityRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelation]()
+
+  // Primitive
+  implicit val PrimitiveSlotObjectType = deriveObjectType[GraphQlSchemaContext, PrimitiveSlot](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label),
+    )
+  )
+  implicit val PrimitiveObjectType = deriveObjectType[GraphQlSchemaContext, Primitive](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label),
+    )
+  )
+
+  // Schema
+  implicit val SchemaSlotObjectType = deriveObjectType[GraphQlSchemaContext, SchemaSlot](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label),
+    )
+  )
+  implicit val BeforeAfterStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, BeforeAfterStepOrder](
+    Interfaces(StepOrderInterfaceType)
+  )
+  implicit val ContainerContainedStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, ContainerContainedStepOrder](
+    Interfaces(StepOrderInterfaceType)
+  )
+  implicit val OverlapsStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, OverlapsStepOrder](
+    Interfaces(StepOrderInterfaceType)
+  )
+  implicit val StepParticipantObjectType = deriveObjectType[GraphQlSchemaContext, StepParticipant](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label),
+    )
+  )
+  implicit val StepObjectType = deriveObjectType[GraphQlSchemaContext, Step](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label),
+    )
+  )
+  implicit val SchemaObjectType = deriveObjectType[GraphQlSchemaContext, models.schema.Schema](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label),
+    ),
+    ReplaceField("order", Field("order", ListType(StepOrderInterfaceType), resolve = _.value.order))
+  )
+
+  // Validation message
   implicit val ValidationMessageObjectType = deriveObjectType[GraphQlSchemaContext, ValidationMessage]()
+
+  // SDF document
   implicit lazy val SdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocument](
     AddFields(
       Field("label", StringType, resolve = _.value.label),
       Field("validationMessageTypes", ListType(ValidationMessageTypeEnumType), resolve = _.value.validationMessages.map(_.`type`).distinct)
     )
   )
+
+  // Search
   implicit val SearchDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SearchDocument]()
   implicit val SearchResultsObjectType = deriveObjectType[GraphQlSchemaContext, SearchResults]()
 
