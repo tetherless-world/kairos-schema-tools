@@ -21,7 +21,11 @@ fragment SdfDocumentSourceFragment on SdfDocument {
     schemas {
         id
         label
-        sdfDocumentId
+        path {
+            sdfDocument {
+                id
+            }
+        }
         slots {
             id
             label

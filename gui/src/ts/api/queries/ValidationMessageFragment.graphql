@@ -1,9 +1,9 @@
-#import "./SdfDocumentPathFragment.graphql"
+#import "./DefinitionPathFragment.graphql"
 
 fragment ValidationMessageFragment on ValidationMessage {
     message
     path {
-        ...SdfDocumentPathFragment
+        ...DefinitionPathFragment
     }
     type
 }

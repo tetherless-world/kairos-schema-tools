@@ -47,6 +47,16 @@ export interface SchemaPageQuery_schemaById_order_OverlapsStepOrder {
 
 export type SchemaPageQuery_schemaById_order = SchemaPageQuery_schemaById_order_BeforeAfterStepOrder | SchemaPageQuery_schemaById_order_ContainerContainedStepOrder | SchemaPageQuery_schemaById_order_OverlapsStepOrder;
 
+export interface SchemaPageQuery_schemaById_path_sdfDocument {
+  __typename: "DefinitionPathSdfDocument";
+  id: string;
+}
+
+export interface SchemaPageQuery_schemaById_path {
+  __typename: "DefinitionPath";
+  sdfDocument: SchemaPageQuery_schemaById_path_sdfDocument;
+}
+
 export interface SchemaPageQuery_schemaById_slots {
   __typename: "SchemaSlot";
   aka: string[] | null;
@@ -108,8 +118,8 @@ export interface SchemaPageQuery_schemaById {
   label: string;
   name: string;
   order: SchemaPageQuery_schemaById_order[];
+  path: SchemaPageQuery_schemaById_path;
   references: string[] | null;
-  sdfDocumentId: string;
   slots: SchemaPageQuery_schemaById_slots[];
   steps: SchemaPageQuery_schemaById_steps[];
   ta2: boolean;

@@ -40,8 +40,8 @@ import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
 import {Hrefs} from "Hrefs";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 import {GraphQlErrorsList} from "components/error/GraphQlErrorsList";
-import {getJsonNodeLocationFromSdfDocumentPath} from "models/sdfDocument/getJsonNodeLocationFromSdfDocumentPath";
-import {SdfDocumentPath} from "models/sdfDocument/SdfDocumentPath";
+import {getJsonNodeLocationFromDefinitionPath} from "models/definition/getJsonNodeLocationFromDefinitionPath";
+import {DefinitionPath} from "models/definition/DefinitionPath";
 import {JsonQueryParamConfig} from "JsonQueryParamConfig";
 
 const RightPanelAccordion: React.FunctionComponent<React.PropsWithChildren<{
@@ -122,9 +122,9 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
     decodeURIComponent
   );
 
-  const [sdfDocumentPath] = useQueryParam<SdfDocumentPath>(
+  const [definitionPath] = useQueryParam<DefinitionPath>(
     "path",
-    new JsonQueryParamConfig<SdfDocumentPath>()
+    new JsonQueryParamConfig<DefinitionPath>()
   );
   const query = useQuery<SdfDocumentPageQuery>(SdfDocumentPageQueryDocument, {
     fetchPolicy: "no-cache",
@@ -259,10 +259,10 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                     <Grid item>
                       <SdfDocumentEditor
                         goToJsonNodeLocation={
-                          sdfDocumentPath
-                            ? getJsonNodeLocationFromSdfDocumentPath(
+                          definitionPath
+                            ? getJsonNodeLocationFromDefinitionPath(
                                 savedSdfDocument,
-                                sdfDocumentPath
+                                definitionPath
                               )
                             : undefined
                         }

@@ -12,6 +12,7 @@ export enum EntityType {
   BAL = "BAL",
   BOD = "BOD",
   COM = "COM",
+  EVENT = "EVENT",
   FAC = "FAC",
   GPE = "GPE",
   INF = "INF",
@@ -34,10 +35,13 @@ export enum EntityType {
 }
 
 export enum SearchDocumentType {
+  Primitive = "Primitive",
+  PrimitiveSlot = "PrimitiveSlot",
   Schema = "Schema",
+  SchemaSlot = "SchemaSlot",
   SdfDocument = "SdfDocument",
-  Slot = "Slot",
   Step = "Step",
+  StepParticipant = "StepParticipant",
 }
 
 export enum StepOrderFlag {

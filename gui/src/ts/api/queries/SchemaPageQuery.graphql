@@ -29,8 +29,12 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
                 overlaps
             }
         }
+        path {
+            sdfDocument {
+                id
+            }
+        }
         references
-        sdfDocumentId
         slots {
             aka
             comments

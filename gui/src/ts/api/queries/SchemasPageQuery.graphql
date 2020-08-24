@@ -2,7 +2,11 @@ query SchemasPageQuery($sdfDocumentId: String!, $withSdfDocument: Boolean!) {
     schemas @skip(if: $withSdfDocument) {
         id
         label
-        sdfDocumentId
+        path {
+            sdfDocument {
+                id
+            }
+        }
     }
 
     sdfDocumentById(id: $sdfDocumentId) @include(if: $withSdfDocument) {

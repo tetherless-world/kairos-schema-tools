@@ -1,54 +1,55 @@
 import {SdfDocumentSourceFragment} from "api/queries/types/SdfDocumentSourceFragment";
 import {JsonNodeLocationFragment} from "api/queries/types/JsonNodeLocationFragment";
-import {SdfDocumentPath} from "models/sdfDocument/SdfDocumentPath";
+import {DefinitionPath} from "models/definition/DefinitionPath";
 
-export const getJsonNodeLocationFromSdfDocumentPath = (
-  sdfDocument: SdfDocumentSourceFragment,
-  sdfDocumentPath: SdfDocumentPath
+export const getJsonNodeLocationFromDefinitionPath = (
+  path: DefinitionPath,
+  sdfDocument: SdfDocumentSourceFragment
 ): JsonNodeLocationFragment | undefined => {
   let result: JsonNodeLocationFragment | undefined;
 
-  if (sdfDocumentPath.primitive) {
+  if (path.sdfDocument.primitive) {
     const primitive = sdfDocument.primitives.find(
-      (primitive) => primitive.id === sdfDocumentPath.primitive!.id
+      (primitive) => primitive.id === path.sdfDocument.primitive!.id
     );
     if (primitive) {
       result = primitive.sourceJsonNodeLocation;
 
-      if (sdfDocumentPath.primitive!.slot) {
+      if (path.sdfDocument.primitive!.slot) {
         const slot = primitive.slots.find(
-          (slot) => slot.id === sdfDocumentPath.primitive!.slot!.id
+          (slot) => slot.id === path.sdfDocument.primitive!.slot!.id
         );
         if (slot) {
           result = slot.sourceJsonNodeLocation;
         }
       }
     }
-  } else if (sdfDocumentPath.schema) {
+  } else if (path.sdfDocument.schema) {
     const schema = sdfDocument.schemas.find(
-      (schema) => schema.id === sdfDocumentPath.schema!.id
+      (schema) => schema.id === path.sdfDocument.schema!.id
     );
     if (schema) {
       result = schema.sourceJsonNodeLocation;
 
-      if (sdfDocumentPath.schema!.slot) {
+      if (path.sdfDocument.schema!.slot) {
         const slot = schema.slots.find(
-          (slot) => slot.id === sdfDocumentPath.schema!.slot!.id
+          (slot) => slot.id === path.sdfDocument.schema!.slot!.id
         );
         if (slot) {
           result = slot.sourceJsonNodeLocation;
         }
-      } else if (sdfDocumentPath.schema!.step) {
+      } else if (path.sdfDocument.schema!.step) {
         const step = schema.steps.find(
-          (step) => step.id === sdfDocumentPath.schema!.step!.id
+          (step) => step.id === path.sdfDocument.schema!.step!.id
         );
         if (step) {
           result = step.sourceJsonNodeLocation;
 
-          if (sdfDocumentPath.schema!.step!.participant) {
+          if (path.sdfDocument.schema!.step!.participant) {
             const stepParticipant = step.participants?.find(
               (participant) =>
-                participant.id === sdfDocumentPath.schema!.step!.participant!.id
+                participant.id ===
+                path.sdfDocument.schema!.step!.participant!.id
             );
             if (stepParticipant) {
               result = stepParticipant.sourceJsonNodeLocation;

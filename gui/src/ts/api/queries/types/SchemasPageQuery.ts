@@ -6,11 +6,21 @@
 // GraphQL query operation: SchemasPageQuery
 // ====================================================
 
+export interface SchemasPageQuery_schemas_path_sdfDocument {
+  __typename: "DefinitionPathSdfDocument";
+  id: string;
+}
+
+export interface SchemasPageQuery_schemas_path {
+  __typename: "DefinitionPath";
+  sdfDocument: SchemasPageQuery_schemas_path_sdfDocument;
+}
+
 export interface SchemasPageQuery_schemas {
   __typename: "Schema";
   id: string;
   label: string;
-  sdfDocumentId: string;
+  path: SchemasPageQuery_schemas_path;
 }
 
 export interface SchemasPageQuery_sdfDocumentById_schemas {

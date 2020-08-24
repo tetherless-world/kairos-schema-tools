@@ -1,6 +1,6 @@
 import * as qs from "qs";
 import {SchemaSectionId} from "models/schema/SchemaSectionId";
-import {SdfDocumentPath} from "models/sdfDocument/SdfDocumentPath";
+import {DefinitionPath} from "models/definition/DefinitionPath";
 
 const encodeId = (kwds: {id: string; idEncoded?: boolean}) =>
   kwds.idEncoded ? kwds.id : encodeURIComponent(kwds.id);
@@ -78,7 +78,7 @@ class SdfDocumentHrefs extends SubHrefs {
     return new SdfDocumentSchemasHrefs(this.home + "schema/");
   }
 
-  sourcePath(path: Omit<SdfDocumentPath, "id">) {
+  sourcePath(path: Omit<DefinitionPath, "id">) {
     return (
       this.home +
       qs.stringify({path: JSON.stringify(path)}, {addQueryPrefix: true})
@@ -99,7 +99,7 @@ export class Hrefs {
   static readonly schemas = "/schema/";
   static readonly sdfDocuments = new SdfDocumentsHrefs("/sdfdocument/");
 
-  static sdfDocumentPath(path: SdfDocumentPath) {
+  static definitionPath(path: DefinitionPath) {
     const sdfDocumentHrefs = Hrefs.sdfDocuments.sdfDocument({id: path.id});
     if (path.primitive) {
       const primitiveHrefs = sdfDocumentHrefs.primitives.primitive({

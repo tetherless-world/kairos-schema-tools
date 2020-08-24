@@ -1,4 +1,4 @@
-export interface SdfDocumentPath {
+export interface DefinitionPath {
   sdfDocument: {
     id: string;
     primitive?: {
