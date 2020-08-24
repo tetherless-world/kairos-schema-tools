@@ -41,7 +41,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
           validationMessages = List(
             ValidationMessage(
               message = e.getMessage,
-              path = DefinitionPath.builder(sourceUri).build,
+              path = DefinitionPath.sdfDocument(sourceUri).build,
               `type` = ValidationMessageType.Fatal
             )
           )
@@ -76,7 +76,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
         case sdfVersion =>
           throw ValidationException(
             message = s"unrecognized SDF version ${sdfVersion}",
-            path = DefinitionPath.builder(header.id).build,
+            path = DefinitionPath.sdfDocument(header.id).build,
             `type` = ValidationMessageType.Fatal
           )
       }

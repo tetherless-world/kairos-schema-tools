@@ -27,7 +27,7 @@ object DefinitionPath {
     }
   }
 
-  class DefinitionPathBuilder(sdfDocumentId: Uri) {
+  class DefinitionPathSdfDocumentBuilder(sdfDocumentId: Uri) {
     class DefinitionPathPrimitiveBuilder(primitiveId: Uri) {
       def build = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = Some(DefinitionPathPrimitive(id = primitiveId, slot = None)), schema = None))
       def slot(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = Some(DefinitionPathPrimitive(id = primitiveId, slot = Some(DefinitionPathPrimitiveSlot(id = id)))), schema = None))
@@ -50,5 +50,5 @@ object DefinitionPath {
     def schema(id: Uri) = new DefinitionPathSchemaBuilder(schemaId = id)
   }
 
-  def builder(id: Uri) = new DefinitionPathBuilder(id)
+  def sdfDocument(id: Uri) = new DefinitionPathSdfDocumentBuilder(id)
 }

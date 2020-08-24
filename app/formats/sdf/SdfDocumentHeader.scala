@@ -10,12 +10,12 @@ final class SdfDocumentHeader(model: Model, sourceId: Uri) {
   private def readRootResource: Resource = {
     val versionStatements = model.listStatements(null, KAIROS.sdfVersion, null)
     if (!versionStatements.hasNext) {
-      throw ValidationException(message = "missing sdfVersion statement", path = DefinitionPath.builder(sourceId).build, `type` = ValidationMessageType.Fatal)
+      throw ValidationException(message = "missing sdfVersion statement", path = DefinitionPath.sdfDocument(sourceId).build, `type` = ValidationMessageType.Fatal)
     }
     val versionStatement = versionStatements.next()
     val rootResource = versionStatement.getSubject
     if (rootResource.getURI == null) {
-      throw ValidationException(message = "document root missing id", path = DefinitionPath.builder(sourceId).build, `type` = ValidationMessageType.Fatal)
+      throw ValidationException(message = "document root missing id", path = DefinitionPath.sdfDocument(sourceId).build, `type` = ValidationMessageType.Fatal)
     }
     rootResource
   }
@@ -25,14 +25,14 @@ final class SdfDocumentHeader(model: Model, sourceId: Uri) {
   private def readSdfVersion(id: Uri, rootResource: Resource): String = {
     val versionStatements = rootResource.listProperties(KAIROS.sdfVersion)
     if (!versionStatements.hasNext) {
-      throw ValidationException(message = "missing sdfVersion statement", path = DefinitionPath.builder(id).build, `type` = ValidationMessageType.Fatal)
+      throw ValidationException(message = "missing sdfVersion statement", path = DefinitionPath.sdfDocument(id).build, `type` = ValidationMessageType.Fatal)
     }
     val versionStatement = versionStatements.next()
     if (versionStatements.hasNext) {
-      throw ValidationException(message = "multiple sdfVersion statements", path = DefinitionPath.builder(id).build, `type` = ValidationMessageType.Fatal)
+      throw ValidationException(message = "multiple sdfVersion statements", path = DefinitionPath.sdfDocument(id).build, `type` = ValidationMessageType.Fatal)
     }
     if (!versionStatement.getObject.isLiteral) {
-      throw ValidationException(message = "sdfVersion statement has a non-Literal object", path = DefinitionPath.builder(id).build, `type` = ValidationMessageType.Fatal)
+      throw ValidationException(message = "sdfVersion statement has a non-Literal object", path = DefinitionPath.sdfDocument(id).build, `type` = ValidationMessageType.Fatal)
     }
     versionStatement.getObject.asLiteral().getString
   }
