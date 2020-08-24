@@ -1,23 +1,23 @@
 import * as React from "react";
 import {useParams} from "react-router-dom";
 import {useQuery} from "@apollo/react-hooks";
-import {SchemasPageQuery} from "api/queries/types/SchemasPageQuery";
-import * as SchemasPageQueryDocument from "api/queries/SchemasPageQuery.graphql";
+import * as PrimitivesPageQueryDocument from "api/queries/PrimitivesPageQuery.graphql";
 import {Frame} from "components/frame/Frame";
 import {StandardLayout} from "components/layout/StandardLayout";
-import {SchemasTable} from "components/schema/SchemasTable";
 import {NoRoute} from "components/error/NoRoute";
 import {BreadcrumbsProps} from "components/breadcrumbs/BreadcrumbsProps";
 import {DefinitionPath} from "models/definition/DefinitionPath";
 import {SdfDocumentLink} from "components/link/SdfDocumentLink";
+import {PrimitivesPageQuery} from "api/queries/types/PrimitivesPageQuery";
+import {PrimitivesTable} from "components/schema/PrimitivesTable";
 
-export const SchemasPage: React.FunctionComponent = () => {
+export const PrimitivesPage: React.FunctionComponent = () => {
   let {sdfDocumentId} = useParams<{sdfDocumentId?: string}>();
   if (sdfDocumentId) {
     sdfDocumentId = decodeURIComponent(sdfDocumentId);
   }
 
-  const query = useQuery<SchemasPageQuery>(SchemasPageQueryDocument, {
+  const query = useQuery<PrimitivesPageQuery>(PrimitivesPageQueryDocument, {
     fetchPolicy: "no-cache",
     variables: {
       sdfDocumentId: sdfDocumentId ?? "",
@@ -29,8 +29,8 @@ export const SchemasPage: React.FunctionComponent = () => {
     <Frame {...query}>
       {({data}) => {
         let breadcrumbs: BreadcrumbsProps | undefined;
-        type Schema = {id: string; label: string; path: DefinitionPath};
-        let schemas: Schema[];
+        type Primitive = {id: string; label: string; path: DefinitionPath};
+        let primitives: Primitive[];
         let subtitle: React.ReactNode | undefined;
         if (sdfDocumentId) {
           const sdfDocument = data.sdfDocumentById;
@@ -40,7 +40,7 @@ export const SchemasPage: React.FunctionComponent = () => {
           breadcrumbs = {
             sdfDocument: {id: sdfDocumentId, label: sdfDocument.label},
           };
-          schemas = sdfDocument!.schemas;
+          primitives = sdfDocument!.primitives;
           subtitle = (
             <span>
               Document:{" "}
@@ -50,16 +50,16 @@ export const SchemasPage: React.FunctionComponent = () => {
             </span>
           );
         } else {
-          schemas = data.schemas ?? [];
+          primitives = data.primitives ?? [];
         }
 
         return (
           <StandardLayout
             breadcrumbs={breadcrumbs}
             subtitle={subtitle}
-            title="Schemas"
+            title="Primitives"
           >
-            <SchemasTable schemas={schemas} />
+            <PrimitivesTable primitives={primitives} />
           </StandardLayout>
         );
       }}

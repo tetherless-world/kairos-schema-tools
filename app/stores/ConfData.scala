@@ -25,5 +25,6 @@ object ConfData extends WithResource {
 //  val makeIedTa1 = readSdfDocumentResource("make_ied_sdf0.8c.json")
 
   val sdfDocuments = List(coordinatedBombingAttackTa1)
+  val primitives = sdfDocuments.flatMap(_.primitives)
   val schemas = sdfDocuments.flatMap(_.schemas)
 }

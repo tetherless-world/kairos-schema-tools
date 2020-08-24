@@ -95,7 +95,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
                     .sdfDocument({id})
                     .primitives.toString()}
                 >
-                  Schemas
+                  Primitives
                 </Link>
               </Typography>
               <PrimitivesTable primitives={primitives} />

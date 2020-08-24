@@ -10,6 +10,7 @@ import {SearchResultsPage} from "components/search/SearchResultsPage";
 import {QueryParamProvider} from "use-query-params";
 import {createBrowserHistory as createHistory} from "history";
 import {ScrollManager, WindowScroller} from "react-scroll-manager";
+import {PrimitivesPage} from "components/schema/PrimitivesPage";
 
 const schemaIdParam = {id: ":schemaId", idEncoded: true};
 const sdfDocumentIdParam = {id: ":sdfDocumentId", idEncoded: true};
@@ -24,6 +25,13 @@ export const Routes: React.FunctionComponent = () => (
             <Route exact path={Hrefs.home}>
               <Redirect to={Hrefs.sdfDocuments.toString()} />
             </Route>
+
+            {/*All primitives*/}
+            <Route
+              exact
+              path={Hrefs.primitives.toString()}
+              component={PrimitivesPage}
+            />
 
             {/*All schemas*/}
             <Route

@@ -58,6 +58,11 @@ export const Navbar: React.FunctionComponent<{
     readonly label: string;
   }[] = [
     {
+      dataCy: "primitives-nav-link",
+      href: Hrefs.primitives.toString(),
+      label: "Primitives",
+    },
+    {
       dataCy: "schemas-nav-link",
       href: Hrefs.schemas.toString(),
       label: "Schemas",
