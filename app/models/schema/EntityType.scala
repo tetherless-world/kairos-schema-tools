@@ -25,6 +25,7 @@ case object EntityType extends StringEnum[EntityType] with StringCirceEnum[Entit
   case object BAL extends EntityType(label = "Ballot (BAL)", value = "BAL")
   case object BOD extends EntityType(label = "Body part (BOD)", value = "BOD")
   case object COM extends EntityType(label = "Commercial product (COM)", value = "COM")
+  case object EVENT extends EntityType(label = "Event (EVENT)", value = "EVENT")
   case object FAC extends EntityType(label = "Facility (FAC)", value = "FAC")
   case object GPE extends EntityType(label = "Geopolitical entity (GPE)", value = "GPE")
   case object INF extends EntityType(label = "Information object (INF)", value = "INF")
