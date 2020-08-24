@@ -95,7 +95,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
 
   private def readPrimitive(jsonNode: ObjectJsonNode, parentPath: SdfDocumentPath, resource: Resource) = {
     val id = Uri.parse(resource.getURI)
-    val path = SdfDocumentPath.builder(parentPath.id).primitive(id).build
+    val path = SdfDocumentPath.builder(parentPath.sdfDocument.id).primitive(id).build
     models.schema.Primitive(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
@@ -116,7 +116,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
 
   private def readSchema(jsonNode: ObjectJsonNode, parentPath: SdfDocumentPath, resource: Resource) = {
     val id = Uri.parse(resource.getURI)
-    val path = SdfDocumentPath.builder(parentPath.id).schema(id).build
+    val path = SdfDocumentPath.builder(parentPath.sdfDocument.id).schema(id).build
     Schema(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
@@ -182,7 +182,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
 
   private def readSchemaSlot(jsonNode: ObjectJsonNode, parentPath: SdfDocumentPath, resource: Resource) = {
     val id = Uri.parse(resource.getURI)
-    val path = SdfDocumentPath.builder(parentPath.id).schema(parentPath.schema.get.id).slot(id)
+    val path = SdfDocumentPath.builder(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).slot(id)
     SchemaSlot(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
@@ -218,7 +218,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
 
   private def readStep(jsonNode: ObjectJsonNode, parentPath: SdfDocumentPath, resource: Resource): Step = {
     val id = Uri.parse(resource.getURI)
-    val path = SdfDocumentPath.builder(parentPath.id).schema(parentPath.schema.get.id).step(id).build
+    val path = SdfDocumentPath.builder(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).step(id).build
     Step(
       achieves = Option(resource.achieves).filter(_.nonEmpty),
       aka = Option(resource.aka).filter(_.nonEmpty),
@@ -251,7 +251,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
 
   private def readStepParticipant(jsonNode: ObjectJsonNode, parentPath: SdfDocumentPath, resource: Resource): StepParticipant = {
     val id = Uri.parse(resource.getURI)
-    val path = SdfDocumentPath.builder(parentPath.id).schema(parentPath.schema.get.id).step(parentPath.schema.get.step.get.id).participant(id)
+    val path = SdfDocumentPath.builder(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).step(parentPath.sdfDocument.schema.get.step.get.id).participant(id)
     StepParticipant(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),

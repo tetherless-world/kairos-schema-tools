@@ -107,19 +107,19 @@ final class SearchEngine {
           (List(
             Fields.id(searchDocument.id.toString),
             Fields.label(searchDocument.label),
-            Fields.sdfDocumentId(searchDocument.path.id.toString),
+            Fields.sdfDocumentId(searchDocument.path.sdfDocument.id.toString),
             Fields.`type`(searchDocument.`type`.value)
           ) ++
             searchDocument.aka.map(aka => Fields.aka(aka.mkString(" "))).toList ++
             searchDocument.comments.map(comments => Fields.comments(comments.mkString(" "))).toList ++
-            searchDocument.path.primitive.toList.flatMap(primitive => {
+            searchDocument.path.sdfDocument.primitive.toList.flatMap(primitive => {
               var fieldAndValues: List[FieldAndValue[String]] = List(Fields.primitiveId(primitive.id.toString))
               if (primitive.slot.isDefined) {
                 fieldAndValues :+= Fields.primitiveSlotId(primitive.slot.get.id.toString)
               }
               fieldAndValues
             }) ++
-            searchDocument.path.schema.toList.flatMap(schema => {
+            searchDocument.path.sdfDocument.schema.toList.flatMap(schema => {
               var fieldAndValues: List[FieldAndValue[String]] = List(Fields.schemaId(schema.id.toString))
               if (schema.slot.isDefined) {
                 fieldAndValues :+= Fields.schemaSlotId(schema.slot.get.id.toString)

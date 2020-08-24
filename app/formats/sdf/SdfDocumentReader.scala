@@ -58,7 +58,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
     } catch {
       case e: ValidationException => {
         return SdfDocument(
-            id = e.messages.map(_.path.id).headOption.getOrElse(sourceUri),
+            id = e.messages.map(_.path.sdfDocument.id).headOption.getOrElse(sourceUri),
             primitives = List(),
             schemas = List(),
             sdfVersion = "",

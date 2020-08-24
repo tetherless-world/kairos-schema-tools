@@ -1,21 +1,23 @@
 export interface SdfDocumentPath {
-  id: string;
-  primitive?: {
+  sdfDocument: {
     id: string;
-    slot?: {
+    primitive?: {
       id: string;
-    } | null;
-  } | null;
-  schema?: {
-    id: string;
-    slot?: {
-      id: string;
-    } | null;
-    step?: {
-      id: string;
-      participant?: {
+      slot?: {
         id: string;
       } | null;
     } | null;
-  } | null;
+    schema?: {
+      id: string;
+      slot?: {
+        id: string;
+      } | null;
+      step?: {
+        id: string;
+        participant?: {
+          id: string;
+        } | null;
+      } | null;
+    } | null;
+  };
 }

@@ -46,41 +46,42 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val DurationObjectType = deriveObjectType[GraphQlSchemaContext, Duration]()
 
   // SdfDocumentPath
-  implicit val SdfDocumentPathSchemaSlotObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPathSchemaSlot](
+  implicit val SdfDocumentPathSchemaSlotObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPath.SdfDocumentPathSchemaSlot](
     AddFields(
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSchemaSlotById(ctx.value.id).map(_.label))
     )
   )
-  implicit val SdfDocumentPathStepParticipantObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPathStepParticipant](
+  implicit val SdfDocumentPathStepParticipantObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPath.SdfDocumentPathStepParticipant](
     AddFields(
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getStepParticipantById(ctx.value.id).map(_.label))
     )
   )
-  implicit val SdfDocumentPathStepObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPathStep](
+  implicit val SdfDocumentPathStepObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPath.SdfDocumentPathStep](
     AddFields(
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getStepById(ctx.value.id).map(_.label))
     )
   )
-  implicit val SdfDocumentPathSchemaObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPathSchema](
+  implicit val SdfDocumentPathSchemaObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPath.SdfDocumentPathSchema](
     AddFields(
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSchemaById(ctx.value.id).map(_.label))
     )
   )
-  implicit val SdfDocumentPathPrimitiveSlotObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPathPrimitiveSlot](
+  implicit val SdfDocumentPathPrimitiveSlotObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPath.SdfDocumentPathPrimitiveSlot](
     AddFields(
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getPrimitiveSlotById(ctx.value.id).map(_.label))
     )
   )
-  implicit val SdfDocumentPathPrimitiveObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPathPrimitive](
+  implicit val SdfDocumentPathPrimitiveObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPath.SdfDocumentPathPrimitive](
     AddFields(
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getPrimitiveById(ctx.value.id).map(_.label))
     )
   )
-  implicit val SdfDocumentPathObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPath](
+  implicit val SdfDocumentPathSdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPath.SdfDocumentPathSdfDocument](
     AddFields(
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.id).map(_.label))
     )
   )
+  implicit val SdfDocumentPathObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentPath]()
 
   // Entity relations
   implicit val EntityRelationRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelationRelation]()

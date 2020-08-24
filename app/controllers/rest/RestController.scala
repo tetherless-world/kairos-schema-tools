@@ -4,14 +4,12 @@ import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.SdfDocument
 import javax.inject.{Inject, Singleton}
 import models.json.JsonNodeLocation
-import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, Duration, EntityRelation, EntityRelationRelation, EntityType, OverlapsStepOrder, Primitive, PrimitiveSlot, Schema, SchemaSlot, SdfDocumentPath, SdfDocumentPathPrimitive, SdfDocumentPathPrimitiveSlot, SdfDocumentPathSchema, SdfDocumentPathSchemaSlot, SdfDocumentPathStep, SdfDocumentPathStepParticipant, Step, StepOrder, StepOrderFlag, StepParticipant}
+import models.schema._
 import models.validation.{ValidationMessage, ValidationMessageType}
-import play.api.http.MimeTypes
 import play.api.libs.json
 import play.api.libs.json._
 import play.api.mvc.InjectedController
 import stores.Store
-import play.api.mvc._
 //import play.api.libs.functional.syntax._
 
 @Singleton
@@ -23,12 +21,13 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val jsonNodeLocationWrites = Json.writes[JsonNodeLocation]
   private implicit val uriJsonWrites: json.Writes[Uri] = (uri) => JsString(uri.toString)
   // SdfDocumentPath
-  private implicit val sdfDocumentPathPrimitiveSlotJsonWrites = Json.writes[SdfDocumentPathPrimitiveSlot]
-  private implicit val sdfDocumentPathPrimitiveJsonWrites = Json.writes[SdfDocumentPathPrimitive]
-  private implicit val sdfDocumentPathSchemaSlotJsonWrites = Json.writes[SdfDocumentPathSchemaSlot]
-  private implicit val sdfDocumentPathStepParticipantJsonWrites = Json.writes[SdfDocumentPathStepParticipant]
-  private implicit val sdfDocumentPathStepJsonWrites = Json.writes[SdfDocumentPathStep]
-  private implicit val sdfDocumentPathSchemaJsonWrites = Json.writes[SdfDocumentPathSchema]
+  private implicit val sdfDocumentPathPrimitiveSlotJsonWrites = Json.writes[SdfDocumentPath.SdfDocumentPathPrimitiveSlot]
+  private implicit val sdfDocumentPathPrimitiveJsonWrites = Json.writes[SdfDocumentPath.SdfDocumentPathPrimitive]
+  private implicit val sdfDocumentPathSchemaSlotJsonWrites = Json.writes[SdfDocumentPath.SdfDocumentPathSchemaSlot]
+  private implicit val sdfDocumentPathStepParticipantJsonWrites = Json.writes[SdfDocumentPath.SdfDocumentPathStepParticipant]
+  private implicit val sdfDocumentPathStepJsonWrites = Json.writes[SdfDocumentPath.SdfDocumentPathStep]
+  private implicit val sdfDocumentPathSchemaJsonWrites = Json.writes[SdfDocumentPath.SdfDocumentPathSchema]
+  private implicit val sdfdocumentPathSdfDocumentJsonWrites = Json.writes[SdfDocumentPath.SdfDocumentPathSdfDocument]
   private implicit val sdfDocumentPathJsonWrites = Json.writes[SdfDocumentPath]
   // Entity relations
   private implicit val entityRelationRelationJsonWrites = Json.writes[EntityRelationRelation]
