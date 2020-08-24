@@ -18,7 +18,7 @@ import ErrorIcon from "@material-ui/icons/Error";
 import WarningIcon from "@material-ui/icons/Warning";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 import {DefinitionPath} from "models/definition/DefinitionPath";
-import {PrimitivesTable} from "components/schema/PrimitivesTable";
+import {PrimitivesTable} from "components/primitive/PrimitivesTable";
 
 export const SdfDocumentCard: React.FunctionComponent<{
   sdfDocument: {

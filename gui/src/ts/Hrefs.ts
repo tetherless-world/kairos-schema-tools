@@ -71,7 +71,7 @@ class SdfDocumentSchemasHrefs extends SubHrefs {
 
 class SdfDocumentHrefs extends SubHrefs {
   get primitives() {
-    return new SdfDocumentPrimitivesHrefs(this.home + "primitives/");
+    return new SdfDocumentPrimitivesHrefs(this.home + "primitive/");
   }
 
   get schemas() {
