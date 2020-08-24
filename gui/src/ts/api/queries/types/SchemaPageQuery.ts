@@ -341,5 +341,4 @@ export interface SchemaPageQuery {
 export interface SchemaPageQueryVariables {
   schemaId: string;
   sdfDocumentId: string;
-  withSdfDocument: boolean;
 }

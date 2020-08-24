@@ -28,8 +28,7 @@ export const SchemaPage: React.FunctionComponent = () => {
     fetchPolicy: "no-cache",
     variables: {
       schemaId,
-      sdfDocumentId: sdfDocumentId ?? "",
-      withSdfDocument: !!sdfDocumentId,
+      sdfDocumentId,
     },
   });
 
@@ -66,7 +65,7 @@ export const SchemaPage: React.FunctionComponent = () => {
             breadcrumbs={{
               sdfDocument: {
                 id: sdfDocumentId,
-                label: sdfDocument!.label,
+                label: sdfDocument.label,
                 schema,
               },
             }}

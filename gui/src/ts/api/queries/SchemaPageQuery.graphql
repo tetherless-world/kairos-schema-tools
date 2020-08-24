@@ -1,6 +1,6 @@
 #import "./DefinitionPathFragment.graphql"
 
-query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocument: Boolean!) {
+query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
     schemaById(id: $schemaId) {
         aka
         comments
@@ -88,7 +88,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
         version
     }
 
-    sdfDocumentById(id: $sdfDocumentId) @include(if: $withSdfDocument) {
+    sdfDocumentById(id: $sdfDocumentId) {
         label
     }
 }
