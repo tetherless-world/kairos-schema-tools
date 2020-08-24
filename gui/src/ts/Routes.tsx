@@ -56,6 +56,15 @@ export const Routes: React.FunctionComponent = () => (
               component={SdfDocumentPage}
             />
 
+            {/*Document primitives*/}
+            <Route
+              exact
+              path={Hrefs.sdfDocuments
+                .sdfDocument(sdfDocumentIdParam)
+                .primitives.toString()}
+              component={PrimitivesPage}
+            />
+
             {/*Document schemas*/}
             <Route
               exact

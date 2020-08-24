@@ -31,7 +31,7 @@ export const SchemasPage: React.FunctionComponent = () => {
         let breadcrumbs: BreadcrumbsProps | undefined;
         type Schema = {id: string; label: string; path: DefinitionPath};
         let schemas: Schema[];
-        let subtitle: React.ReactNode | undefined;
+        let subtitle: React.ReactNode;
         if (sdfDocumentId) {
           const sdfDocument = data.sdfDocumentById;
           if (!sdfDocument) {

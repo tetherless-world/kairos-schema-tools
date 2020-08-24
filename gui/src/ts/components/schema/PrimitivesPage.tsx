@@ -31,7 +31,7 @@ export const PrimitivesPage: React.FunctionComponent = () => {
         let breadcrumbs: BreadcrumbsProps | undefined;
         type Primitive = {id: string; label: string; path: DefinitionPath};
         let primitives: Primitive[];
-        let subtitle: React.ReactNode | undefined;
+        let subtitle: React.ReactNode;
         if (sdfDocumentId) {
           const sdfDocument = data.sdfDocumentById;
           if (!sdfDocument) {
@@ -51,6 +51,7 @@ export const PrimitivesPage: React.FunctionComponent = () => {
           );
         } else {
           primitives = data.primitives ?? [];
+          subtitle = "All documents";
         }
 
         return (
