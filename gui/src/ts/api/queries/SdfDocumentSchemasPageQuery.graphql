@@ -1,0 +1,14 @@
+#import "./DefinitionPathFragment.graphql"
+
+query SdfDocumentSchemasPageQuery($sdfDocumentId: String!) {
+    sdfDocumentById(id: $sdfDocumentId) {
+        label
+        schemas {
+            id
+            label
+            path {
+                ...DefinitionPathFragment
+            }
+        }
+    }
+}
