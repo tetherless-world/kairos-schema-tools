@@ -18,11 +18,17 @@ import ErrorIcon from "@material-ui/icons/Error";
 import WarningIcon from "@material-ui/icons/Warning";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 import {DefinitionPath} from "models/definition/DefinitionPath";
+import {PrimitivesTable} from "components/schema/PrimitivesTable";
 
 export const SdfDocumentCard: React.FunctionComponent<{
   sdfDocument: {
     id: string;
     label: string;
+    primitives: {
+      id: string;
+      label: string;
+      path: DefinitionPath;
+    }[];
     schemas: {
       id: string;
       label: string;
@@ -32,7 +38,14 @@ export const SdfDocumentCard: React.FunctionComponent<{
     validationMessageTypes: ValidationMessageType[];
   };
 }> = ({
-  sdfDocument: {id, label, schemas, sdfVersion, validationMessageTypes},
+  sdfDocument: {
+    id,
+    label,
+    primitives,
+    schemas,
+    sdfVersion,
+    validationMessageTypes,
+  },
 }) => {
   return (
     <Card data-cy={"sdf-document-card-" + id}>
@@ -73,6 +86,21 @@ export const SdfDocumentCard: React.FunctionComponent<{
               </TableBody>
             </Table>
           </Grid>
+          {primitives.length > 0 ? (
+            <Grid item data-cy="sdf-document-primitives">
+              <Typography variant="h6">
+                <Link
+                  dataCy="sdf-document-primitives-header"
+                  to={Hrefs.sdfDocuments
+                    .sdfDocument({id})
+                    .primitives.toString()}
+                >
+                  Schemas
+                </Link>
+              </Typography>
+              <PrimitivesTable primitives={primitives} />
+            </Grid>
+          ) : null}
           {schemas.length > 0 ? (
             <Grid item data-cy="sdf-document-schemas">
               <Typography variant="h6">

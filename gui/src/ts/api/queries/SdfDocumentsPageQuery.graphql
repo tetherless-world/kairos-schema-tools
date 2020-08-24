@@ -4,6 +4,13 @@ query SdfDocumentsPageQuery {
     sdfDocuments {
         id
         label
+        primitives {
+            id
+            label
+            path {
+                ...DefinitionPathFragment
+            }
+        }
         schemas {
             id
             label

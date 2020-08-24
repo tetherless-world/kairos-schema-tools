@@ -41,9 +41,7 @@ export const SchemasPage: React.FunctionComponent = () => {
           breadcrumbs = {
             sdfDocument: {id: sdfDocumentId, label: sdfDocument.label},
           };
-          schemas = sdfDocument!.schemas.map((schema) =>
-            Object.assign({}, schema, {sdfDocumentId: sdfDocumentId!})
-          );
+          schemas = sdfDocument!.schemas;
           subtitle = (
             <span>
               Document:{" "}
