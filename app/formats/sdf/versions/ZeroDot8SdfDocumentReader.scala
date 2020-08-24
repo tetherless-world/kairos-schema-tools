@@ -28,7 +28,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     }
   }
 
-  private def mapResourcesToObjectJsonNodes(jsonNodes: List[JsonNode], path: SdfDocumentPath, resources: List[Resource]): List[(ObjectJsonNode, Resource)] = {
+  private def mapResourcesToObjectJsonNodes(jsonNodes: List[JsonNode], path: DefinitionPath, resources: List[Resource]): List[(ObjectJsonNode, Resource)] = {
     val objectJsonNodes = jsonNodes.filter(_.isInstanceOf[ObjectJsonNode]).map(_.asInstanceOf[ObjectJsonNode])
     if (objectJsonNodes.size != resources.size) {
       validationMessages += ValidationMessage("different number of JSON nodes than resources", path, ValidationMessageType.Error)
@@ -70,7 +70,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     })
   }
 
-  private def readEntityRelation(parentPath: SdfDocumentPath, resource: Resource) =
+  private def readEntityRelation(parentPath: DefinitionPath, resource: Resource) =
     EntityRelation(
       comments = Option(resource.comment).filter(_.nonEmpty),
       relations = resource.relations.flatMap(entityRelationRelationResource =>
@@ -86,16 +86,16 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       relationSubject = resource.relationSubject.headOption.getOrElse(throw ValidationException(s"entity relation missing subject: ${resource.toTtlString()}", parentPath))
     )
 
-  private def readEntityRelationRelation(parentPath: SdfDocumentPath, resource: Resource) =
+  private def readEntityRelationRelation(parentPath: DefinitionPath, resource: Resource) =
     EntityRelationRelation(
       name = resource.name.headOption,
       relationObjects = resource.relationObject,
       relationPredicate = resource.relationPredicate.headOption.getOrElse(throw ValidationException(s"entity relation missing relation predicate: ${resource.toTtlString()}", parentPath))
     )
 
-  private def readPrimitive(jsonNode: ObjectJsonNode, parentPath: SdfDocumentPath, resource: Resource) = {
+  private def readPrimitive(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource) = {
     val id = Uri.parse(resource.getURI)
-    val path = SdfDocumentPath.builder(parentPath.sdfDocument.id).primitive(id).build
+    val path = DefinitionPath.builder(parentPath.sdfDocument.id).primitive(id).build
     models.schema.Primitive(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
@@ -114,9 +114,9 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     )
   }
 
-  private def readSchema(jsonNode: ObjectJsonNode, parentPath: SdfDocumentPath, resource: Resource) = {
+  private def readSchema(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource) = {
     val id = Uri.parse(resource.getURI)
-    val path = SdfDocumentPath.builder(parentPath.sdfDocument.id).schema(id).build
+    val path = DefinitionPath.builder(parentPath.sdfDocument.id).schema(id).build
     Schema(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
@@ -180,9 +180,9 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     )
   }
 
-  private def readSchemaSlot(jsonNode: ObjectJsonNode, parentPath: SdfDocumentPath, resource: Resource) = {
+  private def readSchemaSlot(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource) = {
     val id = Uri.parse(resource.getURI)
-    val path = SdfDocumentPath.builder(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).slot(id)
+    val path = DefinitionPath.builder(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).slot(id)
     SchemaSlot(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
@@ -196,7 +196,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     )
   }
 
-  private def readStepOrder(parentPath: SdfDocumentPath, resource: Resource) = {
+  private def readStepOrder(parentPath: DefinitionPath, resource: Resource) = {
     val after = resource.after
     val before = resource.before
     val comments = Option(resource.comment).filter(_.nonEmpty)
@@ -216,9 +216,9 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     }
   }
 
-  private def readStep(jsonNode: ObjectJsonNode, parentPath: SdfDocumentPath, resource: Resource): Step = {
+  private def readStep(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource): Step = {
     val id = Uri.parse(resource.getURI)
-    val path = SdfDocumentPath.builder(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).step(id).build
+    val path = DefinitionPath.builder(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).step(id).build
     Step(
       achieves = Option(resource.achieves).filter(_.nonEmpty),
       aka = Option(resource.aka).filter(_.nonEmpty),
@@ -249,9 +249,9 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     )
   }
 
-  private def readStepParticipant(jsonNode: ObjectJsonNode, parentPath: SdfDocumentPath, resource: Resource): StepParticipant = {
+  private def readStepParticipant(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource): StepParticipant = {
     val id = Uri.parse(resource.getURI)
-    val path = SdfDocumentPath.builder(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).step(parentPath.sdfDocument.schema.get.step.get.id).participant(id)
+    val path = DefinitionPath.builder(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).step(parentPath.sdfDocument.schema.get.step.get.id).participant(id)
     StepParticipant(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
@@ -268,7 +268,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
 
   def read(): SdfDocument = {
     val id = header.id
-    val path = SdfDocumentPath.builder(id).build
+    val path = DefinitionPath.builder(id).build
     SdfDocument(
       id = id,
       primitives = List(),

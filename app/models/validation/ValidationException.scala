@@ -1,6 +1,6 @@
 package models.validation
 
-import models.schema.SdfDocumentPath
+import models.schema.DefinitionPath
 
 /**
  * An exception used to abort a normal code path while attaching validation messages.
@@ -8,14 +8,14 @@ import models.schema.SdfDocumentPath
 final class ValidationException(val messages: List[ValidationMessage]) extends Exception
 
 object ValidationException {
-  def apply(message: String, path: SdfDocumentPath): ValidationException =
+  def apply(message: String, path: DefinitionPath): ValidationException =
     ValidationException(
       message = message,
       path = path,
       `type` = ValidationMessageType.Error
     )
 
-  def apply(message: String, path: SdfDocumentPath, `type`: ValidationMessageType): ValidationException =
+  def apply(message: String, path: DefinitionPath, `type`: ValidationMessageType): ValidationException =
     ValidationException(
       ValidationMessage(
         message = message,

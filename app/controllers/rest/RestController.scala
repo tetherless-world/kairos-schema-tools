@@ -20,15 +20,15 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val durationJsonWrites = Json.writes[Duration]
   private implicit val jsonNodeLocationWrites = Json.writes[JsonNodeLocation]
   private implicit val uriJsonWrites: json.Writes[Uri] = (uri) => JsString(uri.toString)
-  // SdfDocumentPath
-  private implicit val sdfDocumentPathPrimitiveSlotJsonWrites = Json.writes[SdfDocumentPath.SdfDocumentPathPrimitiveSlot]
-  private implicit val sdfDocumentPathPrimitiveJsonWrites = Json.writes[SdfDocumentPath.SdfDocumentPathPrimitive]
-  private implicit val sdfDocumentPathSchemaSlotJsonWrites = Json.writes[SdfDocumentPath.SdfDocumentPathSchemaSlot]
-  private implicit val sdfDocumentPathStepParticipantJsonWrites = Json.writes[SdfDocumentPath.SdfDocumentPathStepParticipant]
-  private implicit val sdfDocumentPathStepJsonWrites = Json.writes[SdfDocumentPath.SdfDocumentPathStep]
-  private implicit val sdfDocumentPathSchemaJsonWrites = Json.writes[SdfDocumentPath.SdfDocumentPathSchema]
-  private implicit val sdfdocumentPathSdfDocumentJsonWrites = Json.writes[SdfDocumentPath.SdfDocumentPathSdfDocument]
-  private implicit val sdfDocumentPathJsonWrites = Json.writes[SdfDocumentPath]
+  // DefinitionPath
+  private implicit val definitionPathPrimitiveSlotJsonWrites = Json.writes[DefinitionPath.DefinitionPathPrimitiveSlot]
+  private implicit val definitionPathPrimitiveJsonWrites = Json.writes[DefinitionPath.DefinitionPathPrimitive]
+  private implicit val definitionPathSchemaSlotJsonWrites = Json.writes[DefinitionPath.DefinitionPathSchemaSlot]
+  private implicit val definitionPathStepParticipantJsonWrites = Json.writes[DefinitionPath.DefinitionPathStepParticipant]
+  private implicit val definitionPathStepJsonWrites = Json.writes[DefinitionPath.DefinitionPathStep]
+  private implicit val definitionPathSchemaJsonWrites = Json.writes[DefinitionPath.DefinitionPathSchema]
+  private implicit val definitionPathPathSdfDocumentJsonWrites = Json.writes[DefinitionPath.DefinitionPathSdfDocument]
+  private implicit val definitionPathJsonWrites = Json.writes[DefinitionPath]
   // Entity relations
   private implicit val entityRelationRelationJsonWrites = Json.writes[EntityRelationRelation]
   private implicit val entityRelationJsonWrites = Json.writes[EntityRelation]

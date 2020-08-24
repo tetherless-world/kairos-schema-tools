@@ -8,7 +8,7 @@ trait Slot extends Definition {
   val comments: Option[List[String]]
   val entityTypes: Option[List[EntityType]]
   val id: Uri
-  val path: SdfDocumentPath
+  val path: DefinitionPath
   val references: Option[List[String]]
   val sourceJsonNodeLocation: JsonNodeLocation
 }

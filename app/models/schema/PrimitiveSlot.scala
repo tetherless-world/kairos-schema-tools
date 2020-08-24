@@ -8,7 +8,7 @@ final case class PrimitiveSlot(
                                 comments: Option[List[String]],
                                 entityTypes: Option[List[EntityType]],
                                 id: Uri,
-                                path: SdfDocumentPath,
+                                path: DefinitionPath,
                                 references: Option[List[String]],
                                 roleName: String,
                                 sourceJsonNodeLocation: JsonNodeLocation,

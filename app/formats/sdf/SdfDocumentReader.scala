@@ -7,7 +7,7 @@ import formats.json.JsonParser
 import formats.sdf.versions.ZeroDot8SdfDocumentReader
 import formats.sdf.vocabulary.KAIROS
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
-import models.schema.SdfDocumentPath
+import models.schema.DefinitionPath
 import models.validation.{ValidationException, ValidationMessage, ValidationMessageType}
 import org.apache.jena.rdf.model.{Model, ModelFactory, Resource}
 import org.apache.jena.riot.{Lang, RiotException}
@@ -41,7 +41,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
           validationMessages = List(
             ValidationMessage(
               message = e.getMessage,
-              path = SdfDocumentPath.builder(sourceUri).build,
+              path = DefinitionPath.builder(sourceUri).build,
               `type` = ValidationMessageType.Fatal
             )
           )
@@ -76,7 +76,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
         case sdfVersion =>
           throw ValidationException(
             message = s"unrecognized SDF version ${sdfVersion}",
-            path = SdfDocumentPath.builder(header.id).build,
+            path = DefinitionPath.builder(header.id).build,
             `type` = ValidationMessageType.Fatal
           )
       }
