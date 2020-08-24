@@ -12,7 +12,7 @@ final case class PrimitiveSlot(
                                 references: Option[List[String]],
                                 roleName: String,
                                 sourceJsonNodeLocation: JsonNodeLocation,
-                                `super`: Option[Uri]
+                                `super`: Uri
                               ) extends Slot {
 //  def label = s"${roleName}${entityTypes.map(entityTypes => s" (${entityTypes.map(_.label).mkString(", ")})").getOrElse("")}"
   final override def label = roleName

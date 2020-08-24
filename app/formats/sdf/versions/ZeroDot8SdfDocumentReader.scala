@@ -105,11 +105,40 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       name = resource.name.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required name property", path)),
       path = path,
       references = Option(resource.reference).filter(_.nonEmpty),
-      slots = List(),
+      slots = mapResourcesToObjectJsonNodes(
+        jsonNodes = jsonNode.map.get("slots").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
+        path = path,
+        resources = resource.slots,
+      ).flatMap(entry =>
+        try {
+          Some(readPrimitiveSlot(jsonNode = entry._1, parentPath = path, resource =entry._2))
+        } catch {
+          case e: ValidationException => {
+            validationMessages ++= e.messages
+            None
+          }
+        }
+      ),
       sourceJsonNodeLocation = jsonNode.location,
       `super` = resource.`super`.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required super property", path)),
       template = resource.template.headOption,
       version = resource.version.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing requirde version property", path))
+    )
+  }
+
+  private def readPrimitiveSlot(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource) = {
+    val id = Uri.parse(resource.getURI)
+    val path = DefinitionPath.sdfDocument(parentPath.sdfDocument.id).primitive(parentPath.sdfDocument.primitive.get.id).slot(id)
+    PrimitiveSlot(
+      aka = Option(resource.aka).filter(_.nonEmpty),
+      comments = Option(resource.comment).filter(_.nonEmpty),
+      entityTypes = Option(resource.entityTypes).filter(_.nonEmpty),
+      id = id,
+      path = path,
+      references = Option(resource.reference).filter(_.nonEmpty),
+      roleName = resource.roleName.headOption.getOrElse(throw ValidationException(s"slot ${id} missing required roleName property", path)),
+      sourceJsonNodeLocation = jsonNode.location,
+      `super` = resource.`super`.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required super property", path))
     )
   }
 
