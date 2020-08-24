@@ -15,7 +15,7 @@ final case class StepParticipant(
                        role: Uri,
                        sourceJsonNodeLocation: JsonNodeLocation,
                      ) extends Slot {
-  def label = {
+  final override def label = {
     val roleParts = role.toString.split('/')
     if (!roleParts(roleParts.length - 1).isEmpty) {
       s"${name} (${roleParts(roleParts.length - 1)})"

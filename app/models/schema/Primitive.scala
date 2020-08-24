@@ -18,6 +18,6 @@ final case class Primitive(
                       `super`: Uri,
                       template: Option[String],
                       version: String
-) {
-  def label = name
+) extends Definition {
+  final override def label = name
 }

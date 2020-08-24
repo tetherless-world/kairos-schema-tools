@@ -15,5 +15,5 @@ final case class PrimitiveSlot(
                                 `super`: Option[Uri]
                               ) extends Slot {
 //  def label = s"${roleName}${entityTypes.map(entityTypes => s" (${entityTypes.map(_.label).mkString(", ")})").getOrElse("")}"
-  def label = roleName
+  final override def label = roleName
 }

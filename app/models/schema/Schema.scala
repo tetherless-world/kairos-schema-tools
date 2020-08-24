@@ -19,6 +19,6 @@ final case class Schema(
                    ta2: Boolean,
                    template: Option[String],
                    version: String
-) {
-  def label = name
+) extends Definition {
+  final override def label = name
 }
