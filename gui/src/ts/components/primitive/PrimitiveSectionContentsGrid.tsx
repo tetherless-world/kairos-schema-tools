@@ -6,6 +6,7 @@ import {PrimitiveHrefs} from "Hrefs";
 import {primitiveSections} from "models/primitive/primitiveSections";
 import {TopLevelDefinitionSectionContentsGrid} from "components/definition/TopLevelDefinitionSectionContentsGrid";
 import {TopLevelDefinitionSectionContents} from "components/definition/TopLevelDefinitionSectionContents";
+import {PrimitiveSlotCard} from "components/primitive/PrimitiveSlotCard";
 
 export const PrimitiveSectionContentsGrid: React.FunctionComponent<{
   hrefs: PrimitiveHrefs;
@@ -24,7 +25,7 @@ export const PrimitiveSectionContentsGrid: React.FunctionComponent<{
           <Grid container direction="column" spacing={4}>
             {primitive.slots.map((slot) => (
               <Grid item id={hrefs.slotId(slot)} key={slot.id}>
-                {/*<SlotCard slot={slot} />*/}
+                <PrimitiveSlotCard slot={slot} />
               </Grid>
             ))}
           </Grid>
