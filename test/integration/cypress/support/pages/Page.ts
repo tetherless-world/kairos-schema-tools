@@ -41,6 +41,16 @@ export abstract class Page {
 
   readonly standardLayout = {
     breadcrumbs: {
+      get primitive() {
+        return cy.get(
+          "[data-cy=standard-layout] [data-cy=breadcrumbs] [data-cy=primitive-breadcrumb]"
+        );
+      },
+      get primitives() {
+        return cy.get(
+          "[data-cy=standard-layout] [data-cy=breadcrumbs] [data-cy=primitives-breadcrumb]"
+        );
+      },
       get schema() {
         return cy.get(
           "[data-cy=standard-layout] [data-cy=breadcrumbs] [data-cy=schema-breadcrumb]"

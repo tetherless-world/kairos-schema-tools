@@ -10,15 +10,6 @@ export class SchemaPage extends Page {
     this.sdfDocumentId = kwds.sdfDocumentId;
   }
 
-  get graphTab() {
-    cy.get("[data-cy=graph-tab]").click();
-    return {
-      get graph() {
-        return cy.get("#schema-graph");
-      },
-    };
-  }
-
   get tableTab() {
     cy.get("[data-cy=table-tab]").click();
     return {
