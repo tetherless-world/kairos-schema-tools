@@ -1,5 +1,12 @@
 import {SchemaPageQuery_schemaById_steps} from "api/queries/types/SchemaPageQuery";
-import {Card, CardContent, CardHeader, Grid, Table, TableBody} from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Grid,
+  Table,
+  TableBody,
+} from "@material-ui/core";
 import * as React from "react";
 import {SchemaHrefs} from "Hrefs";
 import {StepParticipantCard} from "components/schema/StepParticipantCard";
