@@ -3,7 +3,7 @@ import {Card, CardContent, CardHeader} from "@material-ui/core";
 import * as React from "react";
 import {SlotDetailsTable} from "components/schema/SlotDetailsTable";
 
-export const SlotCard: React.FunctionComponent<{
+export const SchemaSlotCard: React.FunctionComponent<{
   slot: SchemaPageQuery_schemaById_slots;
 }> = ({slot}) => (
   <Card>

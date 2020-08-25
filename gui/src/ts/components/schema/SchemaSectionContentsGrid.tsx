@@ -5,7 +5,7 @@ import {Grid, Typography} from "@material-ui/core";
 import {StepCard} from "components/schema/StepCard";
 import {StepOrderCard} from "components/schema/StepOrderCard";
 import {EntityRelationCard} from "components/schema/EntityRelationCard";
-import {SlotCard} from "components/schema/SlotCard";
+import {SchemaSlotCard} from "components/schema/SchemaSlotCard";
 import {SchemaHrefs} from "Hrefs";
 import {SchemaSection} from "models/schema/SchemaSection";
 import {schemaSections} from "models/schema/schemaSections";
@@ -50,7 +50,7 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
           <Grid container direction="column" spacing={4}>
             {schema.slots.map((slot) => (
               <Grid item id={hrefs.slotId(slot)} key={slot.id}>
-                <SlotCard slot={slot} />
+                <SchemaSlotCard slot={slot} />
               </Grid>
             ))}
           </Grid>
