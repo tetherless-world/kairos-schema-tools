@@ -8,6 +8,110 @@ import { ValidationMessageType } from "./../../graphqlGlobalTypes";
 // GraphQL fragment: SdfDocumentSourceFragment
 // ====================================================
 
+export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_primitive_slot {
+  __typename: "DefinitionPathPrimitiveSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_primitive {
+  __typename: "DefinitionPathPrimitive";
+  id: string;
+  label: string | null;
+  slot: SdfDocumentSourceFragment_primitives_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_slot {
+  __typename: "DefinitionPathSchemaSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_step_participant {
+  __typename: "DefinitionPathStepParticipant";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_step {
+  __typename: "DefinitionPathStep";
+  id: string;
+  label: string | null;
+  participant: SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_step_participant | null;
+}
+
+export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_schema {
+  __typename: "DefinitionPathSchema";
+  id: string;
+  label: string | null;
+  slot: SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_slot | null;
+  step: SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_step | null;
+}
+
+export interface SdfDocumentSourceFragment_primitives_path_sdfDocument {
+  __typename: "DefinitionPathSdfDocument";
+  id: string;
+  primitive: SdfDocumentSourceFragment_primitives_path_sdfDocument_primitive | null;
+  schema: SdfDocumentSourceFragment_primitives_path_sdfDocument_schema | null;
+}
+
+export interface SdfDocumentSourceFragment_primitives_path {
+  __typename: "DefinitionPath";
+  sdfDocument: SdfDocumentSourceFragment_primitives_path_sdfDocument;
+}
+
+export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_primitive_slot {
+  __typename: "DefinitionPathPrimitiveSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_primitive {
+  __typename: "DefinitionPathPrimitive";
+  id: string;
+  label: string | null;
+  slot: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema_slot {
+  __typename: "DefinitionPathSchemaSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema_step_participant {
+  __typename: "DefinitionPathStepParticipant";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema_step {
+  __typename: "DefinitionPathStep";
+  id: string;
+  label: string | null;
+  participant: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema_step_participant | null;
+}
+
+export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema {
+  __typename: "DefinitionPathSchema";
+  id: string;
+  label: string | null;
+  slot: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema_slot | null;
+  step: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema_step | null;
+}
+
+export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument {
+  __typename: "DefinitionPathSdfDocument";
+  id: string;
+  primitive: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_primitive | null;
+  schema: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema | null;
+}
+
+export interface SdfDocumentSourceFragment_primitives_slots_path {
+  __typename: "DefinitionPath";
+  sdfDocument: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument;
+}
+
 export interface SdfDocumentSourceFragment_primitives_slots_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
   column: number;
@@ -18,6 +122,7 @@ export interface SdfDocumentSourceFragment_primitives_slots {
   __typename: "PrimitiveSlot";
   id: string;
   label: string;
+  path: SdfDocumentSourceFragment_primitives_slots_path;
   sourceJsonNodeLocation: SdfDocumentSourceFragment_primitives_slots_sourceJsonNodeLocation;
 }
 
@@ -31,6 +136,7 @@ export interface SdfDocumentSourceFragment_primitives {
   __typename: "Primitive";
   id: string;
   label: string;
+  path: SdfDocumentSourceFragment_primitives_path;
   slots: SdfDocumentSourceFragment_primitives_slots[];
   sourceJsonNodeLocation: SdfDocumentSourceFragment_primitives_sourceJsonNodeLocation;
 }
