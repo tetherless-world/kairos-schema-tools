@@ -1,6 +1,7 @@
 import * as qs from "qs";
 import {SchemaSectionId} from "models/schema/SchemaSectionId";
 import {DefinitionPath} from "models/definition/DefinitionPath";
+import {PrimitiveSectionId} from "models/primitive/PrimitiveSectionId";
 
 const encodeId = (kwds: {id: string; idEncoded?: boolean}) =>
   kwds.idEncoded ? kwds.id : encodeURIComponent(kwds.id);
@@ -18,6 +19,10 @@ class SubHrefs {
 }
 
 export class PrimitiveHrefs extends SubHrefs {
+  section(id: PrimitiveSectionId) {
+    return `${this.home}#${id}`;
+  }
+
   slot(slot: {id: string}) {
     return `${this.home}#${this.slotId(slot)}`;
   }

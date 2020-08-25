@@ -13,7 +13,9 @@ import {ScrollManager, WindowScroller} from "react-scroll-manager";
 import {PrimitivesPage} from "components/primitive/PrimitivesPage";
 import {SdfDocumentSchemasPage} from "components/sdfDocument/SdfDocumentSchemasPage";
 import {SdfDocumentPrimitivesPage} from "components/sdfDocument/SdfDocumentPrimitivesPage";
+import {PrimitivePage} from "components/primitive/PrimitivePage";
 
+const primitiveIdParam = {id: ":primitiveId", idEncoded: true};
 const schemaIdParam = {id: ":schemaId", idEncoded: true};
 const sdfDocumentIdParam = {id: ":sdfDocumentId", idEncoded: true};
 const history = createHistory();
@@ -65,6 +67,16 @@ export const Routes: React.FunctionComponent = () => (
                 .sdfDocument(sdfDocumentIdParam)
                 .primitives.toString()}
               component={SdfDocumentPrimitivesPage}
+            />
+
+            {/*Document primitive*/}
+            <Route
+              exact
+              path={Hrefs.sdfDocuments
+                .sdfDocument(sdfDocumentIdParam)
+                .primitives.primitive(primitiveIdParam)
+                .toString()}
+              component={PrimitivePage}
             />
 
             {/*Document schemas*/}

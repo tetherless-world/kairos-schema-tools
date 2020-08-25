@@ -5,6 +5,7 @@ query PrimitivePageQuery($primitiveId: String!, $sdfDocumentId: String!) {
         aka
         comments
         description
+        label
         maxDuration {
             string
         }

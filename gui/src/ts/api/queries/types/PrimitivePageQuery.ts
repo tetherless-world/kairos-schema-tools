@@ -140,6 +140,7 @@ export interface PrimitivePageQuery_primitiveById {
   aka: string[] | null;
   comments: string[] | null;
   description: string;
+  label: string;
   maxDuration: PrimitivePageQuery_primitiveById_maxDuration | null;
   minDuration: PrimitivePageQuery_primitiveById_minDuration | null;
   name: string;
