@@ -1,24 +1,21 @@
 import {SchemaPageQuery_schemaById} from "api/queries/types/SchemaPageQuery";
 import * as React from "react";
 import {SchemaDetailsTable} from "components/schema/SchemaDetailsTable";
-import {Grid, Typography} from "@material-ui/core";
+import {Grid} from "@material-ui/core";
 import {StepCard} from "components/schema/StepCard";
 import {StepOrderCard} from "components/schema/StepOrderCard";
 import {EntityRelationCard} from "components/schema/EntityRelationCard";
 import {SchemaSlotCard} from "components/schema/SchemaSlotCard";
 import {SchemaHrefs} from "Hrefs";
-import {SchemaSection} from "models/schema/SchemaSection";
 import {schemaSections} from "models/schema/schemaSections";
+import {TopLevelDefinitionSectionContents} from "components/definition/TopLevelDefinitionSectionContents";
+import {TopLevelDefinitionSectionContentsGrid} from "components/definition/TopLevelDefinitionSectionContentsGrid";
 
 export const SchemaSectionContentsGrid: React.FunctionComponent<{
   hrefs: SchemaHrefs;
   schema: SchemaPageQuery_schemaById & {id: string};
 }> = ({hrefs, schema}) => {
-  interface SchemaSectionWithChildren extends SchemaSection {
-    children: React.ReactNode;
-  }
-
-  const schemaSectionsWithChildren: SchemaSectionWithChildren[] = [];
+  const schemaSectionContents: TopLevelDefinitionSectionContents[] = [];
   for (const schemaSection of schemaSections) {
     let children: React.ReactNode;
     switch (schemaSection.id) {
@@ -89,25 +86,13 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
       default:
         throw new EvalError(schemaSection.id);
     }
-    schemaSectionsWithChildren.push({...schemaSection, children});
+    schemaSectionContents.push({...schemaSection, children});
   }
 
   return (
-    <Grid container direction="column" spacing={8}>
-      {schemaSectionsWithChildren.map((schemaSection) => (
-        <Grid
-          data-cy={`schema-${schemaSection.id}`}
-          key={schemaSection.id}
-          item
-        >
-          <Grid container direction="column" id={schemaSection.id} spacing={4}>
-            <Grid item>
-              <Typography variant="h4">{schemaSection.title}</Typography>
-            </Grid>
-            <Grid>{schemaSection.children}</Grid>
-          </Grid>
-        </Grid>
-      ))}
-    </Grid>
+    <TopLevelDefinitionSectionContentsGrid
+      dataCyPrefix={"schema"}
+      sections={schemaSectionContents}
+    />
   );
 };
