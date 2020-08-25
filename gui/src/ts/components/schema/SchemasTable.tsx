@@ -3,15 +3,16 @@ import {Table, TableBody, TableCell, TableRow} from "@material-ui/core";
 import {Hrefs} from "Hrefs";
 import {Link} from "components/link/Link";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
+import {DefinitionPath} from "models/definition/DefinitionPath";
 
 export const SchemasTable: React.FunctionComponent<{
-  schemas: {id: string; label: string; sdfDocumentId: string}[];
+  schemas: {id: string; label: string; path: DefinitionPath}[];
 }> = ({schemas}) => (
   <Table data-cy="schemas-table">
     <TableBody>
       {schemas.map((schema) => {
         const schemaHref = Hrefs.sdfDocuments
-          .sdfDocument({id: schema.sdfDocumentId})
+          .sdfDocument({id: schema.path.sdfDocument.id})
           .schemas.schema(schema)
           .toString();
         return (
@@ -23,9 +24,7 @@ export const SchemasTable: React.FunctionComponent<{
               <Link to={schemaHref}>{schema.label}</Link>
             </TableCell>
             <TableCell data-cy="schema-source">
-              <SdfDocumentSourceLink
-                to={{id: schema.sdfDocumentId, schema: {id: schema.id}}}
-              />
+              <SdfDocumentSourceLink to={schema.path} />
             </TableCell>
           </TableRow>
         );

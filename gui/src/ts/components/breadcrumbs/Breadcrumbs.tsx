@@ -6,7 +6,6 @@ import * as React from "react";
 import {Link} from "components/link/Link";
 
 export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
-  schema,
   sdfDocument,
 }) => (
   <MuiBreadcrumbs aria-label="breadcrumb" data-cy="breadcrumbs">
@@ -28,7 +27,32 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
         {sdfDocument.label}
       </Link>
     ) : null}
-    {schema ? (
+    {sdfDocument.primitive ? (
+      <Link
+        color="inherit"
+        dataCy="primitives-breadcrumb"
+        to={
+          sdfDocument
+            ? Hrefs.sdfDocuments.sdfDocument(sdfDocument).primitives.toString()
+            : Hrefs.primitives.toString()
+        }
+      >
+        Primitives
+      </Link>
+    ) : null}
+    {sdfDocument.primitive ? (
+      <Link
+        color="textPrimary"
+        dataCy="primitive-breadcrumb"
+        to={Hrefs.sdfDocuments
+          .sdfDocument(sdfDocument)
+          .primitives.primitive(sdfDocument.primitive)
+          .toString()}
+      >
+        {sdfDocument.primitive.label}
+      </Link>
+    ) : null}
+    {sdfDocument.schema ? (
       <Link
         color="inherit"
         dataCy="schemas-breadcrumb"
@@ -41,16 +65,16 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
         Schemas
       </Link>
     ) : null}
-    {schema ? (
+    {sdfDocument.schema ? (
       <Link
         color="textPrimary"
         dataCy="schema-breadcrumb"
         to={Hrefs.sdfDocuments
           .sdfDocument(sdfDocument)
-          .schemas.schema(schema)
+          .schemas.schema(sdfDocument.schema)
           .toString()}
       >
-        {schema.label}
+        {sdfDocument.schema.label}
       </Link>
     ) : null}
   </MuiBreadcrumbs>

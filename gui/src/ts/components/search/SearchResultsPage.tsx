@@ -13,7 +13,7 @@ import {
 import * as ReactDOM from "react-dom";
 import {Hrefs} from "Hrefs";
 import {Link} from "components/link/Link";
-import {SdfDocumentPath} from "models/sdfDocument/SdfDocumentPath";
+import {DefinitionPath} from "models/definition/DefinitionPath";
 
 const columns: MUIDataTableColumn[] = [
   {
@@ -58,10 +58,10 @@ const columns: MUIDataTableColumn[] = [
         const rowData = (tableMeta.tableData[
           tableMeta.rowIndex
         ] as unknown) as any[];
-        const path: SdfDocumentPath = rowData[getPropertyColumnIndex("path")];
+        const path: DefinitionPath = rowData[getPropertyColumnIndex("path")];
 
         return (
-          <Link dataCy={"label-link"} to={Hrefs.sdfDocumentPath(path)}>
+          <Link dataCy={"label-link"} to={Hrefs.definitionPath(path)}>
             {label}
           </Link>
         );

@@ -47,6 +47,110 @@ export interface SchemaPageQuery_schemaById_order_OverlapsStepOrder {
 
 export type SchemaPageQuery_schemaById_order = SchemaPageQuery_schemaById_order_BeforeAfterStepOrder | SchemaPageQuery_schemaById_order_ContainerContainedStepOrder | SchemaPageQuery_schemaById_order_OverlapsStepOrder;
 
+export interface SchemaPageQuery_schemaById_path_sdfDocument_primitive_slot {
+  __typename: "DefinitionPathPrimitiveSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SchemaPageQuery_schemaById_path_sdfDocument_primitive {
+  __typename: "DefinitionPathPrimitive";
+  id: string;
+  label: string | null;
+  slot: SchemaPageQuery_schemaById_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SchemaPageQuery_schemaById_path_sdfDocument_schema_slot {
+  __typename: "DefinitionPathSchemaSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SchemaPageQuery_schemaById_path_sdfDocument_schema_step_participant {
+  __typename: "DefinitionPathStepParticipant";
+  id: string;
+  label: string | null;
+}
+
+export interface SchemaPageQuery_schemaById_path_sdfDocument_schema_step {
+  __typename: "DefinitionPathStep";
+  id: string;
+  label: string | null;
+  participant: SchemaPageQuery_schemaById_path_sdfDocument_schema_step_participant | null;
+}
+
+export interface SchemaPageQuery_schemaById_path_sdfDocument_schema {
+  __typename: "DefinitionPathSchema";
+  id: string;
+  label: string | null;
+  slot: SchemaPageQuery_schemaById_path_sdfDocument_schema_slot | null;
+  step: SchemaPageQuery_schemaById_path_sdfDocument_schema_step | null;
+}
+
+export interface SchemaPageQuery_schemaById_path_sdfDocument {
+  __typename: "DefinitionPathSdfDocument";
+  id: string;
+  primitive: SchemaPageQuery_schemaById_path_sdfDocument_primitive | null;
+  schema: SchemaPageQuery_schemaById_path_sdfDocument_schema | null;
+}
+
+export interface SchemaPageQuery_schemaById_path {
+  __typename: "DefinitionPath";
+  sdfDocument: SchemaPageQuery_schemaById_path_sdfDocument;
+}
+
+export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_primitive_slot {
+  __typename: "DefinitionPathPrimitiveSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_primitive {
+  __typename: "DefinitionPathPrimitive";
+  id: string;
+  label: string | null;
+  slot: SchemaPageQuery_schemaById_slots_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_slot {
+  __typename: "DefinitionPathSchemaSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_step_participant {
+  __typename: "DefinitionPathStepParticipant";
+  id: string;
+  label: string | null;
+}
+
+export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_step {
+  __typename: "DefinitionPathStep";
+  id: string;
+  label: string | null;
+  participant: SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_step_participant | null;
+}
+
+export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_schema {
+  __typename: "DefinitionPathSchema";
+  id: string;
+  label: string | null;
+  slot: SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_slot | null;
+  step: SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_step | null;
+}
+
+export interface SchemaPageQuery_schemaById_slots_path_sdfDocument {
+  __typename: "DefinitionPathSdfDocument";
+  id: string;
+  primitive: SchemaPageQuery_schemaById_slots_path_sdfDocument_primitive | null;
+  schema: SchemaPageQuery_schemaById_slots_path_sdfDocument_schema | null;
+}
+
+export interface SchemaPageQuery_schemaById_slots_path {
+  __typename: "DefinitionPath";
+  sdfDocument: SchemaPageQuery_schemaById_slots_path_sdfDocument;
+}
+
 export interface SchemaPageQuery_schemaById_slots {
   __typename: "SchemaSlot";
   aka: string[] | null;
@@ -54,6 +158,7 @@ export interface SchemaPageQuery_schemaById_slots {
   entityTypes: EntityType[] | null;
   id: string;
   label: string;
+  path: SchemaPageQuery_schemaById_slots_path;
   references: string[] | null;
   refvar: string | null;
   roleName: string;
@@ -69,6 +174,58 @@ export interface SchemaPageQuery_schemaById_steps_minDuration {
   string: string;
 }
 
+export interface SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_primitive_slot {
+  __typename: "DefinitionPathPrimitiveSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_primitive {
+  __typename: "DefinitionPathPrimitive";
+  id: string;
+  label: string | null;
+  slot: SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_schema_slot {
+  __typename: "DefinitionPathSchemaSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_schema_step_participant {
+  __typename: "DefinitionPathStepParticipant";
+  id: string;
+  label: string | null;
+}
+
+export interface SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_schema_step {
+  __typename: "DefinitionPathStep";
+  id: string;
+  label: string | null;
+  participant: SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_schema_step_participant | null;
+}
+
+export interface SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_schema {
+  __typename: "DefinitionPathSchema";
+  id: string;
+  label: string | null;
+  slot: SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_schema_slot | null;
+  step: SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_schema_step | null;
+}
+
+export interface SchemaPageQuery_schemaById_steps_participants_path_sdfDocument {
+  __typename: "DefinitionPathSdfDocument";
+  id: string;
+  primitive: SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_primitive | null;
+  schema: SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_schema | null;
+}
+
+export interface SchemaPageQuery_schemaById_steps_participants_path {
+  __typename: "DefinitionPath";
+  sdfDocument: SchemaPageQuery_schemaById_steps_participants_path_sdfDocument;
+}
+
 export interface SchemaPageQuery_schemaById_steps_participants {
   __typename: "StepParticipant";
   aka: string[] | null;
@@ -77,9 +234,62 @@ export interface SchemaPageQuery_schemaById_steps_participants {
   id: string;
   label: string;
   name: string;
+  path: SchemaPageQuery_schemaById_steps_participants_path;
   references: string[] | null;
   refvar: string | null;
   role: string;
+}
+
+export interface SchemaPageQuery_schemaById_steps_path_sdfDocument_primitive_slot {
+  __typename: "DefinitionPathPrimitiveSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SchemaPageQuery_schemaById_steps_path_sdfDocument_primitive {
+  __typename: "DefinitionPathPrimitive";
+  id: string;
+  label: string | null;
+  slot: SchemaPageQuery_schemaById_steps_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SchemaPageQuery_schemaById_steps_path_sdfDocument_schema_slot {
+  __typename: "DefinitionPathSchemaSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SchemaPageQuery_schemaById_steps_path_sdfDocument_schema_step_participant {
+  __typename: "DefinitionPathStepParticipant";
+  id: string;
+  label: string | null;
+}
+
+export interface SchemaPageQuery_schemaById_steps_path_sdfDocument_schema_step {
+  __typename: "DefinitionPathStep";
+  id: string;
+  label: string | null;
+  participant: SchemaPageQuery_schemaById_steps_path_sdfDocument_schema_step_participant | null;
+}
+
+export interface SchemaPageQuery_schemaById_steps_path_sdfDocument_schema {
+  __typename: "DefinitionPathSchema";
+  id: string;
+  label: string | null;
+  slot: SchemaPageQuery_schemaById_steps_path_sdfDocument_schema_slot | null;
+  step: SchemaPageQuery_schemaById_steps_path_sdfDocument_schema_step | null;
+}
+
+export interface SchemaPageQuery_schemaById_steps_path_sdfDocument {
+  __typename: "DefinitionPathSdfDocument";
+  id: string;
+  primitive: SchemaPageQuery_schemaById_steps_path_sdfDocument_primitive | null;
+  schema: SchemaPageQuery_schemaById_steps_path_sdfDocument_schema | null;
+}
+
+export interface SchemaPageQuery_schemaById_steps_path {
+  __typename: "DefinitionPath";
+  sdfDocument: SchemaPageQuery_schemaById_steps_path_sdfDocument;
 }
 
 export interface SchemaPageQuery_schemaById_steps {
@@ -93,6 +303,7 @@ export interface SchemaPageQuery_schemaById_steps {
   minDuration: SchemaPageQuery_schemaById_steps_minDuration | null;
   name: string;
   participants: SchemaPageQuery_schemaById_steps_participants[] | null;
+  path: SchemaPageQuery_schemaById_steps_path;
   provenances: string[] | null;
   references: string[] | null;
   requires: string[] | null;
@@ -108,8 +319,8 @@ export interface SchemaPageQuery_schemaById {
   label: string;
   name: string;
   order: SchemaPageQuery_schemaById_order[];
+  path: SchemaPageQuery_schemaById_path;
   references: string[] | null;
-  sdfDocumentId: string;
   slots: SchemaPageQuery_schemaById_slots[];
   steps: SchemaPageQuery_schemaById_steps[];
   ta2: boolean;
@@ -130,5 +341,4 @@ export interface SchemaPageQuery {
 export interface SchemaPageQueryVariables {
   schemaId: string;
   sdfDocumentId: string;
-  withSdfDocument: boolean;
 }

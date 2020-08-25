@@ -1,4 +1,6 @@
-query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocument: Boolean!) {
+#import "./DefinitionPathFragment.graphql"
+
+query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
     schemaById(id: $schemaId) {
         aka
         comments
@@ -29,14 +31,19 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
                 overlaps
             }
         }
+        path {
+            ...DefinitionPathFragment
+        }
         references
-        sdfDocumentId
         slots {
             aka
             comments
             entityTypes
             id
             label
+            path {
+                ...DefinitionPathFragment
+            }
             references
             refvar
             roleName
@@ -61,9 +68,15 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
                 id
                 label
                 name
+                path {
+                    ...DefinitionPathFragment
+                }
                 references
                 refvar
                 role
+            }
+            path {
+                ...DefinitionPathFragment
             }
             provenances
             references
@@ -75,7 +88,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!, $withSdfDocum
         version
     }
 
-    sdfDocumentById(id: $sdfDocumentId) @include(if: $withSdfDocument) {
+    sdfDocumentById(id: $sdfDocumentId) {
         label
     }
 }

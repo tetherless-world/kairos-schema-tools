@@ -1,17 +1,17 @@
 import {TestData} from "../support/TestData";
 import {SdfDocumentsPage} from "../support/pages/SdfDocumentsPage";
-import {SchemasPage} from "../support/pages/SchemasPage";
+import {SdfDocumentSchemasPage} from "../support/pages/SdfDocumentSchemasPage";
 import {SdfDocumentPage} from "../support/pages/SdfDocumentPage";
 import {SdfDocument} from "../support/models/SdfDocument";
 
-context("Schemas page", () => {
+context("SDF document schemas page", () => {
   let sdfDocument: SdfDocument;
-  let page: SchemasPage;
+  let page: SdfDocumentSchemasPage;
 
   before(() => {
     TestData.sdfDocument.then((sdfDocument_) => {
       sdfDocument = sdfDocument_;
-      page = new SchemasPage({sdfDocumentId: sdfDocument.id});
+      page = new SdfDocumentSchemasPage({sdfDocumentId: sdfDocument.id});
     });
   });
 

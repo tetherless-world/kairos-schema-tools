@@ -1,6 +1,6 @@
 import {TestData} from "../support/TestData";
 import {SchemaPage} from "../support/pages/SchemaPage";
-import {SchemasPage} from "../support/pages/SchemasPage";
+import {SdfDocumentSchemasPage} from "../support/pages/SdfDocumentSchemasPage";
 import {SdfDocument} from "../support/models/SdfDocument";
 import {Schema} from "../support/models/Schema";
 
@@ -24,7 +24,7 @@ context("Schema page", () => {
 
   it("should show a breadcrumb to all schemas", () => {
     page.standardLayout.breadcrumbs.schemas.click();
-    new SchemasPage({sdfDocumentId: sdfDocument.id}).assertLoaded();
+    new SdfDocumentSchemasPage({sdfDocumentId: sdfDocument.id}).assertLoaded();
   });
 
   it("should show a breadcrumb to this schema", () => {

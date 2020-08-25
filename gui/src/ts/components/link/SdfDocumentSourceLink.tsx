@@ -3,13 +3,17 @@ import CodeIcon from "@material-ui/icons/Code";
 import * as React from "react";
 import {Button} from "@material-ui/core";
 import {Hrefs} from "Hrefs";
-import {SdfDocumentPath} from "models/sdfDocument/SdfDocumentPath";
+import {DefinitionPath} from "models/definition/DefinitionPath";
 
 export const SdfDocumentSourceLink: React.FunctionComponent<{
-  to: SdfDocumentPath;
+  to: DefinitionPath;
 }> = ({to}) => {
   return (
-    <Link to={Hrefs.sdfDocuments.sdfDocument({id: to.id}).sourcePath(to)}>
+    <Link
+      to={Hrefs.sdfDocuments
+        .sdfDocument({id: to.sdfDocument.id})
+        .sourcePath(to)}
+    >
       <Button variant="contained" startIcon={<CodeIcon />}>
         Source
       </Button>

@@ -12,11 +12,12 @@ final case class Step(
                        minDuration: Option[Duration],
                        name: String,
                        participants: Option[List[StepParticipant]],
+                       path: DefinitionPath,
                        provenances: Option[List[String]],
                        requires: Option[List[String]],
                        references: Option[List[String]],
                        sourceJsonNodeLocation: JsonNodeLocation,
                        `type`: Uri
-                     ) {
-  def label = name
+                     ) extends Definition {
+  final override def label = name
 }

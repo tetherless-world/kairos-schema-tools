@@ -1,10 +1,10 @@
 package models.validation
 
 import edu.rpi.tw.twks.uri.Uri
-import models.schema.SdfDocumentPath
+import models.schema.DefinitionPath
 
 final case class ValidationMessage(
                                     message: String,
-                                    path: SdfDocumentPath,
+                                    path: DefinitionPath,
                                     `type`: ValidationMessageType
                                   )

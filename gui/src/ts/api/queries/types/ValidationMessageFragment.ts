@@ -8,51 +8,56 @@ import { ValidationMessageType } from "./../../graphqlGlobalTypes";
 // GraphQL fragment: ValidationMessageFragment
 // ====================================================
 
-export interface ValidationMessageFragment_path_primitive_slot {
-  __typename: "SdfDocumentPathPrimitiveSlot";
+export interface ValidationMessageFragment_path_sdfDocument_primitive_slot {
+  __typename: "DefinitionPathPrimitiveSlot";
   id: string;
   label: string | null;
 }
 
-export interface ValidationMessageFragment_path_primitive {
-  __typename: "SdfDocumentPathPrimitive";
+export interface ValidationMessageFragment_path_sdfDocument_primitive {
+  __typename: "DefinitionPathPrimitive";
   id: string;
   label: string | null;
-  slot: ValidationMessageFragment_path_primitive_slot | null;
+  slot: ValidationMessageFragment_path_sdfDocument_primitive_slot | null;
 }
 
-export interface ValidationMessageFragment_path_schema_slot {
-  __typename: "SdfDocumentPathSchemaSlot";
-  id: string;
-  label: string | null;
-}
-
-export interface ValidationMessageFragment_path_schema_step_participant {
-  __typename: "SdfDocumentPathStepParticipant";
+export interface ValidationMessageFragment_path_sdfDocument_schema_slot {
+  __typename: "DefinitionPathSchemaSlot";
   id: string;
   label: string | null;
 }
 
-export interface ValidationMessageFragment_path_schema_step {
-  __typename: "SdfDocumentPathStep";
+export interface ValidationMessageFragment_path_sdfDocument_schema_step_participant {
+  __typename: "DefinitionPathStepParticipant";
   id: string;
   label: string | null;
-  participant: ValidationMessageFragment_path_schema_step_participant | null;
 }
 
-export interface ValidationMessageFragment_path_schema {
-  __typename: "SdfDocumentPathSchema";
+export interface ValidationMessageFragment_path_sdfDocument_schema_step {
+  __typename: "DefinitionPathStep";
   id: string;
   label: string | null;
-  slot: ValidationMessageFragment_path_schema_slot | null;
-  step: ValidationMessageFragment_path_schema_step | null;
+  participant: ValidationMessageFragment_path_sdfDocument_schema_step_participant | null;
+}
+
+export interface ValidationMessageFragment_path_sdfDocument_schema {
+  __typename: "DefinitionPathSchema";
+  id: string;
+  label: string | null;
+  slot: ValidationMessageFragment_path_sdfDocument_schema_slot | null;
+  step: ValidationMessageFragment_path_sdfDocument_schema_step | null;
+}
+
+export interface ValidationMessageFragment_path_sdfDocument {
+  __typename: "DefinitionPathSdfDocument";
+  id: string;
+  primitive: ValidationMessageFragment_path_sdfDocument_primitive | null;
+  schema: ValidationMessageFragment_path_sdfDocument_schema | null;
 }
 
 export interface ValidationMessageFragment_path {
-  __typename: "SdfDocumentPath";
-  id: string;
-  primitive: ValidationMessageFragment_path_primitive | null;
-  schema: ValidationMessageFragment_path_schema | null;
+  __typename: "DefinitionPath";
+  sdfDocument: ValidationMessageFragment_path_sdfDocument;
 }
 
 export interface ValidationMessageFragment {

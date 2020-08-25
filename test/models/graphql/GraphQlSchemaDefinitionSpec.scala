@@ -16,6 +16,39 @@ import scala.concurrent.duration._
 
 class GraphQlSchemaDefinitionSpec extends PlaySpec {
   "GraphQL schema" must {
+    "get primitives" in {
+      val query =
+        graphql"""
+          query PrimitivesQuery {
+            primitives {
+              id
+              label
+            }
+          }
+          """
+      val result = Json.stringify(executeQuery(query))
+      for (primitive <- ConfData.primitives) {
+        result must include(primitive.id.toString)
+        result must include(primitive.label)
+      }
+    }
+
+    "get primitive by id" in {
+      val query =
+        graphql"""
+          query PrimitiveByIdQuery($$id: String!) {
+            primitiveById(id: $$id) {
+              name
+            }
+          }
+          """
+      val expected = ConfData.primitives(0)
+      executeQuery(query, vars = Json.obj("id" -> expected.id.toString)) must be(Json.parse(
+        s"""
+           |{"data":{"primitiveById":{"name":"${expected.name}"}}}
+           |""".stripMargin))
+    }
+
     "get schemas" in {
       val query =
         graphql"""
@@ -90,8 +123,10 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
               documents {
                 label
                 path {
-                  id
-                  label
+                  sdfDocument {
+                    id
+                    label
+                  }
                 }
                 type
               }

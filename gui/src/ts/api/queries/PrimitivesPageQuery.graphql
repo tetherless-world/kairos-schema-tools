@@ -1,0 +1,11 @@
+#import "./DefinitionPathFragment.graphql"
+
+query PrimitivesPageQuery {
+    primitives {
+        id
+        label
+        path {
+            ...DefinitionPathFragment
+        }
+    }
+}

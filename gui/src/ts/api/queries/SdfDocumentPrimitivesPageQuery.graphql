@@ -1,0 +1,14 @@
+#import "./DefinitionPathFragment.graphql"
+
+query SdfDocumentPrimitivesPageQuery($sdfDocumentId: String!) {
+    sdfDocumentById(id: $sdfDocumentId) {
+        label
+        primitives {
+            id
+            label
+            path {
+                ...DefinitionPathFragment
+            }
+        }
+    }
+}

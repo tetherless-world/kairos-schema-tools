@@ -19,13 +19,7 @@ export const SdfDocumentsPage: React.FunctionComponent = () => {
           <Grid container spacing={4}>
             {data.sdfDocuments.map((sdfDocument) => (
               <Grid item key={sdfDocument.id}>
-                <SdfDocumentCard
-                  sdfDocument={Object.assign({}, sdfDocument, {
-                    schemas: sdfDocument.schemas.map((schema) =>
-                      Object.assign({}, schema, {sdfDocumentId: sdfDocument.id})
-                    ),
-                  })}
-                />
+                <SdfDocumentCard sdfDocument={sdfDocument} />
               </Grid>
             ))}
           </Grid>

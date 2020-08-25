@@ -10,7 +10,12 @@ import {SearchResultsPage} from "components/search/SearchResultsPage";
 import {QueryParamProvider} from "use-query-params";
 import {createBrowserHistory as createHistory} from "history";
 import {ScrollManager, WindowScroller} from "react-scroll-manager";
+import {PrimitivesPage} from "components/primitive/PrimitivesPage";
+import {SdfDocumentSchemasPage} from "components/sdfDocument/SdfDocumentSchemasPage";
+import {SdfDocumentPrimitivesPage} from "components/sdfDocument/SdfDocumentPrimitivesPage";
+import {PrimitivePage} from "components/primitive/PrimitivePage";
 
+const primitiveIdParam = {id: ":primitiveId", idEncoded: true};
 const schemaIdParam = {id: ":schemaId", idEncoded: true};
 const sdfDocumentIdParam = {id: ":sdfDocumentId", idEncoded: true};
 const history = createHistory();
@@ -24,6 +29,13 @@ export const Routes: React.FunctionComponent = () => (
             <Route exact path={Hrefs.home}>
               <Redirect to={Hrefs.sdfDocuments.toString()} />
             </Route>
+
+            {/*All primitives*/}
+            <Route
+              exact
+              path={Hrefs.primitives.toString()}
+              component={PrimitivesPage}
+            />
 
             {/*All schemas*/}
             <Route
@@ -48,13 +60,32 @@ export const Routes: React.FunctionComponent = () => (
               component={SdfDocumentPage}
             />
 
+            {/*Document primitives*/}
+            <Route
+              exact
+              path={Hrefs.sdfDocuments
+                .sdfDocument(sdfDocumentIdParam)
+                .primitives.toString()}
+              component={SdfDocumentPrimitivesPage}
+            />
+
+            {/*Document primitive*/}
+            <Route
+              exact
+              path={Hrefs.sdfDocuments
+                .sdfDocument(sdfDocumentIdParam)
+                .primitives.primitive(primitiveIdParam)
+                .toString()}
+              component={PrimitivePage}
+            />
+
             {/*Document schemas*/}
             <Route
               exact
               path={Hrefs.sdfDocuments
                 .sdfDocument(sdfDocumentIdParam)
                 .schemas.toString()}
-              component={SchemasPage}
+              component={SdfDocumentSchemasPage}
             />
 
             {/*Document schema*/}

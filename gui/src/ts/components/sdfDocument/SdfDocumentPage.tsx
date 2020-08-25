@@ -10,6 +10,7 @@ import {NoRoute} from "components/error/NoRoute";
 import {SdfDocumentEditor} from "components/sdfDocument/SdfDocumentEditor";
 import {
   SdfDocumentSourceFragment,
+  SdfDocumentSourceFragment_primitives,
   SdfDocumentSourceFragment_schemas,
 } from "api/queries/types/SdfDocumentSourceFragment";
 import {useQueryParam} from "use-query-params";
@@ -40,9 +41,36 @@ import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
 import {Hrefs} from "Hrefs";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 import {GraphQlErrorsList} from "components/error/GraphQlErrorsList";
-import {getJsonNodeLocationFromSdfDocumentPath} from "models/sdfDocument/getJsonNodeLocationFromSdfDocumentPath";
-import {SdfDocumentPath} from "models/sdfDocument/SdfDocumentPath";
+import {getJsonNodeLocationFromDefinitionPath} from "models/definition/getJsonNodeLocationFromDefinitionPath";
+import {DefinitionPath} from "models/definition/DefinitionPath";
 import {JsonQueryParamConfig} from "JsonQueryParamConfig";
+import {PrimitiveTableOfContents} from "components/primitive/PrimitiveTableOfContents";
+
+const PrimitiveAccordion: React.FunctionComponent<{
+  primitive: SdfDocumentSourceFragment_primitives;
+}> = ({primitive}) => (
+  <Accordion>
+    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <h3>Primitive: {primitive.label}</h3>
+    </AccordionSummary>
+    <AccordionDetails>
+      <Grid container direction="column">
+        <Grid item>
+          <SdfDocumentSourceLink to={primitive.path} />
+        </Grid>
+        <Grid item>
+          <PrimitiveTableOfContents
+            hrefs={Hrefs.sdfDocuments
+              .sdfDocument({id: primitive.path.sdfDocument.id})
+              .primitives.primitive(primitive)}
+            includeSourceLinks={true}
+            primitive={primitive}
+          />
+        </Grid>
+      </Grid>
+    </AccordionDetails>
+  </Accordion>
+);
 
 const RightPanelAccordion: React.FunctionComponent<React.PropsWithChildren<{
   title: string;
@@ -79,17 +107,12 @@ const SchemaAccordion: React.FunctionComponent<{
     <AccordionDetails>
       <Grid container direction="column">
         <Grid item>
-          <SdfDocumentSourceLink
-            to={{
-              id: schema.sdfDocumentId,
-              schema: {id: schema.id},
-            }}
-          />
+          <SdfDocumentSourceLink to={schema.path} />
         </Grid>
         <Grid item>
           <SchemaTableOfContents
             hrefs={Hrefs.sdfDocuments
-              .sdfDocument({id: schema.sdfDocumentId})
+              .sdfDocument({id: schema.path.sdfDocument.id})
               .schemas.schema(schema)}
             includeSourceLinks={true}
             schema={schema}
@@ -122,9 +145,9 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
     decodeURIComponent
   );
 
-  const [sdfDocumentPath] = useQueryParam<SdfDocumentPath>(
+  const [definitionPath] = useQueryParam<DefinitionPath>(
     "path",
-    new JsonQueryParamConfig<SdfDocumentPath>()
+    new JsonQueryParamConfig<DefinitionPath>()
   );
   const query = useQuery<SdfDocumentPageQuery>(SdfDocumentPageQueryDocument, {
     fetchPolicy: "no-cache",
@@ -259,10 +282,10 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                     <Grid item>
                       <SdfDocumentEditor
                         goToJsonNodeLocation={
-                          sdfDocumentPath
-                            ? getJsonNodeLocationFromSdfDocumentPath(
-                                savedSdfDocument,
-                                sdfDocumentPath
+                          definitionPath
+                            ? getJsonNodeLocationFromDefinitionPath(
+                                definitionPath,
+                                savedSdfDocument
                               )
                             : undefined
                         }
@@ -294,6 +317,11 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                     <Grid item>
                       <RightPanelAccordion title="Table of contents">
                         <Grid container direction="column">
+                          {savedSdfDocument.primitives.map((primitive) => (
+                            <Grid item key={primitive.id}>
+                              <PrimitiveAccordion primitive={primitive} />
+                            </Grid>
+                          ))}
                           {savedSdfDocument.schemas.map((schema) => (
                             <Grid item key={schema.id}>
                               <SchemaAccordion schema={schema} />

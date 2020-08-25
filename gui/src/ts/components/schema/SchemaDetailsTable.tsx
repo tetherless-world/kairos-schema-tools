@@ -2,10 +2,10 @@ import * as React from "react";
 import {Table, TableBody, TableCell, TableRow} from "@material-ui/core";
 import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
-import {SchemaPageSchema} from "components/schema/SchemaPageSchema";
+import {SchemaPageQuery_schemaById} from "api/queries/types/SchemaPageQuery";
 
 export const SchemaDetailsTable: React.FunctionComponent<{
-  schema: SchemaPageSchema;
+  schema: SchemaPageQuery_schemaById & {id: string};
 }> = ({schema}) => (
   <Table>
     <TableBody>

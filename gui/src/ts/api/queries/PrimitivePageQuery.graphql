@@ -1,0 +1,41 @@
+#import "./DefinitionPathFragment.graphql"
+
+query PrimitivePageQuery($primitiveId: String!, $sdfDocumentId: String!) {
+    primitiveById(id: $primitiveId) {
+        aka
+        comments
+        description
+        label
+        maxDuration {
+            string
+        }
+        minDuration {
+            string
+        }
+        name
+        path {
+            ...DefinitionPathFragment
+        }
+        references
+        slots {
+            aka
+            comments
+            entityTypes
+            id
+            label
+            path {
+                ...DefinitionPathFragment
+            }
+            references
+            roleName
+            super
+        }
+        super
+        template
+        version
+    }
+
+    sdfDocumentById(id: $sdfDocumentId) {
+        label
+    }
+}

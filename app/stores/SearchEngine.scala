@@ -5,7 +5,7 @@ import com.outr.lucene4s.field.FieldType
 import com.outr.lucene4s.field.value.FieldAndValue
 import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.SdfDocument
-import models.schema.{Primitive, PrimitiveSlot, Schema, SchemaSlot, SdfDocumentPath, Step, StepParticipant}
+import models.schema.{Primitive, PrimitiveSlot, Schema, SchemaSlot, DefinitionPath, Step, StepParticipant}
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 
 final class SearchEngine {
@@ -41,7 +41,7 @@ final class SearchEngine {
           comments = slot.comments,
           id = slot.id,
           label = slot.label,
-          path = SdfDocumentPath.builder(sdfDocument.id).primitive(primitive.id).slot(slot.id),
+          path = DefinitionPath.sdfDocument(sdfDocument.id).primitive(primitive.id).slot(slot.id),
           `type` = SearchDocumentType.PrimitiveSlot
         ))
       }
@@ -51,7 +51,7 @@ final class SearchEngine {
         comments = primitive.comments,
         id = primitive.id,
         label = primitive.label,
-        path = SdfDocumentPath.builder(sdfDocument.id).primitive(primitive.id).build,
+        path = DefinitionPath.sdfDocument(sdfDocument.id).primitive(primitive.id).build,
         `type` = SearchDocumentType.Primitive
       ))
       primitive.slots.foreach(putPrimitiveSlot(_))
@@ -64,7 +64,7 @@ final class SearchEngine {
           comments = slot.comments,
           id = slot.id,
           label = slot.label,
-          path = SdfDocumentPath.builder(sdfDocument.id).schema(schema.id).slot(slot.id),
+          path = DefinitionPath.sdfDocument(sdfDocument.id).schema(schema.id).slot(slot.id),
           `type` = SearchDocumentType.SchemaSlot))
 
       def putStep(step: Step): Unit = {
@@ -74,7 +74,7 @@ final class SearchEngine {
             comments = participant.comments,
             id = participant.id,
             label = participant.label,
-            path = SdfDocumentPath.builder(sdfDocument.id).schema(schema.id).step(step.id).participant(participant.id),
+            path = DefinitionPath.sdfDocument(sdfDocument.id).schema(schema.id).step(step.id).participant(participant.id),
             `type` = SearchDocumentType.StepParticipant
           ))
 
@@ -83,7 +83,7 @@ final class SearchEngine {
           comments = step.comments,
           id = step.id,
           label = step.label,
-          path = SdfDocumentPath.builder(sdfDocument.id).schema(schema.id).step(step.id).build,
+          path = DefinitionPath.sdfDocument(sdfDocument.id).schema(schema.id).step(step.id).build,
           `type` = SearchDocumentType.Step
         ))
         step.participants.foreach(_.foreach(putStepParticipant(_)))
@@ -94,7 +94,7 @@ final class SearchEngine {
         comments = schema.comments,
         id = schema.id,
         label = schema.label,
-        path = SdfDocumentPath.builder(sdfDocument.id).schema(schema.id).build,
+        path = DefinitionPath.sdfDocument(sdfDocument.id).schema(schema.id).build,
         `type` = SearchDocumentType.Schema))
       schema.slots.foreach(putSchemaSlot(_))
       schema.steps.foreach(putStep(_))
@@ -107,19 +107,19 @@ final class SearchEngine {
           (List(
             Fields.id(searchDocument.id.toString),
             Fields.label(searchDocument.label),
-            Fields.sdfDocumentId(searchDocument.path.id.toString),
+            Fields.sdfDocumentId(searchDocument.path.sdfDocument.id.toString),
             Fields.`type`(searchDocument.`type`.value)
           ) ++
             searchDocument.aka.map(aka => Fields.aka(aka.mkString(" "))).toList ++
             searchDocument.comments.map(comments => Fields.comments(comments.mkString(" "))).toList ++
-            searchDocument.path.primitive.toList.flatMap(primitive => {
+            searchDocument.path.sdfDocument.primitive.toList.flatMap(primitive => {
               var fieldAndValues: List[FieldAndValue[String]] = List(Fields.primitiveId(primitive.id.toString))
               if (primitive.slot.isDefined) {
                 fieldAndValues :+= Fields.primitiveSlotId(primitive.slot.get.id.toString)
               }
               fieldAndValues
             }) ++
-            searchDocument.path.schema.toList.flatMap(schema => {
+            searchDocument.path.sdfDocument.schema.toList.flatMap(schema => {
               var fieldAndValues: List[FieldAndValue[String]] = List(Fields.schemaId(schema.id.toString))
               if (schema.slot.isDefined) {
                 fieldAndValues :+= Fields.schemaSlotId(schema.slot.get.id.toString)
@@ -139,7 +139,7 @@ final class SearchEngine {
     putSearchDocument(SearchDocument(
       id = sdfDocument.id,
       label = sdfDocument.label,
-      path = SdfDocumentPath.builder(sdfDocument.id).build,
+      path = DefinitionPath.sdfDocument(sdfDocument.id).build,
       `type` = SearchDocumentType.SdfDocument
     ))
     sdfDocument.schemas.foreach(putSchema(_))
@@ -155,7 +155,7 @@ final class SearchEngine {
         val schemaSlotId = Option(result(Fields.schemaSlotId)).map(Uri.parse(_))
         val stepId = Option(result(Fields.stepId)).map(Uri.parse(_))
 
-        val pathBuilder = SdfDocumentPath.builder(sdfDocumentId)
+        val pathBuilder = DefinitionPath.sdfDocument(sdfDocumentId)
         val path =
           if (schemaId.isDefined) {
             if (schemaSlotId.isDefined) {

@@ -14,6 +14,9 @@ export abstract class Page {
       get brandLink() {
         return cy.get(this.selector + " [data-cy=brand-link]");
       },
+      get primitivesLink() {
+        return cy.get(this.selector + " [data-cy=primitives-nav-link]");
+      },
       get schemasLink() {
         return cy.get(this.selector + " [data-cy=schemas-nav-link]");
       },
@@ -38,6 +41,16 @@ export abstract class Page {
 
   readonly standardLayout = {
     breadcrumbs: {
+      get primitive() {
+        return cy.get(
+          "[data-cy=standard-layout] [data-cy=breadcrumbs] [data-cy=primitive-breadcrumb]"
+        );
+      },
+      get primitives() {
+        return cy.get(
+          "[data-cy=standard-layout] [data-cy=breadcrumbs] [data-cy=primitives-breadcrumb]"
+        );
+      },
       get schema() {
         return cy.get(
           "[data-cy=standard-layout] [data-cy=breadcrumbs] [data-cy=schema-breadcrumb]"
