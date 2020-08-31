@@ -36,7 +36,7 @@ context("Schema page", () => {
     page.standardLayout.title.should("have.text", "Schema: " + schema.name);
   });
 
-  it("should show the schema identifier in the subtitle", () => {
-    page.standardLayout.subtitle.should("have.text", schema.id);
-  });
+  // it("should show the schema identifier in the subtitle", () => {
+  //   page.standardLayout.subtitle.should("have.text", schema.id);
+  // });
 });

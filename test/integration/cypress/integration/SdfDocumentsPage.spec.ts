@@ -25,13 +25,13 @@ context("SDF documents page", () => {
     }
   });
 
-  it("should show the document id", () => {
-    for (const sdfDocument of sdfDocuments) {
-      page
-        .sdfDocument(sdfDocument.id)
-        .sdfDocumentId.should("have.text", sdfDocument.id);
-    }
-  });
+  // it("should show the document id", () => {
+  //   for (const sdfDocument of sdfDocuments) {
+  //     page
+  //       .sdfDocument(sdfDocument.id)
+  //       .sdfDocumentId.should("have.text", sdfDocument.id);
+  //   }
+  // });
 
   it("should link to each document's page", () => {
     for (const sdfDocument of sdfDocuments) {
@@ -44,10 +44,10 @@ context("SDF documents page", () => {
   it("should list each document's schemas", () => {
     for (const sdfDocument of sdfDocuments) {
       for (const schema of sdfDocument.schemas) {
-        page
-          .sdfDocument(sdfDocument.id)
-          .schemasTable.schema(schema.id)
-          .id.should("have.text", schema.id);
+        // page
+        //   .sdfDocument(sdfDocument.id)
+        //   .schemasTable.schema(schema.id)
+        //   .id.should("have.text", schema.id);
         page
           .sdfDocument(sdfDocument.id)
           .schemasTable.schema(schema.id)
