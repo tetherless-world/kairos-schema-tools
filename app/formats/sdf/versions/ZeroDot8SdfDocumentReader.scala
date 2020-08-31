@@ -8,7 +8,7 @@ import formats.sdf.SdfDocumentHeader
 import io.github.tetherlessworld.scena.RdfProperties
 import models.json.{ArrayJsonNode, JsonNode, ObjectJsonNode, StringValueJsonNode}
 import models.schema._
-import models.sdfDocument.SdfDocument
+import models.sdfDocument.{SdfDocument, SdfDocumentNamespacePrefix}
 import models.validation.{ValidationException, ValidationMessage, ValidationMessageType}
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.riot.Lang
@@ -300,6 +300,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     val path = DefinitionPath.sdfDocument(id).build
     SdfDocument(
       id = id,
+      namespacePrefixes = header.rootResource.getModel.getNsPrefixMap.asScala.map(entry => SdfDocumentNamespacePrefix(prefix = entry._1, uri = Uri.parse(entry._2))).toList,
       primitives = mapResourcesToObjectJsonNodes(
         jsonNodes = sourceJsonNode.asInstanceOf[ObjectJsonNode].map.get("primitives").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,

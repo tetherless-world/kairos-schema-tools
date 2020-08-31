@@ -7,7 +7,7 @@ import formats.sdf.SdfDocumentReader
 import io.github.tetherlessworld.twxplore.lib.base.models.graphql.BaseGraphQlSchemaDefinition
 import models.json.JsonNodeLocation
 import models.schema._
-import models.sdfDocument.SdfDocument
+import models.sdfDocument.{SdfDocument, SdfDocumentNamespacePrefix}
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 import models.validation.{ValidationMessage, ValidationMessageType}
 import sangria.macros.derive._
@@ -136,6 +136,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val ValidationMessageObjectType = deriveObjectType[GraphQlSchemaContext, ValidationMessage]()
 
   // SDF document
+  implicit lazy val SdfDocumentNamespacePrefixObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentNamespacePrefix]()
   implicit lazy val SdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocument](
     AddFields(
       Field("label", StringType, resolve = _.value.label),
