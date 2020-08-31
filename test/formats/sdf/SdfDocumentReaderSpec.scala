@@ -37,7 +37,7 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
         val primitives = document.primitives
         primitives.size should be(2)
         for (primitive <- primitives) {
-          primitive.slots.size should be(5)
+          primitive.slots.size should be > 3
         }
 
         val schemas = document.schemas
