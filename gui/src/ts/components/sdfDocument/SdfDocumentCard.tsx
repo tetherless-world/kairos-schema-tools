@@ -19,11 +19,14 @@ import WarningIcon from "@material-ui/icons/Warning";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 import {DefinitionPath} from "models/definition/DefinitionPath";
 import {PrimitivesTable} from "components/primitive/PrimitivesTable";
+import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
+import {shortenUri} from "models/shortenUri";
 
 export const SdfDocumentCard: React.FunctionComponent<{
   sdfDocument: {
     id: string;
     label: string;
+    namespacePrefixes: readonly NamespacePrefixFragment[];
     primitives: {
       id: string;
       label: string;
@@ -41,6 +44,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
   sdfDocument: {
     id,
     label,
+    namespacePrefixes,
     primitives,
     schemas,
     sdfVersion,
@@ -73,7 +77,9 @@ export const SdfDocumentCard: React.FunctionComponent<{
               <TableBody>
                 <TableRow>
                   <TableCell>Identifier</TableCell>
-                  <TableCell data-cy="sdf-document-id">{id}</TableCell>
+                  <TableCell data-cy="sdf-document-id">
+                    {shortenUri({namespacePrefixes, uri: id})}
+                  </TableCell>
                 </TableRow>
                 {sdfVersion.length > 0 ? (
                   <TableRow>
@@ -98,7 +104,10 @@ export const SdfDocumentCard: React.FunctionComponent<{
                   Primitives
                 </Link>
               </Typography>
-              <PrimitivesTable primitives={primitives} />
+              <PrimitivesTable
+                namespacePrefixes={namespacePrefixes}
+                primitives={primitives}
+              />
             </Grid>
           ) : null}
           {schemas.length > 0 ? (
@@ -111,7 +120,10 @@ export const SdfDocumentCard: React.FunctionComponent<{
                   Schemas
                 </Link>
               </Typography>
-              <SchemasTable schemas={schemas} />
+              <SchemasTable
+                namespacePrefixes={namespacePrefixes}
+                schemas={schemas}
+              />
             </Grid>
           ) : null}
           {validationMessageTypes.length > 0 ? (

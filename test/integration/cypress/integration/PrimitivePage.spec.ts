@@ -41,7 +41,7 @@ context("Primitive page", () => {
     );
   });
 
-  it("should show the primitive identifier in the subtitle", () => {
-    page.standardLayout.subtitle.should("have.text", primitive.id);
-  });
+  // it("should show the primitive identifier in the subtitle", () => {
+  //   page.standardLayout.subtitle.should("have.text", primitive.id);
+  // });
 });

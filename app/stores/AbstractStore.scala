@@ -1,8 +1,8 @@
 package stores
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.sdf.SdfDocument
 import models.schema.{Primitive, PrimitiveSlot, Schema, SchemaSlot, Step, StepParticipant}
+import models.sdfDocument.SdfDocument
 
 abstract class AbstractStore extends Store {
   override def getPrimitiveById(id: Uri): Option[Primitive] =

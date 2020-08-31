@@ -1,6 +1,6 @@
 package validators
 
-import formats.sdf.SdfDocument
+import models.sdfDocument.SdfDocument
 import models.validation.ValidationMessage
 
 import scala.concurrent.Future

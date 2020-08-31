@@ -16,7 +16,14 @@ export const PrimitivesPage: React.FunctionComponent = () => {
       {({data}) => {
         return (
           <StandardLayout subtitle={"All documents"} title="Primitives">
-            <PrimitivesTable primitives={data.primitives} />
+            <PrimitivesTable
+              namespacePrefixes={
+                data.primitives.length > 0
+                  ? data.primitives[0].path.sdfDocument.namespacePrefixes
+                  : []
+              }
+              primitives={data.primitives}
+            />
           </StandardLayout>
         );
       }}

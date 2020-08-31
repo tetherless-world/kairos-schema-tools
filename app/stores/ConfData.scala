@@ -1,8 +1,9 @@
 package stores
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.sdf.{SdfDocument, SdfDocumentReader}
+import formats.sdf.SdfDocumentReader
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
+import models.sdfDocument.SdfDocument
 
 import scala.io.Source
 

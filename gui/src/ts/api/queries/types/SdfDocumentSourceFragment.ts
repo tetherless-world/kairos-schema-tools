@@ -8,6 +8,18 @@ import { ValidationMessageType } from "./../../graphqlGlobalTypes";
 // GraphQL fragment: SdfDocumentSourceFragment
 // ====================================================
 
+export interface SdfDocumentSourceFragment_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
+export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
 export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
@@ -51,6 +63,7 @@ export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_schema {
 export interface SdfDocumentSourceFragment_primitives_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentSourceFragment_primitives_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSourceFragment_primitives_path_sdfDocument_primitive | null;
   schema: SdfDocumentSourceFragment_primitives_path_sdfDocument_schema | null;
 }
@@ -58,6 +71,12 @@ export interface SdfDocumentSourceFragment_primitives_path_sdfDocument {
 export interface SdfDocumentSourceFragment_primitives_path {
   __typename: "DefinitionPath";
   sdfDocument: SdfDocumentSourceFragment_primitives_path_sdfDocument;
+}
+
+export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_primitive_slot {
@@ -103,6 +122,7 @@ export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_sch
 export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_primitive | null;
   schema: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema | null;
 }
@@ -139,6 +159,12 @@ export interface SdfDocumentSourceFragment_primitives {
   path: SdfDocumentSourceFragment_primitives_path;
   slots: SdfDocumentSourceFragment_primitives_slots[];
   sourceJsonNodeLocation: SdfDocumentSourceFragment_primitives_sourceJsonNodeLocation;
+}
+
+export interface SdfDocumentSourceFragment_schemas_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentSourceFragment_schemas_path_sdfDocument_primitive_slot {
@@ -184,6 +210,7 @@ export interface SdfDocumentSourceFragment_schemas_path_sdfDocument_schema {
 export interface SdfDocumentSourceFragment_schemas_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentSourceFragment_schemas_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSourceFragment_schemas_path_sdfDocument_primitive | null;
   schema: SdfDocumentSourceFragment_schemas_path_sdfDocument_schema | null;
 }
@@ -191,6 +218,12 @@ export interface SdfDocumentSourceFragment_schemas_path_sdfDocument {
 export interface SdfDocumentSourceFragment_schemas_path {
   __typename: "DefinitionPath";
   sdfDocument: SdfDocumentSourceFragment_schemas_path_sdfDocument;
+}
+
+export interface SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_primitive_slot {
@@ -236,6 +269,7 @@ export interface SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_schema
 export interface SdfDocumentSourceFragment_schemas_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_primitive | null;
   schema: SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_schema | null;
 }
@@ -263,6 +297,12 @@ export interface SdfDocumentSourceFragment_schemas_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
   column: number;
   line: number;
+}
+
+export interface SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_primitive_slot {
@@ -308,6 +348,7 @@ export interface SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDo
 export interface SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_primitive | null;
   schema: SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_schema | null;
 }
@@ -329,6 +370,12 @@ export interface SdfDocumentSourceFragment_schemas_steps_participants {
   label: string;
   path: SdfDocumentSourceFragment_schemas_steps_participants_path;
   sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_steps_participants_sourceJsonNodeLocation;
+}
+
+export interface SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_primitive_slot {
@@ -374,6 +421,7 @@ export interface SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_schema
 export interface SdfDocumentSourceFragment_schemas_steps_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_primitive | null;
   schema: SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_schema | null;
 }
@@ -406,6 +454,12 @@ export interface SdfDocumentSourceFragment_schemas {
   slots: SdfDocumentSourceFragment_schemas_slots[];
   sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_sourceJsonNodeLocation;
   steps: SdfDocumentSourceFragment_schemas_steps[];
+}
+
+export interface SdfDocumentSourceFragment_validationMessages_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentSourceFragment_validationMessages_path_sdfDocument_primitive_slot {
@@ -451,6 +505,7 @@ export interface SdfDocumentSourceFragment_validationMessages_path_sdfDocument_s
 export interface SdfDocumentSourceFragment_validationMessages_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentSourceFragment_validationMessages_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSourceFragment_validationMessages_path_sdfDocument_primitive | null;
   schema: SdfDocumentSourceFragment_validationMessages_path_sdfDocument_schema | null;
 }
@@ -471,6 +526,7 @@ export interface SdfDocumentSourceFragment {
   __typename: "SdfDocument";
   id: string;
   label: string;
+  namespacePrefixes: SdfDocumentSourceFragment_namespacePrefixes[];
   primitives: SdfDocumentSourceFragment_primitives[];
   schemas: SdfDocumentSourceFragment_schemas[];
   sdfVersion: string;

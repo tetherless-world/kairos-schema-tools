@@ -7,10 +7,11 @@ import java.nio.file.{FileVisitResult, FileVisitor, Files, Path, SimpleFileVisit
 import java.util.stream.Collectors
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.sdf.{SdfDocument, SdfDocumentReader}
+import formats.sdf.SdfDocumentReader
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import javax.inject.{Inject, Named, Singleton}
 import models.schema.{Primitive, Schema}
+import models.sdfDocument.SdfDocument
 import models.search.{SearchDocument, SearchResults}
 import validators.Validators
 

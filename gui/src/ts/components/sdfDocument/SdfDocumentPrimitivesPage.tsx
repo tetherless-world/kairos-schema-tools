@@ -46,7 +46,10 @@ export const SdfDocumentPrimitivesPage: React.FunctionComponent = () => {
             }
             title="Primitives"
           >
-            <PrimitivesTable primitives={sdfDocument.primitives} />
+            <PrimitivesTable
+              namespacePrefixes={sdfDocument.namespacePrefixes}
+              primitives={sdfDocument.primitives}
+            />
           </StandardLayout>
         );
       }}

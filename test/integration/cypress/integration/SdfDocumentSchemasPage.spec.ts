@@ -35,7 +35,7 @@ context("SDF document schemas page", () => {
 
   it("should list the document's schemas", () => {
     for (const schema of sdfDocument.schemas) {
-      page.schemasTable.schema(schema.id).id.should("have.text", schema.id);
+      // page.schemasTable.schema(schema.id).id.should("have.text", schema.id);
       page.schemasTable.schema(schema.id).name.should("have.text", schema.name);
     }
   });

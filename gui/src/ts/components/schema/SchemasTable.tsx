@@ -4,10 +4,13 @@ import {Hrefs} from "Hrefs";
 import {Link} from "components/link/Link";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 import {DefinitionPath} from "models/definition/DefinitionPath";
+import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
+import {shortenUri} from "models/shortenUri";
 
 export const SchemasTable: React.FunctionComponent<{
+  namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   schemas: {id: string; label: string; path: DefinitionPath}[];
-}> = ({schemas}) => (
+}> = ({namespacePrefixes, schemas}) => (
   <Table data-cy="schemas-table">
     <TableBody>
       {schemas.map((schema) => {
@@ -18,7 +21,9 @@ export const SchemasTable: React.FunctionComponent<{
         return (
           <TableRow data-cy={"schema-" + schema.id} key={schema.id}>
             <TableCell data-cy="schema-id">
-              <Link to={schemaHref}>{schema.id}</Link>
+              <Link to={schemaHref}>
+                {shortenUri({namespacePrefixes, uri: schema.id})}
+              </Link>
             </TableCell>
             <TableCell data-cy="schema-name">
               <Link to={schemaHref}>{schema.label}</Link>

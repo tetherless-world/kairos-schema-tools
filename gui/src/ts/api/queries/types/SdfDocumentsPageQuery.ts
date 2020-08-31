@@ -8,6 +8,18 @@ import { ValidationMessageType } from "./../../graphqlGlobalTypes";
 // GraphQL query operation: SdfDocumentsPageQuery
 // ====================================================
 
+export interface SdfDocumentsPageQuery_sdfDocuments_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
+export interface SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
 export interface SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
@@ -51,6 +63,7 @@ export interface SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_
 export interface SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_primitive | null;
   schema: SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_schema | null;
 }
@@ -65,6 +78,12 @@ export interface SdfDocumentsPageQuery_sdfDocuments_primitives {
   id: string;
   label: string;
   path: SdfDocumentsPageQuery_sdfDocuments_primitives_path;
+}
+
+export interface SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_primitive_slot {
@@ -110,6 +129,7 @@ export interface SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_sch
 export interface SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_primitive | null;
   schema: SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_schema | null;
 }
@@ -130,6 +150,7 @@ export interface SdfDocumentsPageQuery_sdfDocuments {
   __typename: "SdfDocument";
   id: string;
   label: string;
+  namespacePrefixes: SdfDocumentsPageQuery_sdfDocuments_namespacePrefixes[];
   primitives: SdfDocumentsPageQuery_sdfDocuments_primitives[];
   schemas: SdfDocumentsPageQuery_sdfDocuments_schemas[];
   sdfVersion: string;

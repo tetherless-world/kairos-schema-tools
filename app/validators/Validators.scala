@@ -1,8 +1,9 @@
 package validators
 
-import formats.sdf.{SdfDocument, SdfDocumentReader}
+import formats.sdf.SdfDocumentReader
 import javax.inject.{Inject, Singleton}
 import models.schema.DefinitionPath
+import models.sdfDocument.SdfDocument
 import models.validation.{ValidationMessage, ValidationMessageType}
 import validators.ksfValidationApi.KsfValidationApi
 

@@ -5,10 +5,13 @@ import {StringListFieldTableRow} from "components/table/StringListFieldTableRow"
 import {PrimitivePageQuery_primitiveById} from "api/queries/types/PrimitivePageQuery";
 import {Hrefs} from "Hrefs";
 import {Link} from "components/link/Link";
+import {shortenUri} from "models/shortenUri";
+import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 
 export const PrimitiveDetailsTable: React.FunctionComponent<{
+  namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   primitive: PrimitivePageQuery_primitiveById & {id: string};
-}> = ({primitive}) => (
+}> = ({namespacePrefixes, primitive}) => (
   <Table>
     <TableBody>
       <StringFieldTableRow
@@ -18,7 +21,10 @@ export const PrimitiveDetailsTable: React.FunctionComponent<{
       />
       <StringFieldTableRow
         name="Identifier"
-        value={primitive.id}
+        value={shortenUri({
+          namespacePrefixes,
+          uri: primitive.id,
+        })}
         valueDataCy="primitive-id"
       />
       <TableRow>
@@ -30,7 +36,10 @@ export const PrimitiveDetailsTable: React.FunctionComponent<{
               .primitives.primitive({id: primitive.super})
               .toString()}
           >
-            {primitive.super}
+            {shortenUri({
+              namespacePrefixes,
+              uri: primitive.super,
+            })}
           </Link>
         </TableCell>
       </TableRow>
@@ -64,7 +73,16 @@ export const PrimitiveDetailsTable: React.FunctionComponent<{
       <StringListFieldTableRow
         direction="column"
         name="References"
-        values={primitive.references}
+        values={
+          primitive.references
+            ? primitive.references.map((reference) =>
+                shortenUri({
+                  namespacePrefixes,
+                  uri: reference,
+                })
+              )
+            : null
+        }
         valuesDataCy="primitive-references"
       />
       <StringFieldTableRow

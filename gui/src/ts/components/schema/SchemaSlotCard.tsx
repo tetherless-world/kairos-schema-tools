@@ -9,16 +9,24 @@ import {
 import * as React from "react";
 import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
+import {shortenUri} from "models/shortenUri";
+import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 
 export const SchemaSlotCard: React.FunctionComponent<{
+  namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   slot: SchemaPageQuery_schemaById_slots;
-}> = ({slot}) => (
+}> = ({namespacePrefixes, slot}) => (
   <Card>
-    <CardHeader title={"Slot: " + slot.id} />
+    <CardHeader
+      title={"Slot: " + shortenUri({namespacePrefixes, uri: slot.id})}
+    />
     <CardContent>
       <Table>
         <TableBody>
-          <StringFieldTableRow name="Identifier" value={slot.id} />
+          <StringFieldTableRow
+            name="Identifier"
+            value={shortenUri({namespacePrefixes, uri: slot.id})}
+          />
           <StringListFieldTableRow
             direction="column"
             name="Also known as"
@@ -37,7 +45,13 @@ export const SchemaSlotCard: React.FunctionComponent<{
           <StringListFieldTableRow
             direction="column"
             name="References"
-            values={slot.references}
+            values={
+              slot.references
+                ? slot.references.map((reference) =>
+                    shortenUri({namespacePrefixes, uri: reference})
+                  )
+                : null
+            }
           />
           <StringFieldTableRow name="Refvar" value={slot.refvar} />
           <StringFieldTableRow name="Role name" value={slot.roleName} />

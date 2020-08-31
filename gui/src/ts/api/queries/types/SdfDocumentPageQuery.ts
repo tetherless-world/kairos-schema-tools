@@ -8,6 +8,18 @@ import { ValidationMessageType } from "./../../graphqlGlobalTypes";
 // GraphQL query operation: SdfDocumentPageQuery
 // ====================================================
 
+export interface SdfDocumentPageQuery_sdfDocumentById_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
@@ -51,6 +63,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocumen
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_schema | null;
 }
@@ -58,6 +71,12 @@ export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocumen
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path {
   __typename: "DefinitionPath";
   sdfDocument: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_primitive_slot {
@@ -103,6 +122,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfD
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_schema | null;
 }
@@ -139,6 +159,12 @@ export interface SdfDocumentPageQuery_sdfDocumentById_primitives {
   path: SdfDocumentPageQuery_sdfDocumentById_primitives_path;
   slots: SdfDocumentPageQuery_sdfDocumentById_primitives_slots[];
   sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_primitives_sourceJsonNodeLocation;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_primitive_slot {
@@ -184,6 +210,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_s
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema | null;
 }
@@ -191,6 +218,12 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument {
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path {
   __typename: "DefinitionPath";
   sdfDocument: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_primitive_slot {
@@ -236,6 +269,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocu
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_schema | null;
 }
@@ -263,6 +297,12 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_sourceJsonNodeLoca
   __typename: "JsonNodeLocation";
   column: number;
   line: number;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants_path_sdfDocument_primitive_slot {
@@ -308,6 +348,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants_path_sdfDocument_schema | null;
 }
@@ -329,6 +370,12 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants
   label: string;
   path: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants_path;
   sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants_sourceJsonNodeLocation;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_path_sdfDocument_primitive_slot {
@@ -374,6 +421,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_path_sdfDocu
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_path_sdfDocument_schema | null;
 }
@@ -406,6 +454,12 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas {
   slots: SdfDocumentPageQuery_sdfDocumentById_schemas_slots[];
   sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_schemas_sourceJsonNodeLocation;
   steps: SdfDocumentPageQuery_sdfDocumentById_schemas_steps[];
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument_primitive_slot {
@@ -451,6 +505,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sd
 export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument_schema | null;
 }
@@ -471,6 +526,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById {
   __typename: "SdfDocument";
   id: string;
   label: string;
+  namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_namespacePrefixes[];
   primitives: SdfDocumentPageQuery_sdfDocumentById_primitives[];
   schemas: SdfDocumentPageQuery_sdfDocumentById_schemas[];
   sdfVersion: string;

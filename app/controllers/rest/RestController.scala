@@ -1,10 +1,10 @@
 package controllers.rest
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.sdf.SdfDocument
 import javax.inject.{Inject, Singleton}
 import models.json.JsonNodeLocation
 import models.schema._
+import models.sdfDocument.{SdfDocument, NamespacePrefix}
 import models.validation.{ValidationMessage, ValidationMessageType}
 import play.api.libs.json
 import play.api.libs.json._
@@ -50,6 +50,7 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val validationMessageTypeJsonWrites: json.Writes[ValidationMessageType] = (`type`) => JsString(`type`.value)
   private implicit val validationMessageJsonWrites = Json.writes[ValidationMessage]
   // SDF document
+  private implicit val sdfDocumentNamespacePrefixJsonWrites = Json.writes[NamespacePrefix]
   private implicit val sdfDocumentJsonWrites = Json.writes[SdfDocument]
 
   def schema(id: String) = Action { implicit request =>

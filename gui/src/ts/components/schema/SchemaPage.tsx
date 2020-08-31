@@ -14,6 +14,7 @@ import {Grid, Tab, Tabs} from "@material-ui/core";
 import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
 import {RefvarTable} from "components/schema/RefvarTable";
 import {StepOrdersGraph} from "components/schema/StepOrdersGraph";
+import {shortenUri} from "models/shortenUri";
 
 export const SchemaPage: React.FunctionComponent = () => {
   const {schemaId, sdfDocumentId} = _.mapValues(
@@ -59,6 +60,7 @@ export const SchemaPage: React.FunctionComponent = () => {
         if (!sdfDocument) {
           return <NoRoute />;
         }
+        const namespacePrefixes = schema.path.sdfDocument.namespacePrefixes;
 
         return (
           <StandardLayout
@@ -70,7 +72,7 @@ export const SchemaPage: React.FunctionComponent = () => {
               },
             }}
             rowItemStyle={{flexGrow: 1}}
-            subtitle={schema.id}
+            subtitle={shortenUri({namespacePrefixes, uri: schema.id})}
             title={
               <span>
                 Schema: <strong data-cy="schema-name">{schema.label}</strong>
@@ -98,6 +100,7 @@ export const SchemaPage: React.FunctionComponent = () => {
                       <Grid item>
                         <SchemaSectionContentsGrid
                           hrefs={hrefs}
+                          namespacePrefixes={namespacePrefixes}
                           schema={schema}
                         />
                       </Grid>

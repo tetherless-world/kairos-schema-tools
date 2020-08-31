@@ -1,6 +1,6 @@
 import {
+  SchemaPageQuery_schemaById,
   SchemaPageQuery_schemaById_entityRelations,
-  SchemaPageQuery_schemaById_slots,
 } from "api/queries/types/SchemaPageQuery";
 import {
   Card,
@@ -18,20 +18,46 @@ import {
 import * as React from "react";
 import {SchemaHrefs} from "Hrefs";
 import {Link} from "components/link/Link";
+import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
+import {shortenUri} from "models/shortenUri";
 
 export const EntityRelationCard: React.FunctionComponent<{
   entityRelation: SchemaPageQuery_schemaById_entityRelations;
   entityRelationIndex: number;
+  namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   hrefs: SchemaHrefs;
-  slots: SchemaPageQuery_schemaById_slots[];
-}> = ({entityRelation, entityRelationIndex, hrefs, slots}) => {
+  schema: SchemaPageQuery_schemaById;
+}> = ({
+  entityRelation,
+  entityRelationIndex,
+  hrefs,
+  namespacePrefixes,
+  schema,
+}) => {
   const entityLink = (entityId: string): React.ReactNode => {
-    const slot = slots.find((slot) => slot.id === entityId);
-    if (slot) {
-      return <Link to={hrefs.slot(slot)}>"Slot: " + slot.label</Link>;
-    } else {
-      return <span>{entityId}</span>;
+    for (const slot of schema.slots) {
+      if (slot.id === entityId) {
+        return <Link to={hrefs.slot(slot)}>Slot: {slot.label}</Link>;
+      }
     }
+    for (const step of schema.steps) {
+      if (step.id === entityId) {
+        return <Link to={hrefs.step(step)}>Step: {step.label}</Link>;
+      }
+      if (step.participants) {
+        for (const participant of step.participants) {
+          if (participant.id === entityId) {
+            return (
+              <Link to={hrefs.stepParticipant(participant)}>
+                Participant: {participant.label}
+              </Link>
+            );
+          }
+        }
+      }
+    }
+
+    return <span>{shortenUri({namespacePrefixes, uri: entityId})}</span>;
   };
 
   return (
@@ -59,7 +85,12 @@ export const EntityRelationCard: React.FunctionComponent<{
                       <TableCell>
                         {entityLink(entityRelation.relationSubject)}
                       </TableCell>
-                      <TableCell>{relation.relationPredicate}</TableCell>
+                      <TableCell>
+                        {shortenUri({
+                          namespacePrefixes,
+                          uri: relation.relationPredicate,
+                        })}
+                      </TableCell>
                       <TableCell>{entityLink(relationObject)}</TableCell>
                       <TableCell>{relation.name}</TableCell>
                       <TableCell>

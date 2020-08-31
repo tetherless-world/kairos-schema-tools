@@ -16,7 +16,14 @@ export const SchemasPage: React.FunctionComponent = () => {
       {({data}) => {
         return (
           <StandardLayout subtitle="All documents" title="Schemas">
-            <SchemasTable schemas={data.schemas} />
+            <SchemasTable
+              namespacePrefixes={
+                data.schemas.length > 0
+                  ? data.schemas[0].path.sdfDocument.namespacePrefixes
+                  : []
+              }
+              schemas={data.schemas}
+            />
           </StandardLayout>
         );
       }}

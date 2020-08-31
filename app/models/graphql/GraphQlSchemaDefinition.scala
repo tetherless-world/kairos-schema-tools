@@ -3,10 +3,11 @@ package models.graphql
 import java.util.UUID
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.sdf.{SdfDocument, SdfDocumentReader}
+import formats.sdf.SdfDocumentReader
 import io.github.tetherlessworld.twxplore.lib.base.models.graphql.BaseGraphQlSchemaDefinition
 import models.json.JsonNodeLocation
 import models.schema._
+import models.sdfDocument.{SdfDocument, NamespacePrefix}
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 import models.validation.{ValidationMessage, ValidationMessageType}
 import sangria.macros.derive._
@@ -44,6 +45,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   // Models that don't depend on other models
   implicit val JsonNodeLocationObjectType = deriveObjectType[GraphQlSchemaContext, JsonNodeLocation]()
   implicit val DurationObjectType = deriveObjectType[GraphQlSchemaContext, Duration]()
+  implicit val NamespacePrefixObjectType = deriveObjectType[GraphQlSchemaContext, NamespacePrefix]()
 
   // DefinitionPath
   implicit val DefinitionPathSchemaSlotObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathSchemaSlot](
@@ -78,7 +80,8 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   )
   implicit val DefinitionPathSdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathSdfDocument](
     AddFields(
-      Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.id).map(_.label))
+      Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.id).map(_.label)),
+      Field("namespacePrefixes", OptionType(ListType(NamespacePrefixObjectType)), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.id).map(_.namespacePrefixes))
     )
   )
   implicit val DefinitionPathObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath]()

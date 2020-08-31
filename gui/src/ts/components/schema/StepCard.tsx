@@ -12,11 +12,14 @@ import {SchemaHrefs} from "Hrefs";
 import {StepParticipantCard} from "components/schema/StepParticipantCard";
 import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
+import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
+import {shortenUri} from "models/shortenUri";
 
 export const StepCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
+  namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   step: SchemaPageQuery_schemaById_steps;
-}> = ({hrefs, step}) => (
+}> = ({hrefs, namespacePrefixes, step}) => (
   <Card>
     <CardHeader title={"Step: " + step.label} />
     <CardContent>
@@ -29,7 +32,7 @@ export const StepCard: React.FunctionComponent<{
           />
           <StringFieldTableRow
             name="Identifier"
-            value={step.id}
+            value={shortenUri({namespacePrefixes, uri: step.id})}
             valueDataCy="step-id"
           />
           <StringListFieldTableRow
@@ -73,12 +76,18 @@ export const StepCard: React.FunctionComponent<{
           <StringListFieldTableRow
             direction="column"
             name="References"
-            values={step.references}
+            values={
+              step.references
+                ? step.references.map((reference) =>
+                    shortenUri({namespacePrefixes, uri: reference})
+                  )
+                : null
+            }
             valuesDataCy="step-references"
           />
           <StringFieldTableRow
             name="Type"
-            value={step.type}
+            value={shortenUri({namespacePrefixes, uri: step.type})}
             valueDataCy="step-type"
           />
         </TableBody>
@@ -94,7 +103,10 @@ export const StepCard: React.FunctionComponent<{
                   key={participant.id}
                   item
                 >
-                  <StepParticipantCard participant={participant} />
+                  <StepParticipantCard
+                    namespacePrefixes={namespacePrefixes}
+                    participant={participant}
+                  />
                 </Grid>
               ))}
             </Grid>

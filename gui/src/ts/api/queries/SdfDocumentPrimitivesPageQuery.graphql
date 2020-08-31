@@ -1,8 +1,12 @@
 #import "./DefinitionPathFragment.graphql"
+#import "./NamespacePrefixFragment.graphql"
 
 query SdfDocumentPrimitivesPageQuery($sdfDocumentId: String!) {
     sdfDocumentById(id: $sdfDocumentId) {
         label
+        namespacePrefixes {
+            ... NamespacePrefixFragment
+        }
         primitives {
             id
             label
