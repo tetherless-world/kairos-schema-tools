@@ -27,7 +27,13 @@ export const PrimitiveSlotCard: React.FunctionComponent<{
     <CardContent>
       <Table>
         <TableBody>
-          <StringFieldTableRow name="Identifier" value={slot.id} />
+          <StringFieldTableRow
+            name="Identifier"
+            value={shortenUri({
+              namespacePrefixes: slot.path.sdfDocument.namespacePrefixes,
+              uri: slot.id,
+            })}
+          />
           <StringListFieldTableRow
             direction="column"
             name="Also known as"

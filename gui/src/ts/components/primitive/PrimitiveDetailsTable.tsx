@@ -71,7 +71,17 @@ export const PrimitiveDetailsTable: React.FunctionComponent<{
       <StringListFieldTableRow
         direction="column"
         name="References"
-        values={primitive.references}
+        values={
+          primitive.references
+            ? primitive.references.map((reference) =>
+                shortenUri({
+                  namespacePrefixes:
+                    primitive.path.sdfDocument.namespacePrefixes,
+                  uri: reference,
+                })
+              )
+            : null
+        }
         valuesDataCy="primitive-references"
       />
       <StringFieldTableRow

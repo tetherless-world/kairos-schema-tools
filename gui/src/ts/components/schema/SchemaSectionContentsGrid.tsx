@@ -10,11 +10,13 @@ import {SchemaHrefs} from "Hrefs";
 import {schemaSections} from "models/schema/schemaSections";
 import {TopLevelDefinitionSectionContents} from "components/definition/TopLevelDefinitionSectionContents";
 import {TopLevelDefinitionSectionContentsGrid} from "components/definition/TopLevelDefinitionSectionContentsGrid";
+import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 
 export const SchemaSectionContentsGrid: React.FunctionComponent<{
   hrefs: SchemaHrefs;
+  namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   schema: SchemaPageQuery_schemaById & {id: string};
-}> = ({hrefs, schema}) => {
+}> = ({hrefs, namespacePrefixes, schema}) => {
   const schemaSectionContents: TopLevelDefinitionSectionContents[] = [];
   for (const schemaSection of schemaSections) {
     let children: React.ReactNode;
@@ -33,7 +35,8 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
                     entityRelation={entityRelation}
                     entityRelationIndex={entityRelationIndex}
                     hrefs={hrefs}
-                    slots={schema.slots}
+                    namespacePrefixes={namespacePrefixes}
+                    schema={schema}
                   />
                 </Grid>
               )

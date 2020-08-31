@@ -59,6 +59,7 @@ export const SchemaPage: React.FunctionComponent = () => {
         if (!sdfDocument) {
           return <NoRoute />;
         }
+        const namespacePrefixes = schema.path.sdfDocument.namespacePrefixes;
 
         return (
           <StandardLayout
@@ -98,6 +99,7 @@ export const SchemaPage: React.FunctionComponent = () => {
                       <Grid item>
                         <SchemaSectionContentsGrid
                           hrefs={hrefs}
+                          namespacePrefixes={namespacePrefixes}
                           schema={schema}
                         />
                       </Grid>
