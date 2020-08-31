@@ -11,7 +11,7 @@ import scala.io.Source
 
 final case class SdfDocument(
                               id: Uri,
-                              namespacePrefixes: List[SdfDocumentNamespacePrefix],
+                              namespacePrefixes: List[NamespacePrefix],
                               primitives: List[Primitive],
                               schemas: List[Schema],
                               sdfVersion: String,

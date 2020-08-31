@@ -8,6 +8,12 @@ import { SearchDocumentType } from "./../../graphqlGlobalTypes";
 // GraphQL query operation: SearchResultsPageQuery
 // ====================================================
 
+export interface SearchResultsPageQuery_search_documents_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
 export interface SearchResultsPageQuery_search_documents_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
@@ -51,6 +57,7 @@ export interface SearchResultsPageQuery_search_documents_path_sdfDocument_schema
 export interface SearchResultsPageQuery_search_documents_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SearchResultsPageQuery_search_documents_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SearchResultsPageQuery_search_documents_path_sdfDocument_primitive | null;
   schema: SearchResultsPageQuery_search_documents_path_sdfDocument_schema | null;
 }

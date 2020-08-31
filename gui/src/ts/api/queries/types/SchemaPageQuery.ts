@@ -47,6 +47,12 @@ export interface SchemaPageQuery_schemaById_order_OverlapsStepOrder {
 
 export type SchemaPageQuery_schemaById_order = SchemaPageQuery_schemaById_order_BeforeAfterStepOrder | SchemaPageQuery_schemaById_order_ContainerContainedStepOrder | SchemaPageQuery_schemaById_order_OverlapsStepOrder;
 
+export interface SchemaPageQuery_schemaById_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
 export interface SchemaPageQuery_schemaById_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
@@ -90,6 +96,7 @@ export interface SchemaPageQuery_schemaById_path_sdfDocument_schema {
 export interface SchemaPageQuery_schemaById_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SchemaPageQuery_schemaById_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SchemaPageQuery_schemaById_path_sdfDocument_primitive | null;
   schema: SchemaPageQuery_schemaById_path_sdfDocument_schema | null;
 }
@@ -97,6 +104,12 @@ export interface SchemaPageQuery_schemaById_path_sdfDocument {
 export interface SchemaPageQuery_schemaById_path {
   __typename: "DefinitionPath";
   sdfDocument: SchemaPageQuery_schemaById_path_sdfDocument;
+}
+
+export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_primitive_slot {
@@ -142,6 +155,7 @@ export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_schema {
 export interface SchemaPageQuery_schemaById_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SchemaPageQuery_schemaById_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SchemaPageQuery_schemaById_slots_path_sdfDocument_primitive | null;
   schema: SchemaPageQuery_schemaById_slots_path_sdfDocument_schema | null;
 }
@@ -172,6 +186,12 @@ export interface SchemaPageQuery_schemaById_steps_maxDuration {
 export interface SchemaPageQuery_schemaById_steps_minDuration {
   __typename: "Duration";
   string: string;
+}
+
+export interface SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_primitive_slot {
@@ -217,6 +237,7 @@ export interface SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_
 export interface SchemaPageQuery_schemaById_steps_participants_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_primitive | null;
   schema: SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_schema | null;
 }
@@ -238,6 +259,12 @@ export interface SchemaPageQuery_schemaById_steps_participants {
   references: string[] | null;
   refvar: string | null;
   role: string;
+}
+
+export interface SchemaPageQuery_schemaById_steps_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SchemaPageQuery_schemaById_steps_path_sdfDocument_primitive_slot {
@@ -283,6 +310,7 @@ export interface SchemaPageQuery_schemaById_steps_path_sdfDocument_schema {
 export interface SchemaPageQuery_schemaById_steps_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SchemaPageQuery_schemaById_steps_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SchemaPageQuery_schemaById_steps_path_sdfDocument_primitive | null;
   schema: SchemaPageQuery_schemaById_steps_path_sdfDocument_schema | null;
 }

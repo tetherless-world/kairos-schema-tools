@@ -1,6 +1,11 @@
+#import "./NamespacePrefixFragment.graphql"
+
 fragment DefinitionPathFragment on DefinitionPath {
     sdfDocument {
         id
+        namespacePrefixes {
+            ... NamespacePrefixFragment
+        }
         primitive {
             id
             label

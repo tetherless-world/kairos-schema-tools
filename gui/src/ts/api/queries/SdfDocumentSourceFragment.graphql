@@ -1,10 +1,14 @@
 #import "./DefinitionPathFragment.graphql"
 #import "./JsonNodeLocationFragment.graphql"
+#import "./NamespacePrefixFragment.graphql"
 #import "./ValidationMessageFragment.graphql"
 
 fragment SdfDocumentSourceFragment on SdfDocument {
     id
     label
+    namespacePrefixes {
+        ... NamespacePrefixFragment
+    }
     primitives {
         id
         label

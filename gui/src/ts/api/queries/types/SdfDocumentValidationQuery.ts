@@ -8,6 +8,12 @@ import { ValidationMessageType } from "./../../graphqlGlobalTypes";
 // GraphQL query operation: SdfDocumentValidationQuery
 // ====================================================
 
+export interface SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
 export interface SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
@@ -51,6 +57,7 @@ export interface SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument
 export interface SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument_primitive | null;
   schema: SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument_schema | null;
 }

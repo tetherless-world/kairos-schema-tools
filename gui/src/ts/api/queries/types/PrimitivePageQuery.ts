@@ -18,6 +18,12 @@ export interface PrimitivePageQuery_primitiveById_minDuration {
   string: string;
 }
 
+export interface PrimitivePageQuery_primitiveById_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
 export interface PrimitivePageQuery_primitiveById_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
@@ -61,6 +67,7 @@ export interface PrimitivePageQuery_primitiveById_path_sdfDocument_schema {
 export interface PrimitivePageQuery_primitiveById_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: PrimitivePageQuery_primitiveById_path_sdfDocument_namespacePrefixes[] | null;
   primitive: PrimitivePageQuery_primitiveById_path_sdfDocument_primitive | null;
   schema: PrimitivePageQuery_primitiveById_path_sdfDocument_schema | null;
 }
@@ -68,6 +75,12 @@ export interface PrimitivePageQuery_primitiveById_path_sdfDocument {
 export interface PrimitivePageQuery_primitiveById_path {
   __typename: "DefinitionPath";
   sdfDocument: PrimitivePageQuery_primitiveById_path_sdfDocument;
+}
+
+export interface PrimitivePageQuery_primitiveById_slots_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface PrimitivePageQuery_primitiveById_slots_path_sdfDocument_primitive_slot {
@@ -113,6 +126,7 @@ export interface PrimitivePageQuery_primitiveById_slots_path_sdfDocument_schema 
 export interface PrimitivePageQuery_primitiveById_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: PrimitivePageQuery_primitiveById_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: PrimitivePageQuery_primitiveById_slots_path_sdfDocument_primitive | null;
   schema: PrimitivePageQuery_primitiveById_slots_path_sdfDocument_schema | null;
 }

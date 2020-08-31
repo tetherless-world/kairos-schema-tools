@@ -6,6 +6,12 @@
 // GraphQL fragment: DefinitionPathFragment
 // ====================================================
 
+export interface DefinitionPathFragment_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
 export interface DefinitionPathFragment_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
@@ -49,6 +55,7 @@ export interface DefinitionPathFragment_sdfDocument_schema {
 export interface DefinitionPathFragment_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: DefinitionPathFragment_sdfDocument_namespacePrefixes[] | null;
   primitive: DefinitionPathFragment_sdfDocument_primitive | null;
   schema: DefinitionPathFragment_sdfDocument_schema | null;
 }

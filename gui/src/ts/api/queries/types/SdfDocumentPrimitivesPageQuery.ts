@@ -6,6 +6,12 @@
 // GraphQL query operation: SdfDocumentPrimitivesPageQuery
 // ====================================================
 
+export interface SdfDocumentPrimitivesPageQuery_sdfDocumentById_primitives_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
 export interface SdfDocumentPrimitivesPageQuery_sdfDocumentById_primitives_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
@@ -49,6 +55,7 @@ export interface SdfDocumentPrimitivesPageQuery_sdfDocumentById_primitives_path_
 export interface SdfDocumentPrimitivesPageQuery_sdfDocumentById_primitives_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentPrimitivesPageQuery_sdfDocumentById_primitives_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPrimitivesPageQuery_sdfDocumentById_primitives_path_sdfDocument_primitive | null;
   schema: SdfDocumentPrimitivesPageQuery_sdfDocumentById_primitives_path_sdfDocument_schema | null;
 }

@@ -8,6 +8,18 @@ import { ValidationMessageType } from "./../../graphqlGlobalTypes";
 // GraphQL mutation operation: SdfDocumentSaveMutation
 // ====================================================
 
+export interface SdfDocumentSaveMutation_putSdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
@@ -51,6 +63,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocum
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_schema | null;
 }
@@ -58,6 +71,12 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocum
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path {
   __typename: "DefinitionPath";
   sdfDocument: SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_primitive_slot {
@@ -103,6 +122,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sd
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_schema | null;
 }
@@ -139,6 +159,12 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives {
   path: SdfDocumentSaveMutation_putSdfDocument_primitives_path;
   slots: SdfDocumentSaveMutation_putSdfDocument_primitives_slots[];
   sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_primitives_sourceJsonNodeLocation;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_primitive_slot {
@@ -184,6 +210,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_schema | null;
 }
@@ -191,6 +218,12 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path {
   __typename: "DefinitionPath";
   sdfDocument: SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_primitive_slot {
@@ -236,6 +269,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDo
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_schema | null;
 }
@@ -263,6 +297,12 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_sourceJsonNodeLo
   __typename: "JsonNodeLocation";
   column: number;
   line: number;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_path_sdfDocument_primitive_slot {
@@ -308,6 +348,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participan
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_path_sdfDocument_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_path_sdfDocument_schema | null;
 }
@@ -329,6 +370,12 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participan
   label: string;
   path: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_path;
   sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_sourceJsonNodeLocation;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_path_sdfDocument_primitive_slot {
@@ -374,6 +421,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_path_sdfDo
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_path_sdfDocument_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_path_sdfDocument_schema | null;
 }
@@ -406,6 +454,12 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas {
   slots: SdfDocumentSaveMutation_putSdfDocument_schemas_slots[];
   sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_schemas_sourceJsonNodeLocation;
   steps: SdfDocumentSaveMutation_putSdfDocument_schemas_steps[];
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_primitive_slot {
@@ -451,6 +505,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_
 export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_schema | null;
 }
@@ -471,6 +526,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument {
   __typename: "SdfDocument";
   id: string;
   label: string;
+  namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_namespacePrefixes[];
   primitives: SdfDocumentSaveMutation_putSdfDocument_primitives[];
   schemas: SdfDocumentSaveMutation_putSdfDocument_schemas[];
   sdfVersion: string;
