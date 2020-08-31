@@ -8,6 +8,7 @@ import formats.sdf.versions.ZeroDot8SdfDocumentReader
 import formats.sdf.vocabulary.KAIROS
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import models.schema.DefinitionPath
+import models.sdfDocument.SdfDocument
 import models.validation.{ValidationException, ValidationMessage, ValidationMessageType}
 import org.apache.jena.rdf.model.{Model, ModelFactory, Resource}
 import org.apache.jena.riot.{Lang, RiotException}

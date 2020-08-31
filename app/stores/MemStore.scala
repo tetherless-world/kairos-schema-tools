@@ -1,8 +1,8 @@
 package stores
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.sdf.SdfDocument
 import models.schema.Schema
+import models.sdfDocument.SdfDocument
 import models.search.{SearchDocument, SearchResults}
 
 import scala.collection.mutable

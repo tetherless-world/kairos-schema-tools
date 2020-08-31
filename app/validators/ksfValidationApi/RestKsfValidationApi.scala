@@ -1,11 +1,11 @@
 package validators.ksfValidationApi
 
-import formats.sdf.SdfDocument
 import io.circe.Decoder
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.parser.parse
 import javax.inject.{Inject, Singleton}
 import models.schema.DefinitionPath
+import models.sdfDocument.SdfDocument
 import models.validation.{ValidationMessage, ValidationMessageType}
 import org.slf4j.LoggerFactory
 import play.api.libs.ws.WSClient

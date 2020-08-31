@@ -3,10 +3,11 @@ package models.graphql
 import java.util.UUID
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.sdf.{SdfDocument, SdfDocumentReader}
+import formats.sdf.SdfDocumentReader
 import io.github.tetherlessworld.twxplore.lib.base.models.graphql.BaseGraphQlSchemaDefinition
 import models.json.JsonNodeLocation
 import models.schema._
+import models.sdfDocument.SdfDocument
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 import models.validation.{ValidationMessage, ValidationMessageType}
 import sangria.macros.derive._

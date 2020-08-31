@@ -4,10 +4,11 @@ import java.io.StringWriter
 
 import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.vocabulary.{KairosProperties, SchemaOrgProperties}
-import formats.sdf.{SdfDocument, SdfDocumentHeader}
+import formats.sdf.SdfDocumentHeader
 import io.github.tetherlessworld.scena.RdfProperties
 import models.json.{ArrayJsonNode, JsonNode, ObjectJsonNode, StringValueJsonNode}
 import models.schema._
+import models.sdfDocument.SdfDocument
 import models.validation.{ValidationException, ValidationMessage, ValidationMessageType}
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.riot.Lang

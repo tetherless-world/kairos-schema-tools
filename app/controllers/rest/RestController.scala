@@ -1,10 +1,10 @@
 package controllers.rest
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.sdf.SdfDocument
 import javax.inject.{Inject, Singleton}
 import models.json.JsonNodeLocation
 import models.schema._
+import models.sdfDocument.SdfDocument
 import models.validation.{ValidationMessage, ValidationMessageType}
 import play.api.libs.json
 import play.api.libs.json._

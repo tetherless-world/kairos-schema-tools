@@ -1,12 +1,9 @@
-package formats.sdf
-
-import java.util.UUID
+package models.sdfDocument
 
 import edu.rpi.tw.twks.uri.Uri
-import models.graphql.GraphQlSchemaDefinition.JsonArgument
+import formats.sdf.SdfDocumentReader
 import models.schema.{Primitive, Schema}
 import models.validation.ValidationMessage
-import org.apache.jena.rdf.model.Resource
 import validators.Validators
 
 import scala.concurrent.{ExecutionContext, Future}
