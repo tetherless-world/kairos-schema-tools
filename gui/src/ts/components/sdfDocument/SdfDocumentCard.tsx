@@ -19,11 +19,13 @@ import WarningIcon from "@material-ui/icons/Warning";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 import {DefinitionPath} from "models/definition/DefinitionPath";
 import {PrimitivesTable} from "components/primitive/PrimitivesTable";
+import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 
 export const SdfDocumentCard: React.FunctionComponent<{
   sdfDocument: {
     id: string;
     label: string;
+    namespacePrefixes: readonly NamespacePrefixFragment[];
     primitives: {
       id: string;
       label: string;
@@ -41,6 +43,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
   sdfDocument: {
     id,
     label,
+    namespacePrefixes,
     primitives,
     schemas,
     sdfVersion,
@@ -98,7 +101,10 @@ export const SdfDocumentCard: React.FunctionComponent<{
                   Primitives
                 </Link>
               </Typography>
-              <PrimitivesTable primitives={primitives} />
+              <PrimitivesTable
+                namespacePrefixes={namespacePrefixes}
+                primitives={primitives}
+              />
             </Grid>
           ) : null}
           {schemas.length > 0 ? (

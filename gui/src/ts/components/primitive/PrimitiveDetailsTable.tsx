@@ -5,6 +5,7 @@ import {StringListFieldTableRow} from "components/table/StringListFieldTableRow"
 import {PrimitivePageQuery_primitiveById} from "api/queries/types/PrimitivePageQuery";
 import {Hrefs} from "Hrefs";
 import {Link} from "components/link/Link";
+import {shortenUri} from "models/shortenUri";
 
 export const PrimitiveDetailsTable: React.FunctionComponent<{
   primitive: PrimitivePageQuery_primitiveById & {id: string};
@@ -18,7 +19,10 @@ export const PrimitiveDetailsTable: React.FunctionComponent<{
       />
       <StringFieldTableRow
         name="Identifier"
-        value={primitive.id}
+        value={shortenUri({
+          namespacePrefixes: primitive.path.sdfDocument.namespacePrefixes,
+          uri: primitive.id,
+        })}
         valueDataCy="primitive-id"
       />
       <TableRow>
@@ -30,7 +34,10 @@ export const PrimitiveDetailsTable: React.FunctionComponent<{
               .primitives.primitive({id: primitive.super})
               .toString()}
           >
-            {primitive.super}
+            {shortenUri({
+              namespacePrefixes: primitive.path.sdfDocument.namespacePrefixes,
+              uri: primitive.super,
+            })}
           </Link>
         </TableCell>
       </TableRow>

@@ -4,10 +4,13 @@ import {Hrefs} from "Hrefs";
 import {Link} from "components/link/Link";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 import {DefinitionPath} from "models/definition/DefinitionPath";
+import {shortenUri} from "models/shortenUri";
+import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 
 export const PrimitivesTable: React.FunctionComponent<{
+  namespacePrefixes: readonly NamespacePrefixFragment[] | null | undefined;
   primitives: {id: string; label: string; path: DefinitionPath}[];
-}> = ({primitives}) => (
+}> = ({namespacePrefixes, primitives}) => (
   <Table data-cy="primitives-table">
     <TableBody>
       {primitives.map((primitive) => {
@@ -18,7 +21,12 @@ export const PrimitivesTable: React.FunctionComponent<{
         return (
           <TableRow data-cy={"primitive-" + primitive.id} key={primitive.id}>
             <TableCell data-cy="primitive-id">
-              <Link to={primitiveHref}>{primitive.id}</Link>
+              <Link to={primitiveHref}>
+                {shortenUri({
+                  namespacePrefixes,
+                  uri: primitive.id,
+                })}
+              </Link>
             </TableCell>
             <TableCell data-cy="primitive-name">
               <Link to={primitiveHref}>{primitive.label}</Link>

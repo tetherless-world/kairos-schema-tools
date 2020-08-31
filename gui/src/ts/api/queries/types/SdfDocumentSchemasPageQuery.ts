@@ -6,6 +6,12 @@
 // GraphQL query operation: SdfDocumentSchemasPageQuery
 // ====================================================
 
+export interface SdfDocumentSchemasPageQuery_sdfDocumentById_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
 export interface SdfDocumentSchemasPageQuery_sdfDocumentById_schemas_path_sdfDocument_namespacePrefixes {
   __typename: "NamespacePrefix";
   prefix: string;
@@ -75,6 +81,7 @@ export interface SdfDocumentSchemasPageQuery_sdfDocumentById_schemas {
 export interface SdfDocumentSchemasPageQuery_sdfDocumentById {
   __typename: "SdfDocument";
   label: string;
+  namespacePrefixes: SdfDocumentSchemasPageQuery_sdfDocumentById_namespacePrefixes[];
   schemas: SdfDocumentSchemasPageQuery_sdfDocumentById_schemas[];
 }
 

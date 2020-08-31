@@ -11,6 +11,7 @@ import * as _ from "lodash";
 import {PrimitiveSectionContentsGrid} from "components/primitive/PrimitiveSectionContentsGrid";
 import {Grid} from "@material-ui/core";
 import {PrimitiveTableOfContents} from "components/primitive/PrimitiveTableOfContents";
+import {shortenUri} from "models/shortenUri";
 
 export const PrimitivePage: React.FunctionComponent = () => {
   const {primitiveId, sdfDocumentId} = _.mapValues(
@@ -59,7 +60,10 @@ export const PrimitivePage: React.FunctionComponent = () => {
               },
             }}
             rowItemStyle={{flexGrow: 1}}
-            subtitle={primitive.id}
+            subtitle={shortenUri({
+              namespacePrefixes: primitive.path.sdfDocument.namespacePrefixes,
+              uri: primitive.id,
+            })}
             title={
               <span>
                 Primitive:{" "}

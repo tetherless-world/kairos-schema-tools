@@ -9,12 +9,21 @@ import {
 import * as React from "react";
 import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
+import {shortenUri} from "models/shortenUri";
 
 export const PrimitiveSlotCard: React.FunctionComponent<{
   slot: PrimitivePageQuery_primitiveById_slots;
 }> = ({slot}) => (
   <Card>
-    <CardHeader title={"Slot: " + slot.id} />
+    <CardHeader
+      title={
+        "Slot: " +
+        shortenUri({
+          namespacePrefixes: slot.path.sdfDocument.namespacePrefixes,
+          uri: slot.id,
+        })
+      }
+    />
     <CardContent>
       <Table>
         <TableBody>
@@ -40,7 +49,13 @@ export const PrimitiveSlotCard: React.FunctionComponent<{
             values={slot.references}
           />
           <StringFieldTableRow name="Role name" value={slot.roleName} />
-          <StringFieldTableRow name="Super" value={slot.super} />
+          <StringFieldTableRow
+            name="Super"
+            value={shortenUri({
+              namespacePrefixes: slot.path.sdfDocument.namespacePrefixes,
+              uri: slot.super,
+            })}
+          />
         </TableBody>
       </Table>
     </CardContent>
