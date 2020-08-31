@@ -1,0 +1,4 @@
+fragment NamespacePrefixFragment on NamespacePrefix {
+    prefix
+    uri
+}

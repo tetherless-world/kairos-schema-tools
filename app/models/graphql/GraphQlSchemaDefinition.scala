@@ -7,7 +7,7 @@ import formats.sdf.SdfDocumentReader
 import io.github.tetherlessworld.twxplore.lib.base.models.graphql.BaseGraphQlSchemaDefinition
 import models.json.JsonNodeLocation
 import models.schema._
-import models.sdfDocument.{SdfDocument, SdfDocumentNamespacePrefix}
+import models.sdfDocument.{SdfDocument, NamespacePrefix}
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 import models.validation.{ValidationMessage, ValidationMessageType}
 import sangria.macros.derive._
@@ -45,6 +45,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   // Models that don't depend on other models
   implicit val JsonNodeLocationObjectType = deriveObjectType[GraphQlSchemaContext, JsonNodeLocation]()
   implicit val DurationObjectType = deriveObjectType[GraphQlSchemaContext, Duration]()
+  implicit val NamespacePrefixObjectType = deriveObjectType[GraphQlSchemaContext, NamespacePrefix]()
 
   // DefinitionPath
   implicit val DefinitionPathSchemaSlotObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathSchemaSlot](
@@ -79,7 +80,8 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   )
   implicit val DefinitionPathSdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathSdfDocument](
     AddFields(
-      Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.id).map(_.label))
+      Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.id).map(_.label)),
+      Field("namespacePrefixes", OptionType(ListType(NamespacePrefixObjectType)), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.id).map(_.namespacePrefixes))
     )
   )
   implicit val DefinitionPathObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath]()
@@ -136,7 +138,6 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val ValidationMessageObjectType = deriveObjectType[GraphQlSchemaContext, ValidationMessage]()
 
   // SDF document
-  implicit lazy val SdfDocumentNamespacePrefixObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocumentNamespacePrefix]()
   implicit lazy val SdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, SdfDocument](
     AddFields(
       Field("label", StringType, resolve = _.value.label),
