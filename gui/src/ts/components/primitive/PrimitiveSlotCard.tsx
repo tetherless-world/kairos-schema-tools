@@ -10,16 +10,18 @@ import * as React from "react";
 import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {shortenUri} from "models/shortenUri";
+import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 
 export const PrimitiveSlotCard: React.FunctionComponent<{
+  namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   slot: PrimitivePageQuery_primitiveById_slots;
-}> = ({slot}) => (
+}> = ({namespacePrefixes, slot}) => (
   <Card>
     <CardHeader
       title={
         "Slot: " +
         shortenUri({
-          namespacePrefixes: slot.path.sdfDocument.namespacePrefixes,
+          namespacePrefixes,
           uri: slot.id,
         })
       }
@@ -30,7 +32,7 @@ export const PrimitiveSlotCard: React.FunctionComponent<{
           <StringFieldTableRow
             name="Identifier"
             value={shortenUri({
-              namespacePrefixes: slot.path.sdfDocument.namespacePrefixes,
+              namespacePrefixes,
               uri: slot.id,
             })}
           />
@@ -58,7 +60,7 @@ export const PrimitiveSlotCard: React.FunctionComponent<{
           <StringFieldTableRow
             name="Super"
             value={shortenUri({
-              namespacePrefixes: slot.path.sdfDocument.namespacePrefixes,
+              namespacePrefixes,
               uri: slot.super,
             })}
           />

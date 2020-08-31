@@ -6,10 +6,12 @@ import {PrimitivePageQuery_primitiveById} from "api/queries/types/PrimitivePageQ
 import {Hrefs} from "Hrefs";
 import {Link} from "components/link/Link";
 import {shortenUri} from "models/shortenUri";
+import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 
 export const PrimitiveDetailsTable: React.FunctionComponent<{
+  namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   primitive: PrimitivePageQuery_primitiveById & {id: string};
-}> = ({primitive}) => (
+}> = ({namespacePrefixes, primitive}) => (
   <Table>
     <TableBody>
       <StringFieldTableRow
@@ -20,7 +22,7 @@ export const PrimitiveDetailsTable: React.FunctionComponent<{
       <StringFieldTableRow
         name="Identifier"
         value={shortenUri({
-          namespacePrefixes: primitive.path.sdfDocument.namespacePrefixes,
+          namespacePrefixes,
           uri: primitive.id,
         })}
         valueDataCy="primitive-id"
@@ -35,7 +37,7 @@ export const PrimitiveDetailsTable: React.FunctionComponent<{
               .toString()}
           >
             {shortenUri({
-              namespacePrefixes: primitive.path.sdfDocument.namespacePrefixes,
+              namespacePrefixes,
               uri: primitive.super,
             })}
           </Link>
@@ -75,8 +77,7 @@ export const PrimitiveDetailsTable: React.FunctionComponent<{
           primitive.references
             ? primitive.references.map((reference) =>
                 shortenUri({
-                  namespacePrefixes:
-                    primitive.path.sdfDocument.namespacePrefixes,
+                  namespacePrefixes,
                   uri: reference,
                 })
               )

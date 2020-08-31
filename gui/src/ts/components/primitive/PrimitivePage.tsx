@@ -49,6 +49,7 @@ export const PrimitivePage: React.FunctionComponent = () => {
         if (!sdfDocument) {
           return <NoRoute />;
         }
+        const namespacePrefixes = primitive.path.sdfDocument.namespacePrefixes;
 
         return (
           <StandardLayout
@@ -61,7 +62,7 @@ export const PrimitivePage: React.FunctionComponent = () => {
             }}
             rowItemStyle={{flexGrow: 1}}
             subtitle={shortenUri({
-              namespacePrefixes: primitive.path.sdfDocument.namespacePrefixes,
+              namespacePrefixes,
               uri: primitive.id,
             })}
             title={
@@ -82,6 +83,7 @@ export const PrimitivePage: React.FunctionComponent = () => {
                     <Grid item>
                       <PrimitiveSectionContentsGrid
                         hrefs={hrefs}
+                        namespacePrefixes={namespacePrefixes}
                         primitive={primitive}
                       />
                     </Grid>

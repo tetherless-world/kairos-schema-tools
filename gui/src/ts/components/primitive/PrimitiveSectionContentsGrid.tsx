@@ -7,17 +7,24 @@ import {primitiveSections} from "models/primitive/primitiveSections";
 import {TopLevelDefinitionSectionContentsGrid} from "components/definition/TopLevelDefinitionSectionContentsGrid";
 import {TopLevelDefinitionSectionContents} from "components/definition/TopLevelDefinitionSectionContents";
 import {PrimitiveSlotCard} from "components/primitive/PrimitiveSlotCard";
+import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 
 export const PrimitiveSectionContentsGrid: React.FunctionComponent<{
   hrefs: PrimitiveHrefs;
+  namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   primitive: PrimitivePageQuery_primitiveById & {id: string};
-}> = ({hrefs, primitive}) => {
+}> = ({hrefs, namespacePrefixes, primitive}) => {
   const primitiveSectionContents: TopLevelDefinitionSectionContents[] = [];
   for (const primitiveSection of primitiveSections) {
     let children: React.ReactNode;
     switch (primitiveSection.id) {
       case "details": {
-        children = <PrimitiveDetailsTable primitive={primitive} />;
+        children = (
+          <PrimitiveDetailsTable
+            namespacePrefixes={namespacePrefixes}
+            primitive={primitive}
+          />
+        );
         break;
       }
       case "slots": {
@@ -25,7 +32,10 @@ export const PrimitiveSectionContentsGrid: React.FunctionComponent<{
           <Grid container direction="column" spacing={4}>
             {primitive.slots.map((slot) => (
               <Grid item id={hrefs.slotId(slot)} key={slot.id}>
-                <PrimitiveSlotCard slot={slot} />
+                <PrimitiveSlotCard
+                  namespacePrefixes={namespacePrefixes}
+                  slot={slot}
+                />
               </Grid>
             ))}
           </Grid>

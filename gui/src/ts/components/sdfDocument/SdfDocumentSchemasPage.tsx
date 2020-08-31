@@ -46,7 +46,10 @@ export const SdfDocumentSchemasPage: React.FunctionComponent = () => {
             }
             title="Schemas"
           >
-            <SchemasTable schemas={sdfDocument.schemas} />
+            <SchemasTable
+              namespacePrefixes={sdfDocument.namespacePrefixes}
+              schemas={sdfDocument.schemas}
+            />
           </StandardLayout>
         );
       }}

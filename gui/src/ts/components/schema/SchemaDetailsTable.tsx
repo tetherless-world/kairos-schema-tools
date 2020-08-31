@@ -3,10 +3,13 @@ import {Table, TableBody, TableCell, TableRow} from "@material-ui/core";
 import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {SchemaPageQuery_schemaById} from "api/queries/types/SchemaPageQuery";
+import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
+import {shortenUri} from "models/shortenUri";
 
 export const SchemaDetailsTable: React.FunctionComponent<{
+  namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   schema: SchemaPageQuery_schemaById & {id: string};
-}> = ({schema}) => (
+}> = ({namespacePrefixes, schema}) => (
   <Table>
     <TableBody>
       <StringFieldTableRow
@@ -16,7 +19,7 @@ export const SchemaDetailsTable: React.FunctionComponent<{
       />
       <StringFieldTableRow
         name="Identifier"
-        value={schema.id}
+        value={shortenUri({namespacePrefixes, uri: schema.id})}
         valueDataCy="schema-id"
       />
       {/*{schema.super ? (*/}
@@ -58,7 +61,13 @@ export const SchemaDetailsTable: React.FunctionComponent<{
       <StringListFieldTableRow
         direction="column"
         name="References"
-        values={schema.references}
+        values={
+          schema.references
+            ? schema.references.map((reference) =>
+                shortenUri({namespacePrefixes, uri: reference})
+              )
+            : null
+        }
         valuesDataCy="schema-references"
       />
       <StringFieldTableRow

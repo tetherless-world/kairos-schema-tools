@@ -22,7 +22,12 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
     let children: React.ReactNode;
     switch (schemaSection.id) {
       case "details": {
-        children = <SchemaDetailsTable schema={schema} />;
+        children = (
+          <SchemaDetailsTable
+            namespacePrefixes={namespacePrefixes}
+            schema={schema}
+          />
+        );
         break;
       }
       case "entity-relations": {
@@ -50,7 +55,10 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
           <Grid container direction="column" spacing={4}>
             {schema.slots.map((slot) => (
               <Grid item id={hrefs.slotId(slot)} key={slot.id}>
-                <SchemaSlotCard slot={slot} />
+                <SchemaSlotCard
+                  namespacePrefixes={namespacePrefixes}
+                  slot={slot}
+                />
               </Grid>
             ))}
           </Grid>
@@ -62,7 +70,11 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
           <Grid container direction="column" spacing={4}>
             {schema.steps.map((step) => (
               <Grid item id={hrefs.stepId(step)} key={step.id}>
-                <StepCard hrefs={hrefs} step={step} />
+                <StepCard
+                  hrefs={hrefs}
+                  namespacePrefixes={namespacePrefixes}
+                  step={step}
+                />
               </Grid>
             ))}
           </Grid>

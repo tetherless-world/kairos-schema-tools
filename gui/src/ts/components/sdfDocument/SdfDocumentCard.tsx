@@ -20,6 +20,7 @@ import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 import {DefinitionPath} from "models/definition/DefinitionPath";
 import {PrimitivesTable} from "components/primitive/PrimitivesTable";
 import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
+import {shortenUri} from "models/shortenUri";
 
 export const SdfDocumentCard: React.FunctionComponent<{
   sdfDocument: {
@@ -76,7 +77,9 @@ export const SdfDocumentCard: React.FunctionComponent<{
               <TableBody>
                 <TableRow>
                   <TableCell>Identifier</TableCell>
-                  <TableCell data-cy="sdf-document-id">{id}</TableCell>
+                  <TableCell data-cy="sdf-document-id">
+                    {shortenUri({namespacePrefixes, uri: id})}
+                  </TableCell>
                 </TableRow>
                 {sdfVersion.length > 0 ? (
                   <TableRow>
@@ -117,7 +120,10 @@ export const SdfDocumentCard: React.FunctionComponent<{
                   Schemas
                 </Link>
               </Typography>
-              <SchemasTable schemas={schemas} />
+              <SchemasTable
+                namespacePrefixes={namespacePrefixes}
+                schemas={schemas}
+              />
             </Grid>
           ) : null}
           {validationMessageTypes.length > 0 ? (
