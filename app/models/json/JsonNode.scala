@@ -1,7 +1,5 @@
 package models.json
 
-import org.antlr.v4.runtime.Token
-
 sealed trait JsonNode {
   val location: JsonNodeLocation
 }
@@ -18,6 +16,6 @@ case class NullJsonNode(location: JsonNodeLocation) extends JsonNode
 
 case class NumberValueJsonNode(location: JsonNodeLocation, value: Double) extends ValueJsonNode[Double]
 
-case class ObjectJsonNode(map: Map[String, JsonNode], location: JsonNodeLocation) extends JsonNode
+case class ObjectJsonNode(map: Map[String, JsonNode], location: JsonNodeLocation, text: String) extends JsonNode
 
 case class StringValueJsonNode(location: JsonNodeLocation, value: String) extends ValueJsonNode[String]

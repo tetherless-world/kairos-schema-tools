@@ -28,6 +28,17 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     }
   }
 
+  private def getDefinitionPrivateData(jsonNode: ObjectJsonNode, path: DefinitionPath): Option[String] = {
+    jsonNode.map.get("privateData").flatMap(privateDataNode => {
+      if (privateDataNode.isInstanceOf[ObjectJsonNode]) {
+        Some(privateDataNode.asInstanceOf[ObjectJsonNode].text)
+      } else {
+        validationMessages += ValidationMessage("privateData is not a JSON object", path, ValidationMessageType.Error)
+        None
+      }
+    })
+  }
+
   private def mapResourcesToObjectJsonNodes(jsonNodes: List[JsonNode], path: DefinitionPath, resources: List[Resource]): List[(ObjectJsonNode, Resource)] = {
     val objectJsonNodes = jsonNodes.filter(_.isInstanceOf[ObjectJsonNode]).map(_.asInstanceOf[ObjectJsonNode])
     if (objectJsonNodes.size != resources.size) {
@@ -105,6 +116,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       minDuration = resource.minDuration.map(Duration(_)).headOption,
       name = resource.name.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required name property", path)),
       path = path,
+      privateData = getDefinitionPrivateData(jsonNode, path),
       references = Option(resource.reference).filter(_.nonEmpty),
       slots = mapResourcesToObjectJsonNodes(
         jsonNodes = jsonNode.map.get("slots").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
@@ -136,6 +148,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       entityTypes = Option(resource.entityTypes).filter(_.nonEmpty),
       id = id,
       path = path,
+      privateData = getDefinitionPrivateData(jsonNode, path),
       references = Option(resource.reference).filter(_.nonEmpty),
       roleName = resource.roleName.headOption.getOrElse(throw ValidationException(s"slot ${id} missing required roleName property", path)),
       sourceJsonNodeLocation = jsonNode.location,
@@ -173,6 +186,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         }
       ),
       path = path,
+      privateData = getDefinitionPrivateData(jsonNode, path),
       references = Option(resource.reference).filter(_.nonEmpty),
       slots = mapResourcesToObjectJsonNodes(
         jsonNodes = jsonNode.map.get("slots").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
@@ -218,6 +232,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       entityTypes = Option(resource.entityTypes).filter(_.nonEmpty),
       id = id,
       path = path,
+      privateData = getDefinitionPrivateData(jsonNode, path),
       references = Option(resource.reference).filter(_.nonEmpty),
       refvar = resource.refvar.headOption,
       roleName = resource.roleName.headOption.getOrElse(throw ValidationException(s"slot ${id} missing required roleName property", path)),
@@ -270,6 +285,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
           }
         })).filter(_.nonEmpty),
       path = path,
+      privateData = getDefinitionPrivateData(jsonNode, path),
       provenances = Option(resource.provenance).filter(_.nonEmpty),
       references = Option(resource.reference).filter(_.nonEmpty),
       requires = Option(resource.requires).filter(_.nonEmpty),
@@ -288,6 +304,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       id = id,
       name = resource.name.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required name property", path)),
       path = path,
+      privateData = getDefinitionPrivateData(jsonNode, path),
       references = Option(resource.reference).filter(_.nonEmpty),
       refvar = resource.refvar.headOption,
       role = resource.role.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required role property", path)),

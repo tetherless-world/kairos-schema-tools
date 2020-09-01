@@ -12,6 +12,7 @@ final case class Primitive(
                             minDuration: Option[Duration],
                             name: String,
                             path: DefinitionPath,
+                            privateData: Option[String],
                             references: Option[List[String]],
                             slots: List[PrimitiveSlot],
                             sourceJsonNodeLocation: JsonNodeLocation,

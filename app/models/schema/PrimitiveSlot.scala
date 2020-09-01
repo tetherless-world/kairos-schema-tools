@@ -9,6 +9,7 @@ final case class PrimitiveSlot(
                                 entityTypes: Option[List[EntityType]],
                                 id: Uri,
                                 path: DefinitionPath,
+                                privateData: Option[String],
                                 references: Option[List[String]],
                                 roleName: String,
                                 sourceJsonNodeLocation: JsonNodeLocation,

@@ -13,6 +13,7 @@ final case class Step(
                        name: String,
                        participants: Option[List[StepParticipant]],
                        path: DefinitionPath,
+                       privateData: Option[String],
                        provenances: Option[List[String]],
                        requires: Option[List[String]],
                        references: Option[List[String]],

@@ -6,4 +6,5 @@ trait Definition {
   def label: String
   val id: Uri
   val path: DefinitionPath
+  val privateData: Option[String]
 }
