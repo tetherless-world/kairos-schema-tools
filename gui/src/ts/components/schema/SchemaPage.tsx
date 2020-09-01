@@ -15,6 +15,7 @@ import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
 import {RefvarTable} from "components/schema/RefvarTable";
 import {StepOrdersGraph} from "components/schema/StepOrdersGraph";
 import {shortenUri} from "models/shortenUri";
+import {AchievesRequiresTable} from "components/schema/AchievesRequiresTable";
 
 export const SchemaPage: React.FunctionComponent = () => {
   const {schemaId, sdfDocumentId} = _.mapValues(
@@ -33,11 +34,12 @@ export const SchemaPage: React.FunctionComponent = () => {
     },
   });
 
-  type TabValue = "table" | "refvar" | "order";
+  type TabValue = "table" | "refvar" | "order" | "achieves-requires";
   const tabDefinitions: readonly {label: string; value: TabValue}[] = [
     {label: "Table", value: "table"},
     {label: "Refvar", value: "refvar"},
     {label: "Order", value: "order"},
+    {label: "Achieves/Requires", value: "achieves-requires"},
   ];
   let [tab, setTab] = useQueryParam<TabValue>("tab");
   if (!tab) {
@@ -115,6 +117,12 @@ export const SchemaPage: React.FunctionComponent = () => {
                   style={{minHeight: 600, minWidth: 800}}
                 >
                   <StepOrdersGraph hrefs={hrefs} schema={schema} />
+                </div>
+                <div
+                  hidden={tab !== "achieves-requires"}
+                  style={{minHeight: 600, minWidth: 800}}
+                >
+                  <AchievesRequiresTable hrefs={hrefs} schema={schema} />
                 </div>
               </Grid>
             </Grid>
