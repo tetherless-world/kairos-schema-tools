@@ -10,6 +10,7 @@ final case class StepParticipant(
                                   id: Uri,
                                   name: String, // name is required for step-level slots (participants), unlike schema-level slots
                                   path: DefinitionPath,
+                                  privateData: Option[String],
                                   references: Option[List[String]],
                                   refvar: Option[String],
                                   role: Uri,

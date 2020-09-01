@@ -11,6 +11,7 @@ import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {shortenUri} from "models/shortenUri";
 import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
+import {JsonFieldTableRow} from "components/table/JsonFieldTableRow";
 
 export const SchemaSlotCard: React.FunctionComponent<{
   namespacePrefixes: readonly NamespacePrefixFragment[] | null;
@@ -42,6 +43,7 @@ export const SchemaSlotCard: React.FunctionComponent<{
             name="Entity types"
             values={slot.entityTypes}
           />
+          <JsonFieldTableRow name={"Private data"} value={slot.privateData} />
           <StringListFieldTableRow
             direction="column"
             name="References"

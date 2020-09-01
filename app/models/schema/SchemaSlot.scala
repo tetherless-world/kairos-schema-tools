@@ -9,6 +9,7 @@ final case class SchemaSlot(
                              entityTypes: Option[List[EntityType]],
                              id: Uri,
                              path: DefinitionPath,
+                             privateData: Option[String],
                              references: Option[List[String]],
                              refvar: Option[String],
                              roleName: String,

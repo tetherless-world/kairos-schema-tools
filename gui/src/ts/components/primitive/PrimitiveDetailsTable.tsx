@@ -7,6 +7,7 @@ import {Hrefs} from "Hrefs";
 import {Link} from "components/link/Link";
 import {shortenUri} from "models/shortenUri";
 import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
+import {JsonFieldTableRow} from "components/table/JsonFieldTableRow";
 
 export const PrimitiveDetailsTable: React.FunctionComponent<{
   namespacePrefixes: readonly NamespacePrefixFragment[] | null;
@@ -70,6 +71,7 @@ export const PrimitiveDetailsTable: React.FunctionComponent<{
         value={primitive.minDuration ? primitive.minDuration.string : null}
         valueDataCy="primitive-min-duration"
       />
+      <JsonFieldTableRow name={"Private data"} value={primitive.privateData} />
       <StringListFieldTableRow
         direction="column"
         name="References"

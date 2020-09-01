@@ -14,6 +14,7 @@ import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 import {shortenUri} from "models/shortenUri";
+import {JsonFieldTableRow} from "components/table/JsonFieldTableRow";
 
 export const StepCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
@@ -67,6 +68,7 @@ export const StepCard: React.FunctionComponent<{
             value={step.minDuration ? step.minDuration.string : null}
             valueDataCy="step-min-duration"
           />
+          <JsonFieldTableRow name={"Private data"} value={step.privateData} />
           <StringListFieldTableRow
             direction="column"
             name="Provenance"

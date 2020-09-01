@@ -40,7 +40,7 @@ object JsonParser {
             map.update(key, value)
           }
         })
-        ObjectJsonNode(map = map.toMap, location = JsonNodeLocation(startToken = ctx.start, stopToken = ctx.stop))
+        ObjectJsonNode(map = map.toMap, text = ctx.getText(), location = JsonNodeLocation(startToken = ctx.start, stopToken = ctx.stop))
       }
 
       override def visitValue(ctx: JSONParser.ValueContext): JsonNode = {

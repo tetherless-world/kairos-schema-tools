@@ -13,6 +13,7 @@ final case class Schema(
                          order: List[StepOrder],
                          references: Option[List[String]],
                          path: DefinitionPath,
+                         privateData: Option[String],
                          slots: List[SchemaSlot],
                          sourceJsonNodeLocation: JsonNodeLocation,
                          steps: List[Step],
