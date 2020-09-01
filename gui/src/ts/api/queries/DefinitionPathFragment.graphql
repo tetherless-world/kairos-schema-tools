@@ -3,6 +3,7 @@
 fragment DefinitionPathFragment on DefinitionPath {
     sdfDocument {
         id
+        label
         namespacePrefixes {
             ... NamespacePrefixFragment
         }

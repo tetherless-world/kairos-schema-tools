@@ -57,6 +57,7 @@ export interface ValidationMessageFragment_path_sdfDocument_schema {
 export interface ValidationMessageFragment_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: ValidationMessageFragment_path_sdfDocument_namespacePrefixes[] | null;
   primitive: ValidationMessageFragment_path_sdfDocument_primitive | null;
   schema: ValidationMessageFragment_path_sdfDocument_schema | null;

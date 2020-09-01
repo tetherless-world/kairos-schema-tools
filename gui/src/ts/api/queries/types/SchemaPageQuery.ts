@@ -96,6 +96,7 @@ export interface SchemaPageQuery_schemaById_path_sdfDocument_schema {
 export interface SchemaPageQuery_schemaById_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SchemaPageQuery_schemaById_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SchemaPageQuery_schemaById_path_sdfDocument_primitive | null;
   schema: SchemaPageQuery_schemaById_path_sdfDocument_schema | null;
@@ -155,6 +156,7 @@ export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_schema {
 export interface SchemaPageQuery_schemaById_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SchemaPageQuery_schemaById_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SchemaPageQuery_schemaById_slots_path_sdfDocument_primitive | null;
   schema: SchemaPageQuery_schemaById_slots_path_sdfDocument_schema | null;
@@ -237,6 +239,7 @@ export interface SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_
 export interface SchemaPageQuery_schemaById_steps_participants_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_primitive | null;
   schema: SchemaPageQuery_schemaById_steps_participants_path_sdfDocument_schema | null;
@@ -310,6 +313,7 @@ export interface SchemaPageQuery_schemaById_steps_path_sdfDocument_schema {
 export interface SchemaPageQuery_schemaById_steps_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SchemaPageQuery_schemaById_steps_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SchemaPageQuery_schemaById_steps_path_sdfDocument_primitive | null;
   schema: SchemaPageQuery_schemaById_steps_path_sdfDocument_schema | null;
