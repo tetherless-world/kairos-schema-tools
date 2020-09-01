@@ -146,6 +146,7 @@ export interface PrimitivePageQuery_primitiveById_slots {
   id: string;
   label: string;
   path: PrimitivePageQuery_primitiveById_slots_path;
+  privateData: string | null;
   references: string[] | null;
   roleName: string;
   super: string;
@@ -161,6 +162,7 @@ export interface PrimitivePageQuery_primitiveById {
   minDuration: PrimitivePageQuery_primitiveById_minDuration | null;
   name: string;
   path: PrimitivePageQuery_primitiveById_path;
+  privateData: string | null;
   references: string[] | null;
   slots: PrimitivePageQuery_primitiveById_slots[];
   super: string;

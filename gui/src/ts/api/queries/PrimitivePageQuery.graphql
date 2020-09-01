@@ -16,6 +16,7 @@ query PrimitivePageQuery($primitiveId: String!, $sdfDocumentId: String!) {
         path {
             ...DefinitionPathFragment
         }
+        privateData
         references
         slots {
             aka
@@ -26,6 +27,7 @@ query PrimitivePageQuery($primitiveId: String!, $sdfDocumentId: String!) {
             path {
                 ...DefinitionPathFragment
             }
+            privateData
             references
             roleName
             super

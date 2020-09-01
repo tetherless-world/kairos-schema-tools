@@ -5,6 +5,7 @@ import {StringListFieldTableRow} from "components/table/StringListFieldTableRow"
 import {SchemaPageQuery_schemaById} from "api/queries/types/SchemaPageQuery";
 import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 import {shortenUri} from "models/shortenUri";
+import {JsonFieldTableRow} from "components/table/JsonFieldTableRow";
 
 export const SchemaDetailsTable: React.FunctionComponent<{
   namespacePrefixes: readonly NamespacePrefixFragment[] | null;
@@ -58,6 +59,7 @@ export const SchemaDetailsTable: React.FunctionComponent<{
         value={schema.description}
         valueDataCy="schema-description"
       />
+      <JsonFieldTableRow name={"Private data"} value={schema.privateData} />
       <StringListFieldTableRow
         direction="column"
         name="References"

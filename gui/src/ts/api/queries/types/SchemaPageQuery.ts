@@ -175,6 +175,7 @@ export interface SchemaPageQuery_schemaById_slots {
   id: string;
   label: string;
   path: SchemaPageQuery_schemaById_slots_path;
+  privateData: string | null;
   references: string[] | null;
   refvar: string | null;
   roleName: string;
@@ -259,6 +260,7 @@ export interface SchemaPageQuery_schemaById_steps_participants {
   label: string;
   name: string;
   path: SchemaPageQuery_schemaById_steps_participants_path;
+  privateData: string | null;
   references: string[] | null;
   refvar: string | null;
   role: string;
@@ -336,6 +338,7 @@ export interface SchemaPageQuery_schemaById_steps {
   name: string;
   participants: SchemaPageQuery_schemaById_steps_participants[] | null;
   path: SchemaPageQuery_schemaById_steps_path;
+  privateData: string | null;
   provenances: string[] | null;
   references: string[] | null;
   requires: string[] | null;
@@ -352,6 +355,7 @@ export interface SchemaPageQuery_schemaById {
   name: string;
   order: SchemaPageQuery_schemaById_order[];
   path: SchemaPageQuery_schemaById_path;
+  privateData: string | null;
   references: string[] | null;
   slots: SchemaPageQuery_schemaById_slots[];
   steps: SchemaPageQuery_schemaById_steps[];

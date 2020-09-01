@@ -34,6 +34,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
         path {
             ...DefinitionPathFragment
         }
+        privateData
         references
         slots {
             aka
@@ -44,6 +45,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             path {
                 ...DefinitionPathFragment
             }
+            privateData
             references
             refvar
             roleName
@@ -71,6 +73,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                 path {
                     ...DefinitionPathFragment
                 }
+                privateData
                 references
                 refvar
                 role
@@ -78,6 +81,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             path {
                 ...DefinitionPathFragment
             }
+            privateData
             provenances
             references
             requires
