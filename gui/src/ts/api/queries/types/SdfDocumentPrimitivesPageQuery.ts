@@ -61,6 +61,7 @@ export interface SdfDocumentPrimitivesPageQuery_sdfDocumentById_primitives_path_
 export interface SdfDocumentPrimitivesPageQuery_sdfDocumentById_primitives_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentPrimitivesPageQuery_sdfDocumentById_primitives_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPrimitivesPageQuery_sdfDocumentById_primitives_path_sdfDocument_primitive | null;
   schema: SdfDocumentPrimitivesPageQuery_sdfDocumentById_primitives_path_sdfDocument_schema | null;

@@ -16,6 +16,7 @@ import * as _ from "lodash";
 import * as React from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
+import {DefinitionPathLink} from "components/link/DefinitionPathLink";
 
 export const ValidationMessagesTable: React.FunctionComponent<{
   validationMessages: readonly ValidationMessageFragment[];
@@ -51,7 +52,7 @@ export const ValidationMessagesTable: React.FunctionComponent<{
           const {sdfDocumentId, ...other} = path;
           return _.isEmpty(other);
         };
-        const includePath = validationMessages.some(
+        const includePathColumn = validationMessages.some(
           (validationMessage) =>
             !isValidationMessagePathEmpty(validationMessage.path)
         );
@@ -64,24 +65,36 @@ export const ValidationMessagesTable: React.FunctionComponent<{
               <AccordionDetails>
                 <Table>
                   <TableBody>
-                    {validationMessages.map((message, messageIndex) => (
-                      <TableRow key={messageIndex.toString()}>
-                        <TableCell>{messageIndex + 1}</TableCell>
-                        <TableCell
-                          data-cy={`${validationMessageType.toLowerCase()}-validation-message-${messageIndex}`}
-                          style={{wordBreak: "break-all"}}
-                        >
-                          {message.message}
-                        </TableCell>
-                        {includePath ? (
-                          <TableCell>
-                            {!isValidationMessagePathEmpty(message.path) ? (
-                              <SdfDocumentSourceLink to={message.path} />
-                            ) : null}
+                    {validationMessages.map((message, messageIndex) => {
+                      const includePathCells =
+                        includePathColumn &&
+                        !isValidationMessagePathEmpty(message.path);
+                      return (
+                        <TableRow key={messageIndex.toString()}>
+                          <TableCell>{messageIndex + 1}</TableCell>
+                          <TableCell
+                            data-cy={`${validationMessageType.toLowerCase()}-validation-message-${messageIndex}`}
+                            style={{wordBreak: "break-all"}}
+                          >
+                            {message.message}
                           </TableCell>
-                        ) : null}
-                      </TableRow>
-                    ))}
+                          {includePathColumn ? (
+                            <>
+                              <TableCell>
+                                {includePathCells ? (
+                                  <DefinitionPathLink path={message.path} />
+                                ) : null}
+                              </TableCell>
+                              <TableCell>
+                                {includePathCells ? (
+                                  <SdfDocumentSourceLink to={message.path} />
+                                ) : null}
+                              </TableCell>
+                            </>
+                          ) : null}
+                        </TableRow>
+                      );
+                    })}
                   </TableBody>
                 </Table>
               </AccordionDetails>

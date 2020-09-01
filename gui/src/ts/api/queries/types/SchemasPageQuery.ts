@@ -55,6 +55,7 @@ export interface SchemasPageQuery_schemas_path_sdfDocument_schema {
 export interface SchemasPageQuery_schemas_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SchemasPageQuery_schemas_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SchemasPageQuery_schemas_path_sdfDocument_primitive | null;
   schema: SchemasPageQuery_schemas_path_sdfDocument_schema | null;

@@ -57,6 +57,7 @@ export interface SearchResultsPageQuery_search_documents_path_sdfDocument_schema
 export interface SearchResultsPageQuery_search_documents_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SearchResultsPageQuery_search_documents_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SearchResultsPageQuery_search_documents_path_sdfDocument_primitive | null;
   schema: SearchResultsPageQuery_search_documents_path_sdfDocument_schema | null;

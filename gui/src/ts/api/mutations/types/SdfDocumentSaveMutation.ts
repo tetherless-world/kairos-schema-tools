@@ -63,6 +63,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocum
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_schema | null;
@@ -122,6 +123,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sd
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_schema | null;
@@ -210,6 +212,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_schema | null;
@@ -269,6 +272,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDo
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_schema | null;
@@ -348,6 +352,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participan
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_path_sdfDocument_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_path_sdfDocument_schema | null;
@@ -421,6 +426,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_path_sdfDo
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_path_sdfDocument_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_path_sdfDocument_schema | null;
@@ -505,6 +511,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_
 export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_primitive | null;
   schema: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_schema | null;

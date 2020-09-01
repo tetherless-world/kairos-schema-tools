@@ -57,6 +57,7 @@ export interface SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument
 export interface SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument_primitive | null;
   schema: SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument_schema | null;

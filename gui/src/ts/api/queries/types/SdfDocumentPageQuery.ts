@@ -63,6 +63,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocumen
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_schema | null;
@@ -122,6 +123,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfD
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_schema | null;
@@ -210,6 +212,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_s
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema | null;
@@ -269,6 +272,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocu
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_schema | null;
@@ -348,6 +352,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_participants_path_sdfDocument_schema | null;
@@ -421,6 +426,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_path_sdfDocu
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_path_sdfDocument_schema | null;
@@ -505,6 +511,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sd
 export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument_schema | null;

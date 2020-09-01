@@ -55,6 +55,7 @@ export interface DefinitionPathFragment_sdfDocument_schema {
 export interface DefinitionPathFragment_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
+  label: string | null;
   namespacePrefixes: DefinitionPathFragment_sdfDocument_namespacePrefixes[] | null;
   primitive: DefinitionPathFragment_sdfDocument_primitive | null;
   schema: DefinitionPathFragment_sdfDocument_schema | null;
