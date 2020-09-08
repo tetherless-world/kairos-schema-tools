@@ -7,7 +7,7 @@ import {StandardLayout} from "components/layout/StandardLayout";
 import {SdfDocumentPageQuery} from "api/queries/types/SdfDocumentPageQuery";
 import * as _ from "lodash";
 import {NoRoute} from "components/error/NoRoute";
-import {SdfDocumentEditor} from "components/sdfDocument/SdfDocumentEditor";
+import {SdfDocumentSourceEditor} from "components/sdfDocument/SdfDocumentSourceEditor";
 import {
   SdfDocumentSourceFragment,
   SdfDocumentSourceFragment_primitives,
@@ -280,7 +280,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                 <Grid item xs={8}>
                   <Grid container direction="column" spacing={4}>
                     <Grid item>
-                      <SdfDocumentEditor
+                      <SdfDocumentSourceEditor
                         goToJsonNodeLocation={
                           definitionPath
                             ? getJsonNodeLocationFromDefinitionPath(

@@ -11,7 +11,7 @@ import {ValidationMessageFragment} from "api/queries/types/ValidationMessageFrag
 import {SdfDocumentSourceFragment} from "api/queries/types/SdfDocumentSourceFragment";
 import {getJsonNodeLocationFromDefinitionPath} from "models/definition/getJsonNodeLocationFromDefinitionPath";
 
-export const SdfDocumentEditor: React.FunctionComponent<{
+export const SdfDocumentSourceEditor: React.FunctionComponent<{
   goToJsonNodeLocation?: JsonNodeLocationFragment;
   onChange?: (volatileSourceJson: string) => void;
   savedSdfDocument: SdfDocumentSourceFragment;
