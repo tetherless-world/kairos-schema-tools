@@ -16,15 +16,25 @@ final case class KsfValidationApiResults(errorsList: List[String], warningsList:
 
 @Singleton
 class RestKsfValidationApi @Inject()(ws: WSClient)(implicit ec: ExecutionContext) extends KsfValidationApi {
-  private val Url = "http://validation.kairos.nextcentury.com/json-ld/ksf/validate"
-  private val Accept = "application/json"
-  private val ContentType = "application/ld+json"
+  private val BaseUrl = "http://validation.kairos.nextcentury.com/json-ld/ksf/"
+  private val JsonLdContentType = "application/ld+json"
   implicit val resultsDecoder: Decoder[KsfValidationApiResults] = deriveDecoder
   private val logger = LoggerFactory.getLogger(getClass)
 
+  override def getAnnotationReadableForm(sdfDocument: SdfDocument): Future[String] =
+    ws.url(BaseUrl + "annotator-readable-form")
+      .addHttpHeaders("Accept" -> "text/plain", "Content-Type" -> JsonLdContentType)
+      .post(sdfDocument.sourceJson).flatMap(response =>
+        if (response.status == 200) {
+          Future.successful(response.body)
+        } else {
+          Future.failed(new KsfValidationApiException(response.body))
+        }
+    )
+
   override def validateSdfDocument(sdfDocument: SdfDocument): Future[List[ValidationMessage]] =
-      ws.url(Url)
-      .addHttpHeaders("Accept" -> Accept, "Content-Type" -> ContentType)
+      ws.url(BaseUrl + "validate")
+      .addHttpHeaders("Accept" -> "application/json", "Content-Type" -> JsonLdContentType)
       .post(sdfDocument.sourceJson).flatMap(response => {
         val parseResult = parse(response.body)
         parseResult match {
