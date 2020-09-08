@@ -14,6 +14,7 @@ import {
   SdfDocumentSaveMutation,
   SdfDocumentSaveMutationVariables,
 } from "api/mutations/types/SdfDocumentSaveMutation";
+import * as SdfDocumentAnnotatorReadableFormQueryDocument from "api/queries/SdfDocumentAnnotatorReadableFormQuery.graphql";
 import * as SdfDocumentSaveMutationDocument from "api/mutations/SdfDocumentSaveMutation.graphql";
 import {GraphQLError} from "graphql";
 import {Grid, Snackbar, Tab, Tabs} from "@material-ui/core";
@@ -27,6 +28,11 @@ import {GraphQlErrorsList} from "components/error/GraphQlErrorsList";
 import {DefinitionPath} from "models/definition/DefinitionPath";
 import {JsonQueryParamConfig} from "JsonQueryParamConfig";
 import {SdfDocumentSourceTab} from "components/sdfDocument/SdfDocumentSourceTab";
+import {
+  SdfDocumentAnnotatorReadableFormQuery,
+  SdfDocumentAnnotatorReadableFormQueryVariables,
+} from "api/queries/types/SdfDocumentAnnotatorReadableFormQuery";
+import {SdfDocumentAnnotatorReadableFormTab} from "components/sdfDocument/SdfDocumentAnnotatorReadableFormTab";
 
 export const SdfDocumentPage: React.FunctionComponent = () => {
   const apolloClient = useApolloClient();
@@ -58,11 +64,13 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
 
   // Keep one big state in order to do batch updates.
   const [state, setState] = React.useState<{
+    annotatorReadableForm: string | null;
     savedSdfDocument: SdfDocumentSourceFragment | null;
     snackbarMessage: React.ReactNode | null;
     volatileSourceJson: string | null;
     validationMessages: readonly ValidationMessageFragment[];
   }>({
+    annotatorReadableForm: null,
     savedSdfDocument: null,
     snackbarMessage: null,
     volatileSourceJson: null,
@@ -70,6 +78,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
   });
 
   const {
+    annotatorReadableForm,
     savedSdfDocument,
     snackbarMessage,
     validationMessages,
@@ -84,6 +93,30 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
       "source must not be set if savedSdfDocument is not"
     );
   }
+
+  const getAnnotatorReadableForm = () => {
+    apolloClient
+      .query<
+        SdfDocumentAnnotatorReadableFormQuery,
+        SdfDocumentAnnotatorReadableFormQueryVariables
+      >({
+        fetchPolicy: "no-cache",
+        query: SdfDocumentAnnotatorReadableFormQueryDocument,
+        variables: {json: volatileSourceJson!},
+      })
+      .then((result) => {
+        if (result.data) {
+          setState((prevState) => ({
+            ...prevState,
+            annotatorReadableForm:
+              result.data.getSdfDocumentAnnotatorReadableForm,
+            snackbarMessage: "Updated annotator readable form",
+          }));
+        } else if (result.errors) {
+          setSnackbarMessageFromApolloErrors(result.errors);
+        }
+      });
+  };
 
   const onSnackbarClose = () =>
     setState((prevState) => ({
@@ -102,6 +135,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
         if (result.data) {
           setState((prevState) => ({
             ...prevState,
+            annotatorReadableForm: null,
             savedSdfDocument: result.data!.putSdfDocument,
             snackbarMessage: "Saved",
             volatileSourceJson: result.data!.putSdfDocument.sourceJson,
@@ -189,12 +223,19 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                     ))}
                   </Tabs>
                 </Grid>
+                <Grid hidden={tab !== "annotator-readable-form"}>
+                  <SdfDocumentAnnotatorReadableFormTab
+                    annotatorReadableForm={annotatorReadableForm}
+                    getAnnotatatorReadableForm={getAnnotatorReadableForm}
+                  />
+                </Grid>
                 <Grid hidden={tab !== "source"} item>
                   <SdfDocumentSourceTab
                     definitionPath={definitionPath}
                     onChange={(sourceJson) =>
                       setState((prevState) => ({
                         ...prevState,
+                        annotatorReadableForm: null,
                         volatileSourceJson: sourceJson,
                       }))
                     }

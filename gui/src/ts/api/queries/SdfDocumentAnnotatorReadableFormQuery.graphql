@@ -1,0 +1,3 @@
+query SdfDocumentAnnotatorReadableFormQuery($json: String!) {
+    getSdfDocumentAnnotatorReadableForm(json: $json)
+}

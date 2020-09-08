@@ -9,6 +9,7 @@ import sangria.macros._
 import sangria.marshalling.playJson._
 import stores.{ConfData, MemStore, Store, TestStore}
 import validators.Validators
+import validators.ksfValidationApi.DummyKsfValidationApi
 
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -177,7 +178,7 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
       variables = vars,
       userContext =
         new GraphQlSchemaContext(
-          request = FakeRequest(),
+          ksfValidationApi = new DummyKsfValidationApi(),
           store = store.getOrElse(new TestStore),
           validators = new Validators(List()),
         )
