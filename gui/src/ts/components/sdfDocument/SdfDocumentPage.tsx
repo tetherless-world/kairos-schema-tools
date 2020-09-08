@@ -7,135 +7,32 @@ import {StandardLayout} from "components/layout/StandardLayout";
 import {SdfDocumentPageQuery} from "api/queries/types/SdfDocumentPageQuery";
 import * as _ from "lodash";
 import {NoRoute} from "components/error/NoRoute";
-import {SdfDocumentEditor} from "components/sdfDocument/SdfDocumentEditor";
-import {
-  SdfDocumentSourceFragment,
-  SdfDocumentSourceFragment_primitives,
-  SdfDocumentSourceFragment_schemas,
-} from "api/queries/types/SdfDocumentSourceFragment";
+import {SdfDocumentSourceFragment} from "api/queries/types/SdfDocumentSourceFragment";
 import {useQueryParam} from "use-query-params";
 import {ValidationMessageFragment} from "api/queries/types/ValidationMessageFragment";
 import {
   SdfDocumentSaveMutation,
   SdfDocumentSaveMutationVariables,
 } from "api/mutations/types/SdfDocumentSaveMutation";
+import * as SdfDocumentAnnotatorReadableFormQueryDocument from "api/queries/SdfDocumentAnnotatorReadableFormQuery.graphql";
 import * as SdfDocumentSaveMutationDocument from "api/mutations/SdfDocumentSaveMutation.graphql";
 import {GraphQLError} from "graphql";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  Grid,
-  Snackbar,
-} from "@material-ui/core";
+import {Grid, Snackbar, Tab, Tabs} from "@material-ui/core";
 import {
   SdfDocumentValidationQuery,
   SdfDocumentValidationQueryVariables,
 } from "api/queries/types/SdfDocumentValidationQuery";
 import * as SdfDocumentValidationQueryDocument from "api/queries/SdfDocumentValidationQuery.graphql";
-import {ValidationMessagesTable} from "components/validation/ValidationMessagesTable";
 import {invariant} from "ts-invariant";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
-import {Hrefs} from "Hrefs";
-import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 import {GraphQlErrorsList} from "components/error/GraphQlErrorsList";
-import {getJsonNodeLocationFromDefinitionPath} from "models/definition/getJsonNodeLocationFromDefinitionPath";
 import {DefinitionPath} from "models/definition/DefinitionPath";
 import {JsonQueryParamConfig} from "JsonQueryParamConfig";
-import {PrimitiveTableOfContents} from "components/primitive/PrimitiveTableOfContents";
-
-const PrimitiveAccordion: React.FunctionComponent<{
-  primitive: SdfDocumentSourceFragment_primitives;
-}> = ({primitive}) => (
-  <Accordion>
-    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-      <h3>Primitive: {primitive.label}</h3>
-    </AccordionSummary>
-    <AccordionDetails>
-      <Grid container direction="column">
-        <Grid item>
-          <SdfDocumentSourceLink to={primitive.path} />
-        </Grid>
-        <Grid item>
-          <PrimitiveTableOfContents
-            hrefs={Hrefs.sdfDocuments
-              .sdfDocument({id: primitive.path.sdfDocument.id})
-              .primitives.primitive(primitive)}
-            includeSourceLinks={true}
-            primitive={primitive}
-          />
-        </Grid>
-      </Grid>
-    </AccordionDetails>
-  </Accordion>
-);
-
-const RightPanelAccordion: React.FunctionComponent<React.PropsWithChildren<{
-  title: string;
-}>> = ({children, title}) => (
-  <Accordion>
-    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-      <h2>{title}</h2>
-    </AccordionSummary>
-    <AccordionDetails>{children}</AccordionDetails>
-  </Accordion>
-);
-
-const SaveButton: React.FunctionComponent<{onClick: () => void}> = ({
-  onClick,
-}) => (
-  <Button
-    color="primary"
-    data-cy="save-button"
-    onClick={onClick}
-    size="large"
-    variant="contained"
-  >
-    Save
-  </Button>
-);
-
-const SchemaAccordion: React.FunctionComponent<{
-  schema: SdfDocumentSourceFragment_schemas;
-}> = ({schema}) => (
-  <Accordion>
-    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-      <h3>Schema: {schema.label}</h3>
-    </AccordionSummary>
-    <AccordionDetails>
-      <Grid container direction="column">
-        <Grid item>
-          <SdfDocumentSourceLink to={schema.path} />
-        </Grid>
-        <Grid item>
-          <SchemaTableOfContents
-            hrefs={Hrefs.sdfDocuments
-              .sdfDocument({id: schema.path.sdfDocument.id})
-              .schemas.schema(schema)}
-            includeSourceLinks={true}
-            schema={schema}
-          />
-        </Grid>
-      </Grid>
-    </AccordionDetails>
-  </Accordion>
-);
-
-const ValidateButton: React.FunctionComponent<{onClick: () => void}> = ({
-  onClick,
-}) => (
-  <Button
-    color="secondary"
-    data-cy="validate-button"
-    onClick={onClick}
-    size="large"
-    variant="contained"
-  >
-    Validate
-  </Button>
-);
+import {SdfDocumentSourceTab} from "components/sdfDocument/SdfDocumentSourceTab";
+import {
+  SdfDocumentAnnotatorReadableFormQuery,
+  SdfDocumentAnnotatorReadableFormQueryVariables,
+} from "api/queries/types/SdfDocumentAnnotatorReadableFormQuery";
+import {SdfDocumentAnnotatorReadableFormTab} from "components/sdfDocument/SdfDocumentAnnotatorReadableFormTab";
 
 export const SdfDocumentPage: React.FunctionComponent = () => {
   const apolloClient = useApolloClient();
@@ -149,6 +46,17 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
     "path",
     new JsonQueryParamConfig<DefinitionPath>()
   );
+
+  type TabValue = "annotator-readable-form" | "source";
+  const tabDefinitions: readonly {label: string; value: TabValue}[] = [
+    {label: "Source", value: "source"},
+    {label: "Annotator readable form", value: "annotator-readable-form"},
+  ];
+  let [tab, setTab] = useQueryParam<TabValue>("tab");
+  if (!tab) {
+    tab = "source";
+  }
+
   const query = useQuery<SdfDocumentPageQuery>(SdfDocumentPageQueryDocument, {
     fetchPolicy: "no-cache",
     variables: {id: sdfDocumentId},
@@ -156,11 +64,13 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
 
   // Keep one big state in order to do batch updates.
   const [state, setState] = React.useState<{
+    annotatorReadableForm: string | null;
     savedSdfDocument: SdfDocumentSourceFragment | null;
     snackbarMessage: React.ReactNode | null;
     volatileSourceJson: string | null;
     validationMessages: readonly ValidationMessageFragment[];
   }>({
+    annotatorReadableForm: null,
     savedSdfDocument: null,
     snackbarMessage: null,
     volatileSourceJson: null,
@@ -168,6 +78,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
   });
 
   const {
+    annotatorReadableForm,
     savedSdfDocument,
     snackbarMessage,
     validationMessages,
@@ -183,13 +94,37 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
     );
   }
 
+  const getAnnotatorReadableForm = () => {
+    apolloClient
+      .query<
+        SdfDocumentAnnotatorReadableFormQuery,
+        SdfDocumentAnnotatorReadableFormQueryVariables
+      >({
+        fetchPolicy: "no-cache",
+        query: SdfDocumentAnnotatorReadableFormQueryDocument,
+        variables: {json: volatileSourceJson!},
+      })
+      .then((result) => {
+        if (result.data) {
+          setState((prevState) => ({
+            ...prevState,
+            annotatorReadableForm:
+              result.data.getSdfDocumentAnnotatorReadableForm,
+            snackbarMessage: "Updated annotator readable form",
+          }));
+        } else if (result.errors) {
+          setSnackbarMessageFromApolloErrors(result.errors);
+        }
+      });
+  };
+
   const onSnackbarClose = () =>
     setState((prevState) => ({
       ...prevState,
       snackbarMessage: null,
     }));
 
-  const save = () => {
+  const onSave = () => {
     apolloClient
       .mutate<SdfDocumentSaveMutation, SdfDocumentSaveMutationVariables>({
         fetchPolicy: "no-cache",
@@ -200,6 +135,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
         if (result.data) {
           setState((prevState) => ({
             ...prevState,
+            annotatorReadableForm: null,
             savedSdfDocument: result.data!.putSdfDocument,
             snackbarMessage: "Saved",
             volatileSourceJson: result.data!.putSdfDocument.sourceJson,
@@ -211,16 +147,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
       });
   };
 
-  const setSnackbarMessageFromApolloErrors = (
-    errors: ReadonlyArray<GraphQLError>
-  ) => {
-    setState((prevState) => ({
-      ...prevState,
-      snackbarMessage: <GraphQlErrorsList errors={errors} />,
-    }));
-  };
-
-  const validate = () => {
+  const onValidate = () => {
     apolloClient
       .query<SdfDocumentValidationQuery, SdfDocumentValidationQueryVariables>({
         fetchPolicy: "no-cache",
@@ -238,6 +165,15 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
           setSnackbarMessageFromApolloErrors(result.errors);
         }
       });
+  };
+
+  const setSnackbarMessageFromApolloErrors = (
+    errors: ReadonlyArray<GraphQLError>
+  ) => {
+    setState((prevState) => ({
+      ...prevState,
+      snackbarMessage: <GraphQlErrorsList errors={errors} />,
+    }));
   };
 
   return (
@@ -260,7 +196,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
             return;
           }
 
-          if (!savedSdfDocument) {
+          if (!savedSdfDocument || !validationMessages || !volatileSourceJson) {
             throw new EvalError();
           }
 
@@ -271,75 +207,44 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
               subtitle={savedSdfDocument.id}
               title={savedSdfDocument.label}
             >
-              <Grid
-                container
-                data-cy="sdf-document-editor"
-                direction="row"
-                spacing={4}
-              >
-                <Grid item xs={8}>
-                  <Grid container direction="column" spacing={4}>
-                    <Grid item>
-                      <SdfDocumentEditor
-                        goToJsonNodeLocation={
-                          definitionPath
-                            ? getJsonNodeLocationFromDefinitionPath(
-                                definitionPath,
-                                savedSdfDocument
-                              )
-                            : undefined
-                        }
-                        onChange={(sourceJson) =>
-                          setState((prevState) => ({
-                            ...prevState,
-                            volatileSourceJson: sourceJson,
-                          }))
-                        }
-                        savedSdfDocument={savedSdfDocument}
-                        validationMessages={validationMessages}
-                        volatileSourceJson={volatileSourceJson!}
+              <Grid container direction="column" spacing={4}>
+                <Grid item>
+                  <Tabs
+                    onChange={(_, newValue) => setTab(newValue)}
+                    value={tab}
+                  >
+                    {tabDefinitions.map((tabDefinition) => (
+                      <Tab
+                        data-cy={`${tabDefinition.value}-tab`}
+                        key={tabDefinition.value}
+                        label={tabDefinition.label}
+                        value={tabDefinition.value}
                       />
-                    </Grid>
-                    <Grid item>
-                      <Grid container spacing={8}>
-                        <Grid item>
-                          <SaveButton onClick={save} />
-                        </Grid>
-                        <Grid item>
-                          <ValidateButton onClick={validate} />
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
+                    ))}
+                  </Tabs>
                 </Grid>
-                <Grid item xs={4}>
-                  <Grid container direction="column" spacing={8}>
-                    <Grid item>
-                      <RightPanelAccordion title="Table of contents">
-                        <Grid container direction="column">
-                          {savedSdfDocument.primitives.map((primitive) => (
-                            <Grid item key={primitive.id}>
-                              <PrimitiveAccordion primitive={primitive} />
-                            </Grid>
-                          ))}
-                          {savedSdfDocument.schemas.map((schema) => (
-                            <Grid item key={schema.id}>
-                              <SchemaAccordion schema={schema} />
-                            </Grid>
-                          ))}
-                        </Grid>
-                      </RightPanelAccordion>
-                    </Grid>
-                    <Grid item>
-                      <RightPanelAccordion
-                        title={`Validation messages (${validationMessages.length})`}
-                      >
-                        <ValidationMessagesTable
-                          validationMessages={validationMessages}
-                        />
-                      </RightPanelAccordion>
-                    </Grid>
-                  </Grid>
+                <Grid hidden={tab !== "annotator-readable-form"}>
+                  <SdfDocumentAnnotatorReadableFormTab
+                    annotatorReadableForm={annotatorReadableForm}
+                    getAnnotatatorReadableForm={getAnnotatorReadableForm}
+                  />
+                </Grid>
+                <Grid hidden={tab !== "source"} item>
+                  <SdfDocumentSourceTab
+                    definitionPath={definitionPath}
+                    onChange={(sourceJson) =>
+                      setState((prevState) => ({
+                        ...prevState,
+                        annotatorReadableForm: null,
+                        volatileSourceJson: sourceJson,
+                      }))
+                    }
+                    onSave={onSave}
+                    onValidate={onValidate}
+                    savedSdfDocument={savedSdfDocument}
+                    validationMessages={validationMessages}
+                    volatileSourceJson={volatileSourceJson}
+                  />
                 </Grid>
               </Grid>
             </StandardLayout>

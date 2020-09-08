@@ -7,13 +7,13 @@ import formats.sdf.SdfDocumentReader
 import io.github.tetherlessworld.twxplore.lib.base.models.graphql.BaseGraphQlSchemaDefinition
 import models.json.JsonNodeLocation
 import models.schema._
-import models.sdfDocument.{SdfDocument, NamespacePrefix}
+import models.sdfDocument.{NamespacePrefix, SdfDocument}
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 import models.validation.{ValidationMessage, ValidationMessageType}
 import sangria.macros.derive._
 import sangria.schema.{Argument, Field, InterfaceType, ListType, ObjectType, OptionInputType, OptionType, Schema, StringType, fields}
 
-import scala.util.{Success, Try}
+import scala.util.{Failure, Success, Try}
 
 object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   // Helper methods
@@ -151,6 +151,14 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
 
   // Root query
   val RootQueryType = ObjectType("RootQuery", fields[GraphQlSchemaContext, Unit](
+    Field("getSdfDocumentAnnotatorReadableForm", StringType, arguments = JsonArgument :: Nil, resolve = ctx => {
+      implicit val ec = ctx.ctx.executionContext
+      val sdfDocument = SdfDocument.read(sourceJson = ctx.args.arg(JsonArgument), sourceUri = newUuidUri)
+      ctx.ctx.ksfValidationApi.getAnnotationReadableForm(sdfDocument).transform(result => result match {
+        case Success(result) => Success(result)
+        case Failure(e) => Success(e.getMessage)
+      })
+    }),
     Field("primitiveById", OptionType(PrimitiveObjectType), arguments = IdArgument :: Nil, resolve = ctx => ctx.ctx.store.getPrimitiveById(ctx.args.arg(IdArgument))),
     Field("primitives", ListType(PrimitiveObjectType), resolve = _.ctx.store.getPrimitives),
     Field("schemas", ListType(SchemaObjectType), resolve = _.ctx.store.getSchemas),

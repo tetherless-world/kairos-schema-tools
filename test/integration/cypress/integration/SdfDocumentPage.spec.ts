@@ -26,7 +26,14 @@ context("SDF document page", () => {
     page.assertLoaded();
   });
 
-  it("should show the source editor", () => {
-    page.editor.textarea;
+  it("should show the source editor in a tab", () => {
+    page.sourceTab.editor.textarea;
+  });
+
+  it("should show the annotator readable form in a tab", () => {
+    const tab = page.annotatorReadableFormTab;
+    tab.noAnnotatorReadableForm;
+    tab.refreshButton.click();
+    tab.annotatorReadableForm.should("contain", "A coordinated effort");
   });
 });
