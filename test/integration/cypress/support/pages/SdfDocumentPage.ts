@@ -7,7 +7,27 @@ export class SdfDocumentPage extends Page {
     this.relativeUrl = `/sdfdocument/${encodeURIComponent(id)}/`;
   }
 
-  readonly editor = new SdfDocumentEditor();
+  get annotatorReadableFormTab() {
+    cy.get("[data-cy=annotator-readable-form-tab]").click();
+    return {
+      get annotatorReadableForm() {
+        return cy.get("[data-cy=annotator-readable-form]");
+      },
+      get noAnnotatorReadableForm() {
+        return cy.get("[data-cy=no-annotator-readable-form");
+      },
+      get refreshButton() {
+        return cy.get("[data-cy=refresh-button]");
+      },
+    };
+  }
+
+  get sourceTab() {
+    cy.get("[data-cy=source-tab]").click();
+    return {
+      editor: new SdfDocumentEditor(),
+    };
+  }
 
   readonly relativeUrl: string;
 }

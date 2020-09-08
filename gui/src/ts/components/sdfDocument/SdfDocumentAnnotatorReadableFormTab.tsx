@@ -12,12 +12,13 @@ export const SdfDocumentAnnotatorReadableFormTab: React.FunctionComponent<{
         <Grid item style={{minWidth: 0}}>
           {annotatorReadableForm != null ? (
             <pre
+              data-cy="annotator-readable-form"
               style={{fontSize: "x-large", maxWidth: "100%", overflow: "auto"}}
             >
               {annotatorReadableForm}
             </pre>
           ) : (
-            <h2>
+            <h2 data-cy="no-annotator-readable-form">
               Click the Refresh button to update the annotator readable form.
             </h2>
           )}
@@ -25,6 +26,7 @@ export const SdfDocumentAnnotatorReadableFormTab: React.FunctionComponent<{
         <Grid item>
           <Button
             color="secondary"
+            data-cy="refresh-button"
             onClick={getAnnotatatorReadableForm}
             size="large"
             variant="contained"
