@@ -16,7 +16,7 @@ import {
 } from "api/mutations/types/SdfDocumentSaveMutation";
 import * as SdfDocumentSaveMutationDocument from "api/mutations/SdfDocumentSaveMutation.graphql";
 import {GraphQLError} from "graphql";
-import {Snackbar} from "@material-ui/core";
+import {Grid, Snackbar, Tab, Tabs} from "@material-ui/core";
 import {
   SdfDocumentValidationQuery,
   SdfDocumentValidationQueryVariables,
@@ -40,6 +40,17 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
     "path",
     new JsonQueryParamConfig<DefinitionPath>()
   );
+
+  type TabValue = "annotator-readable-form" | "source";
+  const tabDefinitions: readonly {label: string; value: TabValue}[] = [
+    {label: "Source", value: "source"},
+    {label: "Annotator readable form", value: "annotator-readable-form"},
+  ];
+  let [tab, setTab] = useQueryParam<TabValue>("tab");
+  if (!tab) {
+    tab = "source";
+  }
+
   const query = useQuery<SdfDocumentPageQuery>(SdfDocumentPageQueryDocument, {
     fetchPolicy: "no-cache",
     variables: {id: sdfDocumentId},
@@ -162,20 +173,39 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
               subtitle={savedSdfDocument.id}
               title={savedSdfDocument.label}
             >
-              <SdfDocumentSourceTab
-                definitionPath={definitionPath}
-                onChange={(sourceJson) =>
-                  setState((prevState) => ({
-                    ...prevState,
-                    volatileSourceJson: sourceJson,
-                  }))
-                }
-                onSave={onSave}
-                onValidate={onValidate}
-                savedSdfDocument={savedSdfDocument}
-                validationMessages={validationMessages}
-                volatileSourceJson={volatileSourceJson}
-              />
+              <Grid container direction="column" spacing={4}>
+                <Grid item>
+                  <Tabs
+                    onChange={(_, newValue) => setTab(newValue)}
+                    value={tab}
+                  >
+                    {tabDefinitions.map((tabDefinition) => (
+                      <Tab
+                        data-cy={`${tabDefinition.value}-tab`}
+                        key={tabDefinition.value}
+                        label={tabDefinition.label}
+                        value={tabDefinition.value}
+                      />
+                    ))}
+                  </Tabs>
+                </Grid>
+                <Grid hidden={tab !== "source"} item>
+                  <SdfDocumentSourceTab
+                    definitionPath={definitionPath}
+                    onChange={(sourceJson) =>
+                      setState((prevState) => ({
+                        ...prevState,
+                        volatileSourceJson: sourceJson,
+                      }))
+                    }
+                    onSave={onSave}
+                    onValidate={onValidate}
+                    savedSdfDocument={savedSdfDocument}
+                    validationMessages={validationMessages}
+                    volatileSourceJson={volatileSourceJson}
+                  />
+                </Grid>
+              </Grid>
             </StandardLayout>
           );
         }}
