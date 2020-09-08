@@ -352,5 +352,5 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
 }
 
 object ZeroDot8SdfDocumentReader {
-  val SdfVersion = "0.8"
+  val SdfVersion = "0.81"
 }
