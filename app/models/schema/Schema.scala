@@ -16,7 +16,7 @@ final case class Schema(
                          privateData: Option[String],
                          slots: List[SchemaSlot],
                          sourceJsonNodeLocation: JsonNodeLocation,
-                         steps: List[Step],
+                         steps: Steps,
                          ta2: Boolean,
                          template: Option[String],
                          version: String

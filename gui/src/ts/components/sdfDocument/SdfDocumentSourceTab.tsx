@@ -74,6 +74,7 @@ const SaveButton: React.FunctionComponent<{onClick: () => void}> = ({
 );
 
 const SchemaAccordion: React.FunctionComponent<{
+  addStep: () => void;
   schema: SdfDocumentSourceFragment_schemas;
 }> = ({schema}) => (
   <Accordion>
@@ -172,11 +173,18 @@ export const SdfDocumentSourceTab: React.FunctionComponent<{
                     <PrimitiveAccordion primitive={primitive} />
                   </Grid>
                 ))}
-                {savedSdfDocument.schemas.map((schema) => (
-                  <Grid item key={schema.id}>
-                    <SchemaAccordion schema={schema} />
-                  </Grid>
-                ))}
+                {savedSdfDocument.schemas.map((schema) => {
+                  const addStep = () => {
+                    if (schema.steps.length === 0) {
+                      return;
+                    }
+                  };
+                  return (
+                    <Grid item key={schema.id}>
+                      <SchemaAccordion addStep={addStep} schema={schema} />
+                    </Grid>
+                  );
+                })}
               </Grid>
             </RightPanelAccordion>
           </Grid>

@@ -159,10 +159,11 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
   private def readSchema(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource) = {
     val id = Uri.parse(resource.getURI)
     val path = DefinitionPath.sdfDocument(parentPath.sdfDocument.id).schema(id).build
+    val stepsJsonNode =  jsonNode.map.get("steps").map(_.asInstanceOf[ArrayJsonNode]).getOrElse(throw ValidationException(s"schema ${id} missing required steps", path))
     Schema(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
-      description = resource.description.headOption.getOrElse(s"schema ${id} missing required description property"),
+      description = resource.description.headOption.getOrElse(throw ValidationException(s"schema ${id} missing required description property", path)),
       entityRelations = resource.entityRelations.flatMap(entityRelationResource =>
         try {
           Some(readEntityRelation(path, entityRelationResource))
@@ -203,8 +204,10 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         }
       ),
       sourceJsonNodeLocation = jsonNode.location,
-      steps = mapResourcesToObjectJsonNodes(
-        jsonNodes = jsonNode.map.get("steps").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
+      steps = Steps(
+        sourceJsonNodeLocation = stepsJsonNode.location,
+        steps = mapResourcesToObjectJsonNodes(
+        jsonNodes = stepsJsonNode.list,
         path = path,
         resources = resource.steps,
       ).flatMap(entry =>
@@ -216,7 +219,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
             None
           }
         }
-      ),
+      )),
       ta2 = false,
       template = resource.template.headOption,
       version = resource.version.headOption.getOrElse(throw ValidationException(s"schema ${id} missing version property", path))
