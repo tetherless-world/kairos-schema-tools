@@ -37,7 +37,7 @@ export const StepOrdersGraph: React.FunctionComponent<{
         }
 
         for (const stepId of order.before.concat(order.after)) {
-          const step = schema.steps.find((step) => step.id === stepId);
+          const step = schema.steps.list.find((step) => step.id === stepId);
           if (!step) {
             throw new EvalError(`order step ${stepId} not found in schema`);
           }

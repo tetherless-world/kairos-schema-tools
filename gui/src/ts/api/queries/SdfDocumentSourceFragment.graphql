@@ -49,20 +49,25 @@ fragment SdfDocumentSourceFragment on SdfDocument {
             ...JsonNodeLocationFragment
         }
         steps {
-            id
-            label
-            participants {
+            list {
                 id
                 label
+                participants {
+                    id
+                    label
+                    path {
+                        ...DefinitionPathFragment
+                    }
+                    sourceJsonNodeLocation {
+                        ...JsonNodeLocationFragment
+                    }
+                }
                 path {
                     ...DefinitionPathFragment
                 }
                 sourceJsonNodeLocation {
                     ...JsonNodeLocationFragment
                 }
-            }
-            path {
-                ...DefinitionPathFragment
             }
             sourceJsonNodeLocation {
                 ...JsonNodeLocationFragment

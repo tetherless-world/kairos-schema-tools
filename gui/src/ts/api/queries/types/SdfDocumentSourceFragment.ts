@@ -134,10 +134,26 @@ export interface SdfDocumentSourceFragment_primitives_slots_path {
   sdfDocument: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument;
 }
 
+export interface SdfDocumentSourceFragment_primitives_slots_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSourceFragment_primitives_slots_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
 export interface SdfDocumentSourceFragment_primitives_slots_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
-  column: number;
-  line: number;
+  startToken: SdfDocumentSourceFragment_primitives_slots_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSourceFragment_primitives_slots_sourceJsonNodeLocation_stopToken;
 }
 
 export interface SdfDocumentSourceFragment_primitives_slots {
@@ -148,10 +164,26 @@ export interface SdfDocumentSourceFragment_primitives_slots {
   sourceJsonNodeLocation: SdfDocumentSourceFragment_primitives_slots_sourceJsonNodeLocation;
 }
 
+export interface SdfDocumentSourceFragment_primitives_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSourceFragment_primitives_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
 export interface SdfDocumentSourceFragment_primitives_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
-  column: number;
-  line: number;
+  startToken: SdfDocumentSourceFragment_primitives_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSourceFragment_primitives_sourceJsonNodeLocation_stopToken;
 }
 
 export interface SdfDocumentSourceFragment_primitives {
@@ -283,10 +315,26 @@ export interface SdfDocumentSourceFragment_schemas_slots_path {
   sdfDocument: SdfDocumentSourceFragment_schemas_slots_path_sdfDocument;
 }
 
+export interface SdfDocumentSourceFragment_schemas_slots_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSourceFragment_schemas_slots_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
 export interface SdfDocumentSourceFragment_schemas_slots_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
-  column: number;
-  line: number;
+  startToken: SdfDocumentSourceFragment_schemas_slots_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSourceFragment_schemas_slots_sourceJsonNodeLocation_stopToken;
 }
 
 export interface SdfDocumentSourceFragment_schemas_slots {
@@ -297,158 +345,234 @@ export interface SdfDocumentSourceFragment_schemas_slots {
   sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_slots_sourceJsonNodeLocation;
 }
 
-export interface SdfDocumentSourceFragment_schemas_sourceJsonNodeLocation {
-  __typename: "JsonNodeLocation";
+export interface SdfDocumentSourceFragment_schemas_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
   column: number;
+  startIndex: number;
+  stopIndex: number;
   line: number;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_namespacePrefixes {
+export interface SdfDocumentSourceFragment_schemas_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSourceFragment_schemas_sourceJsonNodeLocation {
+  __typename: "JsonNodeLocation";
+  startToken: SdfDocumentSourceFragment_schemas_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSourceFragment_schemas_sourceJsonNodeLocation_stopToken;
+}
+
+export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_namespacePrefixes {
   __typename: "NamespacePrefix";
   prefix: string;
   uri: string;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_primitive_slot {
+export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
   label: string | null;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_primitive {
+export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_primitive {
   __typename: "DefinitionPathPrimitive";
   id: string;
   label: string | null;
-  slot: SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_primitive_slot | null;
+  slot: SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_primitive_slot | null;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_schema_slot {
+export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema_slot {
   __typename: "DefinitionPathSchemaSlot";
   id: string;
   label: string | null;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_schema_step_participant {
+export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema_step_participant {
   __typename: "DefinitionPathStepParticipant";
   id: string;
   label: string | null;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_schema_step {
+export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema_step {
   __typename: "DefinitionPathStep";
   id: string;
   label: string | null;
-  participant: SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_schema_step_participant | null;
+  participant: SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema_step_participant | null;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_schema {
+export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
   label: string | null;
-  slot: SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_schema_slot | null;
-  step: SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_schema_step | null;
+  slot: SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema_slot | null;
+  step: SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema_step | null;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument {
+export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
   label: string | null;
-  namespacePrefixes: SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_namespacePrefixes[] | null;
-  primitive: SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_primitive | null;
-  schema: SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument_schema | null;
+  namespacePrefixes: SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_namespacePrefixes[] | null;
+  primitive: SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_primitive | null;
+  schema: SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema | null;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_participants_path {
+export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path {
   __typename: "DefinitionPath";
-  sdfDocument: SdfDocumentSourceFragment_schemas_steps_participants_path_sdfDocument;
+  sdfDocument: SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_participants_sourceJsonNodeLocation {
-  __typename: "JsonNodeLocation";
+export interface SdfDocumentSourceFragment_schemas_steps_list_participants_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
   column: number;
+  startIndex: number;
+  stopIndex: number;
   line: number;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_participants {
+export interface SdfDocumentSourceFragment_schemas_steps_list_participants_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSourceFragment_schemas_steps_list_participants_sourceJsonNodeLocation {
+  __typename: "JsonNodeLocation";
+  startToken: SdfDocumentSourceFragment_schemas_steps_list_participants_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSourceFragment_schemas_steps_list_participants_sourceJsonNodeLocation_stopToken;
+}
+
+export interface SdfDocumentSourceFragment_schemas_steps_list_participants {
   __typename: "StepParticipant";
   id: string;
   label: string;
-  path: SdfDocumentSourceFragment_schemas_steps_participants_path;
-  sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_steps_participants_sourceJsonNodeLocation;
+  path: SdfDocumentSourceFragment_schemas_steps_list_participants_path;
+  sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_steps_list_participants_sourceJsonNodeLocation;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_namespacePrefixes {
+export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_namespacePrefixes {
   __typename: "NamespacePrefix";
   prefix: string;
   uri: string;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_primitive_slot {
+export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
   label: string | null;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_primitive {
+export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_primitive {
   __typename: "DefinitionPathPrimitive";
   id: string;
   label: string | null;
-  slot: SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_primitive_slot | null;
+  slot: SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_primitive_slot | null;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_schema_slot {
+export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema_slot {
   __typename: "DefinitionPathSchemaSlot";
   id: string;
   label: string | null;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_schema_step_participant {
+export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema_step_participant {
   __typename: "DefinitionPathStepParticipant";
   id: string;
   label: string | null;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_schema_step {
+export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema_step {
   __typename: "DefinitionPathStep";
   id: string;
   label: string | null;
-  participant: SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_schema_step_participant | null;
+  participant: SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema_step_participant | null;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_schema {
+export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
   label: string | null;
-  slot: SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_schema_slot | null;
-  step: SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_schema_step | null;
+  slot: SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema_slot | null;
+  step: SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema_step | null;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_path_sdfDocument {
+export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
   label: string | null;
-  namespacePrefixes: SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_namespacePrefixes[] | null;
-  primitive: SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_primitive | null;
-  schema: SdfDocumentSourceFragment_schemas_steps_path_sdfDocument_schema | null;
+  namespacePrefixes: SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_namespacePrefixes[] | null;
+  primitive: SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_primitive | null;
+  schema: SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema | null;
 }
 
-export interface SdfDocumentSourceFragment_schemas_steps_path {
+export interface SdfDocumentSourceFragment_schemas_steps_list_path {
   __typename: "DefinitionPath";
-  sdfDocument: SdfDocumentSourceFragment_schemas_steps_path_sdfDocument;
+  sdfDocument: SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument;
+}
+
+export interface SdfDocumentSourceFragment_schemas_steps_list_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSourceFragment_schemas_steps_list_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSourceFragment_schemas_steps_list_sourceJsonNodeLocation {
+  __typename: "JsonNodeLocation";
+  startToken: SdfDocumentSourceFragment_schemas_steps_list_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSourceFragment_schemas_steps_list_sourceJsonNodeLocation_stopToken;
+}
+
+export interface SdfDocumentSourceFragment_schemas_steps_list {
+  __typename: "Step";
+  id: string;
+  label: string;
+  participants: SdfDocumentSourceFragment_schemas_steps_list_participants[] | null;
+  path: SdfDocumentSourceFragment_schemas_steps_list_path;
+  sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_steps_list_sourceJsonNodeLocation;
+}
+
+export interface SdfDocumentSourceFragment_schemas_steps_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSourceFragment_schemas_steps_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
 }
 
 export interface SdfDocumentSourceFragment_schemas_steps_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
-  column: number;
-  line: number;
+  startToken: SdfDocumentSourceFragment_schemas_steps_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSourceFragment_schemas_steps_sourceJsonNodeLocation_stopToken;
 }
 
 export interface SdfDocumentSourceFragment_schemas_steps {
-  __typename: "Step";
-  id: string;
-  label: string;
-  participants: SdfDocumentSourceFragment_schemas_steps_participants[] | null;
-  path: SdfDocumentSourceFragment_schemas_steps_path;
+  __typename: "Steps";
+  list: SdfDocumentSourceFragment_schemas_steps_list[];
   sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_steps_sourceJsonNodeLocation;
 }
 
@@ -459,7 +583,7 @@ export interface SdfDocumentSourceFragment_schemas {
   path: SdfDocumentSourceFragment_schemas_path;
   slots: SdfDocumentSourceFragment_schemas_slots[];
   sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_sourceJsonNodeLocation;
-  steps: SdfDocumentSourceFragment_schemas_steps[];
+  steps: SdfDocumentSourceFragment_schemas_steps;
 }
 
 export interface SdfDocumentSourceFragment_validationMessages_path_sdfDocument_namespacePrefixes {

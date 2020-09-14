@@ -1,4 +1,4 @@
-import {SchemaPageQuery_schemaById_steps_participants} from "api/queries/types/SchemaPageQuery";
+import {SchemaPageQuery_schemaById_steps_list_participants} from "api/queries/types/SchemaPageQuery";
 import * as React from "react";
 import {
   Card,
@@ -15,7 +15,7 @@ import {JsonFieldTableRow} from "components/table/JsonFieldTableRow";
 
 export const StepParticipantCard: React.FunctionComponent<{
   namespacePrefixes: readonly NamespacePrefixFragment[] | null;
-  participant: SchemaPageQuery_schemaById_steps_participants;
+  participant: SchemaPageQuery_schemaById_steps_list_participants;
 }> = ({namespacePrefixes, participant}) => (
   <Card>
     <CardHeader title={"Participant: " + participant.label} />

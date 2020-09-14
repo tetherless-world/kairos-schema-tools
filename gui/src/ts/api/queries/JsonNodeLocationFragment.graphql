@@ -1,4 +1,10 @@
+#import "./JsonTokenLocationFragment.graphql"
+
 fragment JsonNodeLocationFragment on JsonNodeLocation {
-    column
-    line
+    startToken {
+        ... JsonTokenLocationFragment
+    }
+    stopToken {
+        ... JsonTokenLocationFragment
+    }
 }

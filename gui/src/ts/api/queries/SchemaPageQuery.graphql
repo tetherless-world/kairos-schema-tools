@@ -51,41 +51,43 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             roleName
         }
         steps {
-            achieves
-            aka
-            comments
-            id
-            label
-            maxDuration {
-                string
-            }
-            minDuration {
-                string
-            }
-            name
-            participants {
+            list {
+                achieves
                 aka
                 comments
-                entityTypes
                 id
                 label
+                maxDuration {
+                    string
+                }
+                minDuration {
+                    string
+                }
                 name
+                participants {
+                    aka
+                    comments
+                    entityTypes
+                    id
+                    label
+                    name
+                    path {
+                        ...DefinitionPathFragment
+                    }
+                    privateData
+                    references
+                    refvar
+                    role
+                }
                 path {
                     ...DefinitionPathFragment
                 }
                 privateData
+                provenances
                 references
-                refvar
-                role
+                requires
+                type
             }
-            path {
-                ...DefinitionPathFragment
-            }
-            privateData
-            provenances
-            references
-            requires
-            type
         }
         ta2
         template

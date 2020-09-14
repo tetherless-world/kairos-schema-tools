@@ -11,9 +11,8 @@ abstract class AbstractStore extends Store {
   override def getPrimitives: List[Primitive] =
     getSdfDocuments.flatMap(_.primitives)
 
-  override def getPrimitiveSlotById(id: Uri): Option[PrimitiveSlot] = {
+  override def getPrimitiveSlotById(id: Uri): Option[PrimitiveSlot] =
     getPrimitives.view.flatMap(primitive => primitive.slots.find(_.id == id)).headOption
-  }
 
   override def getSchemaById(id: Uri): Option[Schema] =
     getSchemas.find(_.id == id)
@@ -27,10 +26,9 @@ abstract class AbstractStore extends Store {
   override def getSdfDocumentById(id: Uri): Option[SdfDocument] =
     getSdfDocuments.find(_.id == id)
 
-  override def getStepById(id: Uri): Option[Step] = {
-    getSchemas.view.flatMap(schema => schema.steps.find(_.id == id)).headOption
-  }
+  override def getStepById(id: Uri): Option[Step] =
+    getSchemas.view.flatMap(schema => schema.steps.list.find(_.id == id)).headOption
 
   override def getStepParticipantById(id: Uri): Option[StepParticipant] =
-    getSchemas.view.flatMap(schema => schema.steps.flatMap(step => step.participants.flatMap(participants => participants.find(_.id == id)))).headOption
+    getSchemas.view.flatMap(schema => schema.steps.list.flatMap(step => step.participants.flatMap(participants => participants.find(_.id == id)))).headOption
 }

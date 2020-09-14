@@ -97,7 +97,7 @@ final class SearchEngine {
         path = DefinitionPath.sdfDocument(sdfDocument.id).schema(schema.id).build,
         `type` = SearchDocumentType.Schema))
       schema.slots.foreach(putSchemaSlot(_))
-      schema.steps.foreach(putStep(_))
+      schema.steps.list.foreach(putStep(_))
     }
 
     def putSearchDocument(searchDocument: SearchDocument): Unit = {

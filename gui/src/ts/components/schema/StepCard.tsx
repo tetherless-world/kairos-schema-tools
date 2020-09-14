@@ -1,4 +1,4 @@
-import {SchemaPageQuery_schemaById_steps} from "api/queries/types/SchemaPageQuery";
+import {SchemaPageQuery_schemaById_steps_list} from "api/queries/types/SchemaPageQuery";
 import {
   Card,
   CardContent,
@@ -19,7 +19,7 @@ import {JsonFieldTableRow} from "components/table/JsonFieldTableRow";
 export const StepCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
   namespacePrefixes: readonly NamespacePrefixFragment[] | null;
-  step: SchemaPageQuery_schemaById_steps;
+  step: SchemaPageQuery_schemaById_steps_list;
 }> = ({hrefs, namespacePrefixes, step}) => (
   <Card>
     <CardHeader title={"Step: " + step.label} />

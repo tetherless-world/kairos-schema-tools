@@ -1,4 +1,5 @@
 import {
+  Button,
   Grid,
   List,
   ListItem,
@@ -37,15 +38,18 @@ interface SchemaTableOfContentsStepParticipant
   extends SchemaTableOfContentsEntry {}
 
 export const SchemaTableOfContents: React.FunctionComponent<{
+  addStep?: () => void;
   hrefs: SchemaHrefs;
   includeSourceLinks?: boolean;
   schema: {
     id: string;
     slots: readonly SchemaTableOfContentsSlot[];
     path: DefinitionPath;
-    steps: readonly SchemaTableOfContentsStep[];
+    steps: {
+      list: readonly SchemaTableOfContentsStep[];
+    };
   };
-}> = ({hrefs, includeSourceLinks, schema}) => {
+}> = ({addStep, hrefs, includeSourceLinks, schema}) => {
   const classes = useStyles();
 
   const SlotsList: React.FunctionComponent<{
@@ -111,7 +115,7 @@ export const SchemaTableOfContents: React.FunctionComponent<{
     steps: readonly SchemaTableOfContentsStep[];
   }> = ({steps}) => (
     <List component="div" disablePadding>
-      {schema.steps.map((step) => (
+      {schema.steps.list.map((step) => (
         <ListItem className={classes.nestedListItem} key={step.id}>
           <ListItemText>
             <Grid container direction="column">
@@ -153,19 +157,34 @@ export const SchemaTableOfContents: React.FunctionComponent<{
               <FolderIcon />
             </ListItemIcon>
             <ListItemText>
-              <Link
-                dataCy={`schema-toc-${schemaSection.id}-link`}
-                to={hrefs.section(schemaSection.id)}
-              >
-                {schemaSection.title}
-              </Link>
+              <Grid container>
+                <Grid item style={{flexGrow: 1}}>
+                  <Link
+                    dataCy={`schema-toc-${schemaSection.id}-link`}
+                    to={hrefs.section(schemaSection.id)}
+                  >
+                    {schemaSection.title}
+                  </Link>
+                </Grid>
+                {addStep && schemaSection.id === "steps" ? (
+                  <Grid item>
+                    <Button
+                      color="secondary"
+                      onClick={addStep}
+                      variant="contained"
+                    >
+                      Add step
+                    </Button>
+                  </Grid>
+                ) : null}
+              </Grid>
             </ListItemText>
           </ListItem>
           {schemaSection.id === "slots" ? (
             <SlotsList slots={schema.slots} />
           ) : null}
           {schemaSection.id === "steps" ? (
-            <StepsList steps={schema.steps} />
+            <StepsList steps={schema.steps.list} />
           ) : null}
         </React.Fragment>
       ))}

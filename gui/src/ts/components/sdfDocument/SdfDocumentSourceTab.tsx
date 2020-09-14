@@ -21,6 +21,7 @@ import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 import {getJsonNodeLocationFromDefinitionPath} from "models/definition/getJsonNodeLocationFromDefinitionPath";
 import {DefinitionPath} from "models/definition/DefinitionPath";
 import {PrimitiveTableOfContents} from "components/primitive/PrimitiveTableOfContents";
+import ReactAce from "react-ace";
 
 const PrimitiveAccordion: React.FunctionComponent<{
   primitive: SdfDocumentSourceFragment_primitives;
@@ -74,8 +75,9 @@ const SaveButton: React.FunctionComponent<{onClick: () => void}> = ({
 );
 
 const SchemaAccordion: React.FunctionComponent<{
+  addStep: () => void;
   schema: SdfDocumentSourceFragment_schemas;
-}> = ({schema}) => (
+}> = ({addStep, schema}) => (
   <Accordion>
     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
       <h3>Schema: {schema.label}</h3>
@@ -87,6 +89,7 @@ const SchemaAccordion: React.FunctionComponent<{
         </Grid>
         <Grid item>
           <SchemaTableOfContents
+            addStep={addStep}
             hrefs={Hrefs.sdfDocuments
               .sdfDocument({id: schema.path.sdfDocument.id})
               .schemas.schema(schema)}
@@ -130,12 +133,17 @@ export const SdfDocumentSourceTab: React.FunctionComponent<{
   validationMessages,
   volatileSourceJson,
 }) => {
+  const [aceEditor, setAceEditor] = React.useState<ReactAce | null | undefined>(
+    null
+  );
+
   return (
     <Grid container data-cy="sdf-document-editor" direction="row" spacing={4}>
       <Grid item xs={8}>
         <Grid container direction="column" spacing={4}>
           <Grid item>
             <SdfDocumentSourceEditor
+              aceEditorRef={setAceEditor}
               goToJsonNodeLocation={
                 definitionPath
                   ? getJsonNodeLocationFromDefinitionPath(
@@ -172,11 +180,45 @@ export const SdfDocumentSourceTab: React.FunctionComponent<{
                     <PrimitiveAccordion primitive={primitive} />
                   </Grid>
                 ))}
-                {savedSdfDocument.schemas.map((schema) => (
-                  <Grid item key={schema.id}>
-                    <SchemaAccordion schema={schema} />
-                  </Grid>
-                ))}
+                {savedSdfDocument.schemas.map((schema) => {
+                  const addStep = () => {
+                    if (!aceEditor) {
+                      console.error("Ace editor not set");
+                      return;
+                    }
+                    const stepsClosingBracketToken =
+                      schema.steps.sourceJsonNodeLocation.stopToken;
+                    aceEditor.editor.session.insert(
+                      {
+                        row: stepsClosingBracketToken.line - 1,
+                        column: stepsClosingBracketToken.column - 1,
+                      },
+                      JSON.stringify(
+                        {
+                          "@id": "new_identifier_replace_me",
+                          name: "New step",
+                          "@type": "new_type_replace_me",
+                          aka: [],
+                          minDuration: "",
+                          maxDuration: "",
+                          participants: [],
+                        },
+                        undefined,
+                        4
+                      )
+                    );
+                    aceEditor.editor.gotoLine(
+                      stepsClosingBracketToken.line,
+                      stepsClosingBracketToken.column,
+                      false
+                    );
+                  };
+                  return (
+                    <Grid item key={schema.id}>
+                      <SchemaAccordion addStep={addStep} schema={schema} />
+                    </Grid>
+                  );
+                })}
               </Grid>
             </RightPanelAccordion>
           </Grid>
