@@ -12,12 +12,14 @@ import {SdfDocumentSourceFragment} from "api/queries/types/SdfDocumentSourceFrag
 import {getJsonNodeLocationFromDefinitionPath} from "models/definition/getJsonNodeLocationFromDefinitionPath";
 
 export const SdfDocumentSourceEditor: React.FunctionComponent<{
+  aceEditorRef: (aceEditor: ReactAce | null | undefined) => void;
   goToJsonNodeLocation?: JsonNodeLocationFragment;
   onChange?: (volatileSourceJson: string) => void;
   savedSdfDocument: SdfDocumentSourceFragment;
   validationMessages: readonly ValidationMessageFragment[];
   volatileSourceJson: string;
 }> = ({
+  aceEditorRef: aceEditorRefProp,
   goToJsonNodeLocation,
   onChange,
   savedSdfDocument,
@@ -25,7 +27,9 @@ export const SdfDocumentSourceEditor: React.FunctionComponent<{
   volatileSourceJson,
 }) => {
   const aceEditorRef = React.useCallback(
-    (aceEditor: ReactAce) => {
+    (aceEditor: ReactAce | null | undefined) => {
+      aceEditorRefProp(aceEditor);
+
       if (!aceEditor) {
         return;
       }
