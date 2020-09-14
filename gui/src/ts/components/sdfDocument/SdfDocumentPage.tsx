@@ -33,6 +33,7 @@ import {
   SdfDocumentAnnotatorReadableFormQueryVariables,
 } from "api/queries/types/SdfDocumentAnnotatorReadableFormQuery";
 import {SdfDocumentAnnotatorReadableFormTab} from "components/sdfDocument/SdfDocumentAnnotatorReadableFormTab";
+import ReactDOM from "react-dom";
 
 export const SdfDocumentPage: React.FunctionComponent = () => {
   const apolloClient = useApolloClient();
@@ -62,28 +63,25 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
     variables: {id: sdfDocumentId},
   });
 
-  // Keep one big state in order to do batch updates.
-  const [state, setState] = React.useState<{
-    annotatorReadableForm: string | null;
-    savedSdfDocument: SdfDocumentSourceFragment | null;
-    snackbarMessage: React.ReactNode | null;
-    volatileSourceJson: string | null;
-    validationMessages: readonly ValidationMessageFragment[];
-  }>({
-    annotatorReadableForm: null,
-    savedSdfDocument: null,
-    snackbarMessage: null,
-    volatileSourceJson: null,
-    validationMessages: [],
-  });
-
-  const {
-    annotatorReadableForm,
+  // These used to be one big state, but it caused rendering slowdowns in the editor.
+  const [annotatorReadableForm, setAnnotatorReadableForm] = React.useState<
+    string | null
+  >(null);
+  const [
     savedSdfDocument,
+    setSavedSdfDocument,
+  ] = React.useState<SdfDocumentSourceFragment | null>(null);
+  const [
     snackbarMessage,
-    validationMessages,
-    volatileSourceJson,
-  } = state;
+    setSnackbarMessage,
+  ] = React.useState<React.ReactNode | null>(null);
+  const [volatileSourceJson, setVolatileSourceJson] = React.useState<
+    string | null
+  >(null);
+  const [validationMessages, setValidationMessages] = React.useState<
+    readonly ValidationMessageFragment[]
+  >([]);
+
   // Enforce some invariants
   if (savedSdfDocument) {
     invariant(volatileSourceJson, "source must be set if savedSdfDocument is");
@@ -106,23 +104,19 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
       })
       .then((result) => {
         if (result.data) {
-          setState((prevState) => ({
-            ...prevState,
-            annotatorReadableForm:
-              result.data.getSdfDocumentAnnotatorReadableForm,
-            snackbarMessage: "Updated annotator readable form",
-          }));
+          ReactDOM.unstable_batchedUpdates(() => {
+            setAnnotatorReadableForm(
+              result.data.getSdfDocumentAnnotatorReadableForm
+            );
+            setSnackbarMessage("Updated annotator readable form");
+          });
         } else if (result.errors) {
           setSnackbarMessageFromApolloErrors(result.errors);
         }
       });
   };
 
-  const onSnackbarClose = () =>
-    setState((prevState) => ({
-      ...prevState,
-      snackbarMessage: null,
-    }));
+  const onSnackbarClose = () => setSnackbarMessage(null);
 
   const onSave = () => {
     apolloClient
@@ -133,14 +127,15 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
       })
       .then((result) => {
         if (result.data) {
-          setState((prevState) => ({
-            ...prevState,
-            annotatorReadableForm: null,
-            savedSdfDocument: result.data!.putSdfDocument,
-            snackbarMessage: "Saved",
-            volatileSourceJson: result.data!.putSdfDocument.sourceJson,
-            validateMessages: result.data!.putSdfDocument.validationMessages,
-          }));
+          ReactDOM.unstable_batchedUpdates(() => {
+            setAnnotatorReadableForm(null);
+            setSavedSdfDocument(result.data!.putSdfDocument);
+            setSnackbarMessage("Saved");
+            setVolatileSourceJson(result.data!.putSdfDocument.sourceJson);
+            setValidationMessages(
+              result.data!.putSdfDocument.validationMessages
+            );
+          });
         } else if (result.errors) {
           setSnackbarMessageFromApolloErrors(result.errors);
         }
@@ -156,11 +151,10 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
       })
       .then((result) => {
         if (result.data) {
-          setState((prevState) => ({
-            ...prevState,
-            snackbarMessage: "Validated",
-            validationMessages: result.data.validateSdfDocument,
-          }));
+          ReactDOM.unstable_batchedUpdates(() => {
+            setSnackbarMessage("Validated");
+            setValidationMessages(result.data.validateSdfDocument);
+          });
         } else if (result.errors) {
           setSnackbarMessageFromApolloErrors(result.errors);
         }
@@ -169,12 +163,7 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
 
   const setSnackbarMessageFromApolloErrors = (
     errors: ReadonlyArray<GraphQLError>
-  ) => {
-    setState((prevState) => ({
-      ...prevState,
-      snackbarMessage: <GraphQlErrorsList errors={errors} />,
-    }));
-  };
+  ) => setSnackbarMessage(<GraphQlErrorsList errors={errors} />);
 
   return (
     <>
@@ -184,15 +173,13 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
             return <NoRoute />;
           }
 
-          if (state.savedSdfDocument === null) {
+          if (savedSdfDocument === null) {
             // Set state from initial data
-            setState((prevState) => ({
-              ...prevState,
-              savedSdfDocument: initialData.sdfDocumentById!,
-              validationMessages: initialData.sdfDocumentById!
-                .validationMessages,
-              volatileSourceJson: initialData.sdfDocumentById!.sourceJson,
-            }));
+            setSavedSdfDocument(initialData.sdfDocumentById!);
+            setValidationMessages(
+              initialData.sdfDocumentById!.validationMessages
+            );
+            setVolatileSourceJson(initialData.sdfDocumentById!.sourceJson);
             return;
           }
 
@@ -232,13 +219,10 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                 <Grid hidden={tab !== "source"} item>
                   <SdfDocumentSourceTab
                     definitionPath={definitionPath}
-                    onChange={(sourceJson) =>
-                      setState((prevState) => ({
-                        ...prevState,
-                        annotatorReadableForm: null,
-                        volatileSourceJson: sourceJson,
-                      }))
-                    }
+                    onChange={(sourceJson) => {
+                      setAnnotatorReadableForm(null);
+                      setVolatileSourceJson(sourceJson);
+                    }}
                     onSave={onSave}
                     onValidate={onValidate}
                     savedSdfDocument={savedSdfDocument}
