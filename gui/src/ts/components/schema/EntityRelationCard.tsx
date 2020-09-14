@@ -40,7 +40,7 @@ export const EntityRelationCard: React.FunctionComponent<{
         return <Link to={hrefs.slot(slot)}>Slot: {slot.label}</Link>;
       }
     }
-    for (const step of schema.steps) {
+    for (const step of schema.steps.list) {
       if (step.id === entityId) {
         return <Link to={hrefs.step(step)}>Step: {step.label}</Link>;
       }

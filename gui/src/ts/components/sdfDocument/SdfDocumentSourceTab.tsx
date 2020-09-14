@@ -175,7 +175,7 @@ export const SdfDocumentSourceTab: React.FunctionComponent<{
                 ))}
                 {savedSdfDocument.schemas.map((schema) => {
                   const addStep = () => {
-                    if (schema.steps.length === 0) {
+                    if (schema.steps.list.length === 0) {
                       return;
                     }
                   };

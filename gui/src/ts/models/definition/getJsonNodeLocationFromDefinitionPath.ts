@@ -39,7 +39,7 @@ export const getJsonNodeLocationFromDefinitionPath = (
           result = slot.sourceJsonNodeLocation;
         }
       } else if (path.sdfDocument.schema!.step) {
-        const step = schema.steps.find(
+        const step = schema.steps.list.find(
           (step) => step.id === path.sdfDocument.schema!.step!.id
         );
         if (step) {

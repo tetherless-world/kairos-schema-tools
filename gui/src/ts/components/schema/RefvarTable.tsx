@@ -18,7 +18,7 @@ export const RefvarTable: React.FunctionComponent<{
   schema: SchemaPageQuery_schemaById;
 }> = ({hrefs, schema}) => {
   const refvars = new Set<string>();
-  for (const step of schema.steps) {
+  for (const step of schema.steps.list) {
     if (!step.participants) {
       continue;
     }
@@ -34,7 +34,7 @@ export const RefvarTable: React.FunctionComponent<{
       <TableHead>
         <TableRow>
           <TableCell>Refvar</TableCell>
-          {schema.steps.map((step) => (
+          {schema.steps.list.map((step) => (
             <TableCell key={step.id}>
               <Link to={hrefs.step(step)}>Step: {step.label}</Link>
             </TableCell>
@@ -46,7 +46,7 @@ export const RefvarTable: React.FunctionComponent<{
           return (
             <TableRow key={refvar}>
               <TableCell>{refvar}</TableCell>
-              {schema.steps.map((step) => {
+              {schema.steps.list.map((step) => {
                 const participantsWithRefvar = step.participants?.filter(
                   (participant) => participant.refvar === refvar
                 );

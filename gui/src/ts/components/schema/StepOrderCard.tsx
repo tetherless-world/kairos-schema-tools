@@ -1,6 +1,6 @@
 import {
   SchemaPageQuery_schemaById_order,
-  SchemaPageQuery_schemaById_steps,
+  SchemaPageQuery_schemaById_steps_list,
 } from "api/queries/types/SchemaPageQuery";
 import {
   Card,
@@ -21,7 +21,7 @@ import {Link} from "components/link/Link";
 export const StepListTableRow: React.FunctionComponent<{
   hrefs: SchemaHrefs;
   name: string;
-  steps: SchemaPageQuery_schemaById_steps[];
+  steps: SchemaPageQuery_schemaById_steps_list[];
   values: string[] | null;
 }> = ({hrefs, name, steps, values}) => {
   if (!values || values.length === 0) {
@@ -51,7 +51,7 @@ export const StepOrderCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
   stepOrder: SchemaPageQuery_schemaById_order;
   stepOrderIndex: number;
-  steps: SchemaPageQuery_schemaById_steps[];
+  steps: SchemaPageQuery_schemaById_steps_list[];
 }> = ({hrefs, stepOrder, stepOrderIndex, steps}) => (
   <Card>
     <CardHeader title={`Step order ${stepOrderIndex}`} />

@@ -68,7 +68,7 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
       case "steps": {
         children = (
           <Grid container direction="column" spacing={4}>
-            {schema.steps.map((step) => (
+            {schema.steps.list.map((step) => (
               <Grid item id={hrefs.stepId(step)} key={step.id}>
                 <StepCard
                   hrefs={hrefs}
@@ -90,7 +90,7 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
                   hrefs={hrefs}
                   stepOrder={stepOrder}
                   stepOrderIndex={stepOrderIndex}
-                  steps={schema.steps}
+                  steps={schema.steps.list}
                 />
               </Grid>
             ))}

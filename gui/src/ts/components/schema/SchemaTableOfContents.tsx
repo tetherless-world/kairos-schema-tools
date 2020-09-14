@@ -43,7 +43,9 @@ export const SchemaTableOfContents: React.FunctionComponent<{
     id: string;
     slots: readonly SchemaTableOfContentsSlot[];
     path: DefinitionPath;
-    steps: readonly SchemaTableOfContentsStep[];
+    steps: {
+      list: readonly SchemaTableOfContentsStep[];
+    };
   };
 }> = ({hrefs, includeSourceLinks, schema}) => {
   const classes = useStyles();
@@ -111,7 +113,7 @@ export const SchemaTableOfContents: React.FunctionComponent<{
     steps: readonly SchemaTableOfContentsStep[];
   }> = ({steps}) => (
     <List component="div" disablePadding>
-      {schema.steps.map((step) => (
+      {schema.steps.list.map((step) => (
         <ListItem className={classes.nestedListItem} key={step.id}>
           <ListItemText>
             <Grid container direction="column">
@@ -165,7 +167,7 @@ export const SchemaTableOfContents: React.FunctionComponent<{
             <SlotsList slots={schema.slots} />
           ) : null}
           {schemaSection.id === "steps" ? (
-            <StepsList steps={schema.steps} />
+            <StepsList steps={schema.steps.list} />
           ) : null}
         </React.Fragment>
       ))}
