@@ -12,7 +12,7 @@
   "primitives": [
     {
       "@id": "caci:Primitives/Events/Transaction.Donation.WireTransfer",
-      "version": "caci-08.17.2020",
+      "version": "caci-09.08.2020",
       "super": "kairos:Primitives/Events/Transaction.Donation.Unspecified",
       "name": "Transaction.Donation.WireTransfer",
       "description": "The voluntary transfer of monetary assets",
