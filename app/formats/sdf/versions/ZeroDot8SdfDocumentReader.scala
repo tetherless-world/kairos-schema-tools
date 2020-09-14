@@ -124,7 +124,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         resources = resource.slots,
       ).flatMap(entry =>
         try {
-          Some(readPrimitiveSlot(jsonNode = entry._1, parentPath = path, resource =entry._2))
+          Some(readPrimitiveSlot(jsonNode = entry._1, parentPath = path, resource = entry._2))
         } catch {
           case e: ValidationException => {
             validationMessages ++= e.messages
@@ -159,7 +159,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
   private def readSchema(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource) = {
     val id = Uri.parse(resource.getURI)
     val path = DefinitionPath.sdfDocument(parentPath.sdfDocument.id).schema(id).build
-    val stepsJsonNode =  jsonNode.map.get("steps").map(_.asInstanceOf[ArrayJsonNode]).getOrElse(throw ValidationException(s"schema ${id} missing required steps", path))
+    val stepsJsonNode = jsonNode.map.get("steps").map(_.asInstanceOf[ArrayJsonNode]).getOrElse(throw ValidationException(s"schema ${id} missing required steps", path))
     Schema(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
@@ -195,7 +195,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         resources = resource.slots,
       ).flatMap(entry =>
         try {
-          Some(readSchemaSlot(jsonNode = entry._1, parentPath = path, resource =entry._2))
+          Some(readSchemaSlot(jsonNode = entry._1, parentPath = path, resource = entry._2))
         } catch {
           case e: ValidationException => {
             validationMessages ++= e.messages
@@ -205,21 +205,21 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       ),
       sourceJsonNodeLocation = jsonNode.location,
       steps = Steps(
-        sourceJsonNodeLocation = stepsJsonNode.location,
-        steps = mapResourcesToObjectJsonNodes(
-        jsonNodes = stepsJsonNode.list,
-        path = path,
-        resources = resource.steps,
-      ).flatMap(entry =>
-        try {
-          Some(readStep(jsonNode = entry._1, parentPath = path, resource =entry._2))
-        } catch {
-          case e: ValidationException => {
-            validationMessages ++ e.messages
-            None
+        list = mapResourcesToObjectJsonNodes(
+          jsonNodes = stepsJsonNode.list,
+          path = path,
+          resources = resource.steps,
+        ).flatMap(entry =>
+          try {
+            Some(readStep(jsonNode = entry._1, parentPath = path, resource = entry._2))
+          } catch {
+            case e: ValidationException => {
+              validationMessages ++ e.messages
+              None
+            }
           }
-        }
-      )),
+        ), sourceJsonNodeLocation = stepsJsonNode.location,
+      ),
       ta2 = false,
       template = resource.template.headOption,
       version = resource.version.headOption.getOrElse(throw ValidationException(s"schema ${id} missing version property", path))
@@ -327,7 +327,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         resources = header.rootResource.primitives
       ).flatMap(entry =>
         try {
-          Some(readPrimitive(jsonNode = entry._1, parentPath = path, resource =entry._2))
+          Some(readPrimitive(jsonNode = entry._1, parentPath = path, resource = entry._2))
         } catch {
           case e: ValidationException => {
             validationMessages ++= e.messages
@@ -340,7 +340,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         resources = header.rootResource.schemas
       ).flatMap(entry =>
         try {
-          Some(readSchema(jsonNode = entry._1, parentPath = path, resource =entry._2))
+          Some(readSchema(jsonNode = entry._1, parentPath = path, resource = entry._2))
         } catch {
           case e: ValidationException => {
             validationMessages ++= e.messages

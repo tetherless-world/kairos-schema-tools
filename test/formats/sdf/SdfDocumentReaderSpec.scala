@@ -68,7 +68,7 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
         for (order <- schema.order) {
           order.stepIds should not be empty
           for (stepId <- order.stepIds) {
-            schema.steps.steps.exists(_.id == stepId) should be (true)
+            schema.steps.list.exists(_.id == stepId) should be (true)
           }
         }
         schema.order.exists(order => order.comments.isDefined && order.comments.get.nonEmpty) should be (true)
@@ -87,8 +87,8 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
         }
         schema.slots.exists(_.entityTypes.isDefined) should be (true)
         schema.slots.exists(_.refvar.isDefined) should be(true)
-        schema.steps.steps should not be empty
-        for (step <- schema.steps.steps) {
+        schema.steps.list should not be empty
+        for (step <- schema.steps.list) {
           step.name should not be empty
           step.participants should not be None
           val participants = step.participants.get
@@ -98,17 +98,17 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
             participant.entityTypes.get should not be empty
           }
         }
-        schema.steps.steps.exists(_.achieves.isDefined) should be(true)
-        for (aka <- schema.steps.steps.find(_.aka.isDefined).get.aka.get) {
+        schema.steps.list.exists(_.achieves.isDefined) should be(true)
+        for (aka <- schema.steps.list.find(_.aka.isDefined).get.aka.get) {
           aka should not be empty
         }
-        for (comment <- schema.steps.steps.find(_.comments.isDefined).get.comments.get) {
+        for (comment <- schema.steps.list.find(_.comments.isDefined).get.comments.get) {
           comment should not be empty
         }
-        schema.steps.steps.exists(_.references.isDefined) should be(true)
-        schema.steps.steps.exists(_.maxDuration.isDefined) should be (true)
-        schema.steps.steps.exists(_.minDuration.isDefined) should be (true)
-        schema.steps.steps.exists(_.requires.isDefined) should be(true)
+        schema.steps.list.exists(_.references.isDefined) should be(true)
+        schema.steps.list.exists(_.maxDuration.isDefined) should be (true)
+        schema.steps.list.exists(_.minDuration.isDefined) should be (true)
+        schema.steps.list.exists(_.requires.isDefined) should be(true)
 //        schema.`super` should not be None
         schema.ta2 should be (false)
 //        schema.version should equal("caci-07.20.2020")

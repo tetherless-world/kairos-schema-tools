@@ -27,8 +27,8 @@ abstract class AbstractStore extends Store {
     getSdfDocuments.find(_.id == id)
 
   override def getStepById(id: Uri): Option[Step] =
-    getSchemas.view.flatMap(schema => schema.steps.steps.find(_.id == id)).headOption
+    getSchemas.view.flatMap(schema => schema.steps.list.find(_.id == id)).headOption
 
   override def getStepParticipantById(id: Uri): Option[StepParticipant] =
-    getSchemas.view.flatMap(schema => schema.steps.steps.flatMap(step => step.participants.flatMap(participants => participants.find(_.id == id)))).headOption
+    getSchemas.view.flatMap(schema => schema.steps.list.flatMap(step => step.participants.flatMap(participants => participants.find(_.id == id)))).headOption
 }
