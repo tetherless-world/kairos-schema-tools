@@ -220,8 +220,8 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                   <SdfDocumentSourceTab
                     definitionPath={definitionPath}
                     onChange={(sourceJson) => {
-                      setAnnotatorReadableForm(null);
-                      setVolatileSourceJson(sourceJson);
+                      setAnnotatorReadableForm(() => null);
+                      setVolatileSourceJson(() => sourceJson);
                     }}
                     onSave={onSave}
                     onValidate={onValidate}
