@@ -32,8 +32,8 @@ export const SdfDocumentSourceEditor: React.FunctionComponent<{
 
       if (goToJsonNodeLocation) {
         aceEditor.editor.gotoLine(
-          goToJsonNodeLocation.line,
-          goToJsonNodeLocation.column,
+          goToJsonNodeLocation.startToken.line,
+          goToJsonNodeLocation.startToken.column,
           true
         );
       }
@@ -49,8 +49,8 @@ export const SdfDocumentSourceEditor: React.FunctionComponent<{
                 )
               : undefined;
             return {
-              column: jsonNodeLocation?.column,
-              row: jsonNodeLocation?.line,
+              column: jsonNodeLocation?.startToken.column,
+              row: jsonNodeLocation?.startToken.line,
               text: validationMessage.message,
               type: validationMessage.type.toLowerCase(),
             };

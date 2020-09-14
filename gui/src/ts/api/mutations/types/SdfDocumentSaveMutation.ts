@@ -134,10 +134,26 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path {
   sdfDocument: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
-  column: number;
-  line: number;
+  startToken: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_sourceJsonNodeLocation_stopToken;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots {
@@ -148,10 +164,26 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots {
   sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_sourceJsonNodeLocation;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_primitives_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_primitives_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
-  column: number;
-  line: number;
+  startToken: SdfDocumentSaveMutation_putSdfDocument_primitives_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSaveMutation_putSdfDocument_primitives_sourceJsonNodeLocation_stopToken;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives {
@@ -283,10 +315,26 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path {
   sdfDocument: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
-  column: number;
-  line: number;
+  startToken: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_sourceJsonNodeLocation_stopToken;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots {
@@ -297,10 +345,26 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots {
   sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_sourceJsonNodeLocation;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
-  column: number;
-  line: number;
+  startToken: SdfDocumentSaveMutation_putSdfDocument_schemas_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSaveMutation_putSdfDocument_schemas_sourceJsonNodeLocation_stopToken;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_path_sdfDocument_namespacePrefixes {
@@ -363,10 +427,26 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participan
   sdfDocument: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_path_sdfDocument;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
-  column: number;
-  line: number;
+  startToken: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants_sourceJsonNodeLocation_stopToken;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_participants {
@@ -437,10 +517,26 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_path {
   sdfDocument: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_path_sdfDocument;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_sourceJsonNodeLocation {
   __typename: "JsonNodeLocation";
-  column: number;
-  line: number;
+  startToken: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_sourceJsonNodeLocation_stopToken;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps {

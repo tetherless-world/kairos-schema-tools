@@ -2,9 +2,9 @@ package controllers.rest
 
 import edu.rpi.tw.twks.uri.Uri
 import javax.inject.{Inject, Singleton}
-import models.json.JsonNodeLocation
+import models.json.{JsonNodeLocation, JsonTokenLocation}
 import models.schema._
-import models.sdfDocument.{SdfDocument, NamespacePrefix}
+import models.sdfDocument.{NamespacePrefix, SdfDocument}
 import models.validation.{ValidationMessage, ValidationMessageType}
 import play.api.libs.json
 import play.api.libs.json._
@@ -18,6 +18,7 @@ class RestController @Inject() (store: Store) extends InjectedController {
 //  private val AcceptsJsonLd = Accepting(MimeTypeJsonLd)
   // Models with no dependencies on other models
   private implicit val durationJsonWrites = Json.writes[Duration]
+  private implicit val jsonTokenLocationWrites = Json.writes[JsonTokenLocation]
   private implicit val jsonNodeLocationWrites = Json.writes[JsonNodeLocation]
   private implicit val uriJsonWrites: json.Writes[Uri] = (uri) => JsString(uri.toString)
   // DefinitionPath

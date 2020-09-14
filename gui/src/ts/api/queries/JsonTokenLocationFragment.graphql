@@ -1,0 +1,6 @@
+fragment JsonTokenLocationFragment on JsonTokenLocation {
+    column
+    startIndex
+    stopIndex
+    line
+}
