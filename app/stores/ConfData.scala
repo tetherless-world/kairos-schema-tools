@@ -8,6 +8,7 @@ import models.sdfDocument.SdfDocument
 import scala.io.Source
 
 object ConfData extends WithResource {
+
   private def readSdfDocumentResource(resourceName: String): Option[SdfDocument] = {
     val resourcePath = "/data/" + resourceName
     val resourceInputStream = getClass.getResourceAsStream(resourcePath)
@@ -24,6 +25,7 @@ object ConfData extends WithResource {
 
   val coordinatedBombingAttackTa1 = readSdfDocumentResource("coordinated-bombing-attack-ta1.json").get
 //  val makeIedTa1 = readSdfDocumentResource("make_ied_sdf0.8c.json")
+  val wtcTa2 = readSdfDocumentResource("wtc1993-ta2.json").get
 
   val sdfDocuments = List(coordinatedBombingAttackTa1)
   val primitives = sdfDocuments.flatMap(_.primitives)
