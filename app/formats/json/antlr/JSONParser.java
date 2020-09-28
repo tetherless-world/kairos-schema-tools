@@ -1,9 +1,13 @@
-package formats.json.antlr;// Generated from JSON.g4 by ANTLR 4.8
+// Generated from formats/json/antlr/JSON.g4 by ANTLR 4.8
+package formats.json.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class JSONParser extends Parser {
@@ -13,7 +17,7 @@ public class JSONParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9,
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		STRING=10, NUMBER=11, WS=12;
 	public static final int
 		RULE_json = 0, RULE_obj = 1, RULE_pair = 2, RULE_arr = 3, RULE_value = 4;
@@ -26,14 +30,14 @@ public class JSONParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'{'", "','", "'}'", "':'", "'['", "']'", "'true'", "'false'",
+			null, "'{'", "','", "'}'", "':'", "'['", "']'", "'true'", "'false'", 
 			"'null'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, null, null, "STRING",
+			null, null, null, null, null, null, null, null, null, null, "STRING", 
 			"NUMBER", "WS"
 		};
 	}
@@ -96,11 +100,6 @@ public class JSONParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_json; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JSONVisitor) return ((JSONVisitor<? extends T>)visitor).visitJson(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonContext json() throws RecognitionException {
@@ -135,11 +134,6 @@ public class JSONParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_obj; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitObj(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ObjContext obj() throws RecognitionException {
@@ -208,11 +202,6 @@ public class JSONParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_pair; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitPair(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final PairContext pair() throws RecognitionException {
@@ -251,11 +240,6 @@ public class JSONParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_arr; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitArr(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ArrContext arr() throws RecognitionException {
@@ -328,11 +312,6 @@ public class JSONParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_value; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitValue(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ValueContext value() throws RecognitionException {
