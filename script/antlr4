@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd "$(dirname "$0")/../app"
+
+java -jar ../script/antlr-4.8-complete.jar -no-listener -package formats.json.antlr formats/json/antlr/JSON.g4
