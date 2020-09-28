@@ -125,6 +125,80 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
         document.sdfVersion should equal(testDocument.sdfVersion)
         document.sourceJson should not be empty
         document.validationMessages should be(List())
+
+        val primitives = document.primitives
+        primitives.size should be(2)
+        for (primitive <- primitives) {
+          primitive.slots.size should be > 3
+        }
+
+        val schemas = document.schemas
+        schemas.size should equal(1)
+        val schema = schemas(0)
+//        schema.aka should not be None
+//        for (aka <- schema.aka.get) {
+//          schema.aka should not be empty
+//        }
+        schema.comments should not be None
+        // schema has empty comment
+//        for (comment <- schema.comments.get) {
+//          comment should not be empty
+//        }
+        schema.description should be("A terrorist attack on the World Trade Center, carried out on 2/26/1993, when a truck bomb detonated below the North Tower")
+        schema.entityRelations should not be empty
+        for (entityRelation <- schema.entityRelations) {
+          entityRelation.relations should not be empty
+          for (relation <- entityRelation.relations) {
+            relation.relationObjects should not be empty
+          }
+        }
+        schema.name should be("World Trade Center 1993 Attack")
+        schema.order should not be empty
+        for (order <- schema.order) {
+          order.stepIds should not be empty
+          for (stepId <- order.stepIds) {
+            schema.steps.list.exists(_.id == stepId) should be (true)
+          }
+        }
+        schema.order.exists(order => order.comments.isDefined && order.comments.get.nonEmpty) should be (true)
+        schema.order.exists(order => order.flags.isDefined && order.flags.get.nonEmpty) should be (true)
+        schema.order.exists(_.isInstanceOf[BeforeAfterStepOrder]) should be (true)
+        schema.order.exists(_.isInstanceOf[ContainerContainedStepOrder]) should be (true)
+        schema.order.exists(_.isInstanceOf[OverlapsStepOrder]) should be (true)
+        schema.privateData should not be None
+        schema.privateData.get should include("Performers can place any keys/values they wish here")
+        schema.slots should not be empty
+        for (slot <- schema.slots) {
+          slot.roleName should not be empty
+        }
+        for (aka <- schema.slots.find(_.aka.isDefined).get.aka.get) {
+          aka should not be empty
+        }
+        schema.slots.exists(_.entityTypes.isDefined) should be (true)
+        schema.slots.exists(_.refvar.isDefined) should be(true)
+        schema.steps.list should not be empty
+        for (step <- schema.steps.list) {
+          step.name should not be empty
+          step.participants should not be None
+          val participants = step.participants.get
+          participants should not be empty
+          for (participant <- participants) {
+            participant.name should not be empty
+            participant.entityTypes.get should not be empty
+          }
+        }
+        schema.steps.list.exists(_.achieves.isDefined) should be(true)
+        for (aka <- schema.steps.list.find(_.aka.isDefined).get.aka.get) {
+          aka should not be empty
+        }
+        for (comment <- schema.steps.list.find(_.comments.isDefined).get.comments.get) {
+          comment should not be empty
+        }
+        schema.steps.list.exists(_.references.isDefined) should be(true)
+        schema.steps.list.exists(_.maxDuration.isDefined) should be (true)
+        schema.steps.list.exists(_.minDuration.isDefined) should be (true)
+//        schema.steps.list.exists(_.requires.isDefined) should be(true)
+        schema.ta2 should be (true)
       }
     }
   }

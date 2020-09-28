@@ -39,5 +39,6 @@ object KAIROS {
   val slots = ResourceFactory.createProperty(URI + "slots")
   val steps = ResourceFactory.createProperty(URI + "steps")
   val `super` = ResourceFactory.createProperty(URI + "super")
+  val ta2 = ResourceFactory.createProperty(URI + "ta2")
   val template = ResourceFactory.createProperty(URI + "template")
 }

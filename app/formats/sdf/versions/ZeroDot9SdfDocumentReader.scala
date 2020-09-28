@@ -156,7 +156,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     )
   }
 
-  private def readSchema(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource) = {
+  private def readSchema(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource, ta2: Boolean) = {
     val id = Uri.parse(resource.getURI)
     val path = DefinitionPath.sdfDocument(parentPath.sdfDocument.id).schema(id).build
     val stepsJsonNode = jsonNode.map.get("steps").map(_.asInstanceOf[ArrayJsonNode]).getOrElse(throw ValidationException(s"schema ${id} missing required steps", path))
@@ -220,7 +220,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
           }
         ), sourceJsonNodeLocation = stepsJsonNode.location,
       ),
-      ta2 = false,
+      ta2 = ta2,
       template = resource.template.headOption,
       version = resource.version.headOption.getOrElse(throw ValidationException(s"schema ${id} missing version property", path))
     )
@@ -318,6 +318,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
   def read(): SdfDocument = {
     val id = header.id
     val path = DefinitionPath.sdfDocument(id).build
+    val ta2 = header.rootResource.ta2.getOrElse(false)
     SdfDocument(
       id = id,
       namespacePrefixes = header.rootResource.getModel.getNsPrefixMap.asScala.map(entry => NamespacePrefix(prefix = entry._1, uri = Uri.parse(entry._2))).toList,
@@ -340,7 +341,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         resources = header.rootResource.schemas
       ).flatMap(entry =>
         try {
-          Some(readSchema(jsonNode = entry._1, parentPath = path, resource = entry._2))
+          Some(readSchema(jsonNode = entry._1, parentPath = path, resource = entry._2, ta2 = ta2))
         } catch {
           case e: ValidationException => {
             validationMessages ++= e.messages

@@ -42,5 +42,6 @@ trait KairosProperties extends PropertyGetters {
   def steps: List[Resource] = getPropertyObjectUriResourceList(KAIROS.steps)
   def `super`: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.`super`)
   def sdfVersion: List[String] = getPropertyObjectStrings(KAIROS.sdfVersion)
+  def ta2: Option[Boolean] = getPropertyObjectLiterals(KAIROS.ta2).headOption.map(_.getBoolean)
   def template: List[String] = getPropertyObjectStrings(KAIROS.template)
 }
