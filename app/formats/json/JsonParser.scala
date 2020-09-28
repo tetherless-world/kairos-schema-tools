@@ -72,7 +72,7 @@ object JsonParser {
           val terminalNode = child.asInstanceOf[TerminalNode]
           if (terminalNode.getSymbol.getType == JSONParser.STRING) {
             StringValueJsonNode(location = JsonNodeLocation(startToken = ctx.start, stopToken = ctx.stop), value = stripStringQuotes(terminalNode.getText))
-          } else if (terminalNode.getSymbol.getText == JSONParser.NUMBER) {
+          } else if (terminalNode.getSymbol.getType == JSONParser.NUMBER) {
             NumberValueJsonNode(location = JsonNodeLocation(startToken = ctx.start, stopToken = ctx.stop), value = terminalNode.getText.toDouble)
           } else {
             terminalNode.getSymbol.getText match {
