@@ -16,10 +16,12 @@ import stores.Store
 class RestController @Inject() (store: Store) extends InjectedController {
   private val MimeTypeJsonLd = "application/ld+json"
 //  private val AcceptsJsonLd = Accepting(MimeTypeJsonLd)
-  // Models with no dependencies on other models
+  // Duration
   private implicit val durationJsonWrites = Json.writes[Duration]
+  // JSON
   private implicit val jsonTokenLocationWrites = Json.writes[JsonTokenLocation]
   private implicit val jsonNodeLocationWrites = Json.writes[JsonNodeLocation]
+  // URI
   private implicit val uriJsonWrites: json.Writes[Uri] = (uri) => JsString(uri.toString)
   // DefinitionPath
   private implicit val definitionPathPrimitiveSlotJsonWrites = Json.writes[DefinitionPath.DefinitionPathPrimitiveSlot]
@@ -30,10 +32,12 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val definitionPathSchemaJsonWrites = Json.writes[DefinitionPath.DefinitionPathSchema]
   private implicit val definitionPathPathSdfDocumentJsonWrites = Json.writes[DefinitionPath.DefinitionPathSdfDocument]
   private implicit val definitionPathJsonWrites = Json.writes[DefinitionPath]
+  // Entity types
+  private implicit val entityTypeJsonWrites: json.Writes[EntityType] = (entityType) => JsString(entityType.value)
+  private implicit val entityTypesJsonWrites = Json.writes[EntityTypes]
   // Entity relations
   private implicit val entityRelationRelationJsonWrites = Json.writes[EntityRelationRelation]
   private implicit val entityRelationJsonWrites = Json.writes[EntityRelation]
-  private implicit val entityTypeJsonWrites: json.Writes[EntityType] = (entityType) => JsString(entityType.value)
   // Primitive
   private implicit val primitiveSlotJsonWrites: json.Writes[PrimitiveSlot] = Json.writes[PrimitiveSlot]
   private implicit val primitiveJsonWrites: json.Writes[Primitive] = Json.writes[Primitive]

@@ -6,7 +6,7 @@ import models.json.JsonNodeLocation
 trait Slot extends Definition {
   val aka: Option[List[String]]
   val comments: Option[List[String]]
-  val entityTypes: Option[List[EntityType]]
+  val entityTypes: Option[EntityTypes]
   val id: Uri
   val path: DefinitionPath
   val references: Option[List[String]]

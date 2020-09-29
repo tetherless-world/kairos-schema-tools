@@ -42,10 +42,15 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
     )
 
   // Object types
-  // Models that don't depend on other models
+
+  // JSON
   implicit val JsonTokenLocationObjectType = deriveObjectType[GraphQlSchemaContext, JsonTokenLocation]()
   implicit val JsonNodeLocationObjectType = deriveObjectType[GraphQlSchemaContext, JsonNodeLocation]()
+
+  // Duration
   implicit val DurationObjectType = deriveObjectType[GraphQlSchemaContext, Duration]()
+
+  // NamespacePrefix
   implicit val NamespacePrefixObjectType = deriveObjectType[GraphQlSchemaContext, NamespacePrefix]()
 
   // DefinitionPath
@@ -86,6 +91,9 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
     )
   )
   implicit val DefinitionPathObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath]()
+
+  // Entity types
+  implicit val EntityTypesObjectType = deriveObjectType[GraphQlSchemaContext, EntityTypes]()
 
   // Entity relations
   implicit val EntityRelationRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelationRelation]()

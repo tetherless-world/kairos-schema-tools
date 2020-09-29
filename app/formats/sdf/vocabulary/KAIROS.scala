@@ -17,6 +17,8 @@ object KAIROS {
   val container = ResourceFactory.createProperty(URI + "container")
   val entityRelations = ResourceFactory.createProperty(URI + "entityRelations")
   val entityTypes = ResourceFactory.createProperty(URI + "entityTypes")
+  val entityTypes_AND = ResourceFactory.createProperty(URI + "entityTypes_AND")
+  val entityTypes_OR = ResourceFactory.createProperty(URI + "entityTypes_OR")
   val flags = ResourceFactory.createProperty(URI + "flags")
   val maxDuration = ResourceFactory.createProperty(URI + "maxDuration")
   val minDuration = ResourceFactory.createProperty(URI + "minDuration")
