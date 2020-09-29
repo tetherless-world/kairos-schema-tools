@@ -100,6 +100,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
 
   private def readEntityRelationRelation(parentPath: DefinitionPath, resource: Resource) =
     EntityRelationRelation(
+      confidence = resource.confidence.headOption,
       name = resource.name.headOption,
       relationObjects = resource.relationObject,
       relationPredicate = resource.relationPredicate.headOption.getOrElse(throw ValidationException(s"entity relation missing relation predicate: ${resource.toTtlString()}", parentPath))
@@ -164,6 +165,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     Schema(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
+      confidence = resource.confidence.headOption,
       description = resource.description.headOption.getOrElse(throw ValidationException(s"schema ${id} missing required description property", path)),
       entityRelations = resource.entityRelations.flatMap(entityRelationResource =>
         try {
@@ -248,17 +250,18 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     val after = resource.after
     val before = resource.before
     val comments = Option(resource.comment).filter(_.nonEmpty)
+    val confidence = resource.confidence.headOption
     val contained = resource.contained
     val container = resource.container
     val flags = Option(resource.flags.map(flagString => StepOrderFlag.values.find(_.value == flagString).getOrElse(throw ValidationException(s"unknown step order flag ${flagString}", parentPath)))).filter(_.nonEmpty)
     val overlaps = resource.overlaps
 
     if (after.nonEmpty && before.nonEmpty) {
-      BeforeAfterStepOrder(after = after, before = before, comments = comments, flags = flags)
+      BeforeAfterStepOrder(after = after, before = before, comments = comments, confidence = confidence, flags = flags)
     } else if (contained.nonEmpty && container.size == 1) {
-      ContainerContainedStepOrder(comments = comments, container = container(0), contained = contained, flags = flags)
+      ContainerContainedStepOrder(comments = comments, confidence = confidence, container = container(0), contained = contained, flags = flags)
     } else if (overlaps.nonEmpty) {
-      OverlapsStepOrder(comments = comments, flags = flags, overlaps = overlaps)
+      OverlapsStepOrder(comments = comments, confidence = confidence, flags = flags, overlaps = overlaps)
     } else {
       throw ValidationException(s"invalid step order:\n${resource.toTtlString()}", parentPath)
     }
@@ -271,6 +274,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       achieves = Option(resource.achieves).filter(_.nonEmpty),
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
+      confidence = resource.confidence.headOption,
       id = id,
       maxDuration = resource.maxDuration.map(Duration(_)).headOption,
       minDuration = resource.minDuration.map(Duration(_)).headOption,

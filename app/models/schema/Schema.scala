@@ -6,6 +6,7 @@ import models.json.JsonNodeLocation
 final case class Schema(
                          aka: Option[List[String]],
                          comments: Option[List[String]],
+                         confidence: Option[Double],
                          description: String,
                          entityRelations: List[EntityRelation],
                          id: Uri,
