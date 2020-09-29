@@ -48,6 +48,11 @@ export const StepCard: React.FunctionComponent<{
             values={step.comments}
             valuesDataCy="step-comments"
           />
+          <StringFieldTableRow
+            name="Confidence"
+            value={step.confidence ? step.confidence.toFixed(2) : null}
+            valueDataCy="step-confidence"
+          />
           <StringListFieldTableRow
             direction="column"
             name="Achieves"

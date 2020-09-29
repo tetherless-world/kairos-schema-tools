@@ -10,6 +10,7 @@ import { StepOrderFlag, EntityType } from "./../../graphqlGlobalTypes";
 
 export interface SchemaPageQuery_schemaById_entityRelations_relations {
   __typename: "EntityRelationRelation";
+  confidence: number | null;
   name: string | null;
   relationPredicate: string;
   relationObjects: string[];
@@ -25,6 +26,7 @@ export interface SchemaPageQuery_schemaById_entityRelations {
 export interface SchemaPageQuery_schemaById_order_BeforeAfterStepOrder {
   __typename: "BeforeAfterStepOrder";
   comments: string[] | null;
+  confidence: number | null;
   flags: StepOrderFlag[] | null;
   after: string[];
   before: string[];
@@ -33,6 +35,7 @@ export interface SchemaPageQuery_schemaById_order_BeforeAfterStepOrder {
 export interface SchemaPageQuery_schemaById_order_ContainerContainedStepOrder {
   __typename: "ContainerContainedStepOrder";
   comments: string[] | null;
+  confidence: number | null;
   flags: StepOrderFlag[] | null;
   contained: string[];
   container: string;
@@ -41,6 +44,7 @@ export interface SchemaPageQuery_schemaById_order_ContainerContainedStepOrder {
 export interface SchemaPageQuery_schemaById_order_OverlapsStepOrder {
   __typename: "OverlapsStepOrder";
   comments: string[] | null;
+  confidence: number | null;
   flags: StepOrderFlag[] | null;
   overlaps: string[];
 }
@@ -331,6 +335,7 @@ export interface SchemaPageQuery_schemaById_steps_list {
   achieves: string[] | null;
   aka: string[] | null;
   comments: string[] | null;
+  confidence: number | null;
   id: string;
   label: string;
   maxDuration: SchemaPageQuery_schemaById_steps_list_maxDuration | null;
@@ -354,6 +359,7 @@ export interface SchemaPageQuery_schemaById {
   __typename: "Schema";
   aka: string[] | null;
   comments: string[] | null;
+  confidence: number | null;
   description: string;
   entityRelations: SchemaPageQuery_schemaById_entityRelations[];
   label: string;

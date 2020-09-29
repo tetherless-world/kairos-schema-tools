@@ -1,4 +1,5 @@
-package formats.json.antlr;// Generated from JSON.g4 by ANTLR 4.8
+// Generated from formats/json/antlr/JSON.g4 by ANTLR 4.8
+package formats.json.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**

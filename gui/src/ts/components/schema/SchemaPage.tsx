@@ -99,13 +99,13 @@ export const SchemaPage: React.FunctionComponent = () => {
                   <Grid container direction="column">
                     <Grid item>
                       <SchemaTableOfContents hrefs={hrefs} schema={schema} />
-                      <Grid item>
-                        <SchemaSectionContentsGrid
-                          hrefs={hrefs}
-                          namespacePrefixes={namespacePrefixes}
-                          schema={schema}
-                        />
-                      </Grid>
+                    </Grid>
+                    <Grid item>
+                      <SchemaSectionContentsGrid
+                        hrefs={hrefs}
+                        namespacePrefixes={namespacePrefixes}
+                        schema={schema}
+                      />
                     </Grid>
                   </Grid>
                 </div>

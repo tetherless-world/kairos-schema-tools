@@ -4,10 +4,12 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
     schemaById(id: $schemaId) {
         aka
         comments
+        confidence
         description
         entityRelations {
             comments
             relations {
+                confidence
                 name
                 relationPredicate
                 relationObjects
@@ -18,6 +20,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
         name
         order {
             comments
+            confidence
             flags
             ... on BeforeAfterStepOrder {
                 after
@@ -55,6 +58,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                 achieves
                 aka
                 comments
+                confidence
                 id
                 label
                 maxDuration {

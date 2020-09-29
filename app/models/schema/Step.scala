@@ -7,6 +7,7 @@ final case class Step(
                        achieves: Option[List[String]],
                        aka: Option[List[String]],
                        comments: Option[List[String]],
+                       confidence: Option[Double],
                        id: Uri,
                        maxDuration: Option[Duration],
                        minDuration: Option[Duration],

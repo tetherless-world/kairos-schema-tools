@@ -12,6 +12,7 @@ trait KairosProperties extends PropertyGetters {
   def aka: List[String] = getPropertyObjectStrings(KAIROS.aka)
   def before: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.before)
   def comment: List[String] = getPropertyObjectStringList(KAIROS.comment)
+  def confidence: List[Double] = getPropertyObjectLiterals(KAIROS.confidence).map(_.getDouble)
   def contained: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.contained)
   def container: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.container)
   def entityRelations: List[Resource] = getPropertyObjectResources(KAIROS.entityRelations)
@@ -42,5 +43,6 @@ trait KairosProperties extends PropertyGetters {
   def steps: List[Resource] = getPropertyObjectUriResourceList(KAIROS.steps)
   def `super`: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.`super`)
   def sdfVersion: List[String] = getPropertyObjectStrings(KAIROS.sdfVersion)
+  def ta2: Option[Boolean] = getPropertyObjectLiterals(KAIROS.ta2).headOption.map(_.getBoolean)
   def template: List[String] = getPropertyObjectStrings(KAIROS.template)
 }

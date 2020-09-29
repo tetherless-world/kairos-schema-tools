@@ -12,6 +12,7 @@ object KAIROS {
   val aka = ResourceFactory.createProperty(URI + "aka")
   val before = ResourceFactory.createProperty(URI + "before")
   val comment = ResourceFactory.createProperty(URI + "comment")
+  val confidence = ResourceFactory.createProperty(URI + "confidence")
   val contained = ResourceFactory.createProperty(URI + "contained")
   val container = ResourceFactory.createProperty(URI + "container")
   val entityRelations = ResourceFactory.createProperty(URI + "entityRelations")
@@ -39,5 +40,6 @@ object KAIROS {
   val slots = ResourceFactory.createProperty(URI + "slots")
   val steps = ResourceFactory.createProperty(URI + "steps")
   val `super` = ResourceFactory.createProperty(URI + "super")
+  val ta2 = ResourceFactory.createProperty(URI + "ta2")
   val template = ResourceFactory.createProperty(URI + "template")
 }
