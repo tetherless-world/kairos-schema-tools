@@ -99,7 +99,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     )
 
   private def readEntityTypes(parentPath: DefinitionPath, resource: Resource): Option[EntityTypes] = {
-    var and: Boolean = false
+    var and: Boolean = false  // "entityTypes" is functionally equivalent to "entityTypes_OR"
     var entityTypeUris = resource.entityTypes
     if (entityTypeUris.isEmpty) {
       entityTypeUris = resource.entityTypes_OR

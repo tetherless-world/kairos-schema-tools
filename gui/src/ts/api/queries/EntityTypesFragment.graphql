@@ -1,0 +1,4 @@
+fragment EntityTypesFragment on EntityTypes {
+    and
+    entityTypes
+}

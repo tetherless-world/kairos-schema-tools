@@ -111,6 +111,12 @@ export interface SchemaPageQuery_schemaById_path {
   sdfDocument: SchemaPageQuery_schemaById_path_sdfDocument;
 }
 
+export interface SchemaPageQuery_schemaById_slots_entityTypes {
+  __typename: "EntityTypes";
+  and: boolean;
+  entityTypes: EntityType[];
+}
+
 export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_namespacePrefixes {
   __typename: "NamespacePrefix";
   prefix: string;
@@ -175,7 +181,7 @@ export interface SchemaPageQuery_schemaById_slots {
   __typename: "SchemaSlot";
   aka: string[] | null;
   comments: string[] | null;
-  entityTypes: EntityType[] | null;
+  entityTypes: SchemaPageQuery_schemaById_slots_entityTypes | null;
   id: string;
   label: string;
   path: SchemaPageQuery_schemaById_slots_path;
@@ -193,6 +199,12 @@ export interface SchemaPageQuery_schemaById_steps_list_maxDuration {
 export interface SchemaPageQuery_schemaById_steps_list_minDuration {
   __typename: "Duration";
   string: string;
+}
+
+export interface SchemaPageQuery_schemaById_steps_list_participants_entityTypes {
+  __typename: "EntityTypes";
+  and: boolean;
+  entityTypes: EntityType[];
 }
 
 export interface SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocument_namespacePrefixes {
@@ -259,7 +271,7 @@ export interface SchemaPageQuery_schemaById_steps_list_participants {
   __typename: "StepParticipant";
   aka: string[] | null;
   comments: string[] | null;
-  entityTypes: EntityType[] | null;
+  entityTypes: SchemaPageQuery_schemaById_steps_list_participants_entityTypes | null;
   id: string;
   label: string;
   name: string;

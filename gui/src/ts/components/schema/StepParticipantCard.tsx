@@ -12,6 +12,7 @@ import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {shortenUri} from "models/shortenUri";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {JsonFieldTableRow} from "components/table/JsonFieldTableRow";
+import {EntityTypesFieldTableRow} from "components/table/EntityTypesFieldTableRow";
 
 export const StepParticipantCard: React.FunctionComponent<{
   namespacePrefixes: readonly NamespacePrefixFragment[] | null;
@@ -41,11 +42,7 @@ export const StepParticipantCard: React.FunctionComponent<{
             name="Comments"
             values={participant.comments}
           />
-          <StringListFieldTableRow
-            direction="row"
-            name="Entity types"
-            values={participant.entityTypes}
-          />
+          <EntityTypesFieldTableRow entityTypes={participant.entityTypes} />
           <JsonFieldTableRow
             name={"Private data"}
             value={participant.privateData}

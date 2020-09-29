@@ -12,6 +12,7 @@ import {StringListFieldTableRow} from "components/table/StringListFieldTableRow"
 import {shortenUri} from "models/shortenUri";
 import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 import {JsonFieldTableRow} from "components/table/JsonFieldTableRow";
+import {EntityTypesFieldTableRow} from "components/table/EntityTypesFieldTableRow";
 
 export const PrimitiveSlotCard: React.FunctionComponent<{
   namespacePrefixes: readonly NamespacePrefixFragment[] | null;
@@ -47,11 +48,7 @@ export const PrimitiveSlotCard: React.FunctionComponent<{
             name="Comments"
             values={slot.comments}
           />
-          <StringListFieldTableRow
-            direction="row"
-            name="Entity types"
-            values={slot.entityTypes}
-          />
+          <EntityTypesFieldTableRow entityTypes={slot.entityTypes} />
           <JsonFieldTableRow name={"Private data"} value={slot.privateData} />
           <StringListFieldTableRow
             direction="column"

@@ -78,6 +78,12 @@ export interface PrimitivePageQuery_primitiveById_path {
   sdfDocument: PrimitivePageQuery_primitiveById_path_sdfDocument;
 }
 
+export interface PrimitivePageQuery_primitiveById_slots_entityTypes {
+  __typename: "EntityTypes";
+  and: boolean;
+  entityTypes: EntityType[];
+}
+
 export interface PrimitivePageQuery_primitiveById_slots_path_sdfDocument_namespacePrefixes {
   __typename: "NamespacePrefix";
   prefix: string;
@@ -142,7 +148,7 @@ export interface PrimitivePageQuery_primitiveById_slots {
   __typename: "PrimitiveSlot";
   aka: string[] | null;
   comments: string[] | null;
-  entityTypes: EntityType[] | null;
+  entityTypes: PrimitivePageQuery_primitiveById_slots_entityTypes | null;
   id: string;
   label: string;
   path: PrimitivePageQuery_primitiveById_slots_path;
