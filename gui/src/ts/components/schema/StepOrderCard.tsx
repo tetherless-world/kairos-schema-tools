@@ -17,6 +17,7 @@ import * as React from "react";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {SchemaHrefs} from "Hrefs";
 import {Link} from "components/link/Link";
+import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 
 export const StepListTableRow: React.FunctionComponent<{
   hrefs: SchemaHrefs;
@@ -102,6 +103,12 @@ export const StepOrderCard: React.FunctionComponent<{
             direction="column"
             name="Comments"
             values={stepOrder.comments}
+          />
+          <StringFieldTableRow
+            name="Confidence"
+            value={
+              stepOrder.confidence ? stepOrder.confidence.toFixed(2) : null
+            }
           />
           <StringListFieldTableRow
             direction="row"
