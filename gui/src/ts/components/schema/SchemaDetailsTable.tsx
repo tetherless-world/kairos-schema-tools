@@ -55,6 +55,11 @@ export const SchemaDetailsTable: React.FunctionComponent<{
         valuesDataCy="schema-comments"
       />
       <StringFieldTableRow
+        name="Confidence"
+        value={schema.confidence ? schema.confidence.toFixed(2) : null}
+        valueDataCy="schema-confidence"
+      />
+      <StringFieldTableRow
         name="Description"
         value={schema.description}
         valueDataCy="schema-description"

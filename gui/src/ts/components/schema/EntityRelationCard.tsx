@@ -72,6 +72,7 @@ export const EntityRelationCard: React.FunctionComponent<{
               <TableCell>Object</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Comments</TableCell>
+              <TableCell>Confidence</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -104,6 +105,11 @@ export const EntityRelationCard: React.FunctionComponent<{
                             ))}
                           </List>
                         ) : null}
+                      </TableCell>
+                      <TableCell>
+                        {relation.confidence
+                          ? relation.confidence.toFixed(2)
+                          : null}
                       </TableCell>
                     </TableRow>
                   )
