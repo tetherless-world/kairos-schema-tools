@@ -98,6 +98,36 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       relationSubject = resource.relationSubject.headOption.getOrElse(throw ValidationException(s"entity relation missing subject: ${resource.toTtlString()}", parentPath))
     )
 
+  private def readEntityTypes(parentPath: DefinitionPath, resource: Resource): Option[EntityTypes] = {
+    var and: Boolean = false  // "entityTypes" is functionally equivalent to "entityTypes_OR"
+    var entityTypeUris = resource.entityTypes
+    if (entityTypeUris.isEmpty) {
+      entityTypeUris = resource.entityTypes_OR
+      if (entityTypeUris.isEmpty) {
+        entityTypeUris = resource.entityTypes_AND
+        if (entityTypeUris.isEmpty) {
+          return None
+        }
+        and = true
+      }
+    }
+
+    val entityTypes = entityTypeUris.flatMap(uri => {
+      val abbreviation = uri.toString.substring(uri.toString.lastIndexOf('/') + 1)
+      val entityType = EntityType.values.find(_.value == abbreviation)
+      if (!entityType.isDefined) {
+        validationMessages += ValidationMessage(message = s"unknown entity type ${abbreviation}", path = parentPath, `type` = ValidationMessageType.Error)
+      }
+      entityType
+    })
+
+    if (entityTypes.isEmpty) {
+      return None
+    }
+
+    Some(EntityTypes(and=and, entityTypes=entityTypes))
+  }
+
   private def readEntityRelationRelation(parentPath: DefinitionPath, resource: Resource) =
     EntityRelationRelation(
       confidence = resource.confidence.headOption,
@@ -147,7 +177,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     PrimitiveSlot(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
-      entityTypes = Option(resource.entityTypes).filter(_.nonEmpty),
+      entityTypes = readEntityTypes(parentPath = path, resource = resource),
       id = id,
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
@@ -235,7 +265,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     SchemaSlot(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
-      entityTypes = Option(resource.entityTypes).filter(_.nonEmpty),
+      entityTypes = readEntityTypes(parentPath = path, resource = resource),
       id = id,
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
@@ -308,7 +338,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     StepParticipant(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
-      entityTypes = Option(resource.entityTypes).filter(_.nonEmpty),
+      entityTypes = readEntityTypes(parentPath = path, resource = resource),
       id = id,
       name = resource.name.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required name property", path)),
       path = path,

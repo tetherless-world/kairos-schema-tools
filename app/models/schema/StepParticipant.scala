@@ -6,7 +6,7 @@ import models.json.JsonNodeLocation
 final case class StepParticipant(
                                   aka: Option[List[String]],
                                   comments: Option[List[String]],
-                                  entityTypes: Option[List[EntityType]],
+                                  entityTypes: Option[EntityTypes],
                                   id: Uri,
                                   name: String, // name is required for step-level slots (participants), unlike schema-level slots
                                   path: DefinitionPath,
