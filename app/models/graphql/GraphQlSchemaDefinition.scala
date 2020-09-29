@@ -3,7 +3,6 @@ package models.graphql
 import java.util.UUID
 
 import edu.rpi.tw.twks.uri.Uri
-import formats.sdf.SdfDocumentReader
 import io.github.tetherlessworld.twxplore.lib.base.models.graphql.BaseGraphQlSchemaDefinition
 import models.json.{JsonNodeLocation, JsonTokenLocation}
 import models.schema._
@@ -11,9 +10,9 @@ import models.sdfDocument.{NamespacePrefix, SdfDocument}
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 import models.validation.{ValidationMessage, ValidationMessageType}
 import sangria.macros.derive._
-import sangria.schema.{Argument, Field, InterfaceType, ListType, ObjectType, OptionInputType, OptionType, Schema, StringType, fields}
+import sangria.schema.{Argument, Field, FloatType, InterfaceType, ListType, ObjectType, OptionType, Schema, StringType, fields}
 
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Success}
 
 object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   // Helper methods
@@ -37,6 +36,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
       "StepOrder",
       fields[GraphQlSchemaContext, StepOrder](
         Field("comments", OptionType(ListType(StringType)), resolve = _.value.comments),
+        Field("confidence", OptionType(FloatType), resolve = _.value.confidence),
         Field("flags", OptionType(ListType(StepOrderFlagEnumType)), resolve = _.value.flags),
       )
     )
