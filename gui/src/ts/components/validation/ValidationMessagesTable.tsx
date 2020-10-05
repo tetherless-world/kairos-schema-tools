@@ -74,7 +74,7 @@ export const ValidationMessagesTable: React.FunctionComponent<{
                           <TableCell>{messageIndex + 1}</TableCell>
                           <TableCell
                             data-cy={`${validationMessageType.toLowerCase()}-validation-message-${messageIndex}`}
-                            style={{wordBreak: "break-all"}}
+                            style={{width: "60%", wordBreak: "break-all"}}
                           >
                             {message.message}
                           </TableCell>
