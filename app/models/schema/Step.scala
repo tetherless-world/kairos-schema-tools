@@ -15,7 +15,7 @@ final case class Step(
                        participants: Option[List[StepParticipant]],
                        path: DefinitionPath,
                        privateData: Option[String],
-                       provenances: Option[List[Uri]],
+                       provenances: Option[List[String]],
                        requires: Option[List[String]],
                        references: Option[List[String]],
                        sourceJsonNodeLocation: JsonNodeLocation,

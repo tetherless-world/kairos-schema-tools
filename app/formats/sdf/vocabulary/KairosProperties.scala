@@ -26,7 +26,7 @@ trait KairosProperties extends PropertyGetters {
   def overlaps: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.overlaps)
   def participants: List[Resource] = getPropertyObjectUriResourceList(KAIROS.participants)
   def primitives: List[Resource] = getPropertyObjectResources(KAIROS.primitives).filter(resource => resource.isURIResource)
-  def provenance: List[Uri] = getPropertyObjectResourceUris(KAIROS.provenance).map(Uri.parse(_))
+  def provenance: List[String] = getPropertyObjectStrings(KAIROS.provenance)
   def reference: List[String] = getPropertyObjects(KAIROS.reference).map(node => if (node.isLiteral) node.asLiteral().getString else if (node.isURIResource) node.asResource().getURI else throw new UnsupportedOperationException)
   def relationObject: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.relationObject)
   def relations: List[Resource] = getPropertyObjectResources(KAIROS.relations)
@@ -43,4 +43,5 @@ trait KairosProperties extends PropertyGetters {
   def sdfVersion: List[String] = getPropertyObjectStrings(KAIROS.sdfVersion)
   def ta2: Option[Boolean] = getPropertyObjectLiterals(KAIROS.ta2).headOption.map(_.getBoolean)
   def template: List[String] = getPropertyObjectStrings(KAIROS.template)
+  def values: List[Resource] = getPropertyObjectResources(KAIROS.values)
 }

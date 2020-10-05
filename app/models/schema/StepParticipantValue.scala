@@ -9,7 +9,7 @@ final case class StepParticipantValue(
                                        entityTypes: EntityTypes,
                                        name: String,
                                        privateData: Option[String],
-                                       provenances: List[Uri],
+                                       provenances: List[String],
                                        sourceJsonNodeLocation: JsonNodeLocation,
                      ) {
 }

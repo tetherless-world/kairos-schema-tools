@@ -44,4 +44,5 @@ object KAIROS {
   val `super` = ResourceFactory.createProperty(URI + "super")
   val ta2 = ResourceFactory.createProperty(URI + "ta2")
   val template = ResourceFactory.createProperty(URI + "template")
+  val values = ResourceFactory.createProperty(URI + "values")
 }
