@@ -347,6 +347,31 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       refvar = resource.refvar.headOption,
       role = resource.role.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required role property", path)),
       sourceJsonNodeLocation = jsonNode.location,
+      values = Option(mapResourcesToObjectJsonNodes(
+        jsonNodes = jsonNode.map.get("values").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
+        path = path,
+        resources = resource.participants
+      ).flatMap(entry =>
+        try {
+          Some(readStepParticipantValue(jsonNode = entry._1, parentPath = path, resource = entry._2, stepParticipantId = id))
+        } catch {
+          case e: ValidationException => {
+            validationMessages ++= e.messages
+            None
+          }
+        })).filter(_.nonEmpty),
+    )
+  }
+
+  private def readStepParticipantValue(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource, stepParticipantId: Uri): StepParticipantValue = {
+    StepParticipantValue(
+      comments = Option(resource.comment).filter(_.nonEmpty),
+      confidence = resource.confidence.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required confidence", parentPath)),
+      entityTypes = readEntityTypes(parentPath = parentPath, resource = resource).getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required entityTypes or variant", parentPath)),
+      name = resource.name.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required name property", parentPath)),
+      privateData = getDefinitionPrivateData(jsonNode, parentPath),
+      provenances = Option(resource.provenance).filter(_.nonEmpty).getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required provenance", parentPath)),
+      sourceJsonNodeLocation = jsonNode.location
     )
   }
 
