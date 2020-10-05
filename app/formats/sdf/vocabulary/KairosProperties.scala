@@ -43,4 +43,5 @@ trait KairosProperties extends PropertyGetters {
   def sdfVersion: List[String] = getPropertyObjectStrings(KAIROS.sdfVersion)
   def ta2: Option[Boolean] = getPropertyObjectLiterals(KAIROS.ta2).headOption.map(_.getBoolean)
   def template: List[String] = getPropertyObjectStrings(KAIROS.template)
+  def values: List[Resource] = getPropertyObjectResources(KAIROS.values)
 }

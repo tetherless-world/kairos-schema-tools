@@ -40,45 +40,63 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     })
   }
 
-  private def mapResourcesToObjectJsonNodes(jsonNodes: List[JsonNode], path: DefinitionPath, resources: List[Resource]): List[(ObjectJsonNode, Resource)] = {
+  private def mapUriResourcesToJsonNodes(jsonNodes: List[JsonNode], path: DefinitionPath, resources: List[Resource]): List[(ObjectJsonNode, Resource)] =
+    mapResourcesToJsonNodes(
+      getObjectJsonNodeId = (objectJsonNode: ObjectJsonNode) => {
+        try {
+          val idNode = objectJsonNode.map.get("@id").getOrElse(throw ValidationException("JSON node missing @id", path))
+          if (!idNode.isInstanceOf[StringValueJsonNode]) {
+            throw ValidationException(f"JSON node @id is not a string: ${idNode}", path)
+          }
+          val id = idNode.asInstanceOf[StringValueJsonNode].value
+          val idParts = id.split(':')
+          if (idParts.length == 1) {
+            Some(id)
+          } else {
+            val idNsPrefix = idParts(0)
+            val idNsUri = nsPrefixMap.get(idNsPrefix).getOrElse(throw ValidationException(s"JSON node @id namespace prefix is not defined: ${idNsPrefix}", path))
+            Some(idNsUri + idParts(1))
+          }
+        } catch {
+          case e: ValidationException => {
+            // It's useful to have exceptions instead of a bunch of error checking above, but we want to continue processing.
+            validationMessages ++= e.messages
+            None
+          }
+        }
+      },
+      getResourceId = (resource: Resource) => Option(resource.getURI),
+      jsonNodes = jsonNodes,
+      path = path,
+      resources = resources
+    )
+
+  private def
+  mapResourcesToJsonNodes(
+                           getObjectJsonNodeId: (ObjectJsonNode) => Option[String],
+                           getResourceId: (Resource) => Option[String],
+                           jsonNodes: List[JsonNode],
+                           path: DefinitionPath,
+                           resources: List[Resource]
+                         ): List[(ObjectJsonNode, Resource)] = {
     val objectJsonNodes = jsonNodes.filter(_.isInstanceOf[ObjectJsonNode]).map(_.asInstanceOf[ObjectJsonNode])
     if (objectJsonNodes.size != resources.size) {
       validationMessages += ValidationMessage("different number of JSON nodes than resources", path, ValidationMessageType.Error)
       return List()
     }
-    val objectJsonNodesByUri: Map[String, ObjectJsonNode] = objectJsonNodes.flatMap(objectJsonNode => {
-      try {
-        val idNode = objectJsonNode.map.get("@id").getOrElse(throw ValidationException("JSON node missing @id", path))
-        if (!idNode.isInstanceOf[StringValueJsonNode]) {
-          throw ValidationException(f"JSON node @id is not a string: ${idNode}", path)
-        }
-        val id = idNode.asInstanceOf[StringValueJsonNode].value
-        val idParts = id.split(':')
-        if (idParts.length == 1) {
-          Some(id -> objectJsonNode)
-        } else {
-          val idNsPrefix = idParts(0)
-          val idNsUri = nsPrefixMap.get(idNsPrefix).getOrElse(throw ValidationException(s"JSON node @id namespace prefix is not defined: ${idNsPrefix}", path))
-          Some((idNsUri + idParts(1)) -> objectJsonNode)
-        }
-      } catch {
-        case e: ValidationException => {
-          // It's useful to have exceptions instead of a bunch of error checking above, but we want to continue processing.
-          validationMessages ++= e.messages
-          None
-        }
-      }
-    }).toMap
+    val objectJsonNodesById: Map[String, ObjectJsonNode] =
+      objectJsonNodes.flatMap(objectJsonNode => getObjectJsonNodeId(objectJsonNode).map(id => (id -> objectJsonNode))).toMap
 
     resources.flatMap(resource => {
-      val resourceUri = resource.getURI
-      val objectJsonNode = objectJsonNodesByUri.get(resourceUri)
-      if (objectJsonNode.isDefined) {
-        Some((objectJsonNode.get, resource))
-      } else {
-        validationMessages += ValidationMessage(s"resource ${resourceUri} does not correspond to a JSON node", path, ValidationMessageType.Error)
-        None
-      }
+      getResourceId(resource).flatMap(resourceId => {
+        val objectJsonNode = objectJsonNodesById.get(resourceId)
+        if (objectJsonNode.isDefined) {
+          Some((objectJsonNode.get, resource))
+        } else {
+          validationMessages += ValidationMessage(s"resource ${resourceId} does not correspond to a JSON node", path, ValidationMessageType.Error)
+          None
+        }
+      })
     })
   }
 
@@ -150,7 +168,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
       references = Option(resource.reference).filter(_.nonEmpty),
-      slots = mapResourcesToObjectJsonNodes(
+      slots = mapUriResourcesToJsonNodes(
         jsonNodes = jsonNode.map.get("slots").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
         resources = resource.slots,
@@ -222,7 +240,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
       references = Option(resource.reference).filter(_.nonEmpty),
-      slots = mapResourcesToObjectJsonNodes(
+      slots = mapUriResourcesToJsonNodes(
         jsonNodes = jsonNode.map.get("slots").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
         resources = resource.slots,
@@ -238,7 +256,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       ),
       sourceJsonNodeLocation = jsonNode.location,
       steps = Steps(
-        list = mapResourcesToObjectJsonNodes(
+        list = mapUriResourcesToJsonNodes(
           jsonNodes = stepsJsonNode.list,
           path = path,
           resources = resource.steps,
@@ -276,27 +294,6 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     )
   }
 
-  private def readStepOrder(parentPath: DefinitionPath, resource: Resource) = {
-    val after = resource.after
-    val before = resource.before
-    val comments = Option(resource.comment).filter(_.nonEmpty)
-    val confidence = resource.confidence.headOption
-    val contained = resource.contained
-    val container = resource.container
-    val flags = Option(resource.flags.map(flagString => StepOrderFlag.values.find(_.value == flagString).getOrElse(throw ValidationException(s"unknown step order flag ${flagString}", parentPath)))).filter(_.nonEmpty)
-    val overlaps = resource.overlaps
-
-    if (after.nonEmpty && before.nonEmpty) {
-      BeforeAfterStepOrder(after = after, before = before, comments = comments, confidence = confidence, flags = flags)
-    } else if (contained.nonEmpty && container.size == 1) {
-      ContainerContainedStepOrder(comments = comments, confidence = confidence, container = container(0), contained = contained, flags = flags)
-    } else if (overlaps.nonEmpty) {
-      OverlapsStepOrder(comments = comments, confidence = confidence, flags = flags, overlaps = overlaps)
-    } else {
-      throw ValidationException(s"invalid step order:\n${resource.toTtlString()}", parentPath)
-    }
-  }
-
   private def readStep(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource): Step = {
     val id = Uri.parse(resource.getURI)
     val path = DefinitionPath.sdfDocument(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).step(id).build
@@ -309,7 +306,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       maxDuration = resource.maxDuration.map(Duration(_)).headOption,
       minDuration = resource.minDuration.map(Duration(_)).headOption,
       name = resource.name.headOption.getOrElse(throw ValidationException(s"step ${id} missing required name property", path)),
-      participants = Option(mapResourcesToObjectJsonNodes(
+      participants = Option(mapUriResourcesToJsonNodes(
         jsonNodes = jsonNode.map.get("participants").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
         resources = resource.participants
@@ -332,6 +329,27 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     )
   }
 
+  private def readStepOrder(parentPath: DefinitionPath, resource: Resource) = {
+    val after = resource.after
+    val before = resource.before
+    val comments = Option(resource.comment).filter(_.nonEmpty)
+    val confidence = resource.confidence.headOption
+    val contained = resource.contained
+    val container = resource.container
+    val flags = Option(resource.flags.map(flagString => StepOrderFlag.values.find(_.value == flagString).getOrElse(throw ValidationException(s"unknown step order flag ${flagString}", parentPath)))).filter(_.nonEmpty)
+    val overlaps = resource.overlaps
+
+    if (after.nonEmpty && before.nonEmpty) {
+      BeforeAfterStepOrder(after = after, before = before, comments = comments, confidence = confidence, flags = flags)
+    } else if (contained.nonEmpty && container.size == 1) {
+      ContainerContainedStepOrder(comments = comments, confidence = confidence, container = container(0), contained = contained, flags = flags)
+    } else if (overlaps.nonEmpty) {
+      OverlapsStepOrder(comments = comments, confidence = confidence, flags = flags, overlaps = overlaps)
+    } else {
+      throw ValidationException(s"invalid step order:\n${resource.toTtlString()}", parentPath)
+    }
+  }
+
   private def readStepParticipant(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource): StepParticipant = {
     val id = Uri.parse(resource.getURI)
     val path = DefinitionPath.sdfDocument(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).step(parentPath.sdfDocument.schema.get.step.get.id).participant(id)
@@ -347,6 +365,33 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       refvar = resource.refvar.headOption,
       role = resource.role.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required role property", path)),
       sourceJsonNodeLocation = jsonNode.location,
+      values = Option(mapResourcesToJsonNodes(
+        getObjectJsonNodeId = (objectJsonNode) => objectJsonNode.map.get("name").filter(_.isInstanceOf[StringValueJsonNode]).map(_.asInstanceOf[StringValueJsonNode].value),
+        getResourceId = (resource) => resource.name.headOption,
+        jsonNodes = jsonNode.map.get("values").filter(_.isInstanceOf[ArrayJsonNode]).map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
+        path = path,
+        resources = resource.values
+      ).flatMap(entry =>
+        try {
+          Some(readStepParticipantValue(jsonNode = entry._1, parentPath = path, resource = entry._2, stepParticipantId = id))
+        } catch {
+          case e: ValidationException => {
+            validationMessages ++= e.messages
+            None
+          }
+        })).filter(_.nonEmpty),
+    )
+  }
+
+  private def readStepParticipantValue(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource, stepParticipantId: Uri): StepParticipantValue = {
+    StepParticipantValue(
+      comments = Option(resource.comment).filter(_.nonEmpty),
+      confidence = resource.confidence.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required confidence", parentPath)),
+      entityTypes = readEntityTypes(parentPath = parentPath, resource = resource).getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required entityTypes or variant", parentPath)),
+      name = resource.name.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required name property", parentPath)),
+      privateData = getDefinitionPrivateData(jsonNode, parentPath),
+      provenances = Option(resource.provenance).filter(_.nonEmpty).getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required provenance", parentPath)),
+      sourceJsonNodeLocation = jsonNode.location
     )
   }
 
@@ -356,7 +401,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     SdfDocument(
       id = id,
       namespacePrefixes = header.rootResource.getModel.getNsPrefixMap.asScala.map(entry => NamespacePrefix(prefix = entry._1, uri = Uri.parse(entry._2))).toList,
-      primitives = mapResourcesToObjectJsonNodes(
+      primitives = mapUriResourcesToJsonNodes(
         jsonNodes = sourceJsonNode.asInstanceOf[ObjectJsonNode].map.get("primitives").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
         resources = header.rootResource.primitives
@@ -369,7 +414,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
             None
           }
         }),
-      schemas = mapResourcesToObjectJsonNodes(
+      schemas = mapUriResourcesToJsonNodes(
         jsonNodes = sourceJsonNode.asInstanceOf[ObjectJsonNode].map.get("schemas").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
         resources = header.rootResource.schemas

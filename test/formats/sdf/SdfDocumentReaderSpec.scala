@@ -184,7 +184,17 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
           participants should not be empty
           for (participant <- participants) {
             participant.name should not be empty
+            participant.entityTypes should not be None
             participant.entityTypes.get.entityTypes should not be empty
+            if (participant.values.isDefined) {
+              participant.values should not be None
+              participant.values.get should not be empty
+              for (value <- participant.values.get) {
+                //              value.confidence should be >= 0
+                value.name should not be empty
+                value.provenances should not be empty
+              }
+            }
           }
         }
         schema.steps.list.exists(_.achieves.isDefined) should be(true)

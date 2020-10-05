@@ -267,6 +267,23 @@ export interface SchemaPageQuery_schemaById_steps_list_participants_path {
   sdfDocument: SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocument;
 }
 
+export interface SchemaPageQuery_schemaById_steps_list_participants_values_entityTypes {
+  __typename: "EntityTypes";
+  and: boolean;
+  entityTypes: EntityType[];
+}
+
+export interface SchemaPageQuery_schemaById_steps_list_participants_values {
+  __typename: "StepParticipantValue";
+  comments: string[] | null;
+  confidence: number;
+  entityTypes: SchemaPageQuery_schemaById_steps_list_participants_values_entityTypes;
+  label: string;
+  name: string;
+  privateData: string | null;
+  provenances: string[];
+}
+
 export interface SchemaPageQuery_schemaById_steps_list_participants {
   __typename: "StepParticipant";
   aka: string[] | null;
@@ -280,6 +297,7 @@ export interface SchemaPageQuery_schemaById_steps_list_participants {
   references: string[] | null;
   refvar: string | null;
   role: string;
+  values: SchemaPageQuery_schemaById_steps_list_participants_values[] | null;
 }
 
 export interface SchemaPageQuery_schemaById_steps_list_path_sdfDocument_namespacePrefixes {
