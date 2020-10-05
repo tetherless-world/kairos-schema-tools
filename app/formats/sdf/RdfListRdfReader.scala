@@ -8,8 +8,10 @@ object RdfListRdfReader extends RdfReader[List[RDFNode]]{
   override def read(resource: Resource): List[RDFNode] = {
     val first = Option(resource.getProperty(RDF.first)) flatMap {
       statement => Option(statement.getObject)
-    } getOrElse {
-      throw new IllegalArgumentException("List resource missing rdf:first")
+    }
+
+    if (!first.isDefined) {
+      return List()  // Empty list
     }
 
     val rest = Option(resource.getProperty(RDF.rest)) flatMap {
@@ -19,8 +21,8 @@ object RdfListRdfReader extends RdfReader[List[RDFNode]]{
     }
 
     rest.asResource match {
-      case RDF.nil => List(first)
-      case restResource: Resource => first :: read(restResource)
+      case RDF.nil => List(first.get)
+      case restResource: Resource => first.get :: read(restResource)
     }
   }
 }
