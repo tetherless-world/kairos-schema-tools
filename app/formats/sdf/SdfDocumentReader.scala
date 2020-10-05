@@ -4,7 +4,7 @@ import java.io.{Reader, StringReader}
 
 import edu.rpi.tw.twks.uri.Uri
 import formats.json.JsonParser
-import formats.sdf.versions.ZeroDot9SdfDocumentReader
+import formats.sdf.versions.ZeroDot8SdfDocumentReader
 import formats.sdf.vocabulary.KAIROS
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import models.schema.DefinitionPath
@@ -75,7 +75,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
 
     try {
       header.sdfVersion match {
-        case ZeroDot9SdfDocumentReader.SdfVersion => new ZeroDot9SdfDocumentReader(header, sourceJson, sourceJsonNode).read()
+        case "0.8" | "0.9a" => new ZeroDot8SdfDocumentReader(header, sourceJson, sourceJsonNode).read()
         case sdfVersion =>
           throw ValidationException(
             message = s"unrecognized SDF version ${sdfVersion}",
