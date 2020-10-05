@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Grid,
   Table,
   TableBody,
 } from "@material-ui/core";
@@ -13,6 +14,7 @@ import {shortenUri} from "models/shortenUri";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {JsonFieldTableRow} from "components/table/JsonFieldTableRow";
 import {EntityTypesFieldTableRow} from "components/table/EntityTypesFieldTableRow";
+import {StepParticipantValueCard} from "components/schema/StepParticipantValueCard";
 
 export const StepParticipantCard: React.FunctionComponent<{
   namespacePrefixes: readonly NamespacePrefixFragment[] | null;
@@ -65,6 +67,20 @@ export const StepParticipantCard: React.FunctionComponent<{
           />
         </TableBody>
       </Table>
+      {participant.values && participant.values.length > 0 ? (
+        <Card>
+          <CardHeader title="Values"></CardHeader>
+          <CardContent>
+            <Grid container direction="column" spacing={6}>
+              {participant.values.map((value) => (
+                <Grid key={value.label} item>
+                  <StepParticipantValueCard value={value} />
+                </Grid>
+              ))}
+            </Grid>
+          </CardContent>
+        </Card>
+      ) : null}
     </CardContent>
   </Card>
 );
