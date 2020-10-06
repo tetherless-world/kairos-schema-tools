@@ -17,7 +17,11 @@ export const DefinitionPathLink: React.FunctionComponent<{
       label = "Primitive: " + sdfDocument.primitive.label;
     }
   } else if (sdfDocument.schema) {
-    if (sdfDocument.schema.slot) {
+    if (sdfDocument.schema.provenanceDataObject) {
+      label =
+        "Provenance data object: " +
+        sdfDocument.schema.provenanceDataObject.label;
+    } else if (sdfDocument.schema.slot) {
       label = "Schema slot: " + sdfDocument.schema.slot.label;
     } else if (sdfDocument.schema.step) {
       if (sdfDocument.schema.step.participant) {
