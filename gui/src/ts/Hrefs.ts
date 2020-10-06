@@ -33,6 +33,14 @@ export class PrimitiveHrefs extends SubHrefs {
 }
 
 export class SchemaHrefs extends SubHrefs {
+  provenanceDataObject(provenanceDataObject: {id: string}) {
+    return `${this.home}#${this.provenanceDataObjectId(provenanceDataObject)}`;
+  }
+
+  provenanceDataObjectId(provenanceDataObject: {id: string}) {
+    return `provenance-data-object-${this.sanitizeId(provenanceDataObject.id)}`;
+  }
+
   slot(slot: {id: string}) {
     return `${this.home}#${this.slotId(slot)}`;
   }

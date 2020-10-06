@@ -1,11 +1,11 @@
-#import "./DefinitionPathFragment.graphql"
+#import "./DefinitionPathIdsFragment.graphql"
 
 query SchemasPageQuery {
     schemas {
         id
         label
         path {
-            ...DefinitionPathFragment
+            ...DefinitionPathIdsFragment
         }
     }
 }

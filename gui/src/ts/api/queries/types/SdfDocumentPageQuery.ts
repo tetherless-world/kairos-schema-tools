@@ -14,48 +14,42 @@ export interface SdfDocumentPageQuery_sdfDocumentById_namespacePrefixes {
   uri: string;
 }
 
-export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_namespacePrefixes {
-  __typename: "NamespacePrefix";
-  prefix: string;
-  uri: string;
-}
-
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_primitive {
   __typename: "DefinitionPathPrimitive";
   id: string;
-  label: string | null;
   slot: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_schema_provenanceDataObject {
+  __typename: "DefinitionPathProvenanceDataObject";
+  id: string;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_schema_slot {
   __typename: "DefinitionPathSchemaSlot";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_schema_step_participant {
   __typename: "DefinitionPathStepParticipant";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_schema_step {
   __typename: "DefinitionPathStep";
   id: string;
-  label: string | null;
   participant: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_schema_step_participant | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
-  label: string | null;
+  provenanceDataObject: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_schema_slot | null;
   step: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_schema_step | null;
 }
@@ -63,8 +57,6 @@ export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocumen
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
-  label: string | null;
-  namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument_schema | null;
 }
@@ -74,48 +66,42 @@ export interface SdfDocumentPageQuery_sdfDocumentById_primitives_path {
   sdfDocument: SdfDocumentPageQuery_sdfDocumentById_primitives_path_sdfDocument;
 }
 
-export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_namespacePrefixes {
-  __typename: "NamespacePrefix";
-  prefix: string;
-  uri: string;
-}
-
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_primitive {
   __typename: "DefinitionPathPrimitive";
   id: string;
-  label: string | null;
   slot: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_schema_provenanceDataObject {
+  __typename: "DefinitionPathProvenanceDataObject";
+  id: string;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_schema_slot {
   __typename: "DefinitionPathSchemaSlot";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_schema_step_participant {
   __typename: "DefinitionPathStepParticipant";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_schema_step {
   __typename: "DefinitionPathStep";
   id: string;
-  label: string | null;
   participant: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_schema_step_participant | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
-  label: string | null;
+  provenanceDataObject: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_schema_slot | null;
   step: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_schema_step | null;
 }
@@ -123,8 +109,6 @@ export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfD
 export interface SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
-  label: string | null;
-  namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_primitives_slots_path_sdfDocument_schema | null;
 }
@@ -195,48 +179,42 @@ export interface SdfDocumentPageQuery_sdfDocumentById_primitives {
   sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_primitives_sourceJsonNodeLocation;
 }
 
-export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_namespacePrefixes {
-  __typename: "NamespacePrefix";
-  prefix: string;
-  uri: string;
-}
-
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_primitive {
   __typename: "DefinitionPathPrimitive";
   id: string;
-  label: string | null;
   slot: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_provenanceDataObject {
+  __typename: "DefinitionPathProvenanceDataObject";
+  id: string;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_slot {
   __typename: "DefinitionPathSchemaSlot";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_step_participant {
   __typename: "DefinitionPathStepParticipant";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_step {
   __typename: "DefinitionPathStep";
   id: string;
-  label: string | null;
   participant: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_step_participant | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
-  label: string | null;
+  provenanceDataObject: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_slot | null;
   step: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_step | null;
 }
@@ -244,8 +222,6 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_s
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
-  label: string | null;
-  namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema | null;
 }
@@ -255,48 +231,124 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path {
   sdfDocument: SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument;
 }
 
-export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_namespacePrefixes {
-  __typename: "NamespacePrefix";
-  prefix: string;
-  uri: string;
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument_primitive_slot {
+  __typename: "DefinitionPathPrimitiveSlot";
+  id: string;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument_primitive {
+  __typename: "DefinitionPathPrimitive";
+  id: string;
+  slot: SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument_schema_provenanceDataObject {
+  __typename: "DefinitionPathProvenanceDataObject";
+  id: string;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument_schema_slot {
+  __typename: "DefinitionPathSchemaSlot";
+  id: string;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument_schema_step_participant {
+  __typename: "DefinitionPathStepParticipant";
+  id: string;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument_schema_step {
+  __typename: "DefinitionPathStep";
+  id: string;
+  participant: SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument_schema_step_participant | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument_schema {
+  __typename: "DefinitionPathSchema";
+  id: string;
+  provenanceDataObject: SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument_schema_provenanceDataObject | null;
+  slot: SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument_schema_slot | null;
+  step: SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument_schema_step | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument {
+  __typename: "DefinitionPathSdfDocument";
+  id: string;
+  primitive: SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument_primitive | null;
+  schema: SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument_schema | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path {
+  __typename: "DefinitionPath";
+  sdfDocument: SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path_sdfDocument;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_sourceJsonNodeLocation {
+  __typename: "JsonNodeLocation";
+  startToken: SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_sourceJsonNodeLocation_stopToken;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData {
+  __typename: "ProvenanceDataObject";
+  id: string;
+  label: string;
+  path: SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_path;
+  sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData_sourceJsonNodeLocation;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_primitive {
   __typename: "DefinitionPathPrimitive";
   id: string;
-  label: string | null;
   slot: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_schema_provenanceDataObject {
+  __typename: "DefinitionPathProvenanceDataObject";
+  id: string;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_schema_slot {
   __typename: "DefinitionPathSchemaSlot";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_schema_step_participant {
   __typename: "DefinitionPathStepParticipant";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_schema_step {
   __typename: "DefinitionPathStep";
   id: string;
-  label: string | null;
   participant: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_schema_step_participant | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
-  label: string | null;
+  provenanceDataObject: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_schema_slot | null;
   step: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_schema_step | null;
 }
@@ -304,8 +356,6 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocu
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
-  label: string | null;
-  namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_schemas_slots_path_sdfDocument_schema | null;
 }
@@ -367,48 +417,42 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_sourceJsonNodeLoca
   stopToken: SdfDocumentPageQuery_sdfDocumentById_schemas_sourceJsonNodeLocation_stopToken;
 }
 
-export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_namespacePrefixes {
-  __typename: "NamespacePrefix";
-  prefix: string;
-  uri: string;
-}
-
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_primitive {
   __typename: "DefinitionPathPrimitive";
   id: string;
-  label: string | null;
   slot: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_schema_provenanceDataObject {
+  __typename: "DefinitionPathProvenanceDataObject";
+  id: string;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_schema_slot {
   __typename: "DefinitionPathSchemaSlot";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_schema_step_participant {
   __typename: "DefinitionPathStepParticipant";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_schema_step {
   __typename: "DefinitionPathStep";
   id: string;
-  label: string | null;
   participant: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_schema_step_participant | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
-  label: string | null;
+  provenanceDataObject: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_schema_slot | null;
   step: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_schema_step | null;
 }
@@ -416,8 +460,6 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_partici
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
-  label: string | null;
-  namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_path_sdfDocument_schema | null;
 }
@@ -457,48 +499,42 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_partici
   sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants_sourceJsonNodeLocation;
 }
 
-export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_namespacePrefixes {
-  __typename: "NamespacePrefix";
-  prefix: string;
-  uri: string;
-}
-
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_primitive {
   __typename: "DefinitionPathPrimitive";
   id: string;
-  label: string | null;
   slot: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_schema_provenanceDataObject {
+  __typename: "DefinitionPathProvenanceDataObject";
+  id: string;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_schema_slot {
   __typename: "DefinitionPathSchemaSlot";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_schema_step_participant {
   __typename: "DefinitionPathStepParticipant";
   id: string;
-  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_schema_step {
   __typename: "DefinitionPathStep";
   id: string;
-  label: string | null;
   participant: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_schema_step_participant | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
-  label: string | null;
+  provenanceDataObject: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_schema_slot | null;
   step: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_schema_step | null;
 }
@@ -506,8 +542,6 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sd
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
-  label: string | null;
-  namespacePrefixes: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_namespacePrefixes[] | null;
   primitive: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_primitive | null;
   schema: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path_sdfDocument_schema | null;
 }
@@ -581,6 +615,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas {
   id: string;
   label: string;
   path: SdfDocumentPageQuery_sdfDocumentById_schemas_path;
+  provenanceData: SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData[] | null;
   slots: SdfDocumentPageQuery_sdfDocumentById_schemas_slots[];
   sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_schemas_sourceJsonNodeLocation;
   steps: SdfDocumentPageQuery_sdfDocumentById_schemas_steps;
@@ -603,6 +638,12 @@ export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sd
   id: string;
   label: string | null;
   slot: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument_schema_provenanceDataObject {
+  __typename: "DefinitionPathProvenanceDataObject";
+  id: string;
+  label: string | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument_schema_slot {
@@ -628,6 +669,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sd
   __typename: "DefinitionPathSchema";
   id: string;
   label: string | null;
+  provenanceDataObject: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument_schema_slot | null;
   step: SdfDocumentPageQuery_sdfDocumentById_validationMessages_path_sdfDocument_schema_step | null;
 }

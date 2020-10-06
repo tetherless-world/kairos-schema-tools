@@ -3,7 +3,7 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: DefinitionPathFragment
+// GraphQL fragment: DefinitionPathIdsFragment
 // ====================================================
 
 export interface DefinitionPathFragment_primitive_slot {
@@ -46,7 +46,7 @@ export interface DefinitionPathFragment_schema {
   step: DefinitionPathFragment_schema_step | null;
 }
 
-export interface DefinitionPathFragment {
+export interface DefinitionPathIdsFragment {
   __typename: "DefinitionPath";
   id: string;
   primitive: DefinitionPathFragment_primitive | null;

@@ -1,7 +1,7 @@
-import {DefinitionPathFragment} from "api/queries/types/DefinitionPathFragment";
 import {Hrefs} from "Hrefs";
 import {Link} from "components/link/Link";
 import * as React from "react";
+import {DefinitionPathFragment} from "api/queries/types/DefinitionPathFragment";
 
 export const DefinitionPathLink: React.FunctionComponent<{
   path: DefinitionPathFragment;

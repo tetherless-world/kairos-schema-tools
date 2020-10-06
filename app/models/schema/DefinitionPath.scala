@@ -26,7 +26,7 @@ object DefinitionPath {
     if (step.isDefined) {
       definedCount += 1
     }
-    if (definedCount == 0 || definedCount > 1) {
+    if (definedCount > 1) {
       throw new IllegalArgumentException("must specify one of provenance data object or slot or step")
     }
   }

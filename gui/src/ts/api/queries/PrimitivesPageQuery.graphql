@@ -1,11 +1,11 @@
-#import "./DefinitionPathFragment.graphql"
+#import "./DefinitionPathIdsFragment.graphql"
 
 query PrimitivesPageQuery {
     primitives {
         id
         label
         path {
-            ...DefinitionPathFragment
+            ...DefinitionPathIdsFragment
         }
     }
 }

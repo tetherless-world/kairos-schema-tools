@@ -1,4 +1,4 @@
-#import "./DefinitionPathFragment.graphql"
+#import "./DefinitionPathIdsFragment.graphql"
 #import "./EntityTypesFragment.graphql"
 
 query PrimitivePageQuery($primitiveId: String!, $sdfDocumentId: String!) {
@@ -15,7 +15,7 @@ query PrimitivePageQuery($primitiveId: String!, $sdfDocumentId: String!) {
         }
         name
         path {
-            ...DefinitionPathFragment
+            ...DefinitionPathIdsFragment
         }
         privateData
         references
@@ -28,7 +28,7 @@ query PrimitivePageQuery($primitiveId: String!, $sdfDocumentId: String!) {
             id
             label
             path {
-                ...DefinitionPathFragment
+                ...DefinitionPathIdsFragment
             }
             privateData
             references

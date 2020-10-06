@@ -1,4 +1,4 @@
-#import "./DefinitionPathFragment.graphql"
+#import "./DefinitionPathIdsFragment.graphql"
 #import "./EntityTypesFragment.graphql"
 
 query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
@@ -36,7 +36,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             }
         }
         path {
-            ...DefinitionPathFragment
+            ...DefinitionPathIdsFragment
         }
         privateData
         references
@@ -49,7 +49,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             id
             label
             path {
-                ...DefinitionPathFragment
+                ...DefinitionPathIdsFragment
             }
             privateData
             references
@@ -81,7 +81,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                     label
                     name
                     path {
-                        ...DefinitionPathFragment
+                        ...DefinitionPathIdsFragment
                     }
                     privateData
                     references
@@ -100,7 +100,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                     }
                 }
                 path {
-                    ...DefinitionPathFragment
+                    ...DefinitionPathIdsFragment
                 }
                 privateData
                 provenances
