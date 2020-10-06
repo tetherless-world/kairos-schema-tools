@@ -58,11 +58,18 @@ export interface PrimitivePageQuery_primitiveById_path_sdfDocument_schema {
   step: PrimitivePageQuery_primitiveById_path_sdfDocument_schema_step | null;
 }
 
+export interface PrimitivePageQuery_primitiveById_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
 export interface PrimitivePageQuery_primitiveById_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
   primitive: PrimitivePageQuery_primitiveById_path_sdfDocument_primitive | null;
   schema: PrimitivePageQuery_primitiveById_path_sdfDocument_schema | null;
+  namespacePrefixes: PrimitivePageQuery_primitiveById_path_sdfDocument_namespacePrefixes[] | null;
 }
 
 export interface PrimitivePageQuery_primitiveById_path {

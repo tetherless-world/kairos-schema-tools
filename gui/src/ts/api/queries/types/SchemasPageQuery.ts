@@ -46,11 +46,18 @@ export interface SchemasPageQuery_schemas_path_sdfDocument_schema {
   step: SchemasPageQuery_schemas_path_sdfDocument_schema_step | null;
 }
 
+export interface SchemasPageQuery_schemas_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
 export interface SchemasPageQuery_schemas_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
   primitive: SchemasPageQuery_schemas_path_sdfDocument_primitive | null;
   schema: SchemasPageQuery_schemas_path_sdfDocument_schema | null;
+  namespacePrefixes: SchemasPageQuery_schemas_path_sdfDocument_namespacePrefixes[] | null;
 }
 
 export interface SchemasPageQuery_schemas_path {

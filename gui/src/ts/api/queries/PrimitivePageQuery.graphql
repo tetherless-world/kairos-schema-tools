@@ -16,6 +16,11 @@ query PrimitivePageQuery($primitiveId: String!, $sdfDocumentId: String!) {
         name
         path {
             ...DefinitionPathIdsFragment
+            sdfDocument {
+                namespacePrefixes {
+                    ...NamespacePrefixFragment
+                }
+            }
         }
         privateData
         references

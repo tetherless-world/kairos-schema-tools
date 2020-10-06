@@ -6,6 +6,11 @@ query SchemasPageQuery {
         label
         path {
             ...DefinitionPathIdsFragment
+            sdfDocument {
+                namespacePrefixes {
+                    ...NamespacePrefixFragment
+                }
+            }
         }
     }
 }

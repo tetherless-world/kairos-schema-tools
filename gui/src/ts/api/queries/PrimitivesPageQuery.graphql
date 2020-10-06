@@ -6,6 +6,11 @@ query PrimitivesPageQuery {
         label
         path {
             ...DefinitionPathIdsFragment
+            sdfDocument {
+                namespacePrefixes {
+                    ...NamespacePrefixFragment
+                }
+            }
         }
     }
 }

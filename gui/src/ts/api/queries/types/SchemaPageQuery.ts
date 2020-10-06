@@ -91,11 +91,18 @@ export interface SchemaPageQuery_schemaById_path_sdfDocument_schema {
   step: SchemaPageQuery_schemaById_path_sdfDocument_schema_step | null;
 }
 
+export interface SchemaPageQuery_schemaById_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
 export interface SchemaPageQuery_schemaById_path_sdfDocument {
   __typename: "DefinitionPathSdfDocument";
   id: string;
   primitive: SchemaPageQuery_schemaById_path_sdfDocument_primitive | null;
   schema: SchemaPageQuery_schemaById_path_sdfDocument_schema | null;
+  namespacePrefixes: SchemaPageQuery_schemaById_path_sdfDocument_namespacePrefixes[] | null;
 }
 
 export interface SchemaPageQuery_schemaById_path {
