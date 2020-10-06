@@ -9,13 +9,25 @@ object DefinitionPath {
 
   final case class DefinitionPathPrimitiveSlot(id: Uri)
 
+  final case class DefinitionPathProvenanceDataObject(id: Uri)
+
   final case class DefinitionPathStep(id: Uri, participant: Option[DefinitionPathStepParticipant])
 
   final case class DefinitionPathStepParticipant(id: Uri)
 
-  final case class DefinitionPathSchema(id: Uri, slot: Option[DefinitionPathSchemaSlot], step: Option[DefinitionPathStep]) {
-    if (slot.isDefined && step.isDefined) {
-      throw new IllegalArgumentException("may only specify one of slot or step")
+  final case class DefinitionPathSchema(id: Uri, provenanceDataObject: Option[DefinitionPathProvenanceDataObject], slot: Option[DefinitionPathSchemaSlot], step: Option[DefinitionPathStep]) {
+    var definedCount = 0
+    if (provenanceDataObject.isDefined) {
+      definedCount += 1
+    }
+    if (slot.isDefined) {
+      definedCount += 1
+    }
+    if (step.isDefined) {
+      definedCount += 1
+    }
+    if (definedCount == 0 || definedCount > 1) {
+      throw new IllegalArgumentException("must specify one of provenance data object or slot or step")
     }
   }
 
@@ -35,12 +47,13 @@ object DefinitionPath {
 
     class DefinitionPathSchemaBuilder(schemaId: Uri) {
       class DefinitionPathSchemaStepBuilder(stepId: Uri) {
-        def build = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, slot = None, step = Some(DefinitionPathStep(id = stepId, participant = None))))))
-        def participant(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, slot = None, step = Some(DefinitionPathStep(id = stepId, participant = Some(DefinitionPathStepParticipant(id = id))))))))
+        def build = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, provenanceDataObject = None, slot = None, step = Some(DefinitionPathStep(id = stepId, participant = None))))))
+        def participant(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, provenanceDataObject = None, slot = None, step = Some(DefinitionPathStep(id = stepId, participant = Some(DefinitionPathStepParticipant(id = id))))))))
       }
 
-      def build = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, slot = None, step = None))))
-      def slot(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, slot = Some(DefinitionPathSchemaSlot(id = id)), step = None))))
+      def build = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, provenanceDataObject = None, slot = None, step = None))))
+      def provenanceDataObject(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, provenanceDataObject = Some(DefinitionPathProvenanceDataObject(id = id)), slot = None, step = None))))
+      def slot(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, provenanceDataObject = None, slot = Some(DefinitionPathSchemaSlot(id = id)), step = None))))
       def step(id: Uri) = new DefinitionPathSchemaStepBuilder(stepId = id)
     }
 

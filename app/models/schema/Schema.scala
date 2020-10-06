@@ -15,6 +15,7 @@ final case class Schema(
                          references: Option[List[String]],
                          path: DefinitionPath,
                          privateData: Option[String],
+                         provenanceData: Option[List[ProvenanceDataObject]],
                          slots: List[SchemaSlot],
                          sourceJsonNodeLocation: JsonNodeLocation,
                          steps: Steps,
