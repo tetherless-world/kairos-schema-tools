@@ -31,7 +31,16 @@ export const getJsonNodeLocationFromDefinitionPath = (
     if (schema) {
       result = schema.sourceJsonNodeLocation;
 
-      if (path.sdfDocument.schema!.slot) {
+      if (path.sdfDocument.schema!.provenanceDataObject) {
+        const provenanceDataObject = schema.provenanceData?.find(
+          (provenanceDataObject) =>
+            provenanceDataObject.id ===
+            path.sdfDocument.schema!.provenanceDataObject!.id
+        );
+        if (provenanceDataObject) {
+          result = provenanceDataObject.sourceJsonNodeLocation;
+        }
+      } else if (path.sdfDocument.schema!.slot) {
         const slot = schema.slots.find(
           (slot) => slot.id === path.sdfDocument.schema!.slot!.id
         );

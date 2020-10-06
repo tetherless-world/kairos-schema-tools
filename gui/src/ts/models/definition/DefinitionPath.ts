@@ -9,6 +9,9 @@ export interface DefinitionPath {
     } | null;
     schema?: {
       id: string;
+      provenanceDataObject?: {
+        id: string;
+      } | null;
       slot?: {
         id: string;
       } | null;
