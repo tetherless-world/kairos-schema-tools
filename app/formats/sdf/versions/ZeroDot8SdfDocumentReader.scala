@@ -4,11 +4,11 @@ import java.io.StringWriter
 
 import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.vocabulary.{KairosProperties, SchemaOrgProperties}
-import formats.sdf.SdfDocumentHeader
+import formats.sdf.{SdfDocumentHeader}
 import io.github.tetherlessworld.scena.RdfProperties
 import models.json.{ArrayJsonNode, JsonNode, ObjectJsonNode, StringValueJsonNode}
 import models.schema._
-import models.sdfDocument.{SdfDocument, NamespacePrefix}
+import models.sdfDocument.{NamespacePrefix, SdfDocument}
 import models.validation.{ValidationException, ValidationMessage, ValidationMessageType}
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.riot.Lang
@@ -225,7 +225,9 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       order = resource.order.flatMap(stepOrderResource => withValidationExceptionCatch(() => readStepOrder(path, stepOrderResource))),
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
-      provenanceData = Option(mapUriResourcesToJsonNodes(
+      provenanceData = Option(mapResourcesToJsonNodes(
+        getObjectJsonNodeId = (objectJsonNode) => objectJsonNode.map.get("@id").filter(_.isInstanceOf[StringValueJsonNode]).map(_.asInstanceOf[StringValueJsonNode].value),
+        getResourceId = (resource) => if (resource.getURI != null && resource.getURI.startsWith(header.baseUri.toString)) Some(resource.getURI.substring(header.baseUri.toString.length)) else None,
         jsonNodes = jsonNode.map.get("provenanceData").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
         resources = resource.provenanceData,

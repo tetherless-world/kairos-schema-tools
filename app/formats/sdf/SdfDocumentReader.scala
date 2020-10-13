@@ -28,9 +28,11 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
   def read(): SdfDocument = {
     val sourceJson = source.mkString
 
+    val baseUri = SdfDocumentReader.BaseUri
+
     val model = ModelFactory.createDefaultModel()
     try {
-      model.read(new StringReader(sourceJson), "", Lang.JSONLD.getName)
+      model.read(new StringReader(sourceJson), baseUri.toString, Lang.JSONLD.getName)
     } catch {
       case e: RiotException => {
         return SdfDocument(
@@ -52,11 +54,11 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
       }
     }
 
-//    model.write(System.out, Lang.TTL.getName)
+    model.write(System.out, Lang.TTL.getName)
 
     var header: SdfDocumentHeader = null
     try {
-      header = new SdfDocumentHeader(model, sourceUri)
+      header = new SdfDocumentHeader(baseUri = baseUri, model = model, sourceUri = sourceUri)
     } catch {
       case e: ValidationException => {
         return SdfDocument(
@@ -99,6 +101,8 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
 }
 
 object SdfDocumentReader extends WithResource {
+  private val BaseUri = Uri.parse("http://kairos.tw.rpi.edu/sdfDocument/")
+
   def read(sourceJson: String, sourceUri: Uri): SdfDocument =
     read(Source.fromString(sourceJson), sourceUri)
 
