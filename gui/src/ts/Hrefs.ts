@@ -11,7 +11,7 @@ class SubHrefs {
   constructor(readonly home: string) {}
 
   protected sanitizeId(id: string) {
-    return id.replace(/[^a-z]/gi, "");
+    return id.replace(/[^a-z0-9]/gi, "");
   }
 
   toString() {
