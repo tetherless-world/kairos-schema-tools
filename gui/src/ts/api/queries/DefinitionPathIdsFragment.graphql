@@ -1,5 +1,3 @@
-#import "./NamespacePrefixFragment.graphql"
-
 fragment DefinitionPathIdsFragment on DefinitionPath {
     sdfDocument {
         id
