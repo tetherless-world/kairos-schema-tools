@@ -1,5 +1,6 @@
 #import "./DefinitionPathIdsFragment.graphql"
 #import "./EntityTypesFragment.graphql"
+#import "./NamespacePrefixFragment.graphql"
 
 query PrimitivePageQuery($primitiveId: String!, $sdfDocumentId: String!) {
     primitiveById(id: $primitiveId) {

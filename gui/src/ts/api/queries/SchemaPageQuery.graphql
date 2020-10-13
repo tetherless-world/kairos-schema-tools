@@ -1,5 +1,6 @@
 #import "./DefinitionPathIdsFragment.graphql"
 #import "./EntityTypesFragment.graphql"
+#import "./NamespacePrefixFragment.graphql"
 
 query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
     schemaById(id: $schemaId) {
