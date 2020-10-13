@@ -193,10 +193,9 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       boundingBox = Option(resource.boundingBox).filter(_.nonEmpty),
       childId = resource.childId.headOption.getOrElse(throw ValidationException(s"provenanceData object ${id} missing required childID", path)),
       comments = Option(resource.comment).filter(_.nonEmpty),
-      endTime = resource.startTime.headOption.map(DateTime(_)),
-      id = id,
+      endTime = resource.startTime.headOption,
+      id = jsonNode.map("@id").asInstanceOf[StringValueJsonNode].value,
       keyframes = Option(resource.keyframes).filter(_.nonEmpty),
-      label = jsonNode.map("@id").asInstanceOf[StringValueJsonNode].value,
       length = resource.length.headOption,
       mediaType = resource.mediaType.headOption.getOrElse(throw ValidationException(s"provenanceData object ${id} missing required mediaType", path)),
       offset = resource.offset.headOption,
@@ -204,7 +203,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
       sourceJsonNodeLocation = jsonNode.location,
-      startTime = resource.startTime.headOption.map(DateTime(_))
+      startTime = resource.startTime.headOption
     )
   }
 

@@ -164,9 +164,20 @@ export interface SchemaPageQuery_schemaById_provenanceData_path {
 
 export interface SchemaPageQuery_schemaById_provenanceData {
   __typename: "ProvenanceDataObject";
+  boundingBox: number[] | null;
+  childId: string;
+  comments: string[] | null;
+  endTime: number | null;
   id: string;
+  keyframes: number[] | null;
   label: string;
+  length: number | null;
+  mediaType: string;
+  offset: number | null;
+  parentIds: string[] | null;
   path: SchemaPageQuery_schemaById_provenanceData_path;
+  privateData: string | null;
+  startTime: number | null;
 }
 
 export interface SchemaPageQuery_schemaById_slots_entityTypes {

@@ -11,6 +11,7 @@ import {schemaSections} from "models/schema/schemaSections";
 import {TopLevelDefinitionSectionContents} from "components/definition/TopLevelDefinitionSectionContents";
 import {TopLevelDefinitionSectionContentsGrid} from "components/definition/TopLevelDefinitionSectionContentsGrid";
 import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
+import {ProvenanceDataObjectCard} from "components/schema/ProvenanceDataObjectCard";
 
 export const SchemaSectionContentsGrid: React.FunctionComponent<{
   hrefs: SchemaHrefs;
@@ -46,6 +47,28 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
                 </Grid>
               )
             )}
+          </Grid>
+        );
+        break;
+      }
+      case "provenance-data": {
+        if (!schema.provenanceData) {
+          continue;
+        }
+        children = (
+          <Grid container direction="column" spacing={4}>
+            {schema.provenanceData.map((provenanceDataObject) => (
+              <Grid
+                item
+                id={hrefs.provenanceDataObjectId(provenanceDataObject)}
+                key={provenanceDataObject.id}
+              >
+                <ProvenanceDataObjectCard
+                  hrefs={hrefs}
+                  provenanceDataObject={provenanceDataObject}
+                />
+              </Grid>
+            ))}
           </Grid>
         );
         break;

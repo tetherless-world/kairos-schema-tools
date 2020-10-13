@@ -45,11 +45,22 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
         }
         privateData
         provenanceData {
+            boundingBox
+            childId
+            comments
+            endTime
             id
+            keyframes
             label
+            length
+            mediaType
+            offset
+            parentIds
             path {
                 ...DefinitionPathIdsFragment
             }
+            privateData
+            startTime
         }
         references
         slots {

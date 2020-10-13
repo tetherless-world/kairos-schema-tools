@@ -83,7 +83,11 @@ const StepsList: React.FunctionComponent<{
   return (
     <List component="div" disablePadding>
       {steps.map((step) => (
-        <ListItem className={classes.nestedListItem} key={step.id}>
+        <ListItem
+          className={classes.nestedListItem}
+          component="div"
+          key={step.id}
+        >
           <ListItemText>
             <Grid container direction="column">
               <Grid item>
