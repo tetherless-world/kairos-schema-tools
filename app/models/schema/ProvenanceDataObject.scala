@@ -10,6 +10,7 @@ final case class ProvenanceDataObject(
                                        endTime: Option[DateTime],
                                        id: Uri,
                                        keyframes: Option[List[Int]],
+                                       label: String,
                                        length: Option[Int],
                                        mediaType: String,
                                        offset: Option[Int],
@@ -19,5 +20,4 @@ final case class ProvenanceDataObject(
                                        sourceJsonNodeLocation: JsonNodeLocation,
                                        startTime: Option[DateTime]
                                      ) extends Definition {
-  final override def label = id.toString
 }

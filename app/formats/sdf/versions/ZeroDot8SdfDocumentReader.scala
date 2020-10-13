@@ -196,6 +196,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       endTime = resource.startTime.headOption.map(DateTime(_)),
       id = id,
       keyframes = Option(resource.keyframes).filter(_.nonEmpty),
+      label = jsonNode.map("@id").asInstanceOf[StringValueJsonNode].value,
       length = resource.length.headOption,
       mediaType = resource.mediaType.headOption.getOrElse(throw ValidationException(s"provenanceData object ${id} missing required mediaType", path)),
       offset = resource.offset.headOption,
