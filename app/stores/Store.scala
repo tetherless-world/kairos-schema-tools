@@ -1,7 +1,7 @@
 package stores
 
 import edu.rpi.tw.twks.uri.Uri
-import models.schema.{Primitive, PrimitiveSlot, Schema, SchemaSlot, Step, StepParticipant}
+import models.schema.{Primitive, PrimitiveSlot, ProvenanceDataObject, Schema, SchemaSlot, Step, StepParticipant}
 import models.sdfDocument.SdfDocument
 import models.search.{SearchDocument, SearchResults}
 
@@ -12,6 +12,8 @@ trait Store {
   def getPrimitiveById(id: Uri): Option[Primitive]
   def getPrimitives: List[Primitive]
   def getPrimitiveSlotById(id: Uri): Option[PrimitiveSlot]
+
+  def getProvenanceDataObjectById(id: Uri): Option[ProvenanceDataObject]
 
   def getSchemaById(id: Uri): Option[Schema]
   def getSchemas: List[Schema]

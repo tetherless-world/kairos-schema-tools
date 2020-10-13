@@ -1,5 +1,6 @@
-#import "./DefinitionPathFragment.graphql"
+#import "./DefinitionPathIdsFragment.graphql"
 #import "./EntityTypesFragment.graphql"
+#import "./NamespacePrefixFragment.graphql"
 
 query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
     schemaById(id: $schemaId) {
@@ -36,9 +37,32 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             }
         }
         path {
-            ...DefinitionPathFragment
+            ...DefinitionPathIdsFragment
+            sdfDocument {
+                namespacePrefixes {
+                    ...NamespacePrefixFragment
+                }
+            }
         }
         privateData
+        provenanceData {
+            boundingBox
+            childId
+            comments
+            endTime
+            id
+            keyframes
+            label
+            length
+            mediaType
+            offset
+            parentIds
+            path {
+                ...DefinitionPathIdsFragment
+            }
+            privateData
+            startTime
+        }
         references
         slots {
             aka
@@ -49,7 +73,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             id
             label
             path {
-                ...DefinitionPathFragment
+                ...DefinitionPathIdsFragment
             }
             privateData
             references
@@ -81,7 +105,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                     label
                     name
                     path {
-                        ...DefinitionPathFragment
+                        ...DefinitionPathIdsFragment
                     }
                     privateData
                     references
@@ -100,7 +124,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                     }
                 }
                 path {
-                    ...DefinitionPathFragment
+                    ...DefinitionPathIdsFragment
                 }
                 privateData
                 provenances

@@ -1,7 +1,8 @@
 import * as qs from "qs";
 import {SchemaSectionId} from "models/schema/SchemaSectionId";
-import {DefinitionPath} from "models/definition/DefinitionPath";
 import {PrimitiveSectionId} from "models/primitive/PrimitiveSectionId";
+import * as _ from "lodash";
+import {DefinitionPath} from "models/definition/DefinitionPath";
 
 const encodeId = (kwds: {id: string; idEncoded?: boolean}) =>
   kwds.idEncoded ? kwds.id : encodeURIComponent(kwds.id);
@@ -10,7 +11,7 @@ class SubHrefs {
   constructor(readonly home: string) {}
 
   protected sanitizeId(id: string) {
-    return id.replace(/[^a-z]/gi, "");
+    return id.replace(/[^a-z0-9]/gi, "");
   }
 
   toString() {
@@ -33,6 +34,14 @@ export class PrimitiveHrefs extends SubHrefs {
 }
 
 export class SchemaHrefs extends SubHrefs {
+  provenanceDataObject(provenanceDataObject: {id: string}) {
+    return `${this.home}#${this.provenanceDataObjectId(provenanceDataObject)}`;
+  }
+
+  provenanceDataObjectId(provenanceDataObject: {id: string}) {
+    return `provenance-data-object-${this.sanitizeId(provenanceDataObject.id)}`;
+  }
+
   slot(slot: {id: string}) {
     return `${this.home}#${this.slotId(slot)}`;
   }
@@ -84,9 +93,23 @@ class SdfDocumentHrefs extends SubHrefs {
   }
 
   sourcePath(path: DefinitionPath) {
+    const removeTypenames = (object: any) => {
+      const newObject: any = {};
+      for (const key of Object.keys(object)) {
+        newObject[key] =
+          _.isObject(object[key]) && object["__typename"]
+            ? removeTypenames(object[key])
+            : object[key];
+      }
+      return newObject;
+    };
+
     return (
       this.home +
-      qs.stringify({path: JSON.stringify(path)}, {addQueryPrefix: true})
+      qs.stringify(
+        {path: JSON.stringify(removeTypenames(path))},
+        {addQueryPrefix: true}
+      )
     );
   }
 }
@@ -120,7 +143,11 @@ export class Hrefs {
       const schemaHrefs = sdfDocumentHrefs.schemas.schema({
         id: path.sdfDocument.schema.id,
       });
-      if (path.sdfDocument.schema.slot) {
+      if (path.sdfDocument.schema.provenanceDataObject) {
+        return schemaHrefs.provenanceDataObject({
+          id: path.sdfDocument.schema.provenanceDataObject.id,
+        });
+      } else if (path.sdfDocument.schema.slot) {
         return schemaHrefs.slot({id: path.sdfDocument.schema.slot.id});
       } else if (path.sdfDocument.schema.step) {
         if (path.sdfDocument.schema.step.participant) {

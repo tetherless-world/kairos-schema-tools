@@ -1,4 +1,4 @@
-#import "./DefinitionPathFragment.graphql"
+#import "./DefinitionPathIdsFragment.graphql"
 
 query SearchResultsPageQuery($limit: Int!, $offset: Int!, $query: String!) {
     search(limit: $limit, offset: $offset, query: $query) {
@@ -6,7 +6,7 @@ query SearchResultsPageQuery($limit: Int!, $offset: Int!, $query: String!) {
             id
             label
             path {
-                ...DefinitionPathFragment
+                ...DefinitionPathIdsFragment
             }
             type
         }

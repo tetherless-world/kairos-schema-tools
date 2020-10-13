@@ -47,6 +47,9 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val JsonTokenLocationObjectType = deriveObjectType[GraphQlSchemaContext, JsonTokenLocation]()
   implicit val JsonNodeLocationObjectType = deriveObjectType[GraphQlSchemaContext, JsonNodeLocation]()
 
+  // DateTime
+  implicit val DateTimeObjectType = deriveObjectType[GraphQlSchemaContext, DateTime]()
+
   // Duration
   implicit val DurationObjectType = deriveObjectType[GraphQlSchemaContext, Duration]()
 
@@ -54,6 +57,21 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val NamespacePrefixObjectType = deriveObjectType[GraphQlSchemaContext, NamespacePrefix]()
 
   // DefinitionPath
+  implicit val DefinitionPathPrimitiveSlotObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathPrimitiveSlot](
+    AddFields(
+      Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getPrimitiveSlotById(ctx.value.id).map(_.label))
+    )
+  )
+  implicit val DefinitionPathPrimitiveObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathPrimitive](
+    AddFields(
+      Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getPrimitiveById(ctx.value.id).map(_.label))
+    )
+  )
+  implicit val DefinitionPathProvenanceDataObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathProvenanceDataObject](
+    AddFields(
+      Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getProvenanceDataObjectById(ctx.value.id).map(_.label))
+    )
+  )
   implicit val DefinitionPathSchemaSlotObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathSchemaSlot](
     AddFields(
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSchemaSlotById(ctx.value.id).map(_.label))
@@ -74,17 +92,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSchemaById(ctx.value.id).map(_.label))
     )
   )
-  implicit val DefinitionPathPrimitiveSlotObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathPrimitiveSlot](
-    AddFields(
-      Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getPrimitiveSlotById(ctx.value.id).map(_.label))
-    )
-  )
-  implicit val DefinitionPathPrimitiveObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathPrimitive](
-    AddFields(
-      Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getPrimitiveById(ctx.value.id).map(_.label))
-    )
-  )
-  implicit val DefinitionPathSdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathSdfDocument](
+ implicit val DefinitionPathSdfDocumentObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathSdfDocument](
     AddFields(
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.id).map(_.label)),
       Field("namespacePrefixes", OptionType(ListType(NamespacePrefixObjectType)), resolve = ctx => ctx.ctx.store.getSdfDocumentById(ctx.value.id).map(_.namespacePrefixes))
@@ -125,6 +133,11 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   )
   implicit val OverlapsStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, OverlapsStepOrder](
     Interfaces(StepOrderInterfaceType)
+  )
+  implicit val ProvenanceDataObjectObjectType = deriveObjectType[GraphQlSchemaContext, ProvenanceDataObject](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label)
+    )
   )
   implicit val StepParticipantValueObjectType = deriveObjectType[GraphQlSchemaContext, StepParticipantValue](
     AddFields(

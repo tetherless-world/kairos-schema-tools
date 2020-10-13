@@ -1,7 +1,7 @@
 package stores
 
 import edu.rpi.tw.twks.uri.Uri
-import models.schema.{Primitive, PrimitiveSlot, Schema, SchemaSlot, Step, StepParticipant}
+import models.schema.{Primitive, PrimitiveSlot, ProvenanceDataObject, Schema, SchemaSlot, Step, StepParticipant}
 import models.sdfDocument.SdfDocument
 
 abstract class AbstractStore extends Store {
@@ -13,6 +13,9 @@ abstract class AbstractStore extends Store {
 
   override def getPrimitiveSlotById(id: Uri): Option[PrimitiveSlot] =
     getPrimitives.view.flatMap(primitive => primitive.slots.find(_.id == id)).headOption
+
+  override def getProvenanceDataObjectById(id: Uri): Option[ProvenanceDataObject] =
+    getSchemas.view.flatMap(_.provenanceData.flatMap(_.find(_.id == id))).headOption
 
   override def getSchemaById(id: Uri): Option[Schema] =
     getSchemas.find(_.id == id)

@@ -2,20 +2,26 @@ package formats.sdf.vocabulary
 
 import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.RdfListRdfReader
-import org.apache.jena.datatypes.xsd.XSDDuration
-import org.apache.jena.rdf.model.{Property, Resource}
+import org.apache.jena.datatypes.xsd.{XSDDateTime, XSDDuration}
+import org.apache.jena.rdf.model.{Literal, Property, Resource}
 import org.apache.jena.vocabulary.RDF
 
 trait PropertyGetters extends io.github.tetherlessworld.scena.PropertyGetters {
+  protected final def getPropertyObjectDateTimes(property: Property) =
+    getPropertyObjects(property).filter(_.isLiteral).map(_.asLiteral()).map(_.getValue).filter(_.isInstanceOf[XSDDateTime]).map(_.asInstanceOf[XSDDateTime])
+
+  protected final def getPropertyObjectDoubles(property: Property) =
+    getPropertyObjects(property).filter(_.isLiteral).map(_.asLiteral()).map(_.getDouble)
+
   protected final def getPropertyObjectDurations(property: Property) =
     getPropertyObjects(property).filter(_.isLiteral).map(_.asLiteral()).map(_.getValue).filter(_.isInstanceOf[XSDDuration]).map(_.asInstanceOf[XSDDuration])
 
-  protected final def getPropertyObjectStringList(property: Property): List[String] =
+  protected final def getPropertyObjectLiteralList(property: Property): List[Literal] =
     getPropertyObjects(property).flatMap(propertyObject => {
       if (propertyObject.isLiteral) {
-        List(propertyObject.asLiteral().getString)
+        List(propertyObject.asLiteral())
       } else if (propertyObject.isResource) {
-        RdfListRdfReader.read(propertyObject.asResource()).filter(_.isLiteral).map(_.asLiteral().getString)
+        RdfListRdfReader.read(propertyObject.asResource()).filter(_.isLiteral).map(_.asLiteral())
       } else {
         List()
       }

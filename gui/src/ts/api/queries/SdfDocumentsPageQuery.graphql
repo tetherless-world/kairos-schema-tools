@@ -1,4 +1,4 @@
-#import "./DefinitionPathFragment.graphql"
+#import "./DefinitionPathIdsFragment.graphql"
 #import "./NamespacePrefixFragment.graphql"
 
 query SdfDocumentsPageQuery {
@@ -12,14 +12,14 @@ query SdfDocumentsPageQuery {
             id
             label
             path {
-                ...DefinitionPathFragment
+                ...DefinitionPathIdsFragment
             }
         }
         schemas {
             id
             label
             path {
-                ...DefinitionPathFragment
+                ...DefinitionPathIdsFragment
             }
         }
         sdfVersion

@@ -1,4 +1,4 @@
-#import "./DefinitionPathFragment.graphql"
+#import "./DefinitionPathIdsFragment.graphql"
 #import "./JsonNodeLocationFragment.graphql"
 #import "./NamespacePrefixFragment.graphql"
 #import "./ValidationMessageFragment.graphql"
@@ -13,13 +13,13 @@ fragment SdfDocumentSourceFragment on SdfDocument {
         id
         label
         path {
-            ...DefinitionPathFragment
+            ...DefinitionPathIdsFragment
         }
         slots {
             id
             label
             path {
-                ...DefinitionPathFragment
+                ...DefinitionPathIdsFragment
             }
             sourceJsonNodeLocation {
                 ...JsonNodeLocationFragment
@@ -33,13 +33,23 @@ fragment SdfDocumentSourceFragment on SdfDocument {
         id
         label
         path {
-            ...DefinitionPathFragment
+            ...DefinitionPathIdsFragment
+        }
+        provenanceData {
+            id
+            label
+            path {
+                ...DefinitionPathIdsFragment
+            }
+            sourceJsonNodeLocation {
+                ...JsonNodeLocationFragment
+            }
         }
         slots {
             id
             label
             path {
-                ...DefinitionPathFragment
+                ...DefinitionPathIdsFragment
             }
             sourceJsonNodeLocation {
                 ...JsonNodeLocationFragment
@@ -56,14 +66,14 @@ fragment SdfDocumentSourceFragment on SdfDocument {
                     id
                     label
                     path {
-                        ...DefinitionPathFragment
+                        ...DefinitionPathIdsFragment
                     }
                     sourceJsonNodeLocation {
                         ...JsonNodeLocationFragment
                     }
                 }
                 path {
-                    ...DefinitionPathFragment
+                    ...DefinitionPathIdsFragment
                 }
                 sourceJsonNodeLocation {
                     ...JsonNodeLocationFragment

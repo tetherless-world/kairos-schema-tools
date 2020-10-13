@@ -27,6 +27,12 @@ export interface ValidationMessageFragment_path_sdfDocument_primitive {
   slot: ValidationMessageFragment_path_sdfDocument_primitive_slot | null;
 }
 
+export interface ValidationMessageFragment_path_sdfDocument_schema_provenanceDataObject {
+  __typename: "DefinitionPathProvenanceDataObject";
+  id: string;
+  label: string | null;
+}
+
 export interface ValidationMessageFragment_path_sdfDocument_schema_slot {
   __typename: "DefinitionPathSchemaSlot";
   id: string;
@@ -50,6 +56,7 @@ export interface ValidationMessageFragment_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
   label: string | null;
+  provenanceDataObject: ValidationMessageFragment_path_sdfDocument_schema_provenanceDataObject | null;
   slot: ValidationMessageFragment_path_sdfDocument_schema_slot | null;
   step: ValidationMessageFragment_path_sdfDocument_schema_step | null;
 }

@@ -1,37 +1,24 @@
-#import "./NamespacePrefixFragment.graphql"
-
-fragment DefinitionPathFragment on DefinitionPath {
+fragment DefinitionPathIdsFragment on DefinitionPath {
     sdfDocument {
         id
-        label
-        namespacePrefixes {
-            ... NamespacePrefixFragment
-        }
         primitive {
             id
-            label
             slot {
                 id
-                label
             }
         }
         schema {
             id
-            label
             provenanceDataObject {
                 id
-                label
             }
             slot {
                 id
-                label
             }
             step {
                 id
-                label
                 participant {
                     id
-                    label
                 }
             }
         }

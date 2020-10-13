@@ -16,6 +16,8 @@ import stores.Store
 class RestController @Inject() (store: Store) extends InjectedController {
   private val MimeTypeJsonLd = "application/ld+json"
 //  private val AcceptsJsonLd = Accepting(MimeTypeJsonLd)
+  // DateTime
+  private implicit val dateTimeJsonWrites = Json.writes[DateTime]
   // Duration
   private implicit val durationJsonWrites = Json.writes[Duration]
   // JSON
@@ -26,6 +28,7 @@ class RestController @Inject() (store: Store) extends InjectedController {
   // DefinitionPath
   private implicit val definitionPathPrimitiveSlotJsonWrites = Json.writes[DefinitionPath.DefinitionPathPrimitiveSlot]
   private implicit val definitionPathPrimitiveJsonWrites = Json.writes[DefinitionPath.DefinitionPathPrimitive]
+  private implicit val definitionPathProvenanceDataObjectJsonWrites = Json.writes[DefinitionPath.DefinitionPathProvenanceDataObject]
   private implicit val definitionPathSchemaSlotJsonWrites = Json.writes[DefinitionPath.DefinitionPathSchemaSlot]
   private implicit val definitionPathStepParticipantJsonWrites = Json.writes[DefinitionPath.DefinitionPathStepParticipant]
   private implicit val definitionPathStepJsonWrites = Json.writes[DefinitionPath.DefinitionPathStep]
@@ -42,6 +45,7 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val primitiveSlotJsonWrites: json.Writes[PrimitiveSlot] = Json.writes[PrimitiveSlot]
   private implicit val primitiveJsonWrites: json.Writes[Primitive] = Json.writes[Primitive]
   // Schema
+  private implicit val provenanceDataObjectJsonWrites = Json.writes[ProvenanceDataObject]
   private implicit val schemaSlotJsonWrites = Json.writes[SchemaSlot]
   private implicit val stepParticipantValueJsonWrites = Json.writes[StepParticipantValue]
   private implicit val stepParticipantJsonWrites = Json.writes[StepParticipant]

@@ -1,7 +1,7 @@
-import {DefinitionPathFragment} from "api/queries/types/DefinitionPathFragment";
 import {Hrefs} from "Hrefs";
 import {Link} from "components/link/Link";
 import * as React from "react";
+import {DefinitionPathFragment} from "api/queries/types/DefinitionPathFragment";
 
 export const DefinitionPathLink: React.FunctionComponent<{
   path: DefinitionPathFragment;
@@ -17,7 +17,11 @@ export const DefinitionPathLink: React.FunctionComponent<{
       label = "Primitive: " + sdfDocument.primitive.label;
     }
   } else if (sdfDocument.schema) {
-    if (sdfDocument.schema.slot) {
+    if (sdfDocument.schema.provenanceDataObject) {
+      label =
+        "Provenance data object: " +
+        sdfDocument.schema.provenanceDataObject.label;
+    } else if (sdfDocument.schema.slot) {
       label = "Schema slot: " + sdfDocument.schema.slot.label;
     } else if (sdfDocument.schema.step) {
       if (sdfDocument.schema.step.participant) {

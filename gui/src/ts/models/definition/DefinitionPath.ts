@@ -1,3 +1,6 @@
+// Define a DefinitionPath interface instead of using the generated fragment everywhere,
+// because it needs to be constructed and deserialized by hand,
+// and we don't want to require __typename.
 export interface DefinitionPath {
   sdfDocument: {
     id: string;
@@ -9,6 +12,9 @@ export interface DefinitionPath {
     } | null;
     schema?: {
       id: string;
+      provenanceDataObject?: {
+        id: string;
+      } | null;
       slot?: {
         id: string;
       } | null;

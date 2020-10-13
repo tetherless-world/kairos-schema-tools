@@ -167,6 +167,13 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
         schema.order.exists(_.isInstanceOf[OverlapsStepOrder]) should be (true)
         schema.privateData should not be None
         schema.privateData.get should include("Performers can place any keys/values they wish here")
+        schema.provenanceData should not be None
+        schema.provenanceData.get should not be empty
+        for (provenanceDataObject <- schema.provenanceData.get) {
+          provenanceDataObject.childId should not be empty
+          provenanceDataObject.mediaType should not be empty
+          provenanceDataObject.label should not be empty
+        }
         schema.slots should not be empty
         for (slot <- schema.slots) {
           slot.roleName should not be empty
