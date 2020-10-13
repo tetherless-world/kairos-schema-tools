@@ -134,7 +134,11 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val OverlapsStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, OverlapsStepOrder](
     Interfaces(StepOrderInterfaceType)
   )
-  implicit val ProvenanceDataObjectObjectType = deriveObjectType[GraphQlSchemaContext, ProvenanceDataObject]()
+  implicit val ProvenanceDataObjectObjectType = deriveObjectType[GraphQlSchemaContext, ProvenanceDataObject](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label)
+    )
+  )
   implicit val StepParticipantValueObjectType = deriveObjectType[GraphQlSchemaContext, StepParticipantValue](
     AddFields(
       Field("label", StringType, resolve = _.value.name)
