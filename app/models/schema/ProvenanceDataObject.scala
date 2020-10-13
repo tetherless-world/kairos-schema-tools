@@ -1,16 +1,14 @@
 package models.schema
 
-import edu.rpi.tw.twks.uri.Uri
 import models.json.JsonNodeLocation
 
 final case class ProvenanceDataObject(
                                        childId: String,
                                        boundingBox: Option[List[Int]],
                                        comments: Option[List[String]],
-                                       endTime: Option[DateTime],
-                                       id: Uri,
+                                       endTime: Option[Double],
+                                       id: String,
                                        keyframes: Option[List[Int]],
-                                       label: String,
                                        length: Option[Int],
                                        mediaType: String,
                                        offset: Option[Int],
@@ -18,6 +16,7 @@ final case class ProvenanceDataObject(
                                        path: DefinitionPath,
                                        privateData: Option[String],
                                        sourceJsonNodeLocation: JsonNodeLocation,
-                                       startTime: Option[DateTime]
+                                       startTime: Option[Double]
                                      ) extends Definition {
+  final override def label = id.toString
 }

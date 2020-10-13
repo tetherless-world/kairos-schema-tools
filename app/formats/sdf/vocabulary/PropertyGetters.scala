@@ -10,6 +10,9 @@ trait PropertyGetters extends io.github.tetherlessworld.scena.PropertyGetters {
   protected final def getPropertyObjectDateTimes(property: Property) =
     getPropertyObjects(property).filter(_.isLiteral).map(_.asLiteral()).map(_.getValue).filter(_.isInstanceOf[XSDDateTime]).map(_.asInstanceOf[XSDDateTime])
 
+  protected final def getPropertyObjectDoubles(property: Property) =
+    getPropertyObjects(property).filter(_.isLiteral).map(_.asLiteral()).map(_.getDouble)
+
   protected final def getPropertyObjectDurations(property: Property) =
     getPropertyObjects(property).filter(_.isLiteral).map(_.asLiteral()).map(_.getValue).filter(_.isInstanceOf[XSDDuration]).map(_.asInstanceOf[XSDDuration])
 
