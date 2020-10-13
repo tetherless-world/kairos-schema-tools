@@ -98,11 +98,13 @@ export const EntityRelationCard: React.FunctionComponent<{
                         {entityRelation.comments &&
                         entityRelation.comments.length > 0 ? (
                           <List>
-                            {entityRelation.comments.map((comment) => (
-                              <ListItem>
-                                <ListItemText>{comment}</ListItemText>
-                              </ListItem>
-                            ))}
+                            {entityRelation.comments.map(
+                              (comment, commentIndex) => (
+                                <ListItem key={commentIndex}>
+                                  <ListItemText>{comment}</ListItemText>
+                                </ListItem>
+                              )
+                            )}
                           </List>
                         ) : null}
                       </TableCell>
