@@ -1,6 +1,6 @@
 {
   "@context": [
-    "https://raw.githubusercontent.com/NextCenturyCorporation/kairos-pub/master/data-format/kairos-v0.9.jsonld?token=AMPIT5C7DLNNCKFXZ34NTH27QSTEA",
+    "https://raw.githubusercontent.com/NextCenturyCorporation/kairos-pub/master/data-format/kairos-v0.9.jsonld?token=AMPIT5EW77RB3G2VZKPKUX27R5ELO",
     {
       "caci": "https://caci.com/kairos/",
       "my_key": "caci:my_key",
