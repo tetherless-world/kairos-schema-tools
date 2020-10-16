@@ -46,9 +46,12 @@ class FsStore @Inject()(@Named("fsStoreDataDirectoryPath") val dataDirectoryPath
     val sdfDocumentsByFilePath = new mutable.HashMap[Path, SdfDocument]
     Files.walkFileTree(dataDirectoryPath, new SimpleFileVisitor[Path] {
       override def visitFile(filePath: Path, attrs: BasicFileAttributes): FileVisitResult = {
-        if (Files.isRegularFile(filePath) && filePath.getFileName.toString.toLowerCase().endsWith(".json")) {
-          withResource(Source.fromFile(filePath.toFile)) { source =>
-            sdfDocumentsByFilePath.update(filePath, readSdfDocumentFile(filePath))
+        val directoryPath = filePath.getParent
+        if (!Files.isHidden(directoryPath)) {
+          if (!Files.isHidden(filePath) && Files.isRegularFile(filePath) && filePath.getFileName.toString.toLowerCase().endsWith(".json")) {
+            withResource(Source.fromFile(filePath.toFile)) { source =>
+              sdfDocumentsByFilePath.update(filePath, readSdfDocumentFile(filePath))
+            }
           }
         }
         FileVisitResult.CONTINUE

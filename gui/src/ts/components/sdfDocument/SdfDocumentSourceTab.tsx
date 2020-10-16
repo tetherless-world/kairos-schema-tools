@@ -13,7 +13,6 @@ import {
   Grid,
 } from "@material-ui/core";
 import {SdfDocumentValidationQuery_validateSdfDocument} from "api/queries/types/SdfDocumentValidationQuery";
-import {ValidationMessagesTable} from "components/validation/ValidationMessagesTable";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
 import {Hrefs} from "Hrefs";
@@ -46,17 +45,6 @@ const PrimitiveAccordion: React.FunctionComponent<{
         </Grid>
       </Grid>
     </AccordionDetails>
-  </Accordion>
-);
-
-const RightPanelAccordion: React.FunctionComponent<React.PropsWithChildren<{
-  title: string;
-}>> = ({children, title}) => (
-  <Accordion>
-    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-      <h2>{title}</h2>
-    </AccordionSummary>
-    <AccordionDetails>{children}</AccordionDetails>
   </Accordion>
 );
 
@@ -137,6 +125,8 @@ export const SdfDocumentSourceTab: React.FunctionComponent<{
     null
   );
 
+  console.info("Saved sdf document", savedSdfDocument);
+
   return (
     <Grid container data-cy="sdf-document-editor" direction="row" spacing={4}>
       <Grid item xs={8}>
@@ -172,65 +162,50 @@ export const SdfDocumentSourceTab: React.FunctionComponent<{
       </Grid>
       <Grid item xs={4}>
         <Grid container direction="column" spacing={8}>
-          <Grid item>
-            <RightPanelAccordion title="Table of contents">
-              <Grid container direction="column">
-                {savedSdfDocument.primitives.map((primitive) => (
-                  <Grid item key={primitive.id}>
-                    <PrimitiveAccordion primitive={primitive} />
-                  </Grid>
-                ))}
-                {savedSdfDocument.schemas.map((schema) => {
-                  const addStep = () => {
-                    if (!aceEditor) {
-                      console.error("Ace editor not set");
-                      return;
-                    }
-                    const stepsClosingBracketToken =
-                      schema.steps.sourceJsonNodeLocation.stopToken;
-                    aceEditor.editor.session.insert(
-                      {
-                        row: stepsClosingBracketToken.line - 1,
-                        column: stepsClosingBracketToken.column - 1,
-                      },
-                      JSON.stringify(
-                        {
-                          "@id": "new_identifier_replace_me",
-                          name: "New step",
-                          "@type": "new_type_replace_me",
-                          aka: [],
-                          minDuration: "",
-                          maxDuration: "",
-                          participants: [],
-                        },
-                        undefined,
-                        4
-                      )
-                    );
-                    aceEditor.editor.gotoLine(
-                      stepsClosingBracketToken.line,
-                      stepsClosingBracketToken.column,
-                      false
-                    );
-                  };
-                  return (
-                    <Grid item key={schema.id}>
-                      <SchemaAccordion addStep={addStep} schema={schema} />
-                    </Grid>
-                  );
-                })}
+          {savedSdfDocument.primitives.map((primitive) => (
+            <Grid item key={primitive.id}>
+              <PrimitiveAccordion primitive={primitive} />
+            </Grid>
+          ))}
+          {savedSdfDocument.schemas.map((schema) => {
+            const addStep = () => {
+              if (!aceEditor) {
+                console.error("Ace editor not set");
+                return;
+              }
+              const stepsClosingBracketToken =
+                schema.steps.sourceJsonNodeLocation.stopToken;
+              aceEditor.editor.session.insert(
+                {
+                  row: stepsClosingBracketToken.line - 1,
+                  column: stepsClosingBracketToken.column - 1,
+                },
+                JSON.stringify(
+                  {
+                    "@id": "new_identifier_replace_me",
+                    name: "New step",
+                    "@type": "new_type_replace_me",
+                    aka: [],
+                    minDuration: "",
+                    maxDuration: "",
+                    participants: [],
+                  },
+                  undefined,
+                  4
+                )
+              );
+              aceEditor.editor.gotoLine(
+                stepsClosingBracketToken.line,
+                stepsClosingBracketToken.column,
+                false
+              );
+            };
+            return (
+              <Grid item key={schema.id}>
+                <SchemaAccordion addStep={addStep} schema={schema} />
               </Grid>
-            </RightPanelAccordion>
-          </Grid>
-          <Grid item>
-            <RightPanelAccordion
-              title={`Validation messages (${validationMessages.length})`}
-            >
-              <ValidationMessagesTable
-                validationMessages={validationMessages}
-              />
-            </RightPanelAccordion>
-          </Grid>
+            );
+          })}
         </Grid>
       </Grid>
     </Grid>

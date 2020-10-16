@@ -20,7 +20,7 @@ context("SDF document editor tab", () => {
   });
 
   it("should indicate no validation messages by default", () => {
-    page.sourceTab.editor.validationMessages.noValidationMessages;
+    page.validationTab.validationMessages.noValidationMessages;
   });
 
   it("should validate the document unchanged", () => {
@@ -30,7 +30,7 @@ context("SDF document editor tab", () => {
   it("should show a validation message when invalid text is inserted", () => {
     page.sourceTab.editor.textarea.type("invalid text", {force: true});
     page.sourceTab.editor.validateButton.click();
-    page.sourceTab.editor.validationMessages.fatal
+    page.validationTab.validationMessages.fatal
       .validationMessage(0)
       .should("contain", "Unrecognized token");
   });

@@ -18,7 +18,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {SdfDocumentSourceLink} from "components/link/SdfDocumentSourceLink";
 import {DefinitionPathLink} from "components/link/DefinitionPathLink";
 
-export const ValidationMessagesTable: React.FunctionComponent<{
+export const SdfDocumentValidationTab: React.FunctionComponent<{
   validationMessages: readonly ValidationMessageFragment[];
 }> = ({validationMessages}) => {
   const validationMessagesByType: {
@@ -74,7 +74,6 @@ export const ValidationMessagesTable: React.FunctionComponent<{
                           <TableCell>{messageIndex + 1}</TableCell>
                           <TableCell
                             data-cy={`${validationMessageType.toLowerCase()}-validation-message-${messageIndex}`}
-                            style={{width: "60%", wordBreak: "break-all"}}
                           >
                             {message.message}
                           </TableCell>
