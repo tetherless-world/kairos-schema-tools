@@ -17,7 +17,7 @@ import {
 import * as SdfDocumentAnnotatorReadableFormQueryDocument from "api/queries/SdfDocumentAnnotatorReadableFormQuery.graphql";
 import * as SdfDocumentSaveMutationDocument from "api/mutations/SdfDocumentSaveMutation.graphql";
 import {GraphQLError} from "graphql";
-import {Grid, Snackbar, Tab, Tabs} from "@material-ui/core";
+import {Badge, Grid, Snackbar, Tab, Tabs, Typography} from "@material-ui/core";
 import {
   SdfDocumentValidationQuery,
   SdfDocumentValidationQueryVariables,
@@ -34,6 +34,7 @@ import {
 } from "api/queries/types/SdfDocumentAnnotatorReadableFormQuery";
 import {SdfDocumentAnnotatorReadableFormTab} from "components/sdfDocument/SdfDocumentAnnotatorReadableFormTab";
 import ReactDOM from "react-dom";
+import {SdfDocumentValidationTab} from "components/sdfDocument/SdfDocumentValidationTab";
 
 export const SdfDocumentPage: React.FunctionComponent = () => {
   const apolloClient = useApolloClient();
@@ -47,16 +48,6 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
     "path",
     new JsonQueryParamConfig<DefinitionPath>()
   );
-
-  type TabValue = "annotator-readable-form" | "source";
-  const tabDefinitions: readonly {label: string; value: TabValue}[] = [
-    {label: "Source", value: "source"},
-    {label: "Annotator readable form", value: "annotator-readable-form"},
-  ];
-  let [tab, setTab] = useQueryParam<TabValue>("tab");
-  if (!tab) {
-    tab = "source";
-  }
 
   const query = useQuery<SdfDocumentPageQuery>(SdfDocumentPageQueryDocument, {
     fetchPolicy: "no-cache",
@@ -90,6 +81,24 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
       !volatileSourceJson,
       "source must not be set if savedSdfDocument is not"
     );
+  }
+
+  type TabValue = "annotator-readable-form" | "source" | "validation";
+  const tabDefinitions: readonly {label: React.ReactNode; value: TabValue}[] = [
+    {label: "Source", value: "source"},
+    {label: "Annotator readable form", value: "annotator-readable-form"},
+    {
+      label: (
+        <Badge badgeContent={validationMessages.length}>
+          <Typography>Validation</Typography>
+        </Badge>
+      ),
+      value: "validation",
+    },
+  ];
+  let [tab, setTab] = useQueryParam<TabValue>("tab");
+  if (!tab) {
+    tab = "source";
   }
 
   const getAnnotatorReadableForm = () => {
@@ -228,6 +237,11 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
                     savedSdfDocument={savedSdfDocument}
                     validationMessages={validationMessages}
                     volatileSourceJson={volatileSourceJson}
+                  />
+                </Grid>
+                <Grid hidden={tab !== "validation"} item>
+                  <SdfDocumentValidationTab
+                    validationMessages={validationMessages}
                   />
                 </Grid>
               </Grid>
