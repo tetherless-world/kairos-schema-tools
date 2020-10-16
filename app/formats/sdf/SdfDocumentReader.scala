@@ -77,7 +77,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
 
     try {
       header.sdfVersion match {
-        case "0.8" | "0.81" | "0.9a" => new ZeroDot8SdfDocumentReader(header, sourceJson, sourceJsonNode).read()
+        case "0.8" | "0.81" | "0.9" | "0.9a" => new ZeroDot8SdfDocumentReader(header, sourceJson, sourceJsonNode).read()
         case sdfVersion =>
           throw ValidationException(
             message = s"unrecognized SDF version ${sdfVersion}",
