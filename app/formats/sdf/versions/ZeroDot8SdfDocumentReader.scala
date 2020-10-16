@@ -4,7 +4,7 @@ import java.io.StringWriter
 
 import edu.rpi.tw.twks.uri.Uri
 import formats.sdf.vocabulary.{KairosProperties, SchemaOrgProperties}
-import formats.sdf.{SdfDocumentHeader}
+import formats.sdf.{SdfDocumentHeader, UriParseException}
 import io.github.tetherlessworld.scena.RdfProperties
 import models.json.{ArrayJsonNode, JsonNode, ObjectJsonNode, StringValueJsonNode}
 import models.schema._
@@ -43,7 +43,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
   private def mapUriResourcesToJsonNodes(jsonNodes: List[JsonNode], path: DefinitionPath, resources: List[Resource]): List[(ObjectJsonNode, Resource)] =
     mapResourcesToJsonNodes(
       getObjectJsonNodeId = (objectJsonNode: ObjectJsonNode) => {
-        withValidationExceptionCatch { () =>
+        withValidationExceptionCatch(path) { () =>
           val idNode = objectJsonNode.map.get("@id").getOrElse(throw ValidationException("JSON node missing @id", path))
           if (!idNode.isInstanceOf[StringValueJsonNode]) {
             throw ValidationException(f"JSON node @id is not a string: ${idNode}", path)
@@ -98,7 +98,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     EntityRelation(
       comments = Option(resource.comment).filter(_.nonEmpty),
       relations = resource.relations.flatMap(entityRelationRelationResource =>
-        withValidationExceptionCatch(() => readEntityRelationRelation(parentPath, entityRelationRelationResource))
+        withValidationExceptionCatch(parentPath)(() => readEntityRelationRelation(parentPath, entityRelationRelationResource))
       ),
       relationSubject = resource.relationSubject.headOption.getOrElse(throw ValidationException(s"entity relation missing subject: ${resource.toTtlString()}", parentPath))
     )
@@ -160,7 +160,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         path = path,
         resources = resource.slots,
       ).flatMap(entry =>
-        withValidationExceptionCatch(() => readPrimitiveSlot(jsonNode = entry._1, parentPath = path, resource = entry._2))
+        withValidationExceptionCatch(path)(() => readPrimitiveSlot(jsonNode = entry._1, parentPath = path, resource = entry._2))
       ),
       sourceJsonNodeLocation = jsonNode.location,
       `super` = resource.`super`.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required super property", path)),
@@ -218,11 +218,11 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       confidence = resource.confidence.headOption,
       description = resource.description.headOption.getOrElse(throw ValidationException(s"schema ${id} missing required description property", path)),
       entityRelations = resource.entityRelations.flatMap(entityRelationResource =>
-        withValidationExceptionCatch(() => readEntityRelation(path, entityRelationResource))
+        withValidationExceptionCatch(path)(() => readEntityRelation(path, entityRelationResource))
       ),
       id = id,
       name = resource.name.headOption.getOrElse(throw ValidationException(s"schema ${id} missing required name property", path)),
-      order = resource.order.flatMap(stepOrderResource => withValidationExceptionCatch(() => readStepOrder(path, stepOrderResource))),
+      order = resource.order.flatMap(stepOrderResource => withValidationExceptionCatch(path)(() => readStepOrder(path, stepOrderResource))),
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
       provenanceData = Option(mapResourcesToJsonNodes(
@@ -232,7 +232,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         path = path,
         resources = resource.provenanceData,
       ).flatMap(entry =>
-        withValidationExceptionCatch(() => readProvenanceDataObject(jsonNode = entry._1, parentPath = path, resource = entry._2))
+        withValidationExceptionCatch(path)(() => readProvenanceDataObject(jsonNode = entry._1, parentPath = path, resource = entry._2))
       )).filter(_.nonEmpty),
       references = Option(resource.reference).filter(_.nonEmpty),
       slots = mapUriResourcesToJsonNodes(
@@ -240,7 +240,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         path = path,
         resources = resource.slots,
       ).flatMap(entry =>
-        withValidationExceptionCatch(() => readSchemaSlot(jsonNode = entry._1, parentPath = path, resource = entry._2))
+        withValidationExceptionCatch(path)(() => readSchemaSlot(jsonNode = entry._1, parentPath = path, resource = entry._2))
       ),
       sourceJsonNodeLocation = jsonNode.location,
       steps = Steps(
@@ -248,7 +248,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
           jsonNodes = stepsJsonNode.list,
           path = path,
           resources = resource.steps,
-        ).flatMap(entry => withValidationExceptionCatch(() => readStep(jsonNode = entry._1, parentPath = path, resource = entry._2))),
+        ).flatMap(entry => withValidationExceptionCatch(path)(() => readStep(jsonNode = entry._1, parentPath = path, resource = entry._2))),
         sourceJsonNodeLocation = stepsJsonNode.location,
       ),
       ta2 = ta2,
@@ -290,7 +290,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         jsonNodes = jsonNode.map.get("participants").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
         resources = resource.participants
-      ).flatMap(entry => withValidationExceptionCatch(() => readStepParticipant(jsonNode = entry._1, parentPath = path, resource = entry._2)))).filter(_.nonEmpty),
+      ).flatMap(entry => withValidationExceptionCatch(path)(() => readStepParticipant(jsonNode = entry._1, parentPath = path, resource = entry._2)))).filter(_.nonEmpty),
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
       provenances = Option(resource.provenance).filter(_.nonEmpty),
@@ -343,7 +343,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         jsonNodes = jsonNode.map.get("values").filter(_.isInstanceOf[ArrayJsonNode]).map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
         resources = resource.values
-      ).flatMap(entry => withValidationExceptionCatch(() => readStepParticipantValue(jsonNode = entry._1, parentPath = path, resource = entry._2, stepParticipantId = id)))).filter(_.nonEmpty),
+      ).flatMap(entry => withValidationExceptionCatch(path)(() => readStepParticipantValue(jsonNode = entry._1, parentPath = path, resource = entry._2, stepParticipantId = id)))).filter(_.nonEmpty),
     )
   }
 
@@ -369,30 +369,27 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         jsonNodes = sourceJsonNode.asInstanceOf[ObjectJsonNode].map.get("primitives").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
         resources = header.rootResource.primitives
-      ).flatMap(entry => withValidationExceptionCatch(() => readPrimitive(jsonNode = entry._1, parentPath = path, resource = entry._2))),
+      ).flatMap(entry => withValidationExceptionCatch(path)(() => readPrimitive(jsonNode = entry._1, parentPath = path, resource = entry._2))),
       schemas = mapUriResourcesToJsonNodes(
         jsonNodes = sourceJsonNode.asInstanceOf[ObjectJsonNode].map.get("schemas").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
         resources = header.rootResource.schemas
       ).flatMap(entry =>
-        try {
-          Some(readSchema(jsonNode = entry._1, parentPath = path, resource = entry._2))
-        } catch {
-          case e: ValidationException => {
-            validationMessages ++= e.messages
-            None
-          }
-        }),
+        withValidationExceptionCatch(path)(() => readSchema(jsonNode = entry._1, parentPath = path, resource = entry._2))),
       sdfVersion = header.sdfVersion,
       sourceJson = sourceJson,
       validationMessages = validationMessages.toList
     )
   }
 
-  private def withValidationExceptionCatch[T](f: () => T): Option[T] = {
+  private def withValidationExceptionCatch[T](path: DefinitionPath)(f: () => T): Option[T] = {
     try {
       Some(f())
     } catch {
+      case e: UriParseException => {
+        validationMessages += ValidationMessage(s"error parsing URI: ${e.getMessage}", path, ValidationMessageType.Error)
+        None
+      }
       case e: ValidationException => {
         validationMessages ++= e.messages
         None

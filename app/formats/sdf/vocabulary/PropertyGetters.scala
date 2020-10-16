@@ -38,7 +38,7 @@ trait PropertyGetters extends io.github.tetherlessworld.scena.PropertyGetters {
         resources
       }
     } else {
-      resources
+      resources.filter(resource => resource.isURIResource)
     }
   }
 

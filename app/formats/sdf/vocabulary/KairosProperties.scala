@@ -1,12 +1,21 @@
 package formats.sdf.vocabulary
 
 import edu.rpi.tw.twks.uri.Uri
+import formats.sdf.UriParseException
 import models.schema.EntityType
 import models.validation.ValidationException
 import org.apache.jena.datatypes.xsd.{XSDDateTime, XSDDuration}
 import org.apache.jena.rdf.model.Resource
 
 trait KairosProperties extends PropertyGetters {
+  private def parseUri(uri: String): Uri = {
+    try {
+      Uri.parse(uri)
+    } catch {
+      case e: NullPointerException => throw new UriParseException(e)
+    }
+  }
+
   def achieves: List[String] = getPropertyObjectStrings(KAIROS.achieves)
   def after: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.after)
   def aka: List[String] = getPropertyObjectStrings(KAIROS.aka)
@@ -19,9 +28,9 @@ trait KairosProperties extends PropertyGetters {
   def container: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.container)
   def endTime: List[Double] = getPropertyObjectDoubles(KAIROS.endTime)
   def entityRelations: List[Resource] = getPropertyObjectResources(KAIROS.entityRelations)
-  def entityTypes: List[Uri] = getPropertyObjectUriResourceList(KAIROS.entityTypes).map(resource => Uri.parse(resource.getURI))
-  def entityTypes_AND: List[Uri] = getPropertyObjectUriResourceList(KAIROS.entityTypes_AND).map(resource => Uri.parse(resource.getURI))
-  def entityTypes_OR: List[Uri] = getPropertyObjectUriResourceList(KAIROS.entityTypes_OR).map(resource => Uri.parse(resource.getURI))
+  def entityTypes: List[Uri] = getPropertyObjectUriResourceList(KAIROS.entityTypes).map(resource => parseUri(resource.getURI))
+  def entityTypes_AND: List[Uri] = getPropertyObjectUriResourceList(KAIROS.entityTypes_AND).map(resource => parseUri(resource.getURI))
+  def entityTypes_OR: List[Uri] = getPropertyObjectUriResourceList(KAIROS.entityTypes_OR).map(resource => parseUri(resource.getURI))
   def keyframes: List[Int] = getPropertyObjectInts(KAIROS.keyframes)
   def flags: List[String] = getPropertyObjectStrings(KAIROS.flags)
   def length: List[Int] = getPropertyObjectInts(KAIROS.length)
