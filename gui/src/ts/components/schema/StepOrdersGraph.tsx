@@ -4,7 +4,6 @@ import {SchemaHrefs} from "Hrefs";
 import {Graph, GraphConfiguration, GraphLink, GraphNode} from "react-d3-graph";
 import {AutoSizer} from "react-virtualized";
 import {useHistory} from "react-router-dom";
-import {StepOrderFlag} from "api/graphqlGlobalTypes";
 import {useTheme} from "@material-ui/core/styles";
 import {Alert} from "@material-ui/lab";
 
@@ -30,12 +29,12 @@ export const StepOrdersGraph: React.FunctionComponent<{
     const order = schema.order[orderI];
     switch (order.__typename) {
       case "BeforeAfterStepOrder": {
-        if (
-          !order.flags ||
-          !order.flags.some((flag) => flag === StepOrderFlag.Precondition)
-        ) {
-          continue;
-        }
+        // if (
+        //   !order.flags ||
+        //   !order.flags.some((flag) => flag === StepOrderFlag.Precondition)
+        // ) {
+        //   continue;
+        // }
 
         for (const stepId of order.before.concat(order.after)) {
           const step = schema.steps.list.find((step) => step.id === stepId);
