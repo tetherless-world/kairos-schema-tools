@@ -6,6 +6,7 @@ import {AutoSizer} from "react-virtualized";
 import {useHistory} from "react-router-dom";
 import {StepOrderFlag} from "api/graphqlGlobalTypes";
 import {useTheme} from "@material-ui/core/styles";
+import {Alert} from "@material-ui/lab";
 
 interface StepOrdersGraphNode extends GraphNode {
   label: string;
@@ -75,6 +76,14 @@ export const StepOrdersGraph: React.FunctionComponent<{
     }
     history.push(hrefs.step({id: nodeId}));
   };
+
+  if (nodes.length === 0 || links.length === 0) {
+    return (
+      <Alert severity="error">
+        No before-after orders flagged as preconditions.
+      </Alert>
+    );
+  }
 
   return (
     <AutoSizer
