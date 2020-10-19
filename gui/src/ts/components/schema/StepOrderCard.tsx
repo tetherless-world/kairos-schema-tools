@@ -106,9 +106,7 @@ export const StepOrderCard: React.FunctionComponent<{
           />
           <StringFieldTableRow
             name="Confidence"
-            value={
-              stepOrder.confidence ? stepOrder.confidence.toFixed(2) : null
-            }
+            value={stepOrder.confidence?.toFixed(2)}
           />
           <StringListFieldTableRow
             direction="row"

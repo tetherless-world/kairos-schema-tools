@@ -573,6 +573,11 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_sourc
   stopToken: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_sourceJsonNodeLocation_stopToken;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_temporalObjects {
+  __typename: "TemporalObject";
+  label: string;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list {
   __typename: "Step";
   id: string;
@@ -580,6 +585,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list {
   participants: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_participants[] | null;
   path: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_path;
   sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_sourceJsonNodeLocation;
+  temporalObjects: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_temporalObjects[] | null;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_sourceJsonNodeLocation_startToken {

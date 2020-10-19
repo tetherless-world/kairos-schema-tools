@@ -69,6 +69,14 @@ export class SchemaHrefs extends SubHrefs {
   stepParticipantId(stepParticipant: {id: string}) {
     return `step-participant-${this.sanitizeId(stepParticipant.id)}`;
   }
+
+  stepTemporalObjects(step: {id: string}) {
+    return `${this.home}#${this.stepTemporalObjectsId(step)}`;
+  }
+
+  stepTemporalObjectsId(step: {id: string}) {
+    return `step-temporal-objects-${this.sanitizeId(step.id)}`;
+  }
 }
 
 class SdfDocumentPrimitivesHrefs extends SubHrefs {

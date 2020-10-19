@@ -15,6 +15,7 @@ import {StringListFieldTableRow} from "components/table/StringListFieldTableRow"
 import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 import {shortenUri} from "models/shortenUri";
 import {JsonFieldTableRow} from "components/table/JsonFieldTableRow";
+import {TemporalObjectCard} from "components/schema/TemporalObjectCard";
 
 export const StepCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
@@ -50,7 +51,7 @@ export const StepCard: React.FunctionComponent<{
           />
           <StringFieldTableRow
             name="Confidence"
-            value={step.confidence ? step.confidence.toFixed(2) : null}
+            value={step.confidence?.toFixed(2)}
             valueDataCy="step-confidence"
           />
           <StringListFieldTableRow
@@ -65,12 +66,12 @@ export const StepCard: React.FunctionComponent<{
           />
           <StringFieldTableRow
             name="Max duration"
-            value={step.maxDuration ? step.maxDuration.string : null}
+            value={step.maxDuration?.string}
             valueDataCy="step-max-duration"
           />
           <StringFieldTableRow
             name="Min duration"
-            value={step.minDuration ? step.minDuration.string : null}
+            value={step.minDuration?.string}
             valueDataCy="step-min-duration"
           />
           <JsonFieldTableRow name={"Private data"} value={step.privateData} />
@@ -107,8 +108,8 @@ export const StepCard: React.FunctionComponent<{
               {step.participants.map((participant) => (
                 <Grid
                   id={hrefs.stepParticipantId(participant)}
-                  key={participant.id}
                   item
+                  key={participant.id}
                 >
                   <StepParticipantCard
                     namespacePrefixes={namespacePrefixes}
@@ -116,6 +117,30 @@ export const StepCard: React.FunctionComponent<{
                   />
                 </Grid>
               ))}
+            </Grid>
+          </CardContent>
+        </Card>
+      ) : null}
+      {step.temporalObjects && step.temporalObjects.length > 0 ? (
+        <Card>
+          <CardHeader title="Temporal objects" />
+          <CardContent>
+            <Grid
+              container
+              direction="column"
+              id={hrefs.stepTemporalObjectsId(step)}
+              spacing={6}
+            >
+              {step.temporalObjects.map(
+                (temporalObject, temporalObjectIndex) => (
+                  <Grid item key={temporalObjectIndex}>
+                    <TemporalObjectCard
+                      hrefs={hrefs}
+                      temporalObject={temporalObject}
+                    />
+                  </Grid>
+                )
+              )}
             </Grid>
           </CardContent>
         </Card>

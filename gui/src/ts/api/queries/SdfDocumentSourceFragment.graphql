@@ -78,6 +78,9 @@ fragment SdfDocumentSourceFragment on SdfDocument {
                 sourceJsonNodeLocation {
                     ...JsonNodeLocationFragment
                 }
+                temporalObjects {
+                    label
+                }
             }
             sourceJsonNodeLocation {
                 ...JsonNodeLocationFragment

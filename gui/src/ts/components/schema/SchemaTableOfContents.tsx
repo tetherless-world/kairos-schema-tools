@@ -35,6 +35,7 @@ interface SchemaTableOfContentsSlot extends SchemaTableOfContentsEntry {}
 
 interface SchemaTableOfContentsStep extends SchemaTableOfContentsEntry {
   participants: readonly SchemaTableOfContentsStepParticipant[] | null;
+  temporalObjects: readonly {label: string}[] | null;
 }
 
 interface SchemaTableOfContentsStepParticipant
@@ -104,7 +105,7 @@ const StepsList: React.FunctionComponent<{
                   ) : null}
                 </Grid>
               </Grid>
-              {step.participants ? (
+              {step.participants && step.participants.length > 0 ? (
                 <Grid item>
                   <SchemaTableOfContentsEntryList
                     entries={step.participants}
@@ -112,6 +113,13 @@ const StepsList: React.FunctionComponent<{
                     includeSourceLinks={includeSourceLinks}
                     labelPrefix="Participant"
                   />
+                </Grid>
+              ) : null}
+              {step.temporalObjects && step.temporalObjects.length > 0 ? (
+                <Grid item>
+                  <Link to={hrefs.stepTemporalObjects(step)}>
+                    Temporal objects
+                  </Link>
                 </Grid>
               ) : null}
             </Grid>
