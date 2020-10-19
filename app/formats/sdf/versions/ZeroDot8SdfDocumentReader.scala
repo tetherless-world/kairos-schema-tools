@@ -253,7 +253,6 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       ),
       ta2 = ta2,
       template = resource.template.headOption,
-      temporalObjects = None,
       version = resource.version.headOption.getOrElse(throw ValidationException(s"schema ${id} missing version property", path))
     )
   }
@@ -298,6 +297,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       references = Option(resource.reference).filter(_.nonEmpty),
       requires = Option(resource.requires).filter(_.nonEmpty),
       sourceJsonNodeLocation = jsonNode.location,
+      temporalObjects = Option(resource.temporal.map(readTemporalObject(path, _))).filter(_.nonEmpty),
       `type` = Uri.parse(resource.types.headOption.getOrElse(throw ValidationException(s"step ${id} missing type", path)).getURI)
     )
   }

@@ -20,7 +20,6 @@ final case class Schema(
                          sourceJsonNodeLocation: JsonNodeLocation,
                          steps: Steps,
                          ta2: Boolean,
-                          temporalObjects: Option[List[TemporalObject]],
                          template: Option[String],
                          version: String
 ) extends Definition {
