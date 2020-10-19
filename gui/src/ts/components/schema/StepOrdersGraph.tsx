@@ -77,11 +77,7 @@ export const StepOrdersGraph: React.FunctionComponent<{
   };
 
   if (nodes.length === 0 || links.length === 0) {
-    return (
-      <Alert severity="error">
-        No before-after orders flagged as preconditions.
-      </Alert>
-    );
+    return <Alert severity="error">No before-after orders.</Alert>;
   }
 
   return (
