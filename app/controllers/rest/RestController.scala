@@ -38,13 +38,13 @@ class RestController @Inject() (store: Store) extends InjectedController {
   // Entity types
   private implicit val entityTypeJsonWrites: json.Writes[EntityType] = (entityType) => JsString(entityType.value)
   private implicit val entityTypesJsonWrites = Json.writes[EntityTypes]
-  // Entity relations
-  private implicit val entityRelationRelationJsonWrites = Json.writes[EntityRelationRelation]
-  private implicit val entityRelationJsonWrites = Json.writes[EntityRelation]
   // Primitive
   private implicit val primitiveSlotJsonWrites: json.Writes[PrimitiveSlot] = Json.writes[PrimitiveSlot]
   private implicit val primitiveJsonWrites: json.Writes[Primitive] = Json.writes[Primitive]
   // Schema
+  private implicit val entityRelationRelationJsonWrites = Json.writes[EntityRelationRelation]
+  private implicit val entityRelationJsonWrites = Json.writes[EntityRelation]
+  private implicit val temporalObjectJsonWrites = Json.writes[TemporalObject]
   private implicit val provenanceDataObjectJsonWrites = Json.writes[ProvenanceDataObject]
   private implicit val schemaSlotJsonWrites = Json.writes[SchemaSlot]
   private implicit val stepParticipantValueJsonWrites = Json.writes[StepParticipantValue]
