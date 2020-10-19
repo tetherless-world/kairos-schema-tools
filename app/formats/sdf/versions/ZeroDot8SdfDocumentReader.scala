@@ -297,6 +297,7 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       references = Option(resource.reference).filter(_.nonEmpty),
       requires = Option(resource.requires).filter(_.nonEmpty),
       sourceJsonNodeLocation = jsonNode.location,
+      temporalObjects = Option(resource.temporal.map(readTemporalObject(path, _))).filter(_.nonEmpty),
       `type` = Uri.parse(resource.types.headOption.getOrElse(throw ValidationException(s"step ${id} missing type", path)).getURI)
     )
   }
@@ -358,6 +359,20 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       sourceJsonNodeLocation = jsonNode.location
     )
   }
+
+  private def readTemporalObject(parentPath: DefinitionPath, resource: Resource) =
+    TemporalObject(
+      absoluteTime = resource.absoluteTime.headOption.map(DateTime(_)),
+      comments = Option(resource.comment).filter(_.nonEmpty),
+      confidence = resource.confidence.headOption.getOrElse(throw ValidationException(s"temporal object in schema ${parentPath.sdfDocument.schema.get.id} missing required confidence", parentPath)),
+      duration = resource.duration.headOption.map(Duration(_)),
+      label = resource.getId.toString,
+      earliestEndTime = resource.earliestEndTime.headOption.map(DateTime(_)),
+      earliestStartTime = resource.earliestStartTime.headOption.map(DateTime(_)),
+      latestEndTime = resource.latestEndTime.headOption.map(DateTime(_)),
+      latestStartTime = resource.latestStartTime.headOption.map(DateTime(_)),
+      provenances = Option(resource.provenance).filter(_.nonEmpty)
+    )
 
   def read(): SdfDocument = {
     val id = header.id

@@ -573,6 +573,11 @@ export interface SdfDocumentSourceFragment_schemas_steps_list_sourceJsonNodeLoca
   stopToken: SdfDocumentSourceFragment_schemas_steps_list_sourceJsonNodeLocation_stopToken;
 }
 
+export interface SdfDocumentSourceFragment_schemas_steps_list_temporalObjects {
+  __typename: "TemporalObject";
+  label: string;
+}
+
 export interface SdfDocumentSourceFragment_schemas_steps_list {
   __typename: "Step";
   id: string;
@@ -580,6 +585,7 @@ export interface SdfDocumentSourceFragment_schemas_steps_list {
   participants: SdfDocumentSourceFragment_schemas_steps_list_participants[] | null;
   path: SdfDocumentSourceFragment_schemas_steps_list_path;
   sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_steps_list_sourceJsonNodeLocation;
+  temporalObjects: SdfDocumentSourceFragment_schemas_steps_list_temporalObjects[] | null;
 }
 
 export interface SdfDocumentSourceFragment_schemas_steps_sourceJsonNodeLocation_startToken {

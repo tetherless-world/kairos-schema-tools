@@ -130,6 +130,30 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                 provenances
                 references
                 requires
+                temporalObjects {
+                    absoluteTime {
+                        string
+                    }
+                    comments
+                    confidence
+                    duration {
+                        string
+                    }
+                    earliestEndTime {
+                        string
+                    }
+                    earliestStartTime {
+                        string
+                    }
+                    label
+                    latestEndTime {
+                        string
+                    }
+                    latestStartTime {
+                        string
+                    }
+                    provenances
+                }
                 type
             }
         }

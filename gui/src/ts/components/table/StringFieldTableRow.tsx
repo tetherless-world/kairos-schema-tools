@@ -3,7 +3,7 @@ import {TableCell, TableRow} from "@material-ui/core";
 
 export const StringFieldTableRow: React.FunctionComponent<{
   name: string;
-  value: string | null;
+  value: string | null | undefined;
   valueDataCy?: string;
 }> = ({name, value, valueDataCy}) => {
   if (!value) {

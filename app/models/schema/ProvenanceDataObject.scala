@@ -17,6 +17,6 @@ final case class ProvenanceDataObject(
                                        privateData: Option[String],
                                        sourceJsonNodeLocation: JsonNodeLocation,
                                        startTime: Option[Double]
-                                     ) extends Definition {
-  final override def label = id.toString
+                                     ) {
+  final def label = id
 }

@@ -139,6 +139,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
       Field("label", StringType, resolve = _.value.label)
     )
   )
+  implicit val TemporalObjectObjectType = deriveObjectType[GraphQlSchemaContext, TemporalObject]()
   implicit val StepParticipantValueObjectType = deriveObjectType[GraphQlSchemaContext, StepParticipantValue](
     AddFields(
       Field("label", StringType, resolve = _.value.name)

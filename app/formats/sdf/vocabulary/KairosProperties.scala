@@ -16,6 +16,7 @@ trait KairosProperties extends PropertyGetters {
     }
   }
 
+  def absoluteTime: List[XSDDateTime] = getPropertyObjectDateTimes(KAIROS.absoluteTime)
   def achieves: List[String] = getPropertyObjectStrings(KAIROS.achieves)
   def after: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.after)
   def aka: List[String] = getPropertyObjectStrings(KAIROS.aka)
@@ -26,6 +27,9 @@ trait KairosProperties extends PropertyGetters {
   def confidence: List[Double] = getPropertyObjectDoubles(KAIROS.confidence)
   def contained: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.contained)
   def container: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.container)
+  def duration: List[XSDDuration] = getPropertyObjectDurations(KAIROS.duration)
+  def earliestEndTime: List[XSDDateTime] = getPropertyObjectDateTimes(KAIROS.earliestEndTime)
+  def earliestStartTime: List[XSDDateTime] = getPropertyObjectDateTimes(KAIROS.earliestStartTime)
   def endTime: List[Double] = getPropertyObjectDoubles(KAIROS.endTime)
   def entityRelations: List[Resource] = getPropertyObjectResources(KAIROS.entityRelations)
   def entityTypes: List[Uri] = getPropertyObjectUriResourceList(KAIROS.entityTypes).map(resource => parseUri(resource.getURI))
@@ -33,6 +37,8 @@ trait KairosProperties extends PropertyGetters {
   def entityTypes_OR: List[Uri] = getPropertyObjectUriResourceList(KAIROS.entityTypes_OR).map(resource => parseUri(resource.getURI))
   def keyframes: List[Int] = getPropertyObjectInts(KAIROS.keyframes)
   def flags: List[String] = getPropertyObjectStrings(KAIROS.flags)
+  def latestEndTime: List[XSDDateTime] = getPropertyObjectDateTimes(KAIROS.latestEndTime)
+  def latestStartTime: List[XSDDateTime] = getPropertyObjectDateTimes(KAIROS.latestStartTime)
   def length: List[Int] = getPropertyObjectInts(KAIROS.length)
   def maxDuration: List[XSDDuration] = getPropertyObjectDurations(KAIROS.maxDuration)
   def mediaType: List[String] = getPropertyObjectStrings(KAIROS.mediaType)
@@ -62,5 +68,6 @@ trait KairosProperties extends PropertyGetters {
   def sdfVersion: List[String] = getPropertyObjectStrings(KAIROS.sdfVersion)
   def ta2: Option[Boolean] = getPropertyObjectLiterals(KAIROS.ta2).headOption.map(_.getBoolean)
   def template: List[String] = getPropertyObjectStrings(KAIROS.template)
+  def temporal: List[Resource] = getPropertyObjectResources(KAIROS.temporal)
   def values: List[Resource] = getPropertyObjectResources(KAIROS.values)
 }

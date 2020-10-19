@@ -63,12 +63,12 @@ export const PrimitiveDetailsTable: React.FunctionComponent<{
       />
       <StringFieldTableRow
         name="Max duration"
-        value={primitive.maxDuration ? primitive.maxDuration.string : null}
+        value={primitive.maxDuration?.string}
         valueDataCy="primitive-max-duration"
       />
       <StringFieldTableRow
         name="Min duration"
-        value={primitive.minDuration ? primitive.minDuration.string : null}
+        value={primitive.minDuration?.string}
         valueDataCy="primitive-min-duration"
       />
       <JsonFieldTableRow name={"Private data"} value={primitive.privateData} />

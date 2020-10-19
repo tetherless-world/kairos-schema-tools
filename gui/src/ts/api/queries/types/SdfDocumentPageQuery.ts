@@ -573,6 +573,11 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_sourceJ
   stopToken: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_sourceJsonNodeLocation_stopToken;
 }
 
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_temporalObjects {
+  __typename: "TemporalObject";
+  label: string;
+}
+
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list {
   __typename: "Step";
   id: string;
@@ -580,6 +585,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list {
   participants: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_participants[] | null;
   path: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_path;
   sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_sourceJsonNodeLocation;
+  temporalObjects: SdfDocumentPageQuery_sdfDocumentById_schemas_steps_list_temporalObjects[] | null;
 }
 
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_steps_sourceJsonNodeLocation_startToken {

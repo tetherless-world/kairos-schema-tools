@@ -405,6 +405,50 @@ export interface SchemaPageQuery_schemaById_steps_list_path {
   sdfDocument: SchemaPageQuery_schemaById_steps_list_path_sdfDocument;
 }
 
+export interface SchemaPageQuery_schemaById_steps_list_temporalObjects_absoluteTime {
+  __typename: "DateTime";
+  string: string;
+}
+
+export interface SchemaPageQuery_schemaById_steps_list_temporalObjects_duration {
+  __typename: "Duration";
+  string: string;
+}
+
+export interface SchemaPageQuery_schemaById_steps_list_temporalObjects_earliestEndTime {
+  __typename: "DateTime";
+  string: string;
+}
+
+export interface SchemaPageQuery_schemaById_steps_list_temporalObjects_earliestStartTime {
+  __typename: "DateTime";
+  string: string;
+}
+
+export interface SchemaPageQuery_schemaById_steps_list_temporalObjects_latestEndTime {
+  __typename: "DateTime";
+  string: string;
+}
+
+export interface SchemaPageQuery_schemaById_steps_list_temporalObjects_latestStartTime {
+  __typename: "DateTime";
+  string: string;
+}
+
+export interface SchemaPageQuery_schemaById_steps_list_temporalObjects {
+  __typename: "TemporalObject";
+  absoluteTime: SchemaPageQuery_schemaById_steps_list_temporalObjects_absoluteTime | null;
+  comments: string[] | null;
+  confidence: number;
+  duration: SchemaPageQuery_schemaById_steps_list_temporalObjects_duration | null;
+  earliestEndTime: SchemaPageQuery_schemaById_steps_list_temporalObjects_earliestEndTime | null;
+  earliestStartTime: SchemaPageQuery_schemaById_steps_list_temporalObjects_earliestStartTime | null;
+  label: string;
+  latestEndTime: SchemaPageQuery_schemaById_steps_list_temporalObjects_latestEndTime | null;
+  latestStartTime: SchemaPageQuery_schemaById_steps_list_temporalObjects_latestStartTime | null;
+  provenances: string[] | null;
+}
+
 export interface SchemaPageQuery_schemaById_steps_list {
   __typename: "Step";
   achieves: string[] | null;
@@ -422,6 +466,7 @@ export interface SchemaPageQuery_schemaById_steps_list {
   provenances: string[] | null;
   references: string[] | null;
   requires: string[] | null;
+  temporalObjects: SchemaPageQuery_schemaById_steps_list_temporalObjects[] | null;
   type: string;
 }
 
