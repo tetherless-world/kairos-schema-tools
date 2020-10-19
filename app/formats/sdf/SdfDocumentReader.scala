@@ -54,7 +54,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
       }
     }
 
-//    model.write(System.out, Lang.TTL.getName)
+    model.write(System.out, Lang.TTL.getName)
 
     var header: SdfDocumentHeader = null
     try {

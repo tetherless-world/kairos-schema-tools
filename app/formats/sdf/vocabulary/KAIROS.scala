@@ -7,6 +7,7 @@ object KAIROS {
   val URI = "https://kairos-sdf.s3.amazonaws.com/context/kairos/"
 
   // Properties
+  val absoluteTime = ResourceFactory.createProperty(URI + "absoluteTime")
   val achieves = ResourceFactory.createProperty(URI + "achieves")
   val after = ResourceFactory.createProperty(URI + "after")
   val aka = ResourceFactory.createProperty(URI + "aka")
@@ -17,6 +18,9 @@ object KAIROS {
   val confidence = ResourceFactory.createProperty(URI + "confidence")
   val contained = ResourceFactory.createProperty(URI + "contained")
   val container = ResourceFactory.createProperty(URI + "container")
+  val duration = ResourceFactory.createProperty(URI + "duration")
+  val earliestEndTime = ResourceFactory.createProperty(URI + "earliestEndTime")
+  val earliestStartTime = ResourceFactory.createProperty(URI + "earliestStartTime")
   val endTime = ResourceFactory.createProperty(URI + "endTime")
   val entityRelations = ResourceFactory.createProperty(URI + "entityRelations")
   val entityTypes = ResourceFactory.createProperty(URI + "entityTypes")
@@ -24,6 +28,8 @@ object KAIROS {
   val entityTypes_OR = ResourceFactory.createProperty(URI + "entityTypes_OR")
   val flags = ResourceFactory.createProperty(URI + "flags")
   val keyframes = ResourceFactory.createProperty(URI + "keyframes")
+  val latestEndTime = ResourceFactory.createProperty(URI + "latestEndTime")
+  val latestStartTime = ResourceFactory.createProperty(URI + "latestStartTime")
   val length = ResourceFactory.createProperty(URI + "length")
   val maxDuration = ResourceFactory.createProperty(URI + "maxDuration")
   val mediaType = ResourceFactory.createProperty(URI + "mediaType")
@@ -53,6 +59,7 @@ object KAIROS {
   val steps = ResourceFactory.createProperty(URI + "steps")
   val `super` = ResourceFactory.createProperty(URI + "super")
   val ta2 = ResourceFactory.createProperty(URI + "ta2")
+  val temporal = ResourceFactory.createProperty(URI + "temporal")
   val template = ResourceFactory.createProperty(URI + "template")
   val values = ResourceFactory.createProperty(URI + "values")
 }

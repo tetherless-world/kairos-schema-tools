@@ -1,7 +1,5 @@
 package models.schema
 
-import models.json.JsonNodeLocation
-
 final case class TemporalObject(
                                  absoluteTime: Option[DateTime],
                                  comments: Option[List[String]],
@@ -12,8 +10,8 @@ final case class TemporalObject(
                                  label: String,
                                  latestEndTime: Option[DateTime],
                                  latestStartTime: Option[DateTime],
-                                 privateData: Option[String],
-                                 provenances: Option[List[String]],
-                                 sourceJsonNodeLocation: JsonNodeLocation,
-                               ) {
-}
+                               // Currently (20201019) we can't get the JSON object for a temporal object because the container is unordered.
+                               // We need the JSON object to get privateData.
+//                                 privateData: Option[String],
+                                 provenances: Option[List[String]]
+                               )
