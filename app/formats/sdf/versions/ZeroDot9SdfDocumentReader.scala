@@ -40,6 +40,9 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     })
   }
 
+  private def getProvenanceDataObjectId(jsonNode: ObjectJsonNode): Option[String] =
+    jsonNode.map.get("@id").orElse(jsonNode.map.get("provenance")).filter(_.isInstanceOf[StringValueJsonNode]).map(_.asInstanceOf[StringValueJsonNode].value)
+
   private def mapUriResourcesToJsonNodes(jsonNodes: List[JsonNode], path: DefinitionPath, resources: List[Resource]): List[(ObjectJsonNode, Resource)] =
     mapResourcesToJsonNodes(
       getObjectJsonNodeId = (objectJsonNode: ObjectJsonNode) => {
@@ -186,7 +189,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
   }
 
   private def readProvenanceDataObject(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource) = {
-    val id = jsonNode.map.get("@id").orElse(jsonNode.map.get("provenance")).getOrElse(throw ValidationException(s"provenanceDataObject missing @id or provenance", parentPath)).asInstanceOf[StringValueJsonNode].value
+    val id = getProvenanceDataObjectId(jsonNode).getOrElse(throw ValidationException(s"provenanceDataObject missing @id or provenance", parentPath))
     val path = DefinitionPath.sdfDocument(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).provenanceDataObject(id)
     ProvenanceDataObject(
       boundingBox = Option(resource.boundingBox).filter(_.nonEmpty),
@@ -225,7 +228,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
       provenanceData = Option(mapResourcesToJsonNodes(
-        getObjectJsonNodeId = (objectJsonNode) => objectJsonNode.map.get("@id").filter(_.isInstanceOf[StringValueJsonNode]).map(_.asInstanceOf[StringValueJsonNode].value),
+        getObjectJsonNodeId = getProvenanceDataObjectId,
         getResourceId = (resource) => {
           if (resource.getURI != null && resource.getURI.startsWith(header.baseUri.toString))
             Some(resource.getURI.substring(header.baseUri.toString.length))
