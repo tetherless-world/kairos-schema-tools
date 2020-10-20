@@ -13,7 +13,7 @@ trait Store {
   def getPrimitives: List[Primitive]
   def getPrimitiveSlotById(id: Uri): Option[PrimitiveSlot]
 
-  def getProvenanceDataObjectById(id: Uri): Option[ProvenanceDataObject]
+  def getProvenanceDataObjectById(id: String): Option[ProvenanceDataObject]
 
   def getSchemaById(id: Uri): Option[Schema]
   def getSchemas: List[Schema]

@@ -9,7 +9,7 @@ object DefinitionPath {
 
   final case class DefinitionPathPrimitiveSlot(id: Uri)
 
-  final case class DefinitionPathProvenanceDataObject(id: Uri)
+  final case class DefinitionPathProvenanceDataObject(id: String)
 
   final case class DefinitionPathStep(id: Uri, participant: Option[DefinitionPathStepParticipant])
 
@@ -52,7 +52,7 @@ object DefinitionPath {
       }
 
       def build = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, provenanceDataObject = None, slot = None, step = None))))
-      def provenanceDataObject(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, provenanceDataObject = Some(DefinitionPathProvenanceDataObject(id = id)), slot = None, step = None))))
+      def provenanceDataObject(id: String) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, provenanceDataObject = Some(DefinitionPathProvenanceDataObject(id = id)), slot = None, step = None))))
       def slot(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, provenanceDataObject = None, slot = Some(DefinitionPathSchemaSlot(id = id)), step = None))))
       def step(id: Uri) = new DefinitionPathSchemaStepBuilder(stepId = id)
     }
