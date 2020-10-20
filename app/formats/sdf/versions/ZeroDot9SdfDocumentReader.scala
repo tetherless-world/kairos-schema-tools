@@ -153,6 +153,8 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       comments = Option(resource.comment).filter(_.nonEmpty),
       description = resource.description.headOption.getOrElse(s"primitive ${id} missing required description property"),
       id = id,
+      maxDuration = resource.maxDuration.headOption.map(Duration(_)),
+      minDuration = resource.minDuration.headOption.map(Duration(_)),
       name = resource.name.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required name property", path)),
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
