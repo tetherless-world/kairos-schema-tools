@@ -16,7 +16,7 @@ import org.apache.jena.riot.Lang
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 
-final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: String, sourceJsonNode: JsonNode) {
+final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: String, sourceJsonNode: JsonNode) {
   private val nsPrefixMap = header.rootResource.getModel.getNsPrefixMap.asScala
   private val ta2 = header.rootResource.ta2.getOrElse(false)
   private val validationMessages = new mutable.ListBuffer[ValidationMessage]()
@@ -150,8 +150,6 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       comments = Option(resource.comment).filter(_.nonEmpty),
       description = resource.description.headOption.getOrElse(s"primitive ${id} missing required description property"),
       id = id,
-      maxDuration = resource.maxDuration.map(Duration(_)).headOption,
-      minDuration = resource.minDuration.map(Duration(_)).headOption,
       name = resource.name.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required name property", path)),
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
@@ -188,15 +186,15 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
   }
 
   private def readProvenanceDataObject(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource) = {
-    val id = Uri.parse(resource.getURI)
+    val id = jsonNode.map.get("@id").orElse(jsonNode.map.get("provenance")).getOrElse(throw ValidationException(s"provenanceDataObject missing @id or provenance", parentPath)).asInstanceOf[StringValueJsonNode].value
     val path = DefinitionPath.sdfDocument(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).provenanceDataObject(id)
     ProvenanceDataObject(
       boundingBox = Option(resource.boundingBox).filter(_.nonEmpty),
       childId = resource.childId.headOption.getOrElse(throw ValidationException(s"provenanceData object ${id} missing required childID", path)),
       comments = Option(resource.comment).filter(_.nonEmpty),
       endTime = resource.startTime.headOption,
-      id = jsonNode.map("@id").asInstanceOf[StringValueJsonNode].value,
       keyframes = Option(resource.keyframes).filter(_.nonEmpty),
+      id = id,
       length = resource.length.headOption,
       mediaType = resource.mediaType.headOption.getOrElse(throw ValidationException(s"provenanceData object ${id} missing required mediaType", path)),
       offset = resource.offset.headOption,
