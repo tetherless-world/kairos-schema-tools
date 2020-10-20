@@ -138,7 +138,8 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       confidence = resource.confidence.headOption,
       name = resource.name.headOption,
       relationObjects = resource.relationObject,
-      relationPredicate = resource.relationPredicate.headOption.getOrElse(throw ValidationException(s"entity relation missing relation predicate: ${resource.toTtlString()}", parentPath))
+      relationPredicate = resource.relationPredicate.headOption.getOrElse(throw ValidationException(s"entity relation missing relation predicate: ${resource.toTtlString()}", parentPath)),
+      provenances = Option(resource.provenance).filter(_.nonEmpty)
     )
 
   private def readPrimitive(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource) = {
@@ -311,13 +312,14 @@ final class ZeroDot8SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     val container = resource.container
     val flags = Option(resource.flags.map(flagString => StepOrderFlag.values.find(_.value == flagString).getOrElse(throw ValidationException(s"unknown step order flag ${flagString}", parentPath)))).filter(_.nonEmpty)
     val overlaps = resource.overlaps
+    val provenances = Option(resource.provenance).filter(_.nonEmpty)
 
     if (after.nonEmpty && before.nonEmpty) {
-      BeforeAfterStepOrder(after = after, before = before, comments = comments, confidence = confidence, flags = flags)
+      BeforeAfterStepOrder(after = after, before = before, comments = comments, confidence = confidence, flags = flags, provenances = provenances)
     } else if (contained.nonEmpty && container.size == 1) {
-      ContainerContainedStepOrder(comments = comments, confidence = confidence, container = container(0), contained = contained, flags = flags)
+      ContainerContainedStepOrder(comments = comments, confidence = confidence, container = container(0), contained = contained, flags = flags, provenances = provenances)
     } else if (overlaps.nonEmpty) {
-      OverlapsStepOrder(comments = comments, confidence = confidence, flags = flags, overlaps = overlaps)
+      OverlapsStepOrder(comments = comments, confidence = confidence, flags = flags, overlaps = overlaps, provenances = provenances)
     } else {
       throw ValidationException(s"invalid step order:\n${resource.toTtlString()}", parentPath)
     }
