@@ -11,10 +11,13 @@ import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {JsonFieldTableRow} from "components/table/JsonFieldTableRow";
 import {EntityTypesFieldTableRow} from "components/table/EntityTypesFieldTableRow";
+import {ProvenancesFieldTableRow} from "components/table/ProvenancesFieldTableRow";
+import {SchemaHrefs} from "Hrefs";
 
 export const StepParticipantValueCard: React.FunctionComponent<{
+  hrefs: SchemaHrefs;
   value: SchemaPageQuery_schemaById_steps_list_participants_values;
-}> = ({value}) => (
+}> = ({hrefs, value}) => (
   <Card>
     <CardHeader title={"Value: " + value.label} />
     <CardContent>
@@ -36,10 +39,9 @@ export const StepParticipantValueCard: React.FunctionComponent<{
           />
           <EntityTypesFieldTableRow entityTypes={value.entityTypes} />
           <JsonFieldTableRow name={"Private data"} value={value.privateData} />
-          <StringListFieldTableRow
-            direction="column"
-            name="Provenance"
-            values={value.provenances}
+          <ProvenancesFieldTableRow
+            hrefs={hrefs}
+            provenances={value.provenances}
           />
         </TableBody>
       </Table>

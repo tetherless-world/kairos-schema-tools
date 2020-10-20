@@ -38,6 +38,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
         Field("comments", OptionType(ListType(StringType)), resolve = _.value.comments),
         Field("confidence", OptionType(FloatType), resolve = _.value.confidence),
         Field("flags", OptionType(ListType(StepOrderFlagEnumType)), resolve = _.value.flags),
+        Field("provenances", OptionType(ListType(StringType)), resolve = _.value.provenances)
       )
     )
 

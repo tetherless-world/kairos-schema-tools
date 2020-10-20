@@ -10,6 +10,7 @@ import * as React from "react";
 import {SchemaHrefs} from "Hrefs";
 import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
+import {ProvenancesFieldTableRow} from "components/table/ProvenancesFieldTableRow";
 
 export const TemporalObjectCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
@@ -49,10 +50,9 @@ export const TemporalObjectCard: React.FunctionComponent<{
             name="Duration"
             value={temporalObject.duration?.string}
           />
-          <StringListFieldTableRow
-            direction="column"
-            name="Provenance"
-            values={temporalObject.provenances}
+          <ProvenancesFieldTableRow
+            hrefs={hrefs}
+            provenances={temporalObject.provenances}
           />
         </TableBody>
       </Table>
