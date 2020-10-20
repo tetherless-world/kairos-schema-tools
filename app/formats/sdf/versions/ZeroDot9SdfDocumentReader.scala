@@ -226,7 +226,12 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       privateData = getDefinitionPrivateData(jsonNode, path),
       provenanceData = Option(mapResourcesToJsonNodes(
         getObjectJsonNodeId = (objectJsonNode) => objectJsonNode.map.get("@id").filter(_.isInstanceOf[StringValueJsonNode]).map(_.asInstanceOf[StringValueJsonNode].value),
-        getResourceId = (resource) => if (resource.getURI != null && resource.getURI.startsWith(header.baseUri.toString)) Some(resource.getURI.substring(header.baseUri.toString.length)) else None,
+        getResourceId = (resource) => {
+          if (resource.getURI != null && resource.getURI.startsWith(header.baseUri.toString))
+            Some(resource.getURI.substring(header.baseUri.toString.length))
+          else
+            resource.provenance.headOption
+        },
         jsonNodes = jsonNode.map.get("provenanceData").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
         resources = resource.provenanceData,
