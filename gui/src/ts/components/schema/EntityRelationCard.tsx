@@ -121,7 +121,7 @@ export const EntityRelationCard: React.FunctionComponent<{
                             {relation.provenances.map((provenance) => (
                               <ListItem key={provenance}>
                                 <Link
-                                  to={hrefs.provenanceDataObjectId({
+                                  to={hrefs.provenanceDataObject({
                                     id: provenance,
                                   })}
                                 >
