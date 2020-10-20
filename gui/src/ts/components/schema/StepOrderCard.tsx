@@ -18,6 +18,7 @@ import {StringListFieldTableRow} from "components/table/StringListFieldTableRow"
 import {SchemaHrefs} from "Hrefs";
 import {Link} from "components/link/Link";
 import {StringFieldTableRow} from "components/table/StringFieldTableRow";
+import {ProvenancesFieldTableRow} from "components/table/ProvenancesFieldTableRow";
 
 export const StepListTableRow: React.FunctionComponent<{
   hrefs: SchemaHrefs;
@@ -112,6 +113,10 @@ export const StepOrderCard: React.FunctionComponent<{
             direction="row"
             name="Flags"
             values={stepOrder.flags}
+          />
+          <ProvenancesFieldTableRow
+            hrefs={hrefs}
+            provenances={stepOrder.provenances}
           />
         </TableBody>
       </Table>

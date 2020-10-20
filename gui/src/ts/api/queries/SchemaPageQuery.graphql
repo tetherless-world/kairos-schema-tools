@@ -13,6 +13,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             relations {
                 confidence
                 name
+                provenances
                 relationPredicate
                 relationObjects
             }
@@ -24,6 +25,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             comments
             confidence
             flags
+            provenances
             ... on BeforeAfterStepOrder {
                 after
                 before

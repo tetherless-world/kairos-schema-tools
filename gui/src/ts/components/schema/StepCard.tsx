@@ -16,6 +16,7 @@ import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment
 import {shortenUri} from "models/shortenUri";
 import {JsonFieldTableRow} from "components/table/JsonFieldTableRow";
 import {TemporalObjectCard} from "components/schema/TemporalObjectCard";
+import {ProvenancesFieldTableRow} from "components/table/ProvenancesFieldTableRow";
 
 export const StepCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
@@ -75,11 +76,9 @@ export const StepCard: React.FunctionComponent<{
             valueDataCy="step-min-duration"
           />
           <JsonFieldTableRow name={"Private data"} value={step.privateData} />
-          <StringListFieldTableRow
-            direction="column"
-            name="Provenance"
-            values={step.provenances}
-            valuesDataCy="step-provenances"
+          <ProvenancesFieldTableRow
+            hrefs={hrefs}
+            provenances={step.provenances}
           />
           <StringListFieldTableRow
             direction="column"
@@ -112,6 +111,7 @@ export const StepCard: React.FunctionComponent<{
                   key={participant.id}
                 >
                   <StepParticipantCard
+                    hrefs={hrefs}
                     namespacePrefixes={namespacePrefixes}
                     participant={participant}
                   />

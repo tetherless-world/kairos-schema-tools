@@ -73,6 +73,7 @@ export const EntityRelationCard: React.FunctionComponent<{
               <TableCell>Name</TableCell>
               <TableCell>Comments</TableCell>
               <TableCell>Confidence</TableCell>
+              <TableCell>Provenance</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -112,6 +113,24 @@ export const EntityRelationCard: React.FunctionComponent<{
                         {relation.confidence
                           ? relation.confidence.toFixed(2)
                           : null}
+                      </TableCell>
+                      <TableCell>
+                        {relation.provenances &&
+                        relation.provenances.length > 0 ? (
+                          <List>
+                            {relation.provenances.map((provenance) => (
+                              <ListItem key={provenance}>
+                                <Link
+                                  to={hrefs.provenanceDataObjectId({
+                                    id: provenance,
+                                  })}
+                                >
+                                  {provenance}
+                                </Link>
+                              </ListItem>
+                            ))}
+                          </List>
+                        ) : null}
                       </TableCell>
                     </TableRow>
                   )

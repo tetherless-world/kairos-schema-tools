@@ -12,6 +12,7 @@ export interface SchemaPageQuery_schemaById_entityRelations_relations {
   __typename: "EntityRelationRelation";
   confidence: number | null;
   name: string | null;
+  provenances: string[] | null;
   relationPredicate: string;
   relationObjects: string[];
 }
@@ -28,6 +29,7 @@ export interface SchemaPageQuery_schemaById_order_BeforeAfterStepOrder {
   comments: string[] | null;
   confidence: number | null;
   flags: StepOrderFlag[] | null;
+  provenances: string[] | null;
   after: string[];
   before: string[];
 }
@@ -37,6 +39,7 @@ export interface SchemaPageQuery_schemaById_order_ContainerContainedStepOrder {
   comments: string[] | null;
   confidence: number | null;
   flags: StepOrderFlag[] | null;
+  provenances: string[] | null;
   contained: string[];
   container: string;
 }
@@ -46,6 +49,7 @@ export interface SchemaPageQuery_schemaById_order_OverlapsStepOrder {
   comments: string[] | null;
   confidence: number | null;
   flags: StepOrderFlag[] | null;
+  provenances: string[] | null;
   overlaps: string[];
 }
 
