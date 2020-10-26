@@ -20,6 +20,7 @@ import {SchemaHrefs} from "Hrefs";
 import {Link} from "components/link/Link";
 import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 import {shortenUri} from "models/shortenUri";
+import {ProvenanceLink} from "components/link/ProvenanceLink";
 
 export const EntityRelationCard: React.FunctionComponent<{
   entityRelation: SchemaPageQuery_schemaById_entityRelations;
@@ -120,13 +121,12 @@ export const EntityRelationCard: React.FunctionComponent<{
                           <List>
                             {relation.provenances.map((provenance) => (
                               <ListItem key={provenance}>
-                                <Link
-                                  to={hrefs.provenanceDataObject({
-                                    id: provenance,
-                                  })}
-                                >
-                                  {provenance}
-                                </Link>
+                                <ListItemText>
+                                  <ProvenanceLink
+                                    hrefs={hrefs}
+                                    provenance={provenance}
+                                  />
+                                </ListItemText>
                               </ListItem>
                             ))}
                           </List>
