@@ -1,6 +1,7 @@
-/conf/data/.complex_annotation_schemas/
+/conf/data/.*
 /conf/data/complex_annotation_schemas/
 /conf/data/ibm/
+/conf/data/Quizlet4_TA1_101620/
 /gui/dist/
 /gui/package-lock.json
 /.idea/

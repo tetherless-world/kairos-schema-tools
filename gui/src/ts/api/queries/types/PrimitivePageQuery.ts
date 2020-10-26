@@ -8,16 +8,6 @@ import { EntityType } from "./../../graphqlGlobalTypes";
 // GraphQL query operation: PrimitivePageQuery
 // ====================================================
 
-export interface PrimitivePageQuery_primitiveById_maxDuration {
-  __typename: "Duration";
-  string: string;
-}
-
-export interface PrimitivePageQuery_primitiveById_minDuration {
-  __typename: "Duration";
-  string: string;
-}
-
 export interface PrimitivePageQuery_primitiveById_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
@@ -155,8 +145,6 @@ export interface PrimitivePageQuery_primitiveById {
   comments: string[] | null;
   description: string;
   label: string;
-  maxDuration: PrimitivePageQuery_primitiveById_maxDuration | null;
-  minDuration: PrimitivePageQuery_primitiveById_minDuration | null;
   name: string;
   path: PrimitivePageQuery_primitiveById_path;
   privateData: string | null;

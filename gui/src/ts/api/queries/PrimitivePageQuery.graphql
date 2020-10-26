@@ -8,12 +8,6 @@ query PrimitivePageQuery($primitiveId: String!, $sdfDocumentId: String!) {
         comments
         description
         label
-        maxDuration {
-            string
-        }
-        minDuration {
-            string
-        }
         name
         path {
             ...DefinitionPathIdsFragment
