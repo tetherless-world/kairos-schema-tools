@@ -1,7 +1,7 @@
 import * as React from "react";
 import {List, ListItemText, TableCell, TableRow} from "@material-ui/core";
 import {SchemaHrefs} from "Hrefs";
-import {Link} from "components/link/Link";
+import {ProvenanceLink} from "components/link/ProvenanceLink";
 
 export const ProvenancesFieldTableRow: React.FunctionComponent<{
   hrefs: SchemaHrefs;
@@ -18,9 +18,7 @@ export const ProvenancesFieldTableRow: React.FunctionComponent<{
         <List>
           {provenances.map((provenance) => (
             <ListItemText key={provenance}>
-              <Link to={hrefs.provenanceDataObject({id: provenance})}>
-                {provenance}
-              </Link>
+              <ProvenanceLink hrefs={hrefs} provenance={provenance} />
             </ListItemText>
           ))}
         </List>
