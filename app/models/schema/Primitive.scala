@@ -8,8 +8,6 @@ final case class Primitive(
                             comments: Option[List[String]],
                             description: String,
                             id: Uri,
-                            maxDuration: Option[Duration],
-                            minDuration: Option[Duration],
                             name: String,
                             path: DefinitionPath,
                             privateData: Option[String],
