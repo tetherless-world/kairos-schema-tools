@@ -100,8 +100,8 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
   private def readEntityRelation(parentPath: DefinitionPath, resource: Resource) =
     EntityRelation(
       comments = Option(resource.comment).filter(_.nonEmpty),
-      relations = resource.relations.flatMap(entityRelationRelationResource =>
-        withValidationExceptionCatch(parentPath)(() => readEntityRelationRelation(parentPath, entityRelationRelationResource))
+      relations = resource.relations.zipWithIndex.flatMap({ case (entityRelationRelationResource, entityRelationRelationIndex) =>
+        withValidationExceptionCatch(parentPath)(() => readEntityRelationRelation(entityRelationRelationIndex, parentPath, entityRelationRelationResource)) }
       ),
       relationSubject = resource.relationSubject.headOption.getOrElse(throw ValidationException(s"entity relation missing subject: ${resource.toTtlString()}", parentPath))
     )
@@ -136,9 +136,11 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     Some(EntityTypes(and=and, entityTypes=entityTypes))
   }
 
-  private def readEntityRelationRelation(parentPath: DefinitionPath, resource: Resource) =
+  private def readEntityRelationRelation(index: Int, parentPath: DefinitionPath, resource: Resource) =
     EntityRelationRelation(
       confidence = resource.confidence.headOption,
+      id = Option(resource.getURI).map(Uri.parse(_)),
+      index = index,
       name = resource.name.headOption,
       references = Option(resource.reference).filter(_.nonEmpty),
       relationObjects = resource.relationObject,
