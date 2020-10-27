@@ -717,5 +717,6 @@ export interface SdfDocumentSourceFragment {
   schemas: SdfDocumentSourceFragment_schemas[];
   sdfVersion: string;
   sourceJson: string;
+  task2: boolean | null;
   validationMessages: SdfDocumentSourceFragment_validationMessages[];
 }

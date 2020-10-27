@@ -93,6 +93,7 @@ fragment SdfDocumentSourceFragment on SdfDocument {
     }
     sdfVersion
     sourceJson
+    task2
     validationMessages {
         ... ValidationMessageFragment
     }

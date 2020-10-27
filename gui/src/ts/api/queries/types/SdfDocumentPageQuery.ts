@@ -717,6 +717,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById {
   schemas: SdfDocumentPageQuery_sdfDocumentById_schemas[];
   sdfVersion: string;
   sourceJson: string;
+  task2: boolean | null;
   validationMessages: SdfDocumentPageQuery_sdfDocumentById_validationMessages[];
 }
 

@@ -717,6 +717,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument {
   schemas: SdfDocumentSaveMutation_putSdfDocument_schemas[];
   sdfVersion: string;
   sourceJson: string;
+  task2: boolean | null;
   validationMessages: SdfDocumentSaveMutation_putSdfDocument_validationMessages[];
 }
 

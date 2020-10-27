@@ -33,6 +33,7 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
         document.id should equal(testDocument.id)
         document.sdfVersion should equal(testDocument.sdfVersion)
         document.sourceJson should not be empty
+        document.task2 should be(None)
         document.validationMessages should be(List())
 
         val primitives = document.primitives
@@ -124,6 +125,7 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
         document.id should equal(testDocument.id)
         document.sdfVersion should equal(testDocument.sdfVersion)
         document.sourceJson should not be empty
+        document.task2 should be(Some(false))
         document.validationMessages should be(List())
 
         val primitives = document.primitives

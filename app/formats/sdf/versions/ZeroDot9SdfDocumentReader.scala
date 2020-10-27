@@ -428,6 +428,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         withValidationExceptionCatch(path)(() => readSchema(jsonNode = entry._1, parentPath = path, resource = entry._2))),
       sdfVersion = header.sdfVersion,
       sourceJson = sourceJson,
+      task2 = header.rootResource.task2,
       validationMessages = validationMessages.toList
     )
   }
