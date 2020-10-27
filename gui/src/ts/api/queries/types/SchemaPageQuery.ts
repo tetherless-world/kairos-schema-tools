@@ -11,6 +11,7 @@ import { StepOrderFlag, EntityType } from "./../../graphqlGlobalTypes";
 export interface SchemaPageQuery_schemaById_entityRelations_relations {
   __typename: "EntityRelationRelation";
   confidence: number | null;
+  id: string | null;
   name: string | null;
   provenances: string[] | null;
   references: string[] | null;

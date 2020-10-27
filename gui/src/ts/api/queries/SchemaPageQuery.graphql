@@ -12,6 +12,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             comments
             relations {
                 confidence
+                id
                 name
                 provenances
                 references

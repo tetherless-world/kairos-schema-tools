@@ -68,6 +68,7 @@ export const EntityRelationCard: React.FunctionComponent<{
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>Identifier</TableCell>
               <TableCell>Subject</TableCell>
               <TableCell>Predicate</TableCell>
               <TableCell>Object</TableCell>
@@ -86,6 +87,11 @@ export const EntityRelationCard: React.FunctionComponent<{
                     <TableRow
                       key={`relation-${relationIndex}-object-${relationObjectIndex}`}
                     >
+                      <TableCell>
+                        {relation.id
+                          ? shortenUri({namespacePrefixes, uri: relation.id})
+                          : null}
+                      </TableCell>
                       <TableCell>
                         {entityLink(entityRelation.relationSubject)}
                       </TableCell>
