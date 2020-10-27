@@ -13,6 +13,7 @@ export interface SchemaPageQuery_schemaById_entityRelations_relations {
   confidence: number | null;
   name: string | null;
   provenances: string[] | null;
+  references: string[] | null;
   relationPredicate: string;
   relationObjects: string[];
 }
