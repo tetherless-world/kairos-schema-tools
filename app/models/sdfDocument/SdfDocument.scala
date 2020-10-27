@@ -16,6 +16,7 @@ final case class SdfDocument(
                               schemas: List[Schema],
                               sdfVersion: String,
                               sourceJson: String,
+                              task2: Option[Boolean],
                               validationMessages: List[ValidationMessage]
                             ) {
   def label =

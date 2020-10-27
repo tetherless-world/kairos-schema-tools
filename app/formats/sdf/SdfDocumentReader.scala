@@ -42,6 +42,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
           schemas = List(),
           sdfVersion = "",
           sourceJson = sourceJson,
+          task2 = None,
           validationMessages = List(
             ValidationMessage(
               message = e.getMessage,
@@ -68,6 +69,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
             schemas = List(),
             sdfVersion = "",
             sourceJson = sourceJson,
+            task2 = None,
             validationMessages = e.messages
         )
       }
@@ -94,6 +96,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
           schemas = List(),
           sdfVersion = header.sdfVersion,
           sourceJson = sourceJson,
+          task2 = None,
           validationMessages = e.messages
         )
     }

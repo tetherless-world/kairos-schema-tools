@@ -35,6 +35,7 @@ import {
 import {SdfDocumentAnnotatorReadableFormTab} from "components/sdfDocument/SdfDocumentAnnotatorReadableFormTab";
 import ReactDOM from "react-dom";
 import {SdfDocumentValidationTab} from "components/sdfDocument/SdfDocumentValidationTab";
+import {shortenUri} from "models/shortenUri";
 
 export const SdfDocumentPage: React.FunctionComponent = () => {
   const apolloClient = useApolloClient();
@@ -196,11 +197,23 @@ export const SdfDocumentPage: React.FunctionComponent = () => {
             throw new EvalError();
           }
 
+          let subtitle: React.ReactNode;
+          const shortId = shortenUri({
+            namespacePrefixes: savedSdfDocument.namespacePrefixes,
+            uri: savedSdfDocument.id,
+          });
+
+          if (savedSdfDocument.task2) {
+            subtitle = <span>{shortId} (Task 2)</span>;
+          } else {
+            subtitle = shortId;
+          }
+
           return (
             <StandardLayout
               breadcrumbs={{sdfDocument: savedSdfDocument}}
               rowItemStyle={{flexGrow: 1}}
-              subtitle={savedSdfDocument.id}
+              subtitle={subtitle}
               title={savedSdfDocument.label}
             >
               <Grid container direction="column" spacing={4}>
