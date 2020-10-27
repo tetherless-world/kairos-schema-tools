@@ -3,6 +3,9 @@ jobs:
   app-docker:
     docker:
       - image: circleci/python:3.8
+        auth:
+          username: $DOCKER_ID
+          password: $DOCKER_PASSWORD
     steps:
       - checkout
       - setup_remote_docker
@@ -27,6 +30,9 @@ jobs:
   scala:
     docker:
       - image: circleci/openjdk:8
+        auth:
+          username: $DOCKER_ID
+          password: $DOCKER_PASSWORD
     steps:
       - attach_workspace:
           at: /tmp/workspace
@@ -52,9 +58,11 @@ jobs:
             - "~/.m2"
             - "~/.sbt"
   ts:
-    working_directory: ~/project
     docker:
       - image: circleci/node:12
+        auth:
+          username: $DOCKER_ID
+          password: $DOCKER_PASSWORD
     steps:
       - checkout
       - restore_cache:
