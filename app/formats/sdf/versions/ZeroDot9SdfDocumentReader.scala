@@ -140,6 +140,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     EntityRelationRelation(
       confidence = resource.confidence.headOption,
       name = resource.name.headOption,
+      references = Option(resource.reference).filter(_.nonEmpty),
       relationObjects = resource.relationObject,
       relationPredicate = resource.relationPredicate.headOption.getOrElse(throw ValidationException(s"entity relation missing relation predicate: ${resource.toTtlString()}", parentPath)),
       provenances = Option(resource.provenance).filter(_.nonEmpty)

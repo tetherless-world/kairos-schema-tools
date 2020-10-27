@@ -14,6 +14,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                 confidence
                 name
                 provenances
+                references
                 relationPredicate
                 relationObjects
             }

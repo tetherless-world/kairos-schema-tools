@@ -75,6 +75,7 @@ export const EntityRelationCard: React.FunctionComponent<{
               <TableCell>Comments</TableCell>
               <TableCell>Confidence</TableCell>
               <TableCell>Provenance</TableCell>
+              <TableCell>Reference</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -127,6 +128,18 @@ export const EntityRelationCard: React.FunctionComponent<{
                                     provenance={provenance}
                                   />
                                 </ListItemText>
+                              </ListItem>
+                            ))}
+                          </List>
+                        ) : null}
+                      </TableCell>
+                      <TableCell>
+                        {relation.references &&
+                        relation.references.length > 0 ? (
+                          <List>
+                            {relation.references.map((reference) => (
+                              <ListItem key={reference}>
+                                <ListItemText>{reference}</ListItemText>
                               </ListItem>
                             ))}
                           </List>
