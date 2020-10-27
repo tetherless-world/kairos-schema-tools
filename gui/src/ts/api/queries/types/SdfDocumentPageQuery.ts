@@ -179,6 +179,12 @@ export interface SdfDocumentPageQuery_sdfDocumentById_primitives {
   sourceJsonNodeLocation: SdfDocumentPageQuery_sdfDocumentById_primitives_sourceJsonNodeLocation;
 }
 
+export interface SdfDocumentPageQuery_sdfDocumentById_schemas_order {
+  __typename: "BeforeAfterStepOrder" | "ContainerContainedStepOrder" | "OverlapsStepOrder";
+  id: string | null;
+  label: string;
+}
+
 export interface SdfDocumentPageQuery_sdfDocumentById_schemas_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
@@ -620,6 +626,7 @@ export interface SdfDocumentPageQuery_sdfDocumentById_schemas {
   __typename: "Schema";
   id: string;
   label: string;
+  order: SdfDocumentPageQuery_sdfDocumentById_schemas_order[];
   path: SdfDocumentPageQuery_sdfDocumentById_schemas_path;
   provenanceData: SdfDocumentPageQuery_sdfDocumentById_schemas_provenanceData[] | null;
   slots: SdfDocumentPageQuery_sdfDocumentById_schemas_slots[];

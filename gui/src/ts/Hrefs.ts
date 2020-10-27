@@ -62,6 +62,14 @@ export class SchemaHrefs extends SubHrefs {
     return `step-${this.sanitizeId(step.id)}`;
   }
 
+  stepOrder(stepOrder: {id: string}) {
+    return `${this.home}#${this.stepOrderId(stepOrder)}`;
+  }
+
+  stepOrderId(stepOrder: {id: string}) {
+    return `step-order-${this.sanitizeId(stepOrder.id)}`;
+  }
+
   stepParticipant(stepParticipant: {id: string}) {
     return `${this.home}#${this.stepParticipantId(stepParticipant)}`;
   }
