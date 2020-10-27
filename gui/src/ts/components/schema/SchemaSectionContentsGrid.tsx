@@ -108,9 +108,18 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
         children = (
           <Grid container direction="column" spacing={4}>
             {schema.order.map((stepOrder, stepOrderIndex) => (
-              <Grid item key={stepOrderIndex}>
+              <Grid
+                id={
+                  stepOrder.id
+                    ? hrefs.stepOrderId({id: stepOrder.id})
+                    : undefined
+                }
+                item
+                key={stepOrderIndex}
+              >
                 <StepOrderCard
                   hrefs={hrefs}
+                  namespacePrefixes={namespacePrefixes}
                   stepOrder={stepOrder}
                   stepOrderIndex={stepOrderIndex}
                   steps={schema.steps.list}

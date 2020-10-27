@@ -25,6 +25,8 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             comments
             confidence
             flags
+            id
+            label
             provenances
             ... on BeforeAfterStepOrder {
                 after

@@ -32,6 +32,10 @@ fragment SdfDocumentSourceFragment on SdfDocument {
     schemas {
         id
         label
+        order {
+            id
+            label
+        }
         path {
             ...DefinitionPathIdsFragment
         }

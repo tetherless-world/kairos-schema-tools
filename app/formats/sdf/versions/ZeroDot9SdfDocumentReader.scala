@@ -224,7 +224,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       ),
       id = id,
       name = resource.name.headOption.getOrElse(throw ValidationException(s"schema ${id} missing required name property", path)),
-      order = resource.order.flatMap(stepOrderResource => withValidationExceptionCatch(path)(() => readStepOrder(path, stepOrderResource))),
+      order = resource.order.zipWithIndex.flatMap({ case (stepOrderResource, stepOrderIndex) => withValidationExceptionCatch(path)(() => readStepOrder(stepOrderIndex, path, stepOrderResource)) }),
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
       provenanceData = Option(mapResourcesToJsonNodes(
@@ -309,7 +309,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     )
   }
 
-  private def readStepOrder(parentPath: DefinitionPath, resource: Resource) = {
+  private def readStepOrder(index: Int, parentPath: DefinitionPath, resource: Resource) = {
     val after = resource.after
     val before = resource.before
     val comments = Option(resource.comment).filter(_.nonEmpty)
@@ -317,15 +317,42 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     val contained = resource.contained
     val container = resource.container
     val flags = Option(resource.flags.map(flagString => StepOrderFlag.values.find(_.value == flagString).getOrElse(throw ValidationException(s"unknown step order flag ${flagString}", parentPath)))).filter(_.nonEmpty)
+    val id = Option(resource.getURI).map(Uri.parse(_))
     val overlaps = resource.overlaps
     val provenances = Option(resource.provenance).filter(_.nonEmpty)
 
     if (after.nonEmpty && before.nonEmpty) {
-      BeforeAfterStepOrder(after = after, before = before, comments = comments, confidence = confidence, flags = flags, provenances = provenances)
+      BeforeAfterStepOrder(
+        after = after,
+        before = before,
+        comments = comments,
+        confidence = confidence,
+        flags = flags,
+        id = id,
+        index = index,
+        provenances = provenances
+      )
     } else if (contained.nonEmpty && container.size == 1) {
-      ContainerContainedStepOrder(comments = comments, confidence = confidence, container = container(0), contained = contained, flags = flags, provenances = provenances)
+      ContainerContainedStepOrder(
+        comments = comments,
+        confidence = confidence,
+        container = container(0),
+        contained = contained,
+        flags = flags,
+        id = id,
+        index = index,
+        provenances = provenances
+      )
     } else if (overlaps.nonEmpty) {
-      OverlapsStepOrder(comments = comments, confidence = confidence, flags = flags, overlaps = overlaps, provenances = provenances)
+      OverlapsStepOrder(
+        comments = comments,
+        confidence = confidence,
+        flags = flags,
+        id = id,
+        index = index,
+        overlaps = overlaps,
+        provenances = provenances
+      )
     } else {
       throw ValidationException(s"invalid step order:\n${resource.toTtlString()}", parentPath)
     }

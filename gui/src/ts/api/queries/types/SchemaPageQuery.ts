@@ -29,6 +29,8 @@ export interface SchemaPageQuery_schemaById_order_BeforeAfterStepOrder {
   comments: string[] | null;
   confidence: number | null;
   flags: StepOrderFlag[] | null;
+  id: string | null;
+  label: string;
   provenances: string[] | null;
   after: string[];
   before: string[];
@@ -39,6 +41,8 @@ export interface SchemaPageQuery_schemaById_order_ContainerContainedStepOrder {
   comments: string[] | null;
   confidence: number | null;
   flags: StepOrderFlag[] | null;
+  id: string | null;
+  label: string;
   provenances: string[] | null;
   contained: string[];
   container: string;
@@ -49,6 +53,8 @@ export interface SchemaPageQuery_schemaById_order_OverlapsStepOrder {
   comments: string[] | null;
   confidence: number | null;
   flags: StepOrderFlag[] | null;
+  id: string | null;
+  label: string;
   provenances: string[] | null;
   overlaps: string[];
 }

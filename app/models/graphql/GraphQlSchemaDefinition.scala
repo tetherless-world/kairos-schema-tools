@@ -10,7 +10,7 @@ import models.sdfDocument.{NamespacePrefix, SdfDocument}
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 import models.validation.{ValidationMessage, ValidationMessageType}
 import sangria.macros.derive._
-import sangria.schema.{Argument, Field, FloatType, InterfaceType, ListType, ObjectType, OptionType, Schema, StringType, fields}
+import sangria.schema.{Argument, Field, FloatType, IntType, InterfaceType, ListType, ObjectType, OptionType, Schema, StringType, fields}
 
 import scala.util.{Failure, Success}
 
@@ -38,6 +38,9 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
         Field("comments", OptionType(ListType(StringType)), resolve = _.value.comments),
         Field("confidence", OptionType(FloatType), resolve = _.value.confidence),
         Field("flags", OptionType(ListType(StepOrderFlagEnumType)), resolve = _.value.flags),
+        Field("id", OptionType(UriType), resolve = _.value.id),
+        Field("index", IntType, resolve = _.value.index),
+        Field("label", StringType, resolve = _.value.label),
         Field("provenances", OptionType(ListType(StringType)), resolve = _.value.provenances)
       )
     )

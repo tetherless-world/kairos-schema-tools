@@ -179,6 +179,12 @@ export interface SdfDocumentSourceFragment_primitives {
   sourceJsonNodeLocation: SdfDocumentSourceFragment_primitives_sourceJsonNodeLocation;
 }
 
+export interface SdfDocumentSourceFragment_schemas_order {
+  __typename: "BeforeAfterStepOrder" | "ContainerContainedStepOrder" | "OverlapsStepOrder";
+  id: string | null;
+  label: string;
+}
+
 export interface SdfDocumentSourceFragment_schemas_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
@@ -620,6 +626,7 @@ export interface SdfDocumentSourceFragment_schemas {
   __typename: "Schema";
   id: string;
   label: string;
+  order: SdfDocumentSourceFragment_schemas_order[];
   path: SdfDocumentSourceFragment_schemas_path;
   provenanceData: SdfDocumentSourceFragment_schemas_provenanceData[] | null;
   slots: SdfDocumentSourceFragment_schemas_slots[];

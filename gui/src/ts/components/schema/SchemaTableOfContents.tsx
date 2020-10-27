@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 interface SchemaTableOfContentsEntry {
   id: string;
   label: string;
-  path: DefinitionPath;
+  path?: DefinitionPath;
 }
 
 interface SchemaTableOfContentsProvenanceDataObject
@@ -36,6 +36,11 @@ interface SchemaTableOfContentsSlot extends SchemaTableOfContentsEntry {}
 interface SchemaTableOfContentsStep extends SchemaTableOfContentsEntry {
   participants: readonly SchemaTableOfContentsStepParticipant[] | null;
   temporalObjects: readonly {label: string}[] | null;
+}
+
+interface SchemaTableOfContentsStepOrder {
+  id: string | null;
+  label: string;
 }
 
 interface SchemaTableOfContentsStepParticipant
@@ -62,7 +67,7 @@ const SchemaTableOfContentsEntryList: React.FunctionComponent<{
                   {labelPrefix}: {entry.label}
                 </Link>
               </Grid>
-              {includeSourceLinks ? (
+              {includeSourceLinks && entry.path ? (
                 <Grid item>
                   <SdfDocumentSourceLink to={entry.path} />
                 </Grid>
@@ -98,7 +103,7 @@ const StepsList: React.FunctionComponent<{
                       Step: {step.label}
                     </Link>
                   </Grid>
-                  {includeSourceLinks ? (
+                  {includeSourceLinks && step.path ? (
                     <Grid item>
                       <SdfDocumentSourceLink to={step.path} />
                     </Grid>
@@ -136,9 +141,10 @@ export const SchemaTableOfContents: React.FunctionComponent<{
   includeSourceLinks?: boolean;
   schema: {
     id: string;
+    order: readonly SchemaTableOfContentsStepOrder[];
+    path: DefinitionPath;
     provenanceData: readonly SchemaTableOfContentsProvenanceDataObject[] | null;
     slots: readonly SchemaTableOfContentsSlot[];
-    path: DefinitionPath;
     steps: {
       list: readonly SchemaTableOfContentsStep[];
     };
@@ -196,6 +202,17 @@ export const SchemaTableOfContents: React.FunctionComponent<{
             hrefs={hrefs}
             includeSourceLinks={includeSourceLinks}
             steps={schema.steps.list}
+          />
+        ) : null}
+        {schemaSection.id === "step-order" &&
+        schema.order.every((order) => !!order.id) ? (
+          <SchemaTableOfContentsEntryList
+            entries={schema.order.map((order) => ({
+              id: order.id!,
+              label: order.label,
+            }))}
+            entryHref={(entry) => hrefs.stepOrder(entry)}
+            labelPrefix="Step order"
           />
         ) : null}
       </React.Fragment>

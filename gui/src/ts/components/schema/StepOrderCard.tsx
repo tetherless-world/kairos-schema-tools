@@ -19,6 +19,8 @@ import {SchemaHrefs} from "Hrefs";
 import {Link} from "components/link/Link";
 import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {ProvenancesFieldTableRow} from "components/table/ProvenancesFieldTableRow";
+import {shortenUri} from "models/shortenUri";
+import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 
 export const StepListTableRow: React.FunctionComponent<{
   hrefs: SchemaHrefs;
@@ -51,12 +53,13 @@ export const StepListTableRow: React.FunctionComponent<{
 
 export const StepOrderCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
+  namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   stepOrder: SchemaPageQuery_schemaById_order;
   stepOrderIndex: number;
   steps: SchemaPageQuery_schemaById_steps_list[];
-}> = ({hrefs, stepOrder, stepOrderIndex, steps}) => (
+}> = ({hrefs, namespacePrefixes, stepOrder, stepOrderIndex, steps}) => (
   <Card>
-    <CardHeader title={`Step order ${stepOrderIndex}`} />
+    <CardHeader title={`Step order ${stepOrder.label}`} />
     <CardContent>
       <Table>
         <TableBody>
@@ -113,6 +116,14 @@ export const StepOrderCard: React.FunctionComponent<{
             direction="row"
             name="Flags"
             values={stepOrder.flags}
+          />
+          <StringFieldTableRow
+            name="Identifier"
+            value={
+              stepOrder.id
+                ? shortenUri({namespacePrefixes, uri: stepOrder.id})
+                : null
+            }
           />
           <ProvenancesFieldTableRow
             hrefs={hrefs}

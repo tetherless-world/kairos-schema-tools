@@ -179,6 +179,12 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives {
   sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_primitives_sourceJsonNodeLocation;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_order {
+  __typename: "BeforeAfterStepOrder" | "ContainerContainedStepOrder" | "OverlapsStepOrder";
+  id: string | null;
+  label: string;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";
   id: string;
@@ -620,6 +626,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas {
   __typename: "Schema";
   id: string;
   label: string;
+  order: SdfDocumentSaveMutation_putSdfDocument_schemas_order[];
   path: SdfDocumentSaveMutation_putSdfDocument_schemas_path;
   provenanceData: SdfDocumentSaveMutation_putSdfDocument_schemas_provenanceData[] | null;
   slots: SdfDocumentSaveMutation_putSdfDocument_schemas_slots[];
