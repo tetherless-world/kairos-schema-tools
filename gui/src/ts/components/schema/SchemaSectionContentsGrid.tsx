@@ -96,6 +96,7 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
                 <StepCard
                   hrefs={hrefs}
                   namespacePrefixes={namespacePrefixes}
+                  provenanceData={schema.provenanceData}
                   step={step}
                 />
               </Grid>
@@ -120,6 +121,7 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
                 <StepOrderCard
                   hrefs={hrefs}
                   namespacePrefixes={namespacePrefixes}
+                  provenanceData={schema.provenanceData}
                   stepOrder={stepOrder}
                   stepOrderIndex={stepOrderIndex}
                   steps={schema.steps.list}

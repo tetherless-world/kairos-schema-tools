@@ -1,4 +1,7 @@
-import {SchemaPageQuery_schemaById_steps_list_temporalObjects} from "api/queries/types/SchemaPageQuery";
+import {
+  SchemaPageQuery_schemaById_provenanceData,
+  SchemaPageQuery_schemaById_steps_list_temporalObjects,
+} from "api/queries/types/SchemaPageQuery";
 import {
   Card,
   CardContent,
@@ -14,8 +17,9 @@ import {ProvenancesFieldTableRow} from "components/table/ProvenancesFieldTableRo
 
 export const TemporalObjectCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
+  provenanceData: readonly SchemaPageQuery_schemaById_provenanceData[] | null;
   temporalObject: SchemaPageQuery_schemaById_steps_list_temporalObjects;
-}> = ({hrefs, temporalObject}) => (
+}> = ({hrefs, provenanceData, temporalObject}) => (
   <Card>
     <CardHeader title={"Temporal object: " + temporalObject.label} />
     <CardContent>
@@ -52,6 +56,7 @@ export const TemporalObjectCard: React.FunctionComponent<{
           />
           <ProvenancesFieldTableRow
             hrefs={hrefs}
+            provenanceData={provenanceData}
             provenances={temporalObject.provenances}
           />
         </TableBody>

@@ -1,5 +1,6 @@
 import {
   SchemaPageQuery_schemaById_order,
+  SchemaPageQuery_schemaById_provenanceData,
   SchemaPageQuery_schemaById_steps_list,
 } from "api/queries/types/SchemaPageQuery";
 import {
@@ -25,8 +26,9 @@ import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment
 export const StepListTableRow: React.FunctionComponent<{
   hrefs: SchemaHrefs;
   name: string;
-  steps: SchemaPageQuery_schemaById_steps_list[];
-  values: string[] | null;
+  provenanceData: readonly SchemaPageQuery_schemaById_provenanceData[] | null;
+  steps: readonly SchemaPageQuery_schemaById_steps_list[];
+  values: readonly string[] | null;
 }> = ({hrefs, name, steps, values}) => {
   if (!values || values.length === 0) {
     return null;
@@ -54,10 +56,18 @@ export const StepListTableRow: React.FunctionComponent<{
 export const StepOrderCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
   namespacePrefixes: readonly NamespacePrefixFragment[] | null;
+  provenanceData: readonly SchemaPageQuery_schemaById_provenanceData[] | null;
   stepOrder: SchemaPageQuery_schemaById_order;
   stepOrderIndex: number;
   steps: SchemaPageQuery_schemaById_steps_list[];
-}> = ({hrefs, namespacePrefixes, stepOrder, stepOrderIndex, steps}) => (
+}> = ({
+  hrefs,
+  namespacePrefixes,
+  provenanceData,
+  stepOrder,
+  stepOrderIndex,
+  steps,
+}) => (
   <Card>
     <CardHeader title={`Step order ${stepOrder.label}`} />
     <CardContent>
@@ -68,12 +78,14 @@ export const StepOrderCard: React.FunctionComponent<{
               <StepListTableRow
                 hrefs={hrefs}
                 name="Before"
+                provenanceData={provenanceData}
                 steps={steps}
                 values={stepOrder.before}
               />
               <StepListTableRow
                 hrefs={hrefs}
                 name="After"
+                provenanceData={provenanceData}
                 steps={steps}
                 values={stepOrder.after}
               />
@@ -84,12 +96,14 @@ export const StepOrderCard: React.FunctionComponent<{
               <StepListTableRow
                 hrefs={hrefs}
                 name="Container"
+                provenanceData={provenanceData}
                 steps={steps}
                 values={[stepOrder.container]}
               />
               <StepListTableRow
                 hrefs={hrefs}
                 name="Contained"
+                provenanceData={provenanceData}
                 steps={steps}
                 values={stepOrder.contained}
               />
@@ -99,6 +113,7 @@ export const StepOrderCard: React.FunctionComponent<{
             <StepListTableRow
               hrefs={hrefs}
               name="Overlaps"
+              provenanceData={provenanceData}
               steps={steps}
               values={stepOrder.overlaps}
             />
@@ -127,6 +142,7 @@ export const StepOrderCard: React.FunctionComponent<{
           />
           <ProvenancesFieldTableRow
             hrefs={hrefs}
+            provenanceData={provenanceData}
             provenances={stepOrder.provenances}
           />
         </TableBody>

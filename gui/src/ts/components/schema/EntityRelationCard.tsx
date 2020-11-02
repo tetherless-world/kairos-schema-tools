@@ -133,6 +133,7 @@ export const EntityRelationCard: React.FunctionComponent<{
                                   <ProvenanceLink
                                     hrefs={hrefs}
                                     provenance={provenance}
+                                    provenanceData={schema.provenanceData}
                                   />
                                 </ListItemText>
                               </ListItem>
@@ -156,6 +157,7 @@ export const EntityRelationCard: React.FunctionComponent<{
                         {relation.relationProvenance ? (
                           <ProvenanceLink
                             hrefs={hrefs}
+                            provenanceData={schema.provenanceData}
                             provenance={relation.relationProvenance}
                           />
                         ) : null}

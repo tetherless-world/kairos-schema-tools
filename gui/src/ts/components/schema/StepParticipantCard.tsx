@@ -1,4 +1,7 @@
-import {SchemaPageQuery_schemaById_steps_list_participants} from "api/queries/types/SchemaPageQuery";
+import {
+  SchemaPageQuery_schemaById_provenanceData,
+  SchemaPageQuery_schemaById_steps_list_participants,
+} from "api/queries/types/SchemaPageQuery";
 import * as React from "react";
 import {
   Card,
@@ -21,7 +24,8 @@ export const StepParticipantCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
   namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   participant: SchemaPageQuery_schemaById_steps_list_participants;
-}> = ({hrefs, namespacePrefixes, participant}) => (
+  provenanceData: readonly SchemaPageQuery_schemaById_provenanceData[] | null;
+}> = ({hrefs, namespacePrefixes, participant, provenanceData}) => (
   <Card>
     <CardHeader title={"Participant: " + participant.label} />
     <CardContent>
@@ -76,7 +80,11 @@ export const StepParticipantCard: React.FunctionComponent<{
             <Grid container direction="column" spacing={6}>
               {participant.values.map((value) => (
                 <Grid key={value.label} item>
-                  <StepParticipantValueCard hrefs={hrefs} value={value} />
+                  <StepParticipantValueCard
+                    hrefs={hrefs}
+                    provenanceData={provenanceData}
+                    value={value}
+                  />
                 </Grid>
               ))}
             </Grid>
