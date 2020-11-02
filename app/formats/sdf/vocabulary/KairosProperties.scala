@@ -55,6 +55,7 @@ trait KairosProperties extends PropertyGetters {
   def relationObject: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.relationObject)
   def relations: List[Resource] = getPropertyObjectResources(KAIROS.relations)
   def relationPredicate: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.relationPredicate)
+  def relationProvenance: List[String] = getPropertyObjectStrings(KAIROS.relationProvenance)
   def relationSubject: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.relationSubject)
   def requires: List[String] = getPropertyObjectStrings(KAIROS.requires)
   def refvar: List[String] = getPropertyObjectStrings(KAIROS.refvar)
