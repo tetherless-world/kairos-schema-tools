@@ -77,6 +77,7 @@ export const EntityRelationCard: React.FunctionComponent<{
               <TableCell>Confidence</TableCell>
               <TableCell>Provenance</TableCell>
               <TableCell>Reference</TableCell>
+              <TableCell>Relation provenance</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -149,6 +150,14 @@ export const EntityRelationCard: React.FunctionComponent<{
                               </ListItem>
                             ))}
                           </List>
+                        ) : null}
+                      </TableCell>
+                      <TableCell>
+                        {relation.relationProvenance ? (
+                          <ProvenanceLink
+                            hrefs={hrefs}
+                            provenance={relation.relationProvenance}
+                          />
                         ) : null}
                       </TableCell>
                     </TableRow>

@@ -16,6 +16,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                 name
                 provenances
                 references
+                relationProvenance
                 relationPredicate
                 relationObjects
             }
