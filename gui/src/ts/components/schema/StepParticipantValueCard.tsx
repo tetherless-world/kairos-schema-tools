@@ -1,4 +1,7 @@
-import {SchemaPageQuery_schemaById_steps_list_participants_values} from "api/queries/types/SchemaPageQuery";
+import {
+  SchemaPageQuery_schemaById_provenanceData,
+  SchemaPageQuery_schemaById_steps_list_participants_values,
+} from "api/queries/types/SchemaPageQuery";
 import * as React from "react";
 import {
   Card,
@@ -16,8 +19,9 @@ import {SchemaHrefs} from "Hrefs";
 
 export const StepParticipantValueCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
+  provenanceData: readonly SchemaPageQuery_schemaById_provenanceData[] | null;
   value: SchemaPageQuery_schemaById_steps_list_participants_values;
-}> = ({hrefs, value}) => (
+}> = ({hrefs, provenanceData, value}) => (
   <Card>
     <CardHeader title={"Value: " + value.label} />
     <CardContent>
@@ -41,6 +45,7 @@ export const StepParticipantValueCard: React.FunctionComponent<{
           <JsonFieldTableRow name={"Private data"} value={value.privateData} />
           <ProvenancesFieldTableRow
             hrefs={hrefs}
+            provenanceData={provenanceData}
             provenances={value.provenances}
           />
         </TableBody>

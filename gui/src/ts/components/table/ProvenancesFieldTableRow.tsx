@@ -2,11 +2,13 @@ import * as React from "react";
 import {List, ListItemText, TableCell, TableRow} from "@material-ui/core";
 import {SchemaHrefs} from "Hrefs";
 import {ProvenanceLink} from "components/link/ProvenanceLink";
+import {SchemaPageQuery_schemaById_provenanceData} from "api/queries/types/SchemaPageQuery";
 
 export const ProvenancesFieldTableRow: React.FunctionComponent<{
   hrefs: SchemaHrefs;
+  provenanceData: readonly SchemaPageQuery_schemaById_provenanceData[] | null;
   provenances: readonly string[] | null;
-}> = ({hrefs, provenances}) => {
+}> = ({hrefs, provenanceData, provenances}) => {
   if (!provenances || provenances.length === 0) {
     return null;
   }
@@ -18,7 +20,11 @@ export const ProvenancesFieldTableRow: React.FunctionComponent<{
         <List>
           {provenances.map((provenance) => (
             <ListItemText key={provenance}>
-              <ProvenanceLink hrefs={hrefs} provenance={provenance} />
+              <ProvenanceLink
+                hrefs={hrefs}
+                provenance={provenance}
+                provenanceData={provenanceData}
+              />
             </ListItemText>
           ))}
         </List>

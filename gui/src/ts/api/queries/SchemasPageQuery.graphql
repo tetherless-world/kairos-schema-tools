@@ -1,4 +1,5 @@
 #import "./DefinitionPathIdsFragment.graphql"
+#import "./NamespacePrefixFragment.graphql"
 
 query SchemasPageQuery {
     schemas {

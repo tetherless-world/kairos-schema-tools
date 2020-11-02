@@ -1,4 +1,7 @@
-import {SchemaPageQuery_schemaById_steps_list} from "api/queries/types/SchemaPageQuery";
+import {
+  SchemaPageQuery_schemaById_provenanceData,
+  SchemaPageQuery_schemaById_steps_list,
+} from "api/queries/types/SchemaPageQuery";
 import {
   Card,
   CardContent,
@@ -21,8 +24,9 @@ import {ProvenancesFieldTableRow} from "components/table/ProvenancesFieldTableRo
 export const StepCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
   namespacePrefixes: readonly NamespacePrefixFragment[] | null;
+  provenanceData: readonly SchemaPageQuery_schemaById_provenanceData[] | null;
   step: SchemaPageQuery_schemaById_steps_list;
-}> = ({hrefs, namespacePrefixes, step}) => (
+}> = ({hrefs, namespacePrefixes, provenanceData, step}) => (
   <Card>
     <CardHeader title={"Step: " + step.label} />
     <CardContent>
@@ -78,6 +82,7 @@ export const StepCard: React.FunctionComponent<{
           <JsonFieldTableRow name={"Private data"} value={step.privateData} />
           <ProvenancesFieldTableRow
             hrefs={hrefs}
+            provenanceData={provenanceData}
             provenances={step.provenances}
           />
           <StringListFieldTableRow
@@ -114,6 +119,7 @@ export const StepCard: React.FunctionComponent<{
                     hrefs={hrefs}
                     namespacePrefixes={namespacePrefixes}
                     participant={participant}
+                    provenanceData={provenanceData}
                   />
                 </Grid>
               ))}
@@ -136,6 +142,7 @@ export const StepCard: React.FunctionComponent<{
                   <Grid item key={temporalObjectIndex}>
                     <TemporalObjectCard
                       hrefs={hrefs}
+                      provenanceData={provenanceData}
                       temporalObject={temporalObject}
                     />
                   </Grid>

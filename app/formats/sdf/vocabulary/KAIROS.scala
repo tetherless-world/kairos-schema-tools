@@ -48,6 +48,7 @@ object KAIROS {
   val relations = ResourceFactory.createProperty(URI + "relations")
   val relationObject = ResourceFactory.createProperty(URI + "relationObject")
   val relationPredicate = ResourceFactory.createProperty(URI + "relationPredicate")
+  val relationProvenance = ResourceFactory.createProperty(URI + "relationProvenance")
   val relationSubject = ResourceFactory.createProperty(URI + "relationSubject")
   val requires = ResourceFactory.createProperty(URI + "requires")
   val role = ResourceFactory.createProperty(URI + "role")
