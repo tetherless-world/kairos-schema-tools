@@ -78,11 +78,11 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
     val sourceJsonNode = JsonParser.parse(sourceJson)
 
     try {
-      header.sdfVersion match {
-        case "0.8" | "0.81" | "0.9" | "0.9a" | "0.91" => new ZeroDot9SdfDocumentReader(header, sourceJson, sourceJsonNode).read()
-        case sdfVersion =>
+      if (header.sdfVersion.startsWith("0.8") || header.sdfVersion.startsWith("0.9")) {
+        new ZeroDot9SdfDocumentReader(header, sourceJson, sourceJsonNode).read()
+      } else {
           throw ValidationException(
-            message = s"unrecognized SDF version ${sdfVersion}",
+            message = s"unrecognized SDF version ${header.sdfVersion}",
             path = DefinitionPath.sdfDocument(header.id).build,
             `type` = ValidationMessageType.Fatal
           )
