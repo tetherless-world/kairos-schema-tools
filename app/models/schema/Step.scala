@@ -11,6 +11,7 @@ final case class Step(
                        id: Uri,
                        maxDuration: Option[Duration],
                        minDuration: Option[Duration],
+                       modalities: Option[List[Modality]],
                        name: String,
                        participants: Option[List[StepParticipant]],
                        path: DefinitionPath,

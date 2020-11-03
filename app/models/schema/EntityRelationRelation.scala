@@ -6,6 +6,7 @@ final case class EntityRelationRelation(
                                          confidence: Option[Double],
                                          id: Option[Uri],
                                          index: Int,
+                                         modalities: Option[List[Modality]],
                                          name: Option[String],
                                          provenances: Option[List[String]],
                                          references: Option[List[String]],

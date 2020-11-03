@@ -141,6 +141,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       confidence = resource.confidence.headOption,
       id = Option(resource.getURI).map(Uri.parse(_)),
       index = index,
+      modalities = readModalities(parentPath, resource),
       name = resource.name.headOption,
       references = Option(resource.reference).filter(_.nonEmpty),
       relationObjects = resource.relationObject,
@@ -149,6 +150,9 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       provenances = Option(resource.provenance).filter(_.nonEmpty),
       ta1ref = resource.ta1ref.headOption
     )
+
+  private def readModalities(parentPath: DefinitionPath, resource: Resource): Option[List[Modality]] =
+    Option(resource.modality.map(modalityString => Modality.values.find(_.value == modalityString).getOrElse(throw ValidationException(s"unknown modality ${modalityString}", parentPath)))).filter(_.nonEmpty)
 
   private def readPrimitive(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource) = {
     val id = Uri.parse(resource.getURI)
@@ -296,6 +300,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       confidence = resource.confidence.headOption,
       id = id,
       maxDuration = resource.maxDuration.headOption.map(Duration(_)),
+      modalities = readModalities(path, resource),
       minDuration = resource.minDuration.headOption.map(Duration(_)),
       name = resource.name.headOption.getOrElse(throw ValidationException(s"step ${id} missing required name property", path)),
       participants = Option(mapUriResourcesToJsonNodes(
@@ -402,6 +407,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       comments = Option(resource.comment).filter(_.nonEmpty),
       confidence = resource.confidence.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required confidence", parentPath)),
       entityTypes = readEntityTypes(parentPath = parentPath, resource = resource).getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required entityTypes or variant", parentPath)),
+      modalities = readModalities(parentPath, resource),
       name = resource.name.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required name property", parentPath)),
       privateData = getDefinitionPrivateData(jsonNode, parentPath),
       provenances = Option(resource.provenance).filter(_.nonEmpty).getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required provenance", parentPath)),
