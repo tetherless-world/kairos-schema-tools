@@ -8,25 +8,20 @@ import { Modality, StepOrderFlag, EntityType } from "./../../graphqlGlobalTypes"
 // GraphQL query operation: SchemaPageQuery
 // ====================================================
 
-export interface SchemaPageQuery_schemaById_entityRelations_relations {
-  __typename: "EntityRelationRelation";
+export interface SchemaPageQuery_schemaById_entityRelations {
+  __typename: "EntityRelation";
+  comments: string[] | null;
   confidence: number | null;
   id: string | null;
   modalities: Modality[] | null;
   name: string | null;
-  provenances: string[] | null;
+  object: string;
   references: string[] | null;
+  predicate: string;
+  provenances: string[] | null;
   relationProvenance: string | null;
-  relationPredicate: string;
-  relationObjects: string[];
+  subject: string;
   ta1ref: string | null;
-}
-
-export interface SchemaPageQuery_schemaById_entityRelations {
-  __typename: "EntityRelation";
-  comments: string[] | null;
-  relations: SchemaPageQuery_schemaById_entityRelations_relations[];
-  relationSubject: string;
 }
 
 export interface SchemaPageQuery_schemaById_order_BeforeAfterStepOrder {
