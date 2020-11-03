@@ -79,6 +79,11 @@ export const StepCard: React.FunctionComponent<{
             value={step.minDuration?.string}
             valueDataCy="step-min-duration"
           />
+          <StringListFieldTableRow
+            direction="row"
+            name="Modalities"
+            values={step.modalities}
+          />
           <JsonFieldTableRow name={"Private data"} value={step.privateData} />
           <ProvenancesFieldTableRow
             hrefs={hrefs}

@@ -42,6 +42,11 @@ export const StepParticipantValueCard: React.FunctionComponent<{
             value={value.confidence ? value.confidence.toFixed(2) : null}
           />
           <EntityTypesFieldTableRow entityTypes={value.entityTypes} />
+          <StringListFieldTableRow
+            direction="row"
+            name="Modalities"
+            values={value.modalities}
+          />
           <JsonFieldTableRow name={"Private data"} value={value.privateData} />
           <ProvenancesFieldTableRow
             hrefs={hrefs}

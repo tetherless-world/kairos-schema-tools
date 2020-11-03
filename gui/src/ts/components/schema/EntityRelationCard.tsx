@@ -75,6 +75,7 @@ export const EntityRelationCard: React.FunctionComponent<{
               <TableCell>Name</TableCell>
               <TableCell>Comments</TableCell>
               <TableCell>Confidence</TableCell>
+              <TableCell>Modality</TableCell>
               <TableCell>Provenance</TableCell>
               <TableCell>Reference</TableCell>
               <TableCell>Relation provenance</TableCell>
@@ -123,6 +124,20 @@ export const EntityRelationCard: React.FunctionComponent<{
                         {relation.confidence
                           ? relation.confidence.toFixed(2)
                           : null}
+                      </TableCell>
+                      <TableCell>
+                        {relation.modalities &&
+                        relation.modalities.length > 0 ? (
+                          <List>
+                            {relation.modalities.map(
+                              (modality, modalityIndex) => (
+                                <ListItem key={modalityIndex}>
+                                  <ListItemText>{modality}</ListItemText>
+                                </ListItem>
+                              )
+                            )}
+                          </List>
+                        ) : null}
                       </TableCell>
                       <TableCell>
                         {relation.provenances &&
