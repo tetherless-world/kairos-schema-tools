@@ -145,6 +145,14 @@ export const StepOrderCard: React.FunctionComponent<{
             provenanceData={provenanceData}
             provenances={stepOrder.provenances}
           />
+          <StringFieldTableRow
+            name="TA1 reference"
+            value={
+              stepOrder.ta1ref
+                ? shortenUri({namespacePrefixes, uri: stepOrder.ta1ref})
+                : null
+            }
+          />
         </TableBody>
       </Table>
     </CardContent>

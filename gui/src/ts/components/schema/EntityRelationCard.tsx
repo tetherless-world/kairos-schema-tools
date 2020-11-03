@@ -78,6 +78,7 @@ export const EntityRelationCard: React.FunctionComponent<{
               <TableCell>Provenance</TableCell>
               <TableCell>Reference</TableCell>
               <TableCell>Relation provenance</TableCell>
+              <TableCell>TA1 reference</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -161,6 +162,14 @@ export const EntityRelationCard: React.FunctionComponent<{
                             provenance={relation.relationProvenance}
                           />
                         ) : null}
+                      </TableCell>
+                      <TableCell>
+                        {relation.ta1ref
+                          ? shortenUri({
+                              namespacePrefixes,
+                              uri: relation.ta1ref,
+                            })
+                          : null}
                       </TableCell>
                     </TableRow>
                   )

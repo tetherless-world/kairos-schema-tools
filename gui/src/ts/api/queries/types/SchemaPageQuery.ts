@@ -18,6 +18,7 @@ export interface SchemaPageQuery_schemaById_entityRelations_relations {
   relationProvenance: string | null;
   relationPredicate: string;
   relationObjects: string[];
+  ta1ref: string | null;
 }
 
 export interface SchemaPageQuery_schemaById_entityRelations {
@@ -35,6 +36,7 @@ export interface SchemaPageQuery_schemaById_order_BeforeAfterStepOrder {
   id: string | null;
   label: string;
   provenances: string[] | null;
+  ta1ref: string | null;
   after: string[];
   before: string[];
 }
@@ -47,6 +49,7 @@ export interface SchemaPageQuery_schemaById_order_ContainerContainedStepOrder {
   id: string | null;
   label: string;
   provenances: string[] | null;
+  ta1ref: string | null;
   contained: string[];
   container: string;
 }
@@ -59,6 +62,7 @@ export interface SchemaPageQuery_schemaById_order_OverlapsStepOrder {
   id: string | null;
   label: string;
   provenances: string[] | null;
+  ta1ref: string | null;
   overlaps: string[];
 }
 
@@ -479,6 +483,7 @@ export interface SchemaPageQuery_schemaById_steps_list {
   provenances: string[] | null;
   references: string[] | null;
   requires: string[] | null;
+  ta1ref: string | null;
   temporalObjects: SchemaPageQuery_schemaById_steps_list_temporalObjects[] | null;
   type: string;
 }

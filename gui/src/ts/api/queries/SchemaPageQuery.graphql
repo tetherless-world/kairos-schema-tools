@@ -19,6 +19,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                 relationProvenance
                 relationPredicate
                 relationObjects
+                ta1ref
             }
             relationSubject
         }
@@ -31,6 +32,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             id
             label
             provenances
+            ta1ref
             ... on BeforeAfterStepOrder {
                 after
                 before
@@ -137,6 +139,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                 provenances
                 references
                 requires
+                ta1ref
                 temporalObjects {
                     absoluteTime {
                         string
