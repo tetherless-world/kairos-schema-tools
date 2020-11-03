@@ -41,7 +41,8 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
         Field("id", OptionType(UriType), resolve = _.value.id),
         Field("index", IntType, resolve = _.value.index),
         Field("label", StringType, resolve = _.value.label),
-        Field("provenances", OptionType(ListType(StringType)), resolve = _.value.provenances)
+        Field("provenances", OptionType(ListType(StringType)), resolve = _.value.provenances),
+        Field("ta1ref", OptionType(UriType), resolve = _.value.ta1ref)
       )
     )
 

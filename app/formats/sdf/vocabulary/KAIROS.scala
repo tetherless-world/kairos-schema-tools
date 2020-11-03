@@ -59,9 +59,13 @@ object KAIROS {
   val startTime = ResourceFactory.createProperty(URI + "startTime")
   val steps = ResourceFactory.createProperty(URI + "steps")
   val `super` = ResourceFactory.createProperty(URI + "super")
+  val ta1ref = ResourceFactory.createProperty(URI + "ta1ref")
   val ta2 = ResourceFactory.createProperty(URI + "ta2")
   val task2 = ResourceFactory.createProperty(URI + "task2")
   val temporal = ResourceFactory.createProperty(URI + "temporal")
   val template = ResourceFactory.createProperty(URI + "template")
   val values = ResourceFactory.createProperty(URI + "values")
+
+  // Resources
+  val NULL = ResourceFactory.createResource(URI + "NULL")
 }

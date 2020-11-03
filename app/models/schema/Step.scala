@@ -19,6 +19,7 @@ final case class Step(
                        requires: Option[List[String]],
                        references: Option[List[String]],
                        sourceJsonNodeLocation: JsonNodeLocation,
+                       ta1ref: Option[Uri],
                        temporalObjects: Option[List[TemporalObject]],
                        `type`: Uri
                      ) extends Definition {

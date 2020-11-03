@@ -146,7 +146,8 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       relationObjects = resource.relationObject,
       relationPredicate = resource.relationPredicate.headOption.getOrElse(throw ValidationException(s"entity relation missing relation predicate: ${resource.toTtlString()}", parentPath)),
       relationProvenance = resource.relationProvenance.headOption,
-      provenances = Option(resource.provenance).filter(_.nonEmpty)
+      provenances = Option(resource.provenance).filter(_.nonEmpty),
+      ta1ref = resource.ta1ref.headOption
     )
 
   private def readPrimitive(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource) = {
@@ -308,6 +309,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       references = Option(resource.reference).filter(_.nonEmpty),
       requires = Option(resource.requires).filter(_.nonEmpty),
       sourceJsonNodeLocation = jsonNode.location,
+      ta1ref = resource.ta1ref.headOption,
       temporalObjects = Option(resource.temporal.map(readTemporalObject(path, _))).filter(_.nonEmpty),
       `type` = Uri.parse(resource.types.headOption.getOrElse(throw ValidationException(s"step ${id} missing type", path)).getURI)
     )
@@ -324,6 +326,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     val id = Option(resource.getURI).map(Uri.parse(_))
     val overlaps = resource.overlaps
     val provenances = Option(resource.provenance).filter(_.nonEmpty)
+    val ta1ref = resource.ta1ref.headOption
 
     if (after.nonEmpty && before.nonEmpty) {
       BeforeAfterStepOrder(
@@ -334,7 +337,8 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         flags = flags,
         id = id,
         index = index,
-        provenances = provenances
+        provenances = provenances,
+        ta1ref = ta1ref
       )
     } else if (contained.nonEmpty && container.size == 1) {
       ContainerContainedStepOrder(
@@ -345,7 +349,8 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         flags = flags,
         id = id,
         index = index,
-        provenances = provenances
+        provenances = provenances,
+        ta1ref = ta1ref
       )
     } else if (overlaps.nonEmpty) {
       OverlapsStepOrder(
@@ -355,7 +360,8 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         id = id,
         index = index,
         overlaps = overlaps,
-        provenances = provenances
+        provenances = provenances,
+        ta1ref = ta1ref
       )
     } else {
       throw ValidationException(s"invalid step order:\n${resource.toTtlString()}", parentPath)

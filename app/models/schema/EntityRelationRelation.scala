@@ -11,5 +11,6 @@ final case class EntityRelationRelation(
                                          references: Option[List[String]],
                                          relationPredicate: Uri,
                                          relationProvenance: Option[String],
-                                         relationObjects: List[Uri]
+                                         relationObjects: List[Uri],
+                                         ta1ref: Option[Uri]
                                        )

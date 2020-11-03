@@ -98,6 +98,15 @@ export const StepCard: React.FunctionComponent<{
             valuesDataCy="step-references"
           />
           <StringFieldTableRow
+            name="TA1 reference"
+            value={
+              step.ta1ref
+                ? shortenUri({namespacePrefixes, uri: step.ta1ref})
+                : null
+            }
+            valueDataCy="step-ta1ref"
+          />
+          <StringFieldTableRow
             name="Type"
             value={shortenUri({namespacePrefixes, uri: step.type})}
             valueDataCy="step-type"

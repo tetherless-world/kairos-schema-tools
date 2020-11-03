@@ -11,6 +11,7 @@ sealed trait StepOrder {
   def label = if (id.isDefined) id.get.toString else index.toString
   val provenances: Option[List[String]]
   def stepIds: List[Uri]
+  val ta1ref: Option[Uri]
 }
 
 final case class BeforeAfterStepOrder(
@@ -21,7 +22,8 @@ final case class BeforeAfterStepOrder(
                                        flags: Option[List[StepOrderFlag]],
                                        id: Option[Uri],
                                        index: Int,
-                                       provenances: Option[List[String]]
+                                       provenances: Option[List[String]],
+                                       ta1ref: Option[Uri]
                                      ) extends StepOrder {
   final override def stepIds: List[Uri] = after ++ before
 }
@@ -34,7 +36,8 @@ final case class ContainerContainedStepOrder(
                                               flags: Option[List[StepOrderFlag]],
                                               id: Option[Uri],
                                               index: Int,
-                                              provenances: Option[List[String]]
+                                              provenances: Option[List[String]],
+                                              ta1ref: Option[Uri]
                                             ) extends StepOrder {
   final override def stepIds: List[Uri] = contained :+ container
 }
@@ -46,7 +49,8 @@ final case class OverlapsStepOrder(
                                     id: Option[Uri],
                                     index: Int,
                                     overlaps: List[Uri],
-                                    provenances: Option[List[String]]
+                                    provenances: Option[List[String]],
+                                    ta1ref: Option[Uri]
                                   ) extends StepOrder {
   final override def stepIds: List[Uri] = overlaps
 }
