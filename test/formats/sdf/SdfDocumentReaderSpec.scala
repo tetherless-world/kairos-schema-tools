@@ -59,11 +59,6 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
         for (entityRelation <- schema.entityRelations) {
           entityRelation.comments should not be None
           entityRelation.comments.get should not be empty
-          // relationSubject should be in slots
-          entityRelation.relations should not be empty
-          for (relation <- entityRelation.relations) {
-            relation.relationObjects should not be empty
-          }
         }
         schema.name should be("Coordinated Bombing Attack")
         schema.order should not be empty
@@ -149,12 +144,8 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
         schema.description should be("A terrorist attack on the World Trade Center, carried out on 2/26/1993, when a truck bomb detonated below the North Tower")
         schema.entityRelations should not be empty
         for (entityRelation <- schema.entityRelations) {
-          entityRelation.relations should not be empty
-          for (relation <- entityRelation.relations) {
-            relation.relationObjects should not be empty
-            relation.provenances.get should not be empty
-            relation.provenances should not be None
-          }
+          entityRelation.provenances.get should not be empty
+          entityRelation.provenances should not be None
         }
         schema.name should be("World Trade Center 1993 Attack")
         schema.order should not be empty

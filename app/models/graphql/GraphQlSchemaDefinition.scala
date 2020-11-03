@@ -109,8 +109,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   // Entity types
   implicit val EntityTypesObjectType = deriveObjectType[GraphQlSchemaContext, EntityTypes]()
 
-  // Entity relations
-  implicit val EntityRelationRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelationRelation]()
+  // Entity relation
   implicit val EntityRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelation]()
 
   // Primitive
