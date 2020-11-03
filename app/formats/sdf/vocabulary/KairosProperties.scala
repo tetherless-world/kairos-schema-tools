@@ -43,6 +43,7 @@ trait KairosProperties extends PropertyGetters {
   def maxDuration: List[XSDDuration] = getPropertyObjectDurations(KAIROS.maxDuration)
   def mediaType: List[String] = getPropertyObjectStrings(KAIROS.mediaType)
   def minDuration: List[XSDDuration] = getPropertyObjectDurations(KAIROS.minDuration)
+  def modality: List[String] = getPropertyObjectStrings(KAIROS.modality)
   def offset: List[Int] = getPropertyObjectInts(KAIROS.offset)
   def order: List[Resource] = getPropertyObjectResources(KAIROS.order)
   def overlaps: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.overlaps)

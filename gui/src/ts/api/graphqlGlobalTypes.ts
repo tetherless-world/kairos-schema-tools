@@ -34,6 +34,13 @@ export enum EntityType {
   WEA = "WEA",
 }
 
+export enum Modality {
+  Generic = "Generic",
+  Hedged = "Hedged",
+  Irrealis = "Irrealis",
+  Negated = "Negated",
+}
+
 export enum SearchDocumentType {
   Primitive = "Primitive",
   PrimitiveSlot = "PrimitiveSlot",

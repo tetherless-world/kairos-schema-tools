@@ -26,6 +26,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
 
   // Enum types
   implicit val EntityTypeEnumType = deriveEnumType[EntityType]()
+  implicit val ModalityEnumType = deriveEnumType[Modality]()
   implicit val SearchDocumentTypeEnumType = deriveEnumType[SearchDocumentType]()
   implicit val StepOrderFlagEnumType = deriveEnumType[StepOrderFlag]()
   implicit val ValidationMessageTypeEnumType = deriveEnumType[ValidationMessageType]()

@@ -34,6 +34,7 @@ object KAIROS {
   val maxDuration = ResourceFactory.createProperty(URI + "maxDuration")
   val mediaType = ResourceFactory.createProperty(URI + "mediaType")
   val minDuration = ResourceFactory.createProperty(URI + "minDuration")
+  val modality = ResourceFactory.createProperty(URI + "modality")
   val offset = ResourceFactory.createProperty(URI + "offset")
   val order = ResourceFactory.createProperty(URI + "order")
   val overlaps = ResourceFactory.createProperty(URI + "overlaps")

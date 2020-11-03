@@ -13,6 +13,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             relations {
                 confidence
                 id
+                modalities
                 name
                 provenances
                 references
@@ -103,6 +104,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                 minDuration {
                     string
                 }
+                modalities
                 name
                 participants {
                     aka
@@ -127,6 +129,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                             ...EntityTypesFragment
                         }
                         label
+                        modalities
                         name
                         privateData
                         provenances

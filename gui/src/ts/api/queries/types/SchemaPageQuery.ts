@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { StepOrderFlag, EntityType } from "./../../graphqlGlobalTypes";
+import { Modality, StepOrderFlag, EntityType } from "./../../graphqlGlobalTypes";
 
 // ====================================================
 // GraphQL query operation: SchemaPageQuery
@@ -12,6 +12,7 @@ export interface SchemaPageQuery_schemaById_entityRelations_relations {
   __typename: "EntityRelationRelation";
   confidence: number | null;
   id: string | null;
+  modalities: Modality[] | null;
   name: string | null;
   provenances: string[] | null;
   references: string[] | null;
@@ -349,6 +350,7 @@ export interface SchemaPageQuery_schemaById_steps_list_participants_values {
   confidence: number;
   entityTypes: SchemaPageQuery_schemaById_steps_list_participants_values_entityTypes;
   label: string;
+  modalities: Modality[] | null;
   name: string;
   privateData: string | null;
   provenances: string[];
@@ -476,6 +478,7 @@ export interface SchemaPageQuery_schemaById_steps_list {
   label: string;
   maxDuration: SchemaPageQuery_schemaById_steps_list_maxDuration | null;
   minDuration: SchemaPageQuery_schemaById_steps_list_minDuration | null;
+  modalities: Modality[] | null;
   name: string;
   participants: SchemaPageQuery_schemaById_steps_list_participants[] | null;
   path: SchemaPageQuery_schemaById_steps_list_path;
