@@ -380,7 +380,11 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       values = Option(mapResourcesToJsonNodes(
         getObjectJsonNodeId = (objectJsonNode) => objectJsonNode.map.get("name").filter(_.isInstanceOf[StringValueJsonNode]).map(_.asInstanceOf[StringValueJsonNode].value),
         getResourceId = (resource) => resource.name.headOption,
-        jsonNodes = jsonNode.map.get("values").filter(_.isInstanceOf[ArrayJsonNode]).map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
+        jsonNodes = jsonNode.map.get("values").map({
+          case valuesJsonNode: ArrayJsonNode => valuesJsonNode.list
+          case valuesJsonNode: ObjectJsonNode => List(valuesJsonNode)
+          case _ => List()
+        }).getOrElse(List()),
         path = path,
         resources = resource.values
       ).flatMap(entry => withValidationExceptionCatch(path)(() => readStepParticipantValue(jsonNode = entry._1, parentPath = path, resource = entry._2, stepParticipantId = id)))).filter(_.nonEmpty),

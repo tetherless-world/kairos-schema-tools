@@ -70,6 +70,6 @@ trait KairosProperties extends PropertyGetters {
   def ta2: Option[Boolean] = getPropertyObjectLiterals(KAIROS.ta2).headOption.map(_.getBoolean)
   def task2: Option[Boolean] = getPropertyObjectLiterals(KAIROS.task2).headOption.map(_.getBoolean)
   def template: List[String] = getPropertyObjectStrings(KAIROS.template)
-  def temporal: List[Resource] = getPropertyObjectResources(KAIROS.temporal)
+  def temporal: List[Resource] = getPropertyObjectResourceList(KAIROS.temporal)
   def values: List[Resource] = getPropertyObjectResources(KAIROS.values)
 }
