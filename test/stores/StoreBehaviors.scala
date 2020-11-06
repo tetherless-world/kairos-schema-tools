@@ -6,15 +6,16 @@ import org.scalatest.{Matchers, WordSpec}
 
 trait StoreBehaviors extends Matchers { this: WordSpec =>
   val testSdfDocument1 = ConfData.sdfDocuments(0)
+  val testPrimitive1 = testSdfDocument1.primitives(0)
   val testSchema1 = testSdfDocument1.schemas(0)
 
   def store(storeFactory: () => Store): Unit = {
     "get a primitive by id" in {
       val store = storeFactory()
-      store.getPrimitiveById(testSchema1.id) should equal(None)
+      store.getPrimitiveById(testPrimitive1.id) should equal(None)
       store.putSdfDocument(testSdfDocument1)
-      store.getSchemaById(testSchema1.id).get.id should equal(testSchema1.id)
-      store.getSchemaById(Uri.parse("http://example.com/other")) should equal(None)
+      store.getPrimitiveById(testPrimitive1.id).get.id should equal(testPrimitive1.id)
+      store.getPrimitiveById(Uri.parse("http://example.com/other")) should equal(None)
     }
 
     "get a schema by id" in {
