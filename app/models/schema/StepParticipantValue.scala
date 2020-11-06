@@ -8,7 +8,6 @@ final case class StepParticipantValue(
                                        confidence: Double,
                                        entity: Uri,
                                        modalities: Option[List[Modality]],
-                                       name: String,
                                        privateData: Option[String],
                                        provenances: List[String],
                                        sourceJsonNodeLocation: JsonNodeLocation,

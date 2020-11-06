@@ -138,7 +138,6 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                         entity
                         label
                         modalities
-                        name
                         privateData
                         provenances
                     }

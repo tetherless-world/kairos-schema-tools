@@ -382,7 +382,6 @@ export interface SchemaPageQuery_schemaById_steps_list_participants_values {
   entity: string;
   label: string;
   modalities: Modality[] | null;
-  name: string;
   privateData: string | null;
   provenances: string[];
 }

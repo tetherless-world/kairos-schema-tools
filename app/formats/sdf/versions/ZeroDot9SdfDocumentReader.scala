@@ -29,6 +29,21 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     }
   }
 
+  private def expandNamespacePrefix(id: String): String = {
+    val idParts = id.split(':')
+    if (idParts.length == 1) {
+      id
+    } else {
+      val idNsPrefix = idParts(0)
+      val idNsUri = nsPrefixMap.get(idNsPrefix)
+      if (idNsUri.isDefined) {
+        idNsUri.get + idParts(1)
+      } else {
+        id
+      }
+    }
+  }
+
   private def getDefinitionPrivateData(jsonNode: ObjectJsonNode, path: DefinitionPath): Option[String] = {
     jsonNode.map.get("privateData").flatMap(privateDataNode => {
       if (privateDataNode.isInstanceOf[ObjectJsonNode]) {
@@ -52,14 +67,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
             throw ValidationException(f"JSON node @id is not a string: ${idNode}", path)
           }
           val id = idNode.asInstanceOf[StringValueJsonNode].value
-          val idParts = id.split(':')
-          if (idParts.length == 1) {
-            id
-          } else {
-            val idNsPrefix = idParts(0)
-            val idNsUri = nsPrefixMap.get(idNsPrefix).getOrElse(throw ValidationException(s"JSON node @id namespace prefix is not defined: ${idNsPrefix}", path))
-            idNsUri + idParts(1)
-          }
+          expandNamespacePrefix(id)
         }
       },
       getResourceId = (resource: Resource) => Option(resource.getURI),
@@ -412,8 +420,8 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       role = resource.role.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required role", path)),
       sourceJsonNodeLocation = jsonNode.location,
       values = Option(mapResourcesToJsonNodes(
-        getObjectJsonNodeId = (objectJsonNode) => objectJsonNode.map.get("name").filter(_.isInstanceOf[StringValueJsonNode]).map(_.asInstanceOf[StringValueJsonNode].value),
-        getResourceId = (resource) => resource.name.headOption,
+        getObjectJsonNodeId = (objectJsonNode) => objectJsonNode.map.get("entity").filter(_.isInstanceOf[StringValueJsonNode]).map(_.asInstanceOf[StringValueJsonNode].value).map(expandNamespacePrefix(_)),
+        getResourceId = (resource) => resource.entity.headOption.map(_.toString),
         jsonNodes = jsonNode.map.get("values").map({
           case valuesJsonNode: ArrayJsonNode => valuesJsonNode.list
           case valuesJsonNode: ObjectJsonNode => List(valuesJsonNode)
@@ -425,19 +433,17 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     )
   }
 
-  private def readStepParticipantValue(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource, stepParticipantId: Uri): StepParticipantValue = {
+  private def readStepParticipantValue(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource, stepParticipantId: Uri): StepParticipantValue =
     StepParticipantValue(
       comments = Option(resource.comment).filter(_.nonEmpty),
       confidence = resource.confidence.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required confidence", parentPath)),
       entity = resource.entity.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required entity", parentPath)),
 //      entityTypes = readEntityTypes(parentPath = parentPath, resource = resource).getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required entityTypes or variant", parentPath)),
       modalities = readModalities(parentPath, resource),
-      name = resource.name.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required name", parentPath)),
       privateData = getDefinitionPrivateData(jsonNode, parentPath),
       provenances = Option(resource.provenance).filter(_.nonEmpty).getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required provenance", parentPath)),
       sourceJsonNodeLocation = jsonNode.location
     )
-  }
 
   private def readTemporalObject(parentPath: DefinitionPath, resource: Resource) =
     TemporalObject(

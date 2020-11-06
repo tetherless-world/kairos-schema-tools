@@ -50,11 +50,6 @@ export const StepParticipantValueCard: React.FunctionComponent<{
       <CardContent>
         <Table>
           <TableBody>
-            <StringFieldTableRow
-              name="Name"
-              value={value.name}
-              valueDataCy="step-participant-name"
-            />
             <StringListFieldTableRow
               direction="column"
               name="Comments"
