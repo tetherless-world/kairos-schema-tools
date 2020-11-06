@@ -26,6 +26,7 @@ class RestController @Inject() (store: Store) extends InjectedController {
   // URI
   private implicit val uriJsonWrites: json.Writes[Uri] = (uri) => JsString(uri.toString)
   // DefinitionPath
+  private implicit val definitionPathEntityJsonWrites = Json.writes[DefinitionPath.DefinitionPathEntity]
   private implicit val definitionPathPrimitiveSlotJsonWrites = Json.writes[DefinitionPath.DefinitionPathPrimitiveSlot]
   private implicit val definitionPathPrimitiveJsonWrites = Json.writes[DefinitionPath.DefinitionPathPrimitive]
   private implicit val definitionPathProvenanceDataObjectJsonWrites = Json.writes[DefinitionPath.DefinitionPathProvenanceDataObject]
@@ -42,6 +43,7 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val primitiveSlotJsonWrites: json.Writes[PrimitiveSlot] = Json.writes[PrimitiveSlot]
   private implicit val primitiveJsonWrites: json.Writes[Primitive] = Json.writes[Primitive]
   // Schema
+  private implicit val entityJsonWrites = Json.writes[Entity]
   private implicit val modalityJsonWrites: json.Writes[Modality] = (modality) => JsString(modality.value)
   private implicit val entityRelationJsonWrites = Json.writes[EntityRelation]
   private implicit val temporalObjectJsonWrites = Json.writes[TemporalObject]

@@ -22,6 +22,8 @@ object KAIROS {
   val earliestEndTime = ResourceFactory.createProperty(URI + "earliestEndTime")
   val earliestStartTime = ResourceFactory.createProperty(URI + "earliestStartTime")
   val endTime = ResourceFactory.createProperty(URI + "endTime")
+  val entities = ResourceFactory.createProperty(URI + "entities")
+  val entity = ResourceFactory.createProperty(URI + "entity")
   val entityRelations = ResourceFactory.createProperty(URI + "entityRelations")
   val entityTypes = ResourceFactory.createProperty(URI + "entityTypes")
   val entityTypes_AND = ResourceFactory.createProperty(URI + "entityTypes_AND")

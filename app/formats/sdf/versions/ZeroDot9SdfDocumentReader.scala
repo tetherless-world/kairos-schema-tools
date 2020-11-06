@@ -97,6 +97,22 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     })
   }
 
+  private def readEntity(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource): Entity = {
+    val id = Uri.parse(resource.getURI)
+    val path = DefinitionPath.sdfDocument(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).entity(id)
+    Entity(
+      comments = Option(resource.comment).filter(_.nonEmpty),
+      entityTypes = readEntityTypes(parentPath = path, resource = resource).getOrElse(throw ValidationException(s"entity ${id} missing required entityTypes", path)),
+      id = id,
+      name = resource.name.headOption.getOrElse(throw ValidationException(s"entity ${id} missing required name", path)),
+      path = path,
+      privateData = getDefinitionPrivateData(jsonNode, path),
+      references = Option(resource.reference).filter(_.nonEmpty),
+      refvar = resource.refvar.headOption,
+      sourceJsonNodeLocation = jsonNode.location,
+    )
+  }
+
   private def readEntityRelations(parentPath: DefinitionPath, resource: Resource): List[EntityRelation] = {
     val comments = Option(resource.comment).filter(_.nonEmpty)
     val subject = resource.relationSubject.headOption.getOrElse(throw ValidationException(s"entity relation missing subject: ${resource.toTtlString()}", parentPath))
@@ -161,9 +177,9 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     models.schema.Primitive(
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
-      description = resource.description.headOption.getOrElse(s"primitive ${id} missing required description property"),
+      description = resource.description.headOption.getOrElse(s"primitive ${id} missing required description"),
       id = id,
-      name = resource.name.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required name property", path)),
+      name = resource.name.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required name", path)),
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
       references = Option(resource.reference).filter(_.nonEmpty),
@@ -175,9 +191,9 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         withValidationExceptionCatchOption(path)(() => readPrimitiveSlot(jsonNode = entry._1, parentPath = path, resource = entry._2))
       ),
       sourceJsonNodeLocation = jsonNode.location,
-      `super` = resource.`super`.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required super property", path)),
+      `super` = resource.`super`.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required super", path)),
       template = resource.template.headOption,
-      version = resource.version.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing requirde version property", path))
+      version = resource.version.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing requirde version", path))
     )
   }
 
@@ -192,9 +208,9 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
       references = Option(resource.reference).filter(_.nonEmpty),
-      roleName = resource.roleName.headOption.getOrElse(throw ValidationException(s"slot ${id} missing required roleName property", path)),
+      roleName = resource.roleName.headOption.getOrElse(throw ValidationException(s"slot ${id} missing required roleName", path)),
       sourceJsonNodeLocation = jsonNode.location,
-      `super` = resource.`super`.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required super property", path))
+      `super` = resource.`super`.headOption.getOrElse(throw ValidationException(s"primitive ${id} missing required super", path))
     )
   }
 
@@ -227,12 +243,19 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       aka = Option(resource.aka).filter(_.nonEmpty),
       comments = Option(resource.comment).filter(_.nonEmpty),
       confidence = resource.confidence.headOption,
-      description = resource.description.headOption.getOrElse(throw ValidationException(s"schema ${id} missing required description property", path)),
+      description = resource.description.headOption.getOrElse(throw ValidationException(s"schema ${id} missing required description", path)),
+      entities = Option(mapUriResourcesToJsonNodes(
+        jsonNodes = jsonNode.map.get("entities").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
+        path = path,
+        resources = resource.entities,
+      ).flatMap(entry =>
+        withValidationExceptionCatchOption(path)(() => readEntity(jsonNode = entry._1, parentPath = path, resource = entry._2))
+      )).filter(_.nonEmpty),
       entityRelations = resource.entityRelations.flatMap(entityRelationResource =>
         withValidationExceptionCatchList(path)(() => readEntityRelations(path, entityRelationResource))
       ),
       id = id,
-      name = resource.name.headOption.getOrElse(throw ValidationException(s"schema ${id} missing required name property", path)),
+      name = resource.name.headOption.getOrElse(throw ValidationException(s"schema ${id} missing required name", path)),
       order = resource.order.zipWithIndex.flatMap({ case (stepOrderResource, stepOrderIndex) => withValidationExceptionCatchOption(path)(() => readStepOrder(stepOrderIndex, path, stepOrderResource)) }),
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
@@ -269,7 +292,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       ),
       ta2 = ta2,
       template = resource.template.headOption,
-      version = resource.version.headOption.getOrElse(throw ValidationException(s"schema ${id} missing version property", path))
+      version = resource.version.headOption.getOrElse(throw ValidationException(s"schema ${id} missing version", path))
     )
   }
 
@@ -285,7 +308,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       privateData = getDefinitionPrivateData(jsonNode, path),
       references = Option(resource.reference).filter(_.nonEmpty),
       refvar = resource.refvar.headOption,
-      roleName = resource.roleName.headOption.getOrElse(throw ValidationException(s"slot ${id} missing required roleName property", path)),
+      roleName = resource.roleName.headOption.getOrElse(throw ValidationException(s"slot ${id} missing required roleName", path)),
       sourceJsonNodeLocation = jsonNode.location
     )
   }
@@ -302,7 +325,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       maxDuration = resource.maxDuration.headOption.map(Duration(_)),
       modalities = readModalities(path, resource),
       minDuration = resource.minDuration.headOption.map(Duration(_)),
-      name = resource.name.headOption.getOrElse(throw ValidationException(s"step ${id} missing required name property", path)),
+      name = resource.name.headOption.getOrElse(throw ValidationException(s"step ${id} missing required name", path)),
       participants = Option(mapUriResourcesToJsonNodes(
         jsonNodes = jsonNode.map.get("participants").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
@@ -381,12 +404,12 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       comments = Option(resource.comment).filter(_.nonEmpty),
       entityTypes = readEntityTypes(parentPath = path, resource = resource),
       id = id,
-      name = resource.name.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required name property", path)),
+      name = resource.name.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required name", path)),
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
       references = Option(resource.reference).filter(_.nonEmpty),
       refvar = resource.refvar.headOption,
-      role = resource.role.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required role property", path)),
+      role = resource.role.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required role", path)),
       sourceJsonNodeLocation = jsonNode.location,
       values = Option(mapResourcesToJsonNodes(
         getObjectJsonNodeId = (objectJsonNode) => objectJsonNode.map.get("name").filter(_.isInstanceOf[StringValueJsonNode]).map(_.asInstanceOf[StringValueJsonNode].value),
@@ -406,9 +429,10 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     StepParticipantValue(
       comments = Option(resource.comment).filter(_.nonEmpty),
       confidence = resource.confidence.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required confidence", parentPath)),
-      entityTypes = readEntityTypes(parentPath = parentPath, resource = resource).getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required entityTypes or variant", parentPath)),
+      entity = resource.entity.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required entity", parentPath)),
+//      entityTypes = readEntityTypes(parentPath = parentPath, resource = resource).getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required entityTypes or variant", parentPath)),
       modalities = readModalities(parentPath, resource),
-      name = resource.name.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required name property", parentPath)),
+      name = resource.name.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required name", parentPath)),
       privateData = getDefinitionPrivateData(jsonNode, parentPath),
       provenances = Option(resource.provenance).filter(_.nonEmpty).getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required provenance", parentPath)),
       sourceJsonNodeLocation = jsonNode.location

@@ -8,6 +8,7 @@ final case class Schema(
                          comments: Option[List[String]],
                          confidence: Option[Double],
                          description: String,
+                         entities: Option[List[Entity]],
                          entityRelations: List[EntityRelation],
                          id: Uri,
                          name: String,

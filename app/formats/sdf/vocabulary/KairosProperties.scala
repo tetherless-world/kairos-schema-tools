@@ -31,6 +31,8 @@ trait KairosProperties extends PropertyGetters {
   def earliestEndTime: List[XSDDateTime] = getPropertyObjectDateTimes(KAIROS.earliestEndTime)
   def earliestStartTime: List[XSDDateTime] = getPropertyObjectDateTimes(KAIROS.earliestStartTime)
   def endTime: List[Double] = getPropertyObjectDoubles(KAIROS.endTime)
+  def entities: List[Resource] = getPropertyObjectResources(KAIROS.entities)
+  def entity: List[Uri] = getPropertyObjectUriResourceList(KAIROS.entity).map(resource => parseUri(resource.getURI))
   def entityRelations: List[Resource] = getPropertyObjectResources(KAIROS.entityRelations)
   def entityTypes: List[Uri] = getPropertyObjectUriResourceList(KAIROS.entityTypes).map(resource => parseUri(resource.getURI))
   def entityTypes_AND: List[Uri] = getPropertyObjectUriResourceList(KAIROS.entityTypes_AND).map(resource => parseUri(resource.getURI))
