@@ -21,6 +21,9 @@ import {Link} from "components/link/Link";
 import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 import {shortenUri} from "models/shortenUri";
 import {ProvenanceLink} from "components/link/ProvenanceLink";
+import {StringFieldTableRow} from "components/table/StringFieldTableRow";
+import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
+import {ProvenancesFieldTableRow} from "components/table/ProvenancesFieldTableRow";
 
 export const EntityRelationCard: React.FunctionComponent<{
   entityRelation: SchemaPageQuery_schemaById_entityRelations;
@@ -61,122 +64,91 @@ export const EntityRelationCard: React.FunctionComponent<{
     return <span>{shortenUri({namespacePrefixes, uri: entityId})}</span>;
   };
 
+  const shortenedEntityRelationId = entityRelation.id
+    ? shortenUri({namespacePrefixes, uri: entityRelation.id})
+    : null;
+
   return (
     <Card>
-      <CardHeader title={`Entity relation ${entityRelationIndex}`} />
+      <CardHeader
+        title={`Entity relation ${
+          shortenedEntityRelationId ?? entityRelationIndex
+        }`}
+      />
       <CardContent>
         <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Identifier</TableCell>
-              <TableCell>Subject</TableCell>
-              <TableCell>Predicate</TableCell>
-              <TableCell>Object</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Comments</TableCell>
-              <TableCell>Confidence</TableCell>
-              <TableCell>Modality</TableCell>
-              <TableCell>Provenance</TableCell>
-              <TableCell>Reference</TableCell>
-              <TableCell>Relation provenance</TableCell>
-              <TableCell>TA1 reference</TableCell>
-            </TableRow>
-          </TableHead>
           <TableBody>
+            <StringFieldTableRow
+              name="Identifier"
+              value={shortenedEntityRelationId}
+            />
+            <StringFieldTableRow name="Name" value={entityRelation.name} />
             <TableRow>
-              <TableCell>
-                {entityRelation.id
-                  ? shortenUri({namespacePrefixes, uri: entityRelation.id})
-                  : null}
-              </TableCell>
+              <TableCell>Subject</TableCell>
               <TableCell>{entityLink(entityRelation.subject)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Predicate</TableCell>
               <TableCell>
                 {shortenUri({
                   namespacePrefixes,
                   uri: entityRelation.predicate,
                 })}
               </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Object</TableCell>
               <TableCell>{entityLink(entityRelation.object)}</TableCell>
-              <TableCell>{entityRelation.name}</TableCell>
-              <TableCell>
-                {entityRelation.comments &&
-                entityRelation.comments.length > 0 ? (
-                  <List>
-                    {entityRelation.comments.map((comment, commentIndex) => (
-                      <ListItem key={commentIndex}>
-                        <ListItemText>{comment}</ListItemText>
-                      </ListItem>
-                    ))}
-                  </List>
-                ) : null}
-              </TableCell>
-              <TableCell>
-                {entityRelation.confidence
+            </TableRow>
+            <StringListFieldTableRow
+              direction="column"
+              name="Comments"
+              values={entityRelation.comments}
+            />
+            <StringFieldTableRow
+              name="Confidence"
+              value={
+                entityRelation.confidence
                   ? entityRelation.confidence.toFixed(2)
-                  : null}
-              </TableCell>
-              <TableCell>
-                {entityRelation.modalities &&
-                entityRelation.modalities.length > 0 ? (
-                  <List>
-                    {entityRelation.modalities.map(
-                      (modality, modalityIndex) => (
-                        <ListItem key={modalityIndex}>
-                          <ListItemText>{modality}</ListItemText>
-                        </ListItem>
-                      )
-                    )}
-                  </List>
-                ) : null}
-              </TableCell>
-              <TableCell>
-                {entityRelation.provenances &&
-                entityRelation.provenances.length > 0 ? (
-                  <List>
-                    {entityRelation.provenances.map((provenance) => (
-                      <ListItem key={provenance}>
-                        <ListItemText>
-                          <ProvenanceLink
-                            hrefs={hrefs}
-                            provenance={provenance}
-                            provenanceData={schema.provenanceData}
-                          />
-                        </ListItemText>
-                      </ListItem>
-                    ))}
-                  </List>
-                ) : null}
-              </TableCell>
-              <TableCell>
-                {entityRelation.references &&
-                entityRelation.references.length > 0 ? (
-                  <List>
-                    {entityRelation.references.map((reference) => (
-                      <ListItem key={reference}>
-                        <ListItemText>{reference}</ListItemText>
-                      </ListItem>
-                    ))}
-                  </List>
-                ) : null}
-              </TableCell>
-              <TableCell>
-                {entityRelation.relationProvenance ? (
-                  <ProvenanceLink
-                    hrefs={hrefs}
-                    provenanceData={schema.provenanceData}
-                    provenance={entityRelation.relationProvenance}
-                  />
-                ) : null}
-              </TableCell>
-              <TableCell>
-                {entityRelation.ta1ref
+                  : null
+              }
+            />
+            <StringListFieldTableRow
+              direction="row"
+              name="Modalities"
+              values={entityRelation.modalities}
+            />
+            <ProvenancesFieldTableRow
+              hrefs={hrefs}
+              provenanceData={schema.provenanceData}
+              provenances={entityRelation.provenances}
+            />
+            <StringListFieldTableRow
+              direction="column"
+              name="References"
+              values={entityRelation.references}
+            />
+            <ProvenancesFieldTableRow
+              hrefs={hrefs}
+              name="Relation provenance"
+              provenanceData={schema.provenanceData}
+              provenances={
+                entityRelation.relationProvenance
+                  ? [entityRelation.relationProvenance]
+                  : null
+              }
+            />
+            <StringFieldTableRow
+              name="TA1 reference"
+              value={
+                entityRelation.ta1ref
                   ? shortenUri({
                       namespacePrefixes,
                       uri: entityRelation.ta1ref,
                     })
-                  : null}
-              </TableCell>
-            </TableRow>
+                  : null
+              }
+            />
           </TableBody>
         </Table>
       </CardContent>
