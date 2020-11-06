@@ -6,16 +6,17 @@ import {SchemaPageQuery_schemaById_provenanceData} from "api/queries/types/Schem
 
 export const ProvenancesFieldTableRow: React.FunctionComponent<{
   hrefs: SchemaHrefs;
+  name?: string;
   provenanceData: readonly SchemaPageQuery_schemaById_provenanceData[] | null;
   provenances: readonly string[] | null;
-}> = ({hrefs, provenanceData, provenances}) => {
+}> = ({hrefs, name, provenanceData, provenances}) => {
   if (!provenances || provenances.length === 0) {
     return null;
   }
 
   return (
     <TableRow>
-      <TableCell>Provenance</TableCell>
+      <TableCell>{name ?? "Provenance"}</TableCell>
       <TableCell>
         <List>
           {provenances.map((provenance) => (
