@@ -12,6 +12,9 @@ export interface DefinitionPath {
     } | null;
     schema?: {
       id: string;
+      entity?: {
+        id: string;
+      } | null;
       provenanceDataObject?: {
         id: string;
       } | null;

@@ -21,7 +21,9 @@ export interface SchemaPageQuery_schemaById_entities {
   id: string;
   label: string;
   name: string;
+  privateData: string | null;
   references: string[] | null;
+  refvar: string | null;
 }
 
 export interface SchemaPageQuery_schemaById_entityRelations {

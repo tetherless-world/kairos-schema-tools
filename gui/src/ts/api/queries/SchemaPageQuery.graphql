@@ -16,8 +16,9 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             id
             label
             name
+            privateData
             references
-            references
+            refvar
         }
         entityRelations {
             comments

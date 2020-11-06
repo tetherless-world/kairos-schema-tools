@@ -12,6 +12,7 @@ import {TopLevelDefinitionSectionContents} from "components/definition/TopLevelD
 import {TopLevelDefinitionSectionContentsGrid} from "components/definition/TopLevelDefinitionSectionContentsGrid";
 import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 import {ProvenanceDataObjectCard} from "components/schema/ProvenanceDataObjectCard";
+import {EntityCard} from "components/schema/EntityCard";
 
 export const SchemaSectionContentsGrid: React.FunctionComponent<{
   hrefs: SchemaHrefs;
@@ -28,6 +29,26 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
             namespacePrefixes={namespacePrefixes}
             schema={schema}
           />
+        );
+        break;
+      }
+      case "entities": {
+        if (!schema.entities) {
+          continue;
+        }
+        children = (
+          <Grid container direction="column" spacing={4}>
+            {schema.entities.map((entity) => (
+              <Grid id={hrefs.entityId(entity)} item key={entity.id}>
+                <EntityCard
+                  entity={entity}
+                  hrefs={hrefs}
+                  namespacePrefixes={namespacePrefixes}
+                  schema={schema}
+                />
+              </Grid>
+            ))}
+          </Grid>
         );
         break;
       }
@@ -96,7 +117,7 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
                 <StepCard
                   hrefs={hrefs}
                   namespacePrefixes={namespacePrefixes}
-                  provenanceData={schema.provenanceData}
+                  schema={schema}
                   step={step}
                 />
               </Grid>
