@@ -17,6 +17,11 @@ export interface SchemasPageQuery_schemas_path_sdfDocument_primitive {
   slot: SchemasPageQuery_schemas_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SchemasPageQuery_schemas_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SchemasPageQuery_schemas_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -41,6 +46,7 @@ export interface SchemasPageQuery_schemas_path_sdfDocument_schema_step {
 export interface SchemasPageQuery_schemas_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SchemasPageQuery_schemas_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SchemasPageQuery_schemas_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SchemasPageQuery_schemas_path_sdfDocument_schema_slot | null;
   step: SchemasPageQuery_schemas_path_sdfDocument_schema_step | null;

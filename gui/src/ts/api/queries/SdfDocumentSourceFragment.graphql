@@ -32,6 +32,16 @@ fragment SdfDocumentSourceFragment on SdfDocument {
     schemas {
         id
         label
+        entities {
+            id
+            label
+            path {
+                ...DefinitionPathFragment
+            }
+            sourceJsonNodeLocation {
+                ...JsonNodeLocationFragment
+            }
+        }
         order {
             id
             label

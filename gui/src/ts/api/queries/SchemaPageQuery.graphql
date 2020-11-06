@@ -8,6 +8,17 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
         comments
         confidence
         description
+        entities {
+            comments
+            entityTypes {
+                ...EntityTypesFragment
+            }
+            id
+            label
+            name
+            references
+            references
+        }
         entityRelations {
             comments
             confidence
@@ -123,9 +134,7 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
                     values {
                         comments
                         confidence
-                        entityTypes {
-                            ...EntityTypesFragment
-                        }
+                        entity
                         label
                         modalities
                         name

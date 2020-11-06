@@ -27,6 +27,12 @@ export interface SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument
   slot: SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+  label: string | null;
+}
+
 export interface SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -54,6 +60,7 @@ export interface SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument
 
 export interface SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
+  entity: SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument_schema_entity | null;
   id: string;
   label: string | null;
   provenanceDataObject: SdfDocumentValidationQuery_validateSdfDocument_path_sdfDocument_schema_provenanceDataObject | null;

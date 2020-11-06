@@ -25,6 +25,11 @@ export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_primitive
   slot: SdfDocumentSourceFragment_primitives_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -49,6 +54,7 @@ export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_st
 export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_step | null;
@@ -77,6 +83,11 @@ export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_pri
   slot: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -101,6 +112,7 @@ export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_sch
 export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema_step | null;
@@ -179,6 +191,110 @@ export interface SdfDocumentSourceFragment_primitives {
   sourceJsonNodeLocation: SdfDocumentSourceFragment_primitives_sourceJsonNodeLocation;
 }
 
+export interface SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
+export interface SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_primitive_slot {
+  __typename: "DefinitionPathPrimitiveSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_primitive {
+  __typename: "DefinitionPathPrimitive";
+  id: string;
+  label: string | null;
+  slot: SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_schema_provenanceDataObject {
+  __typename: "DefinitionPathProvenanceDataObject";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_schema_slot {
+  __typename: "DefinitionPathSchemaSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_schema_step_participant {
+  __typename: "DefinitionPathStepParticipant";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_schema_step {
+  __typename: "DefinitionPathStep";
+  id: string;
+  label: string | null;
+  participant: SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_schema_step_participant | null;
+}
+
+export interface SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_schema {
+  __typename: "DefinitionPathSchema";
+  entity: SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_schema_entity | null;
+  id: string;
+  label: string | null;
+  provenanceDataObject: SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_schema_provenanceDataObject | null;
+  slot: SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_schema_slot | null;
+  step: SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_schema_step | null;
+}
+
+export interface SdfDocumentSourceFragment_schemas_entities_path_sdfDocument {
+  __typename: "DefinitionPathSdfDocument";
+  id: string;
+  label: string | null;
+  namespacePrefixes: SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_namespacePrefixes[] | null;
+  primitive: SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_primitive | null;
+  schema: SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_schema | null;
+}
+
+export interface SdfDocumentSourceFragment_schemas_entities_path {
+  __typename: "DefinitionPath";
+  sdfDocument: SdfDocumentSourceFragment_schemas_entities_path_sdfDocument;
+}
+
+export interface SdfDocumentSourceFragment_schemas_entities_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSourceFragment_schemas_entities_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSourceFragment_schemas_entities_sourceJsonNodeLocation {
+  __typename: "JsonNodeLocation";
+  startToken: SdfDocumentSourceFragment_schemas_entities_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSourceFragment_schemas_entities_sourceJsonNodeLocation_stopToken;
+}
+
+export interface SdfDocumentSourceFragment_schemas_entities {
+  __typename: "Entity";
+  id: string;
+  label: string;
+  path: SdfDocumentSourceFragment_schemas_entities_path;
+  sourceJsonNodeLocation: SdfDocumentSourceFragment_schemas_entities_sourceJsonNodeLocation;
+}
+
 export interface SdfDocumentSourceFragment_schemas_order {
   __typename: "BeforeAfterStepOrder" | "ContainerContainedStepOrder" | "OverlapsStepOrder";
   id: string | null;
@@ -194,6 +310,11 @@ export interface SdfDocumentSourceFragment_schemas_path_sdfDocument_primitive {
   __typename: "DefinitionPathPrimitive";
   id: string;
   slot: SdfDocumentSourceFragment_schemas_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentSourceFragment_schemas_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
 }
 
 export interface SdfDocumentSourceFragment_schemas_path_sdfDocument_schema_provenanceDataObject {
@@ -220,6 +341,7 @@ export interface SdfDocumentSourceFragment_schemas_path_sdfDocument_schema_step 
 export interface SdfDocumentSourceFragment_schemas_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSourceFragment_schemas_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSourceFragment_schemas_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSourceFragment_schemas_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSourceFragment_schemas_path_sdfDocument_schema_step | null;
@@ -248,6 +370,11 @@ export interface SdfDocumentSourceFragment_schemas_provenanceData_path_sdfDocume
   slot: SdfDocumentSourceFragment_schemas_provenanceData_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentSourceFragment_schemas_provenanceData_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentSourceFragment_schemas_provenanceData_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -272,6 +399,7 @@ export interface SdfDocumentSourceFragment_schemas_provenanceData_path_sdfDocume
 export interface SdfDocumentSourceFragment_schemas_provenanceData_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSourceFragment_schemas_provenanceData_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSourceFragment_schemas_provenanceData_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSourceFragment_schemas_provenanceData_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSourceFragment_schemas_provenanceData_path_sdfDocument_schema_step | null;
@@ -330,6 +458,11 @@ export interface SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_primit
   slot: SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -354,6 +487,7 @@ export interface SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_schema
 export interface SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_schema_step | null;
@@ -434,6 +568,11 @@ export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_
   slot: SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -458,6 +597,7 @@ export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_
 export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema_step | null;
@@ -516,6 +656,11 @@ export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_p
   slot: SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -540,6 +685,7 @@ export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_s
 export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema_step | null;
@@ -626,6 +772,7 @@ export interface SdfDocumentSourceFragment_schemas {
   __typename: "Schema";
   id: string;
   label: string;
+  entities: SdfDocumentSourceFragment_schemas_entities[] | null;
   order: SdfDocumentSourceFragment_schemas_order[];
   path: SdfDocumentSourceFragment_schemas_path;
   provenanceData: SdfDocumentSourceFragment_schemas_provenanceData[] | null;
@@ -651,6 +798,12 @@ export interface SdfDocumentSourceFragment_validationMessages_path_sdfDocument_p
   id: string;
   label: string | null;
   slot: SdfDocumentSourceFragment_validationMessages_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentSourceFragment_validationMessages_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+  label: string | null;
 }
 
 export interface SdfDocumentSourceFragment_validationMessages_path_sdfDocument_schema_provenanceDataObject {
@@ -680,6 +833,7 @@ export interface SdfDocumentSourceFragment_validationMessages_path_sdfDocument_s
 
 export interface SdfDocumentSourceFragment_validationMessages_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
+  entity: SdfDocumentSourceFragment_validationMessages_path_sdfDocument_schema_entity | null;
   id: string;
   label: string | null;
   provenanceDataObject: SdfDocumentSourceFragment_validationMessages_path_sdfDocument_schema_provenanceDataObject | null;

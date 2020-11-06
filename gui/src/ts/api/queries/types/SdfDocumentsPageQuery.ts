@@ -25,6 +25,11 @@ export interface SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_
   slot: SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -49,6 +54,7 @@ export interface SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_
 export interface SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_schema_slot | null;
   step: SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_schema_step | null;
@@ -84,6 +90,11 @@ export interface SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_pri
   slot: SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -108,6 +119,7 @@ export interface SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_sch
 export interface SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_schema_slot | null;
   step: SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_schema_step | null;
