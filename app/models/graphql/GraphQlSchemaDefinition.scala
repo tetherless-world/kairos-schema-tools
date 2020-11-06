@@ -63,6 +63,12 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   implicit val NamespacePrefixObjectType = deriveObjectType[GraphQlSchemaContext, NamespacePrefix]()
 
   // DefinitionPath
+  implicit val DefinitionPathEntityObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathEntity](
+    AddFields(
+      Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getEntityById(ctx.value.id).map(_.label))
+    )
+  )
+
   implicit val DefinitionPathPrimitiveSlotObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathPrimitiveSlot](
     AddFields(
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getPrimitiveSlotById(ctx.value.id).map(_.label))
@@ -108,6 +114,13 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
 
   // Entity types
   implicit val EntityTypesObjectType = deriveObjectType[GraphQlSchemaContext, EntityTypes]()
+
+  // Entity
+  implicit val EntityObjectType = deriveObjectType[GraphQlSchemaContext, Entity](
+    AddFields(
+      Field("label", StringType, resolve = _.value.label),
+    )
+  )
 
   // Entity relation
   implicit val EntityRelationObjectType = deriveObjectType[GraphQlSchemaContext, EntityRelation]()
