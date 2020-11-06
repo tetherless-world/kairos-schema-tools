@@ -199,7 +199,6 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
               participant.values.get should not be empty
               for (value <- participant.values.get) {
                 //              value.confidence should be >= 0
-                value.name should not be empty
                 value.provenances should not be empty
               }
             }
