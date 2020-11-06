@@ -5,6 +5,8 @@ import edu.rpi.tw.twks.uri.Uri
 final case class DefinitionPath(sdfDocument: DefinitionPath.DefinitionPathSdfDocument)
 
 object DefinitionPath {
+  final case class DefinitionPathEntity(id: Uri)
+
   final case class DefinitionPathPrimitive(id: Uri, slot: Option[DefinitionPathPrimitiveSlot]) {}
 
   final case class DefinitionPathPrimitiveSlot(id: Uri)
@@ -15,8 +17,11 @@ object DefinitionPath {
 
   final case class DefinitionPathStepParticipant(id: Uri)
 
-  final case class DefinitionPathSchema(id: Uri, provenanceDataObject: Option[DefinitionPathProvenanceDataObject], slot: Option[DefinitionPathSchemaSlot], step: Option[DefinitionPathStep]) {
+  final case class DefinitionPathSchema(id: Uri, entity: Option[DefinitionPathEntity], provenanceDataObject: Option[DefinitionPathProvenanceDataObject], slot: Option[DefinitionPathSchemaSlot], step: Option[DefinitionPathStep]) {
     var definedCount = 0
+    if (entity.isDefined) {
+      definedCount += 1
+    }
     if (provenanceDataObject.isDefined) {
       definedCount += 1
     }
@@ -47,13 +52,14 @@ object DefinitionPath {
 
     class DefinitionPathSchemaBuilder(schemaId: Uri) {
       class DefinitionPathSchemaStepBuilder(stepId: Uri) {
-        def build = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, provenanceDataObject = None, slot = None, step = Some(DefinitionPathStep(id = stepId, participant = None))))))
-        def participant(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, provenanceDataObject = None, slot = None, step = Some(DefinitionPathStep(id = stepId, participant = Some(DefinitionPathStepParticipant(id = id))))))))
+        def build = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, entity = None, provenanceDataObject = None, slot = None, step = Some(DefinitionPathStep(id = stepId, participant = None))))))
+        def participant(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, entity = None, provenanceDataObject = None, slot = None, step = Some(DefinitionPathStep(id = stepId, participant = Some(DefinitionPathStepParticipant(id = id))))))))
       }
 
-      def build = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, provenanceDataObject = None, slot = None, step = None))))
-      def provenanceDataObject(id: String) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, provenanceDataObject = Some(DefinitionPathProvenanceDataObject(id = id)), slot = None, step = None))))
-      def slot(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, provenanceDataObject = None, slot = Some(DefinitionPathSchemaSlot(id = id)), step = None))))
+      def build = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, entity = None, provenanceDataObject = None, slot = None, step = None))))
+      def entity(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, entity = Some(DefinitionPathEntity(id)), provenanceDataObject = None, slot = None, step = None))))
+      def provenanceDataObject(id: String) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, entity = None, provenanceDataObject = Some(DefinitionPathProvenanceDataObject(id = id)), slot = None, step = None))))
+      def slot(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, entity = None, provenanceDataObject = None, slot = Some(DefinitionPathSchemaSlot(id = id)), step = None))))
       def step(id: Uri) = new DefinitionPathSchemaStepBuilder(stepId = id)
     }
 

@@ -25,6 +25,11 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocum
   slot: SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -49,6 +54,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocum
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_schema_step | null;
@@ -77,6 +83,11 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sd
   slot: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -101,6 +112,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sd
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_schema_step | null;
@@ -179,6 +191,110 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives {
   sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_primitives_sourceJsonNodeLocation;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_namespacePrefixes {
+  __typename: "NamespacePrefix";
+  prefix: string;
+  uri: string;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_primitive_slot {
+  __typename: "DefinitionPathPrimitiveSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_primitive {
+  __typename: "DefinitionPathPrimitive";
+  id: string;
+  label: string | null;
+  slot: SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_schema_provenanceDataObject {
+  __typename: "DefinitionPathProvenanceDataObject";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_schema_slot {
+  __typename: "DefinitionPathSchemaSlot";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_schema_step_participant {
+  __typename: "DefinitionPathStepParticipant";
+  id: string;
+  label: string | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_schema_step {
+  __typename: "DefinitionPathStep";
+  id: string;
+  label: string | null;
+  participant: SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_schema_step_participant | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_schema {
+  __typename: "DefinitionPathSchema";
+  entity: SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_schema_entity | null;
+  id: string;
+  label: string | null;
+  provenanceDataObject: SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_schema_provenanceDataObject | null;
+  slot: SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_schema_slot | null;
+  step: SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_schema_step | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument {
+  __typename: "DefinitionPathSdfDocument";
+  id: string;
+  label: string | null;
+  namespacePrefixes: SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_namespacePrefixes[] | null;
+  primitive: SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_primitive | null;
+  schema: SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_schema | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path {
+  __typename: "DefinitionPath";
+  sdfDocument: SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_sourceJsonNodeLocation_startToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_sourceJsonNodeLocation_stopToken {
+  __typename: "JsonTokenLocation";
+  column: number;
+  startIndex: number;
+  stopIndex: number;
+  line: number;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_sourceJsonNodeLocation {
+  __typename: "JsonNodeLocation";
+  startToken: SdfDocumentSaveMutation_putSdfDocument_schemas_entities_sourceJsonNodeLocation_startToken;
+  stopToken: SdfDocumentSaveMutation_putSdfDocument_schemas_entities_sourceJsonNodeLocation_stopToken;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities {
+  __typename: "Entity";
+  id: string;
+  label: string;
+  path: SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path;
+  sourceJsonNodeLocation: SdfDocumentSaveMutation_putSdfDocument_schemas_entities_sourceJsonNodeLocation;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_order {
   __typename: "BeforeAfterStepOrder" | "ContainerContainedStepOrder" | "OverlapsStepOrder";
   id: string | null;
@@ -194,6 +310,11 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument
   __typename: "DefinitionPathPrimitive";
   id: string;
   slot: SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_schema_provenanceDataObject {
@@ -220,6 +341,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_schema_step | null;
@@ -248,6 +370,11 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_provenanceData_p
   slot: SdfDocumentSaveMutation_putSdfDocument_schemas_provenanceData_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_provenanceData_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_provenanceData_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -272,6 +399,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_provenanceData_p
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_provenanceData_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSaveMutation_putSdfDocument_schemas_provenanceData_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSaveMutation_putSdfDocument_schemas_provenanceData_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSaveMutation_putSdfDocument_schemas_provenanceData_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSaveMutation_putSdfDocument_schemas_provenanceData_path_sdfDocument_schema_step | null;
@@ -330,6 +458,11 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDo
   slot: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -354,6 +487,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDo
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_schema_step | null;
@@ -434,6 +568,11 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_parti
   slot: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_participants_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_participants_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_participants_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -458,6 +597,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_parti
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_participants_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_participants_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_participants_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_participants_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_participants_path_sdfDocument_schema_step | null;
@@ -516,6 +656,11 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_path_
   slot: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -540,6 +685,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_path_
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_path_sdfDocument_schema_step | null;
@@ -626,6 +772,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas {
   __typename: "Schema";
   id: string;
   label: string;
+  entities: SdfDocumentSaveMutation_putSdfDocument_schemas_entities[] | null;
   order: SdfDocumentSaveMutation_putSdfDocument_schemas_order[];
   path: SdfDocumentSaveMutation_putSdfDocument_schemas_path;
   provenanceData: SdfDocumentSaveMutation_putSdfDocument_schemas_provenanceData[] | null;
@@ -651,6 +798,12 @@ export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_
   id: string;
   label: string | null;
   slot: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_primitive_slot | null;
+}
+
+export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+  label: string | null;
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_schema_provenanceDataObject {
@@ -680,6 +833,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_
 
 export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
+  entity: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_schema_entity | null;
   id: string;
   label: string | null;
   provenanceDataObject: SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_schema_provenanceDataObject | null;

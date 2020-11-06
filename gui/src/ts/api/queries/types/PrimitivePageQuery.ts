@@ -19,6 +19,11 @@ export interface PrimitivePageQuery_primitiveById_path_sdfDocument_primitive {
   slot: PrimitivePageQuery_primitiveById_path_sdfDocument_primitive_slot | null;
 }
 
+export interface PrimitivePageQuery_primitiveById_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface PrimitivePageQuery_primitiveById_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -43,6 +48,7 @@ export interface PrimitivePageQuery_primitiveById_path_sdfDocument_schema_step {
 export interface PrimitivePageQuery_primitiveById_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: PrimitivePageQuery_primitiveById_path_sdfDocument_schema_entity | null;
   provenanceDataObject: PrimitivePageQuery_primitiveById_path_sdfDocument_schema_provenanceDataObject | null;
   slot: PrimitivePageQuery_primitiveById_path_sdfDocument_schema_slot | null;
   step: PrimitivePageQuery_primitiveById_path_sdfDocument_schema_step | null;
@@ -84,6 +90,11 @@ export interface PrimitivePageQuery_primitiveById_slots_path_sdfDocument_primiti
   slot: PrimitivePageQuery_primitiveById_slots_path_sdfDocument_primitive_slot | null;
 }
 
+export interface PrimitivePageQuery_primitiveById_slots_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface PrimitivePageQuery_primitiveById_slots_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -108,6 +119,7 @@ export interface PrimitivePageQuery_primitiveById_slots_path_sdfDocument_schema_
 export interface PrimitivePageQuery_primitiveById_slots_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: PrimitivePageQuery_primitiveById_slots_path_sdfDocument_schema_entity | null;
   provenanceDataObject: PrimitivePageQuery_primitiveById_slots_path_sdfDocument_schema_provenanceDataObject | null;
   slot: PrimitivePageQuery_primitiveById_slots_path_sdfDocument_schema_slot | null;
   step: PrimitivePageQuery_primitiveById_slots_path_sdfDocument_schema_step | null;

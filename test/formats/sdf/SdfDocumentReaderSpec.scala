@@ -142,6 +142,13 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
         //          comment should not be empty
         //        }
         schema.description should be("A terrorist attack on the World Trade Center, carried out on 2/26/1993, when a truck bomb detonated below the North Tower")
+        schema.entities should not be None
+        schema.entities.get should not be empty
+        for (entity <- schema.entities.get) {
+          entity.name should not be empty
+        }
+        schema.entities.get.exists(_.comments.isDefined) should be(true)
+        schema.entities.get.exists(_.refvar.isDefined) should be(true)
         schema.entityRelations should not be empty
         for (entityRelation <- schema.entityRelations) {
           entityRelation.provenances.get should not be empty
@@ -192,7 +199,6 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
               participant.values.get should not be empty
               for (value <- participant.values.get) {
                 //              value.confidence should be >= 0
-                value.name should not be empty
                 value.provenances should not be empty
               }
             }

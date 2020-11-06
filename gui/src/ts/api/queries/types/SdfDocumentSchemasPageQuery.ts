@@ -23,6 +23,11 @@ export interface SdfDocumentSchemasPageQuery_sdfDocumentById_schemas_path_sdfDoc
   slot: SdfDocumentSchemasPageQuery_sdfDocumentById_schemas_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SdfDocumentSchemasPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SdfDocumentSchemasPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -47,6 +52,7 @@ export interface SdfDocumentSchemasPageQuery_sdfDocumentById_schemas_path_sdfDoc
 export interface SdfDocumentSchemasPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SdfDocumentSchemasPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SdfDocumentSchemasPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SdfDocumentSchemasPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_slot | null;
   step: SdfDocumentSchemasPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_step | null;

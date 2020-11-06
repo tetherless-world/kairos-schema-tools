@@ -28,6 +28,8 @@ interface SchemaTableOfContentsEntry {
   path?: DefinitionPath;
 }
 
+interface SchemaTableOfContentsEntity extends SchemaTableOfContentsEntry {}
+
 interface SchemaTableOfContentsProvenanceDataObject
   extends SchemaTableOfContentsEntry {}
 
@@ -140,6 +142,7 @@ export const SchemaTableOfContents: React.FunctionComponent<{
   hrefs: SchemaHrefs;
   includeSourceLinks?: boolean;
   schema: {
+    entities: readonly SchemaTableOfContentsEntity[] | null;
     id: string;
     order: readonly SchemaTableOfContentsStepOrder[];
     path: DefinitionPath;
@@ -181,6 +184,14 @@ export const SchemaTableOfContents: React.FunctionComponent<{
             </Grid>
           </ListItemText>
         </ListItem>
+        {schemaSection.id === "entities" && schema.entities ? (
+          <SchemaTableOfContentsEntryList
+            entries={schema.entities}
+            entryHref={(entry) => hrefs.entity(entry)}
+            includeSourceLinks={includeSourceLinks}
+            labelPrefix="Entity"
+          />
+        ) : null}
         {schemaSection.id === "provenance-data" && schema.provenanceData ? (
           <SchemaTableOfContentsEntryList
             entries={schema.provenanceData}

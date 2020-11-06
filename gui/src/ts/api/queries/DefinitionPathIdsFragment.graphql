@@ -9,6 +9,9 @@ fragment DefinitionPathIdsFragment on DefinitionPath {
         }
         schema {
             id
+            entity {
+                id
+            }
             provenanceDataObject {
                 id
             }

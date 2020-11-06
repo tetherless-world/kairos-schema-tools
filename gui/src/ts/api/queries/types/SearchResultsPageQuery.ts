@@ -19,6 +19,11 @@ export interface SearchResultsPageQuery_search_documents_path_sdfDocument_primit
   slot: SearchResultsPageQuery_search_documents_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SearchResultsPageQuery_search_documents_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SearchResultsPageQuery_search_documents_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -43,6 +48,7 @@ export interface SearchResultsPageQuery_search_documents_path_sdfDocument_schema
 export interface SearchResultsPageQuery_search_documents_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SearchResultsPageQuery_search_documents_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SearchResultsPageQuery_search_documents_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SearchResultsPageQuery_search_documents_path_sdfDocument_schema_slot | null;
   step: SearchResultsPageQuery_search_documents_path_sdfDocument_schema_step | null;

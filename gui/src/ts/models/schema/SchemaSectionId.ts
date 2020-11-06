@@ -1,5 +1,6 @@
 export type SchemaSectionId =
   | "details"
+  | "entities"
   | "entity-relations"
   | "provenance-data"
   | "slots"

@@ -34,6 +34,14 @@ export class PrimitiveHrefs extends SubHrefs {
 }
 
 export class SchemaHrefs extends SubHrefs {
+  entity(entity: {id: string}) {
+    return `${this.home}#${this.entityId(entity)}`;
+  }
+
+  entityId(entity: {id: string}) {
+    return `entity-${this.sanitizeId(entity.id)}`;
+  }
+
   provenanceDataObject(provenanceDataObject: {id: string}) {
     return `${this.home}#${this.provenanceDataObjectId(provenanceDataObject)}`;
   }
@@ -112,10 +120,16 @@ class SdfDocumentHrefs extends SubHrefs {
     const removeTypenames = (object: any) => {
       const newObject: any = {};
       for (const key of Object.keys(object)) {
-        newObject[key] =
-          _.isObject(object[key]) && object["__typename"]
-            ? removeTypenames(object[key])
-            : object[key];
+        if (key === "__typename") {
+          continue;
+        }
+        const value = object[key];
+        if (value == null) {
+          continue;
+        }
+        newObject[key] = _.isObject(object[key])
+          ? removeTypenames(object[key])
+          : object[key];
       }
       return newObject;
     };
@@ -159,7 +173,11 @@ export class Hrefs {
       const schemaHrefs = sdfDocumentHrefs.schemas.schema({
         id: path.sdfDocument.schema.id,
       });
-      if (path.sdfDocument.schema.provenanceDataObject) {
+      if (path.sdfDocument.schema.entity) {
+        return schemaHrefs.entity({
+          id: path.sdfDocument.schema.entity.id,
+        });
+      } else if (path.sdfDocument.schema.provenanceDataObject) {
         return schemaHrefs.provenanceDataObject({
           id: path.sdfDocument.schema.provenanceDataObject.id,
         });

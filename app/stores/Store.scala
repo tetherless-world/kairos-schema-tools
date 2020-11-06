@@ -1,11 +1,14 @@
 package stores
 
 import edu.rpi.tw.twks.uri.Uri
-import models.schema.{Primitive, PrimitiveSlot, ProvenanceDataObject, Schema, SchemaSlot, Step, StepParticipant}
+import models.schema._
 import models.sdfDocument.SdfDocument
-import models.search.{SearchDocument, SearchResults}
+import models.search.SearchResults
 
 trait Store {
+  def getEntities: List[Entity]
+  def getEntityById(id: Uri): Option[Entity]
+
   def deleteSdfDocumentById(id: Uri): Unit
   def deleteSdfDocuments(): Unit
 

@@ -2,11 +2,29 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { Modality, StepOrderFlag, EntityType } from "./../../graphqlGlobalTypes";
+import { EntityType, Modality, StepOrderFlag } from "./../../graphqlGlobalTypes";
 
 // ====================================================
 // GraphQL query operation: SchemaPageQuery
 // ====================================================
+
+export interface SchemaPageQuery_schemaById_entities_entityTypes {
+  __typename: "EntityTypes";
+  and: boolean;
+  entityTypes: EntityType[];
+}
+
+export interface SchemaPageQuery_schemaById_entities {
+  __typename: "Entity";
+  comments: string[] | null;
+  entityTypes: SchemaPageQuery_schemaById_entities_entityTypes;
+  id: string;
+  label: string;
+  name: string;
+  privateData: string | null;
+  references: string[] | null;
+  refvar: string | null;
+}
 
 export interface SchemaPageQuery_schemaById_entityRelations {
   __typename: "EntityRelation";
@@ -75,6 +93,11 @@ export interface SchemaPageQuery_schemaById_path_sdfDocument_primitive {
   slot: SchemaPageQuery_schemaById_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SchemaPageQuery_schemaById_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SchemaPageQuery_schemaById_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -99,6 +122,7 @@ export interface SchemaPageQuery_schemaById_path_sdfDocument_schema_step {
 export interface SchemaPageQuery_schemaById_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SchemaPageQuery_schemaById_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SchemaPageQuery_schemaById_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SchemaPageQuery_schemaById_path_sdfDocument_schema_slot | null;
   step: SchemaPageQuery_schemaById_path_sdfDocument_schema_step | null;
@@ -134,6 +158,11 @@ export interface SchemaPageQuery_schemaById_provenanceData_path_sdfDocument_prim
   slot: SchemaPageQuery_schemaById_provenanceData_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SchemaPageQuery_schemaById_provenanceData_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SchemaPageQuery_schemaById_provenanceData_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -158,6 +187,7 @@ export interface SchemaPageQuery_schemaById_provenanceData_path_sdfDocument_sche
 export interface SchemaPageQuery_schemaById_provenanceData_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SchemaPageQuery_schemaById_provenanceData_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SchemaPageQuery_schemaById_provenanceData_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SchemaPageQuery_schemaById_provenanceData_path_sdfDocument_schema_slot | null;
   step: SchemaPageQuery_schemaById_provenanceData_path_sdfDocument_schema_step | null;
@@ -210,6 +240,11 @@ export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_primitive {
   slot: SchemaPageQuery_schemaById_slots_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -234,6 +269,7 @@ export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_step {
 export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_slot | null;
   step: SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_step | null;
@@ -292,6 +328,11 @@ export interface SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocu
   slot: SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -316,6 +357,7 @@ export interface SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocu
 export interface SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocument_schema_slot | null;
   step: SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocument_schema_step | null;
@@ -333,20 +375,13 @@ export interface SchemaPageQuery_schemaById_steps_list_participants_path {
   sdfDocument: SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocument;
 }
 
-export interface SchemaPageQuery_schemaById_steps_list_participants_values_entityTypes {
-  __typename: "EntityTypes";
-  and: boolean;
-  entityTypes: EntityType[];
-}
-
 export interface SchemaPageQuery_schemaById_steps_list_participants_values {
   __typename: "StepParticipantValue";
   comments: string[] | null;
   confidence: number;
-  entityTypes: SchemaPageQuery_schemaById_steps_list_participants_values_entityTypes;
+  entity: string;
   label: string;
   modalities: Modality[] | null;
-  name: string;
   privateData: string | null;
   provenances: string[];
 }
@@ -378,6 +413,11 @@ export interface SchemaPageQuery_schemaById_steps_list_path_sdfDocument_primitiv
   slot: SchemaPageQuery_schemaById_steps_list_path_sdfDocument_primitive_slot | null;
 }
 
+export interface SchemaPageQuery_schemaById_steps_list_path_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+}
+
 export interface SchemaPageQuery_schemaById_steps_list_path_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -402,6 +442,7 @@ export interface SchemaPageQuery_schemaById_steps_list_path_sdfDocument_schema_s
 export interface SchemaPageQuery_schemaById_steps_list_path_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
   id: string;
+  entity: SchemaPageQuery_schemaById_steps_list_path_sdfDocument_schema_entity | null;
   provenanceDataObject: SchemaPageQuery_schemaById_steps_list_path_sdfDocument_schema_provenanceDataObject | null;
   slot: SchemaPageQuery_schemaById_steps_list_path_sdfDocument_schema_slot | null;
   step: SchemaPageQuery_schemaById_steps_list_path_sdfDocument_schema_step | null;
@@ -497,6 +538,7 @@ export interface SchemaPageQuery_schemaById {
   comments: string[] | null;
   confidence: number | null;
   description: string;
+  entities: SchemaPageQuery_schemaById_entities[] | null;
   entityRelations: SchemaPageQuery_schemaById_entityRelations[];
   label: string;
   name: string;

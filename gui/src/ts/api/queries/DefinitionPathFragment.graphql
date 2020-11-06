@@ -16,6 +16,10 @@ fragment DefinitionPathFragment on DefinitionPath {
             }
         }
         schema {
+            entity {
+                id
+                label
+            }
             id
             label
             provenanceDataObject {

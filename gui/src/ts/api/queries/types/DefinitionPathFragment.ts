@@ -25,6 +25,12 @@ export interface DefinitionPathFragment_sdfDocument_primitive {
   slot: DefinitionPathFragment_sdfDocument_primitive_slot | null;
 }
 
+export interface DefinitionPathFragment_sdfDocument_schema_entity {
+  __typename: "DefinitionPathEntity";
+  id: string;
+  label: string | null;
+}
+
 export interface DefinitionPathFragment_sdfDocument_schema_provenanceDataObject {
   __typename: "DefinitionPathProvenanceDataObject";
   id: string;
@@ -52,6 +58,7 @@ export interface DefinitionPathFragment_sdfDocument_schema_step {
 
 export interface DefinitionPathFragment_sdfDocument_schema {
   __typename: "DefinitionPathSchema";
+  entity: DefinitionPathFragment_sdfDocument_schema_entity | null;
   id: string;
   label: string | null;
   provenanceDataObject: DefinitionPathFragment_sdfDocument_schema_provenanceDataObject | null;
