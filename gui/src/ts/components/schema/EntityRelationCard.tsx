@@ -6,13 +6,9 @@ import {
   Card,
   CardContent,
   CardHeader,
-  List,
-  ListItem,
-  ListItemText,
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
 } from "@material-ui/core";
 import * as React from "react";
@@ -20,7 +16,6 @@ import {SchemaHrefs} from "Hrefs";
 import {Link} from "components/link/Link";
 import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
 import {shortenUri} from "models/shortenUri";
-import {ProvenanceLink} from "components/link/ProvenanceLink";
 import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {ProvenancesFieldTableRow} from "components/table/ProvenancesFieldTableRow";
