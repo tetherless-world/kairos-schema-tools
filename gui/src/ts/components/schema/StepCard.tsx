@@ -148,7 +148,7 @@ export const StepCard: React.FunctionComponent<{
             <Grid
               container
               direction="column"
-              id={hrefs.stepTemporalObjectsId(step)}
+              id={hrefs.temporalObjectsId(step)}
               spacing={6}
             >
               {step.temporalObjects.map(

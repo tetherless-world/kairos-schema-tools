@@ -27,18 +27,18 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   // Enum types
   implicit val EntityTypeEnumType = deriveEnumType[EntityType]()
   implicit val ModalityEnumType = deriveEnumType[Modality]()
+  implicit val OrderFlagEnumType = deriveEnumType[OrderFlag]()
   implicit val SearchDocumentTypeEnumType = deriveEnumType[SearchDocumentType]()
-  implicit val StepOrderFlagEnumType = deriveEnumType[StepOrderFlag]()
   implicit val ValidationMessageTypeEnumType = deriveEnumType[ValidationMessageType]()
 
   // Interface types
-  val StepOrderInterfaceType: InterfaceType[GraphQlSchemaContext, StepOrder] =
+  val OrderInterfaceType: InterfaceType[GraphQlSchemaContext, Order] =
     InterfaceType(
-      "StepOrder",
-      fields[GraphQlSchemaContext, StepOrder](
+      "Order",
+      fields[GraphQlSchemaContext, Order](
         Field("comments", OptionType(ListType(StringType)), resolve = _.value.comments),
         Field("confidence", OptionType(FloatType), resolve = _.value.confidence),
-        Field("flags", OptionType(ListType(StepOrderFlagEnumType)), resolve = _.value.flags),
+        Field("flags", OptionType(ListType(OrderFlagEnumType)), resolve = _.value.flags),
         Field("id", OptionType(UriType), resolve = _.value.id),
         Field("index", IntType, resolve = _.value.index),
         Field("label", StringType, resolve = _.value.label),
@@ -143,14 +143,14 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
       Field("label", StringType, resolve = _.value.label),
     )
   )
-  implicit val BeforeAfterStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, BeforeAfterStepOrder](
-    Interfaces(StepOrderInterfaceType)
+  implicit val BeforeAfterOrderObjectType = deriveObjectType[GraphQlSchemaContext, BeforeAfterOrder](
+    Interfaces(OrderInterfaceType)
   )
-  implicit val ContainerContainedStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, ContainerContainedStepOrder](
-    Interfaces(StepOrderInterfaceType)
+  implicit val ContainerContainedOrderObjectType = deriveObjectType[GraphQlSchemaContext, ContainerContainedOrder](
+    Interfaces(OrderInterfaceType)
   )
-  implicit val OverlapsStepOrderObjectType = deriveObjectType[GraphQlSchemaContext, OverlapsStepOrder](
-    Interfaces(StepOrderInterfaceType)
+  implicit val OverlapsOrderObjectType = deriveObjectType[GraphQlSchemaContext, OverlapsOrder](
+    Interfaces(OrderInterfaceType)
   )
   implicit val ProvenanceDataObjectObjectType = deriveObjectType[GraphQlSchemaContext, ProvenanceDataObject](
     AddFields(
@@ -178,7 +178,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
     AddFields(
       Field("label", StringType, resolve = _.value.label),
     ),
-    ReplaceField("order", Field("order", ListType(StepOrderInterfaceType), resolve = _.value.order))
+    ReplaceField("order", Field("order", ListType(OrderInterfaceType), resolve = _.value.order))
   )
 
   // Validation message
@@ -247,6 +247,6 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
   val schema = Schema(
     RootQueryType,
     Some(RootMutationType),
-    additionalTypes = BeforeAfterStepOrderObjectType :: ContainerContainedStepOrderObjectType :: OverlapsStepOrderObjectType :: Nil
+    additionalTypes = BeforeAfterOrderObjectType :: ContainerContainedOrderObjectType :: OverlapsOrderObjectType :: Nil
   )
 }

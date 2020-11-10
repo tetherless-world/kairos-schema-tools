@@ -53,11 +53,11 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val participantJsonWrites = Json.writes[Participant]
   private implicit val stepJsonWrites = Json.writes[Step]
   private implicit val stepsJsonWrites = Json.writes[Steps]
-  private implicit val stepOrderFlagJsonWrites: json.Writes[StepOrderFlag] = (flag) => JsString(flag.value)
-  private implicit val beforeAfterStepOrderJsonWrites = Json.writes[BeforeAfterStepOrder]
-  private implicit val containerContainedStepOrderJsonWrites = Json.writes[ContainerContainedStepOrder]
-  private implicit val overlapsStepOrderJsonWrites = Json.writes[OverlapsStepOrder]
-  private implicit val stepOrderJsonWrites = Json.writes[StepOrder] // json.Writes[StepOrder]
+  private implicit val orderFlagJsonWrites: json.Writes[OrderFlag] = (flag) => JsString(flag.value)
+  private implicit val beforeAfterOrderJsonWrites = Json.writes[BeforeAfterOrder]
+  private implicit val containerContainedOrderJsonWrites = Json.writes[ContainerContainedOrder]
+  private implicit val overlapsOrderJsonWrites = Json.writes[OverlapsOrder]
+  private implicit val orderJsonWrites = Json.writes[Order]
   private implicit val schemaJsonWrites = Json.writes[Schema]
   // Validation message
   private implicit val validationMessageTypeJsonWrites: json.Writes[ValidationMessageType] = (`type`) => JsString(`type`.value)

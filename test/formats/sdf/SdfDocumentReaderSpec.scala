@@ -4,7 +4,7 @@ import java.util.UUID
 
 import edu.rpi.tw.twks.uri.Uri
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
-import models.schema.{BeforeAfterStepOrder, ContainerContainedStepOrder, OverlapsStepOrder}
+import models.schema.{BeforeAfterOrder, ContainerContainedOrder, OverlapsOrder}
 import models.validation.ValidationMessageType
 import org.scalatest.{Matchers, WordSpec}
 import stores.ConfData
@@ -70,9 +70,9 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
         }
         schema.order.exists(order => order.comments.isDefined && order.comments.get.nonEmpty) should be (true)
         schema.order.exists(order => order.flags.isDefined && order.flags.get.nonEmpty) should be (true)
-        schema.order.exists(_.isInstanceOf[BeforeAfterStepOrder]) should be (true)
-        schema.order.exists(_.isInstanceOf[ContainerContainedStepOrder]) should be (true)
-        schema.order.exists(_.isInstanceOf[OverlapsStepOrder]) should be (true)
+        schema.order.exists(_.isInstanceOf[BeforeAfterOrder]) should be (true)
+        schema.order.exists(_.isInstanceOf[ContainerContainedOrder]) should be (true)
+        schema.order.exists(_.isInstanceOf[OverlapsOrder]) should be (true)
         schema.privateData should not be None
         schema.privateData.get should include("Performers can place any keys/values they wish here")
         schema.slots should not be empty
@@ -164,9 +164,9 @@ class SdfDocumentReaderSpec extends WordSpec with Matchers with WithResource {
         }
         schema.order.exists(order => order.comments.isDefined && order.comments.get.nonEmpty) should be(true)
         schema.order.exists(order => order.flags.isDefined && order.flags.get.nonEmpty) should be(true)
-        schema.order.exists(_.isInstanceOf[BeforeAfterStepOrder]) should be(true)
-        schema.order.exists(_.isInstanceOf[ContainerContainedStepOrder]) should be(true)
-        schema.order.exists(_.isInstanceOf[OverlapsStepOrder]) should be(true)
+        schema.order.exists(_.isInstanceOf[BeforeAfterOrder]) should be(true)
+        schema.order.exists(_.isInstanceOf[ContainerContainedOrder]) should be(true)
+        schema.order.exists(_.isInstanceOf[OverlapsOrder]) should be(true)
         schema.privateData should not be None
         schema.privateData.get should include("Performers can place any keys/values they wish here")
         schema.provenanceData should not be None

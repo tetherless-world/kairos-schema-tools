@@ -3,7 +3,7 @@ import * as React from "react";
 import {SchemaDetailsTable} from "components/schema/SchemaDetailsTable";
 import {Grid} from "@material-ui/core";
 import {StepCard} from "components/schema/StepCard";
-import {StepOrderCard} from "components/schema/StepOrderCard";
+import {OrderCard} from "components/schema/OrderCard";
 import {EntityRelationCard} from "components/schema/EntityRelationCard";
 import {SchemaSlotCard} from "components/schema/SchemaSlotCard";
 import {SchemaHrefs} from "Hrefs";
@@ -129,22 +129,18 @@ export const SchemaSectionContentsGrid: React.FunctionComponent<{
       case "step-order": {
         children = (
           <Grid container direction="column" spacing={4}>
-            {schema.order.map((stepOrder, stepOrderIndex) => (
+            {schema.order.map((order, orderIndex) => (
               <Grid
-                id={
-                  stepOrder.id
-                    ? hrefs.stepOrderId({id: stepOrder.id})
-                    : undefined
-                }
+                id={order.id ? hrefs.orderId({id: order.id}) : undefined}
                 item
-                key={stepOrderIndex}
+                key={orderIndex}
               >
-                <StepOrderCard
+                <OrderCard
                   hrefs={hrefs}
                   namespacePrefixes={namespacePrefixes}
                   provenanceData={schema.provenanceData}
-                  stepOrder={stepOrder}
-                  stepOrderIndex={stepOrderIndex}
+                  order={order}
+                  orderIndex={orderIndex}
                   steps={schema.steps.list}
                 />
               </Grid>

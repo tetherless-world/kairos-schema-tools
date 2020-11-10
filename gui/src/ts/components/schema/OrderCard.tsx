@@ -53,103 +53,94 @@ export const StepListTableRow: React.FunctionComponent<{
   );
 };
 
-export const StepOrderCard: React.FunctionComponent<{
+export const OrderCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
   namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   provenanceData: readonly SchemaPageQuery_schemaById_provenanceData[] | null;
-  stepOrder: SchemaPageQuery_schemaById_order;
-  stepOrderIndex: number;
+  order: SchemaPageQuery_schemaById_order;
+  orderIndex: number;
   steps: SchemaPageQuery_schemaById_steps_list[];
-}> = ({
-  hrefs,
-  namespacePrefixes,
-  provenanceData,
-  stepOrder,
-  stepOrderIndex,
-  steps,
-}) => (
+}> = ({hrefs, namespacePrefixes, provenanceData, order, orderIndex, steps}) => (
   <Card>
-    <CardHeader title={`Step order ${stepOrder.label}`} />
+    <CardHeader title={`Step order ${order.label}`} />
     <CardContent>
       <Table>
         <TableBody>
-          {stepOrder.__typename === "BeforeAfterStepOrder" ? (
+          {order.__typename === "BeforeAfterOrder" ? (
             <React.Fragment>
               <StepListTableRow
                 hrefs={hrefs}
                 name="Before"
                 provenanceData={provenanceData}
                 steps={steps}
-                values={stepOrder.before}
+                values={order.before}
               />
               <StepListTableRow
                 hrefs={hrefs}
                 name="After"
                 provenanceData={provenanceData}
                 steps={steps}
-                values={stepOrder.after}
+                values={order.after}
               />
             </React.Fragment>
           ) : null}
-          {stepOrder.__typename === "ContainerContainedStepOrder" ? (
+          {order.__typename === "ContainerContainedOrder" ? (
             <React.Fragment>
               <StepListTableRow
                 hrefs={hrefs}
                 name="Container"
                 provenanceData={provenanceData}
                 steps={steps}
-                values={[stepOrder.container]}
+                values={[order.container]}
               />
               <StepListTableRow
                 hrefs={hrefs}
                 name="Contained"
                 provenanceData={provenanceData}
                 steps={steps}
-                values={stepOrder.contained}
+                values={order.contained}
               />
             </React.Fragment>
           ) : null}
-          {stepOrder.__typename === "OverlapsStepOrder" ? (
+          {order.__typename === "OverlapsOrder" ? (
             <StepListTableRow
               hrefs={hrefs}
               name="Overlaps"
               provenanceData={provenanceData}
               steps={steps}
-              values={stepOrder.overlaps}
+              values={order.overlaps}
             />
           ) : null}
           <StringListFieldTableRow
             direction="column"
             name="Comments"
-            values={stepOrder.comments}
+            values={order.comments}
           />
           <StringFieldTableRow
             name="Confidence"
-            value={stepOrder.confidence?.toFixed(2)}
+            value={order.confidence?.toFixed(2)}
           />
           <StringListFieldTableRow
             direction="row"
             name="Flags"
-            values={stepOrder.flags}
+            values={order.flags}
           />
           <StringFieldTableRow
             name="Identifier"
             value={
-              stepOrder.id
-                ? shortenUri({namespacePrefixes, uri: stepOrder.id})
-                : null
+              order.id ? shortenUri({namespacePrefixes, uri: order.id}) : null
             }
           />
           <ProvenancesFieldTableRow
             hrefs={hrefs}
             provenanceData={provenanceData}
-            provenances={stepOrder.provenances}
+            provenances={order.provenances}
           />
           <StringFieldTableRow
             name="TA1 reference"
             value={
-              stepOrder.ta1ref
-                ? shortenUri({namespacePrefixes, uri: stepOrder.ta1ref})
+              order.ta1ref
+                ? shortenUri({namespacePrefixes, uri: order.ta1ref})
                 : null
             }
           />

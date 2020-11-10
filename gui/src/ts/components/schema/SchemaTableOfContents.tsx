@@ -40,7 +40,7 @@ interface SchemaTableOfContentsStep extends SchemaTableOfContentsEntry {
   temporalObjects: readonly {label: string}[] | null;
 }
 
-interface SchemaTableOfContentsStepOrder {
+interface SchemaTableOfContentsOrder {
   id: string | null;
   label: string;
 }
@@ -123,9 +123,7 @@ const StepsList: React.FunctionComponent<{
               ) : null}
               {step.temporalObjects && step.temporalObjects.length > 0 ? (
                 <Grid item>
-                  <Link to={hrefs.stepTemporalObjects(step)}>
-                    Temporal objects
-                  </Link>
+                  <Link to={hrefs.temporalObjects(step)}>Temporal objects</Link>
                 </Grid>
               ) : null}
             </Grid>
@@ -143,7 +141,7 @@ export const SchemaTableOfContents: React.FunctionComponent<{
   schema: {
     entities: readonly SchemaTableOfContentsEntity[] | null;
     id: string;
-    order: readonly SchemaTableOfContentsStepOrder[];
+    order: readonly SchemaTableOfContentsOrder[];
     path: DefinitionPath;
     provenanceData: readonly SchemaTableOfContentsProvenanceDataObject[] | null;
     slots: readonly SchemaTableOfContentsSlot[];
@@ -221,7 +219,7 @@ export const SchemaTableOfContents: React.FunctionComponent<{
               id: order.id!,
               label: order.label,
             }))}
-            entryHref={(entry) => hrefs.stepOrder(entry)}
+            entryHref={(entry) => hrefs.order(entry)}
             labelPrefix="Step order"
           />
         ) : null}

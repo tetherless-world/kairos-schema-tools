@@ -179,6 +179,59 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
   private def readModalities(parentPath: DefinitionPath, resource: Resource): Option[List[Modality]] =
     Option(resource.modality.map(modalityString => Modality.values.find(_.value == modalityString).getOrElse(throw ValidationException(s"unknown modality ${modalityString}", parentPath)))).filter(_.nonEmpty)
 
+  private def readOrder(index: Int, parentPath: DefinitionPath, resource: Resource) = {
+    val after = resource.after
+    val before = resource.before
+    val comments = Option(resource.comment).filter(_.nonEmpty)
+    val confidence = resource.confidence.headOption
+    val contained = resource.contained
+    val container = resource.container
+    val flags = Option(resource.flags.map(flagString => OrderFlag.values.find(_.value == flagString).getOrElse(throw ValidationException(s"unknown step order flag ${flagString}", parentPath)))).filter(_.nonEmpty)
+    val id = Option(resource.getURI).map(Uri.parse(_))
+    val overlaps = resource.overlaps
+    val provenances = Option(resource.provenance).filter(_.nonEmpty)
+    val ta1ref = resource.ta1ref.headOption
+
+    if (after.nonEmpty && before.nonEmpty) {
+      BeforeAfterOrder(
+        after = after,
+        before = before,
+        comments = comments,
+        confidence = confidence,
+        flags = flags,
+        id = id,
+        index = index,
+        provenances = provenances,
+        ta1ref = ta1ref
+      )
+    } else if (contained.nonEmpty && container.size == 1) {
+      ContainerContainedOrder(
+        comments = comments,
+        confidence = confidence,
+        container = container(0),
+        contained = contained,
+        flags = flags,
+        id = id,
+        index = index,
+        provenances = provenances,
+        ta1ref = ta1ref
+      )
+    } else if (overlaps.nonEmpty) {
+      OverlapsOrder(
+        comments = comments,
+        confidence = confidence,
+        flags = flags,
+        id = id,
+        index = index,
+        overlaps = overlaps,
+        provenances = provenances,
+        ta1ref = ta1ref
+      )
+    } else {
+      throw ValidationException(s"invalid step order:\n${resource.toTtlString()}", parentPath)
+    }
+  }
+
   private def readParticipant(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource): Participant = {
     val id = Uri.parse(resource.getURI)
     val path = DefinitionPath.sdfDocument(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).step(parentPath.sdfDocument.schema.get.step.get.id).participant(id)
@@ -293,7 +346,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       ),
       id = id,
       name = resource.name.headOption.getOrElse(throw ValidationException(s"schema ${id} missing required name", path)),
-      order = resource.order.zipWithIndex.flatMap({ case (stepOrderResource, stepOrderIndex) => withValidationExceptionCatchOption(path)(() => readStepOrder(stepOrderIndex, path, stepOrderResource)) }),
+      order = resource.order.zipWithIndex.flatMap({ case (orderResource, orderIndex) => withValidationExceptionCatchOption(path)(() => readOrder(orderIndex, path, orderResource)) }),
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
       provenanceData = Option(mapResourcesToJsonNodes(
@@ -378,59 +431,6 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
       temporalObjects = Option(resource.temporal.map(readTemporalObject(path, _))).filter(_.nonEmpty),
       `type` = Uri.parse(resource.types.headOption.getOrElse(throw ValidationException(s"step ${id} missing type", path)).getURI)
     )
-  }
-
-  private def readStepOrder(index: Int, parentPath: DefinitionPath, resource: Resource) = {
-    val after = resource.after
-    val before = resource.before
-    val comments = Option(resource.comment).filter(_.nonEmpty)
-    val confidence = resource.confidence.headOption
-    val contained = resource.contained
-    val container = resource.container
-    val flags = Option(resource.flags.map(flagString => StepOrderFlag.values.find(_.value == flagString).getOrElse(throw ValidationException(s"unknown step order flag ${flagString}", parentPath)))).filter(_.nonEmpty)
-    val id = Option(resource.getURI).map(Uri.parse(_))
-    val overlaps = resource.overlaps
-    val provenances = Option(resource.provenance).filter(_.nonEmpty)
-    val ta1ref = resource.ta1ref.headOption
-
-    if (after.nonEmpty && before.nonEmpty) {
-      BeforeAfterStepOrder(
-        after = after,
-        before = before,
-        comments = comments,
-        confidence = confidence,
-        flags = flags,
-        id = id,
-        index = index,
-        provenances = provenances,
-        ta1ref = ta1ref
-      )
-    } else if (contained.nonEmpty && container.size == 1) {
-      ContainerContainedStepOrder(
-        comments = comments,
-        confidence = confidence,
-        container = container(0),
-        contained = contained,
-        flags = flags,
-        id = id,
-        index = index,
-        provenances = provenances,
-        ta1ref = ta1ref
-      )
-    } else if (overlaps.nonEmpty) {
-      OverlapsStepOrder(
-        comments = comments,
-        confidence = confidence,
-        flags = flags,
-        id = id,
-        index = index,
-        overlaps = overlaps,
-        provenances = provenances,
-        ta1ref = ta1ref
-      )
-    } else {
-      throw ValidationException(s"invalid step order:\n${resource.toTtlString()}", parentPath)
-    }
   }
 
   private def readTemporalObject(parentPath: DefinitionPath, resource: Resource) =

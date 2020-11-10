@@ -44,15 +44,15 @@ query SchemaPageQuery($schemaId: String!, $sdfDocumentId: String!) {
             label
             provenances
             ta1ref
-            ... on BeforeAfterStepOrder {
+            ... on BeforeAfterOrder {
                 after
                 before
             }
-            ... on ContainerContainedStepOrder {
+            ... on ContainerContainedOrder {
                 contained
                 container
             }
-            ... on OverlapsStepOrder {
+            ... on OverlapsOrder {
                 overlaps
             }
         }

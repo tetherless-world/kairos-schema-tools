@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { EntityType, Modality, StepOrderFlag } from "./../../graphqlGlobalTypes";
+import { EntityType, Modality, OrderFlag } from "./../../graphqlGlobalTypes";
 
 // ====================================================
 // GraphQL query operation: SchemaPageQuery
@@ -42,11 +42,11 @@ export interface SchemaPageQuery_schemaById_entityRelations {
   ta1ref: string | null;
 }
 
-export interface SchemaPageQuery_schemaById_order_BeforeAfterStepOrder {
-  __typename: "BeforeAfterStepOrder";
+export interface SchemaPageQuery_schemaById_order_BeforeAfterOrder {
+  __typename: "BeforeAfterOrder";
   comments: string[] | null;
   confidence: number | null;
-  flags: StepOrderFlag[] | null;
+  flags: OrderFlag[] | null;
   id: string | null;
   label: string;
   provenances: string[] | null;
@@ -55,11 +55,11 @@ export interface SchemaPageQuery_schemaById_order_BeforeAfterStepOrder {
   before: string[];
 }
 
-export interface SchemaPageQuery_schemaById_order_ContainerContainedStepOrder {
-  __typename: "ContainerContainedStepOrder";
+export interface SchemaPageQuery_schemaById_order_ContainerContainedOrder {
+  __typename: "ContainerContainedOrder";
   comments: string[] | null;
   confidence: number | null;
-  flags: StepOrderFlag[] | null;
+  flags: OrderFlag[] | null;
   id: string | null;
   label: string;
   provenances: string[] | null;
@@ -68,11 +68,11 @@ export interface SchemaPageQuery_schemaById_order_ContainerContainedStepOrder {
   container: string;
 }
 
-export interface SchemaPageQuery_schemaById_order_OverlapsStepOrder {
-  __typename: "OverlapsStepOrder";
+export interface SchemaPageQuery_schemaById_order_OverlapsOrder {
+  __typename: "OverlapsOrder";
   comments: string[] | null;
   confidence: number | null;
-  flags: StepOrderFlag[] | null;
+  flags: OrderFlag[] | null;
   id: string | null;
   label: string;
   provenances: string[] | null;
@@ -80,7 +80,7 @@ export interface SchemaPageQuery_schemaById_order_OverlapsStepOrder {
   overlaps: string[];
 }
 
-export type SchemaPageQuery_schemaById_order = SchemaPageQuery_schemaById_order_BeforeAfterStepOrder | SchemaPageQuery_schemaById_order_ContainerContainedStepOrder | SchemaPageQuery_schemaById_order_OverlapsStepOrder;
+export type SchemaPageQuery_schemaById_order = SchemaPageQuery_schemaById_order_BeforeAfterOrder | SchemaPageQuery_schemaById_order_ContainerContainedOrder | SchemaPageQuery_schemaById_order_OverlapsOrder;
 
 export interface SchemaPageQuery_schemaById_path_sdfDocument_primitive_slot {
   __typename: "DefinitionPathPrimitiveSlot";

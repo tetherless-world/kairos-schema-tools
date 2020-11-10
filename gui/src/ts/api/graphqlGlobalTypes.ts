@@ -41,6 +41,14 @@ export enum Modality {
   Negated = "Negated",
 }
 
+export enum OrderFlag {
+  Causal = "Causal",
+  Optional = "Optional",
+  Precondition = "Precondition",
+  Simultaneous = "Simultaneous",
+  Subevent = "Subevent",
+}
+
 export enum SearchDocumentType {
   Participant = "Participant",
   Primitive = "Primitive",
@@ -49,14 +57,6 @@ export enum SearchDocumentType {
   SchemaSlot = "SchemaSlot",
   SdfDocument = "SdfDocument",
   Step = "Step",
-}
-
-export enum StepOrderFlag {
-  Causal = "Causal",
-  Optional = "Optional",
-  Precondition = "Precondition",
-  Simultaneous = "Simultaneous",
-  Subevent = "Subevent",
 }
 
 export enum ValidationMessageType {
