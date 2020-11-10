@@ -17,7 +17,7 @@ import {shortenUri} from "models/shortenUri";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {JsonFieldTableRow} from "components/table/JsonFieldTableRow";
 import {EntityTypesFieldTableRow} from "components/table/EntityTypesFieldTableRow";
-import {StepParticipantValueCard} from "components/schema/StepParticipantValueCard";
+import {ValueCard} from "components/schema/ValueCard";
 import {SchemaHrefs} from "Hrefs";
 
 export const StepParticipantCard: React.FunctionComponent<{
@@ -80,7 +80,7 @@ export const StepParticipantCard: React.FunctionComponent<{
             <Grid container direction="column" spacing={6}>
               {participant.values.map((value) => (
                 <Grid key={value.label} item>
-                  <StepParticipantValueCard
+                  <ValueCard
                     hrefs={hrefs}
                     namespacePrefixes={namespacePrefixes}
                     schema={schema}
