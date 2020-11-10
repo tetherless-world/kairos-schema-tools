@@ -35,7 +35,7 @@ export interface PrimitivePageQuery_primitiveById_path_sdfDocument_schema_slot {
 }
 
 export interface PrimitivePageQuery_primitiveById_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -106,7 +106,7 @@ export interface PrimitivePageQuery_primitiveById_slots_path_sdfDocument_schema_
 }
 
 export interface PrimitivePageQuery_primitiveById_slots_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 

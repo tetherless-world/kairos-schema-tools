@@ -26,7 +26,7 @@ trait Store {
   def getSdfDocuments: List[SdfDocument]
 
   def getStepById(id: Uri): Option[Step]
-  def getStepParticipantById(id: Uri): Option[StepParticipant]
+  def getParticipantById(id: Uri): Option[Participant]
 
   def putSdfDocument(sdfDocument: SdfDocument)
 

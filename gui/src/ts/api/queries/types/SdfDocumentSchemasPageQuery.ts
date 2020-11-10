@@ -39,7 +39,7 @@ export interface SdfDocumentSchemasPageQuery_sdfDocumentById_schemas_path_sdfDoc
 }
 
 export interface SdfDocumentSchemasPageQuery_sdfDocumentById_schemas_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 

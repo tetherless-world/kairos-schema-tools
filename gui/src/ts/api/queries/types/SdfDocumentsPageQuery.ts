@@ -41,7 +41,7 @@ export interface SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_
 }
 
 export interface SdfDocumentsPageQuery_sdfDocuments_primitives_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -106,7 +106,7 @@ export interface SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_sch
 }
 
 export interface SdfDocumentsPageQuery_sdfDocuments_schemas_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 

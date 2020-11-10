@@ -13,9 +13,9 @@ object DefinitionPath {
 
   final case class DefinitionPathProvenanceDataObject(id: String)
 
-  final case class DefinitionPathStep(id: Uri, participant: Option[DefinitionPathStepParticipant])
+  final case class DefinitionPathStep(id: Uri, participant: Option[DefinitionPathParticipant])
 
-  final case class DefinitionPathStepParticipant(id: Uri)
+  final case class DefinitionPathParticipant(id: Uri)
 
   final case class DefinitionPathSchema(id: Uri, entity: Option[DefinitionPathEntity], provenanceDataObject: Option[DefinitionPathProvenanceDataObject], slot: Option[DefinitionPathSchemaSlot], step: Option[DefinitionPathStep]) {
     var definedCount = 0
@@ -53,7 +53,7 @@ object DefinitionPath {
     class DefinitionPathSchemaBuilder(schemaId: Uri) {
       class DefinitionPathSchemaStepBuilder(stepId: Uri) {
         def build = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, entity = None, provenanceDataObject = None, slot = None, step = Some(DefinitionPathStep(id = stepId, participant = None))))))
-        def participant(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, entity = None, provenanceDataObject = None, slot = None, step = Some(DefinitionPathStep(id = stepId, participant = Some(DefinitionPathStepParticipant(id = id))))))))
+        def participant(id: Uri) = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, entity = None, provenanceDataObject = None, slot = None, step = Some(DefinitionPathStep(id = stepId, participant = Some(DefinitionPathParticipant(id = id))))))))
       }
 
       def build = DefinitionPath(sdfDocument = DefinitionPathSdfDocument(id = sdfDocumentId, primitive = None, schema = Some(DefinitionPathSchema(id = schemaId, entity = None, provenanceDataObject = None, slot = None, step = None))))

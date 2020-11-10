@@ -44,7 +44,7 @@ export interface DefinitionPathFragment_sdfDocument_schema_slot {
 }
 
 export interface DefinitionPathFragment_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
   label: string | null;
 }

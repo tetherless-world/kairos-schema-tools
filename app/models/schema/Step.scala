@@ -13,7 +13,7 @@ final case class Step(
                        minDuration: Option[Duration],
                        modalities: Option[List[Modality]],
                        name: String,
-                       participants: Option[List[StepParticipant]],
+                       participants: Option[List[Participant]],
                        path: DefinitionPath,
                        privateData: Option[String],
                        provenances: Option[List[String]],

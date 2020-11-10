@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import * as React from "react";
 import {SchemaHrefs} from "Hrefs";
-import {StepParticipantCard} from "components/schema/StepParticipantCard";
+import {ParticipantCard} from "components/schema/ParticipantCard";
 import {StringFieldTableRow} from "components/table/StringFieldTableRow";
 import {StringListFieldTableRow} from "components/table/StringListFieldTableRow";
 import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment";
@@ -125,11 +125,11 @@ export const StepCard: React.FunctionComponent<{
             <Grid container direction="column" spacing={6}>
               {step.participants.map((participant) => (
                 <Grid
-                  id={hrefs.stepParticipantId(participant)}
+                  id={hrefs.participantId(participant)}
                   item
                   key={participant.id}
                 >
-                  <StepParticipantCard
+                  <ParticipantCard
                     hrefs={hrefs}
                     namespacePrefixes={namespacePrefixes}
                     participant={participant}

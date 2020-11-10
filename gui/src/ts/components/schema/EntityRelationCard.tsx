@@ -47,7 +47,7 @@ export const EntityRelationCard: React.FunctionComponent<{
         for (const participant of step.participants) {
           if (participant.id === entityId) {
             return (
-              <Link to={hrefs.stepParticipant(participant)}>
+              <Link to={hrefs.participant(participant)}>
                 Participant: {participant.label}
               </Link>
             );

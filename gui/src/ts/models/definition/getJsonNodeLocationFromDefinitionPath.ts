@@ -62,13 +62,13 @@ export const getJsonNodeLocationFromDefinitionPath = (
           result = step.sourceJsonNodeLocation;
 
           if (path.sdfDocument.schema!.step!.participant) {
-            const stepParticipant = step.participants?.find(
+            const participant = step.participants?.find(
               (participant) =>
                 participant.id ===
                 path.sdfDocument.schema!.step!.participant!.id
             );
-            if (stepParticipant) {
-              result = stepParticipant.sourceJsonNodeLocation;
+            if (participant) {
+              result = participant.sourceJsonNodeLocation;
             }
           }
         }

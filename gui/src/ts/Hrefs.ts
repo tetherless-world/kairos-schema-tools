@@ -42,6 +42,14 @@ export class SchemaHrefs extends SubHrefs {
     return `entity-${this.sanitizeId(entity.id)}`;
   }
 
+  participant(participant: {id: string}) {
+    return `${this.home}#${this.participantId(participant)}`;
+  }
+
+  participantId(participant: {id: string}) {
+    return `participant-${this.sanitizeId(participant.id)}`;
+  }
+
   provenanceDataObject(provenanceDataObject: {id: string}) {
     return `${this.home}#${this.provenanceDataObjectId(provenanceDataObject)}`;
   }
@@ -76,14 +84,6 @@ export class SchemaHrefs extends SubHrefs {
 
   stepOrderId(stepOrder: {id: string}) {
     return `step-order-${this.sanitizeId(stepOrder.id)}`;
-  }
-
-  stepParticipant(stepParticipant: {id: string}) {
-    return `${this.home}#${this.stepParticipantId(stepParticipant)}`;
-  }
-
-  stepParticipantId(stepParticipant: {id: string}) {
-    return `step-participant-${this.sanitizeId(stepParticipant.id)}`;
   }
 
   stepTemporalObjects(step: {id: string}) {
@@ -185,7 +185,7 @@ export class Hrefs {
         return schemaHrefs.slot({id: path.sdfDocument.schema.slot.id});
       } else if (path.sdfDocument.schema.step) {
         if (path.sdfDocument.schema.step.participant) {
-          return schemaHrefs.stepParticipant({
+          return schemaHrefs.participant({
             id: path.sdfDocument.schema.step.participant.id,
           });
         } else {
