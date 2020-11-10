@@ -17,7 +17,7 @@ jobs:
           name: Run
           background: true
           command: |
-            docker-compose up app --abort-on-container-exit
+            docker-compose up --abort-on-container-exit app
       - run:
           name: Wait for the server to start
           command: |
