@@ -15,7 +15,7 @@ final case class StepParticipant(
                                   refvar: Option[String],
                                   role: Uri,
                                   sourceJsonNodeLocation: JsonNodeLocation,
-                                  values: Option[List[StepParticipantValue]]
+                                  values: Option[List[Value]]
                      ) extends Slot {
   final override def label = {
     val roleParts = role.toString.split('/')

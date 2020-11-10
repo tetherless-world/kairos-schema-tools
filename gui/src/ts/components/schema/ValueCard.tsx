@@ -21,7 +21,7 @@ import {NamespacePrefixFragment} from "api/queries/types/NamespacePrefixFragment
 import {shortenUri} from "models/shortenUri";
 import {Link} from "components/link/Link";
 
-export const StepParticipantValueCard: React.FunctionComponent<{
+export const ValueCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
   namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   schema: SchemaPageQuery_schemaById;

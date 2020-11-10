@@ -49,7 +49,7 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val temporalObjectJsonWrites = Json.writes[TemporalObject]
   private implicit val provenanceDataObjectJsonWrites = Json.writes[ProvenanceDataObject]
   private implicit val schemaSlotJsonWrites = Json.writes[SchemaSlot]
-  private implicit val stepParticipantValueJsonWrites = Json.writes[StepParticipantValue]
+  private implicit val valueJsonWrites = Json.writes[Value]
   private implicit val stepParticipantJsonWrites = Json.writes[StepParticipant]
   private implicit val stepJsonWrites = Json.writes[Step]
   private implicit val stepsJsonWrites = Json.writes[Steps]

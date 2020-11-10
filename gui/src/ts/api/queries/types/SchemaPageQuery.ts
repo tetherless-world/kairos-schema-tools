@@ -376,7 +376,7 @@ export interface SchemaPageQuery_schemaById_steps_list_participants_path {
 }
 
 export interface SchemaPageQuery_schemaById_steps_list_participants_values {
-  __typename: "StepParticipantValue";
+  __typename: "Value";
   comments: string[] | null;
   confidence: number;
   entity: string;
