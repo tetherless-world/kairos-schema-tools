@@ -20,7 +20,7 @@ import {EntityTypesFieldTableRow} from "components/table/EntityTypesFieldTableRo
 import {ValueCard} from "components/schema/ValueCard";
 import {SchemaHrefs} from "Hrefs";
 
-export const StepParticipantCard: React.FunctionComponent<{
+export const ParticipantCard: React.FunctionComponent<{
   hrefs: SchemaHrefs;
   namespacePrefixes: readonly NamespacePrefixFragment[] | null;
   participant: SchemaPageQuery_schemaById_steps_list_participants;

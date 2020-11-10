@@ -35,7 +35,7 @@ export interface SearchResultsPageQuery_search_documents_path_sdfDocument_schema
 }
 
 export interface SearchResultsPageQuery_search_documents_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 

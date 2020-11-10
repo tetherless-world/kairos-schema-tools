@@ -41,7 +41,7 @@ export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_sl
 }
 
 export interface SdfDocumentSourceFragment_primitives_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -99,7 +99,7 @@ export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_sch
 }
 
 export interface SdfDocumentSourceFragment_primitives_slots_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -229,7 +229,7 @@ export interface SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_sch
 }
 
 export interface SdfDocumentSourceFragment_schemas_entities_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
   label: string | null;
 }
@@ -328,7 +328,7 @@ export interface SdfDocumentSourceFragment_schemas_path_sdfDocument_schema_slot 
 }
 
 export interface SdfDocumentSourceFragment_schemas_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -386,7 +386,7 @@ export interface SdfDocumentSourceFragment_schemas_provenanceData_path_sdfDocume
 }
 
 export interface SdfDocumentSourceFragment_schemas_provenanceData_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -474,7 +474,7 @@ export interface SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_schema
 }
 
 export interface SdfDocumentSourceFragment_schemas_slots_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -584,7 +584,7 @@ export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_
 }
 
 export interface SdfDocumentSourceFragment_schemas_steps_list_participants_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -638,7 +638,7 @@ export interface SdfDocumentSourceFragment_schemas_steps_list_participants_sourc
 }
 
 export interface SdfDocumentSourceFragment_schemas_steps_list_participants {
-  __typename: "StepParticipant";
+  __typename: "Participant";
   id: string;
   label: string;
   path: SdfDocumentSourceFragment_schemas_steps_list_participants_path;
@@ -672,7 +672,7 @@ export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_s
 }
 
 export interface SdfDocumentSourceFragment_schemas_steps_list_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -819,7 +819,7 @@ export interface SdfDocumentSourceFragment_validationMessages_path_sdfDocument_s
 }
 
 export interface SdfDocumentSourceFragment_validationMessages_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
   label: string | null;
 }

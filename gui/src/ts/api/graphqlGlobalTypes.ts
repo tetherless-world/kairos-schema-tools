@@ -42,13 +42,13 @@ export enum Modality {
 }
 
 export enum SearchDocumentType {
+  Participant = "Participant",
   Primitive = "Primitive",
   PrimitiveSlot = "PrimitiveSlot",
   Schema = "Schema",
   SchemaSlot = "SchemaSlot",
   SdfDocument = "SdfDocument",
   Step = "Step",
-  StepParticipant = "StepParticipant",
 }
 
 export enum StepOrderFlag {

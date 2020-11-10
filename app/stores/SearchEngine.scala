@@ -4,7 +4,7 @@ import com.outr.lucene4s.{DirectLucene, _}
 import com.outr.lucene4s.field.FieldType
 import com.outr.lucene4s.field.value.FieldAndValue
 import edu.rpi.tw.twks.uri.Uri
-import models.schema.{DefinitionPath, Primitive, PrimitiveSlot, Schema, SchemaSlot, Step, StepParticipant}
+import models.schema.{DefinitionPath, Primitive, PrimitiveSlot, Schema, SchemaSlot, Step, Participant}
 import models.sdfDocument.SdfDocument
 import models.search.{SearchDocument, SearchDocumentType, SearchResults}
 
@@ -20,13 +20,13 @@ final class SearchEngine {
     val comments = lucene.create.field[String]("comments", fieldType = FieldType.NotStored, fullTextSearchable = true)
     val id = lucene.create.field[String]("id", fieldType = FieldType.Untokenized)
     val label = lucene.create.field[String]("label", fullTextSearchable = true)
+    val participantId = lucene.create.field[String]("participantId", fieldType = FieldType.Untokenized)
     val primitiveId = lucene.create.field[String]("primitiveId", fieldType = FieldType.Untokenized)
     val primitiveSlotId = lucene.create.field[String]("primitiveSlotId", fieldType = FieldType.Untokenized)
     val schemaId = lucene.create.field[String]("schemaId", fieldType = FieldType.Untokenized)
     val schemaSlotId = lucene.create.field[String]("schemaSlotId", fieldType = FieldType.Untokenized)
     val sdfDocumentId = lucene.create.field[String]("sdfDocumentId", fieldType = FieldType.Untokenized)
     val stepId = lucene.create.field[String]("stepId", fieldType = FieldType.Untokenized)
-    val stepParticipantId = lucene.create.field[String]("stepParticipantId", fieldType = FieldType.Untokenized)
     val `type` = lucene.create.field[String](name = "type", fieldType = FieldType.Untokenized)
   }
 
@@ -68,14 +68,14 @@ final class SearchEngine {
           `type` = SearchDocumentType.SchemaSlot))
 
       def putStep(step: Step): Unit = {
-        def putStepParticipant(participant: StepParticipant): Unit =
+        def putParticipant(participant: Participant): Unit =
           putSearchDocument(SearchDocument(
             aka = participant.aka,
             comments = participant.comments,
             id = participant.id,
             label = participant.label,
             path = DefinitionPath.sdfDocument(sdfDocument.id).schema(schema.id).step(step.id).participant(participant.id),
-            `type` = SearchDocumentType.StepParticipant
+            `type` = SearchDocumentType.Participant
           ))
 
         putSearchDocument(SearchDocument(
@@ -86,7 +86,7 @@ final class SearchEngine {
           path = DefinitionPath.sdfDocument(sdfDocument.id).schema(schema.id).step(step.id).build,
           `type` = SearchDocumentType.Step
         ))
-        step.participants.foreach(_.foreach(putStepParticipant(_)))
+        step.participants.foreach(_.foreach(putParticipant(_)))
       }
 
       putSearchDocument(SearchDocument(
@@ -127,7 +127,7 @@ final class SearchEngine {
               if (schema.step.isDefined) {
                 fieldAndValues :+= Fields.stepId(schema.step.get.id.toString)
                 if (schema.step.get.participant.isDefined) {
-                  fieldAndValues :+= Fields.stepParticipantId(schema.step.get.participant.get.id.toString)
+                  fieldAndValues :+= Fields.participantId(schema.step.get.participant.get.id.toString)
                 }
               }
               fieldAndValues

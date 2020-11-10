@@ -36,7 +36,7 @@ interface SchemaTableOfContentsProvenanceDataObject
 interface SchemaTableOfContentsSlot extends SchemaTableOfContentsEntry {}
 
 interface SchemaTableOfContentsStep extends SchemaTableOfContentsEntry {
-  participants: readonly SchemaTableOfContentsStepParticipant[] | null;
+  participants: readonly SchemaTableOfContentsParticipant[] | null;
   temporalObjects: readonly {label: string}[] | null;
 }
 
@@ -45,8 +45,7 @@ interface SchemaTableOfContentsStepOrder {
   label: string;
 }
 
-interface SchemaTableOfContentsStepParticipant
-  extends SchemaTableOfContentsEntry {}
+interface SchemaTableOfContentsParticipant extends SchemaTableOfContentsEntry {}
 
 const SchemaTableOfContentsEntryList: React.FunctionComponent<{
   entries: readonly SchemaTableOfContentsEntry[];
@@ -116,7 +115,7 @@ const StepsList: React.FunctionComponent<{
                 <Grid item>
                   <SchemaTableOfContentsEntryList
                     entries={step.participants}
-                    entryHref={(entry) => hrefs.stepParticipant(entry)}
+                    entryHref={(entry) => hrefs.participant(entry)}
                     includeSourceLinks={includeSourceLinks}
                     labelPrefix="Participant"
                   />

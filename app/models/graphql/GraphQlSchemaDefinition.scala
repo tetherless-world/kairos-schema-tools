@@ -89,9 +89,9 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
       Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getSchemaSlotById(ctx.value.id).map(_.label))
     )
   )
-  implicit val DefinitionPathStepParticipantObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathStepParticipant](
+  implicit val DefinitionPathParticipantObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathParticipant](
     AddFields(
-      Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getStepParticipantById(ctx.value.id).map(_.label))
+      Field("label", OptionType(StringType), resolve = ctx => ctx.ctx.store.getParticipantById(ctx.value.id).map(_.label))
     )
   )
   implicit val DefinitionPathStepObjectType = deriveObjectType[GraphQlSchemaContext, DefinitionPath.DefinitionPathStep](
@@ -163,7 +163,7 @@ object GraphQlSchemaDefinition extends BaseGraphQlSchemaDefinition {
       Field("label", StringType, resolve = _.value.entity.toString)
     )
   )
-  implicit val StepParticipantObjectType = deriveObjectType[GraphQlSchemaContext, StepParticipant](
+  implicit val ParticipantObjectType = deriveObjectType[GraphQlSchemaContext, Participant](
     AddFields(
       Field("label", StringType, resolve = _.value.label),
     )

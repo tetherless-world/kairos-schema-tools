@@ -109,7 +109,7 @@ export interface SchemaPageQuery_schemaById_path_sdfDocument_schema_slot {
 }
 
 export interface SchemaPageQuery_schemaById_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -174,7 +174,7 @@ export interface SchemaPageQuery_schemaById_provenanceData_path_sdfDocument_sche
 }
 
 export interface SchemaPageQuery_schemaById_provenanceData_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -256,7 +256,7 @@ export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_slot {
 }
 
 export interface SchemaPageQuery_schemaById_slots_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -344,7 +344,7 @@ export interface SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocu
 }
 
 export interface SchemaPageQuery_schemaById_steps_list_participants_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -387,7 +387,7 @@ export interface SchemaPageQuery_schemaById_steps_list_participants_values {
 }
 
 export interface SchemaPageQuery_schemaById_steps_list_participants {
-  __typename: "StepParticipant";
+  __typename: "Participant";
   aka: string[] | null;
   comments: string[] | null;
   entityTypes: SchemaPageQuery_schemaById_steps_list_participants_entityTypes | null;
@@ -429,7 +429,7 @@ export interface SchemaPageQuery_schemaById_steps_list_path_sdfDocument_schema_s
 }
 
 export interface SchemaPageQuery_schemaById_steps_list_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 

@@ -41,7 +41,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocum
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -99,7 +99,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sd
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_primitives_slots_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -229,7 +229,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sd
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_entities_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
   label: string | null;
 }
@@ -328,7 +328,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -386,7 +386,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_provenanceData_p
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_provenanceData_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -474,7 +474,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDo
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_slots_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -584,7 +584,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_parti
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_participants_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -638,7 +638,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_parti
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_participants {
-  __typename: "StepParticipant";
+  __typename: "Participant";
   id: string;
   label: string;
   path: SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_participants_path;
@@ -672,7 +672,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_path_
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_schemas_steps_list_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
 }
 
@@ -819,7 +819,7 @@ export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_
 }
 
 export interface SdfDocumentSaveMutation_putSdfDocument_validationMessages_path_sdfDocument_schema_step_participant {
-  __typename: "DefinitionPathStepParticipant";
+  __typename: "DefinitionPathParticipant";
   id: string;
   label: string | null;
 }

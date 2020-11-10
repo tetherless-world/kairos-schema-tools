@@ -179,6 +179,35 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
   private def readModalities(parentPath: DefinitionPath, resource: Resource): Option[List[Modality]] =
     Option(resource.modality.map(modalityString => Modality.values.find(_.value == modalityString).getOrElse(throw ValidationException(s"unknown modality ${modalityString}", parentPath)))).filter(_.nonEmpty)
 
+  private def readParticipant(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource): Participant = {
+    val id = Uri.parse(resource.getURI)
+    val path = DefinitionPath.sdfDocument(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).step(parentPath.sdfDocument.schema.get.step.get.id).participant(id)
+    Participant(
+      aka = Option(resource.aka).filter(_.nonEmpty),
+      comments = Option(resource.comment).filter(_.nonEmpty),
+      entityTypes = readEntityTypes(parentPath = path, resource = resource),
+      id = id,
+      name = resource.name.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required name", path)),
+      path = path,
+      privateData = getDefinitionPrivateData(jsonNode, path),
+      references = Option(resource.reference).filter(_.nonEmpty),
+      refvar = resource.refvar.headOption,
+      role = resource.role.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required role", path)),
+      sourceJsonNodeLocation = jsonNode.location,
+      values = Option(mapResourcesToJsonNodes(
+        getObjectJsonNodeId = (objectJsonNode) => objectJsonNode.map.get("entity").filter(_.isInstanceOf[StringValueJsonNode]).map(_.asInstanceOf[StringValueJsonNode].value).map(expandNamespacePrefix(_)),
+        getResourceId = (resource) => resource.entity.headOption.map(_.toString),
+        jsonNodes = jsonNode.map.get("values").map({
+          case valuesJsonNode: ArrayJsonNode => valuesJsonNode.list
+          case valuesJsonNode: ObjectJsonNode => List(valuesJsonNode)
+          case _ => List()
+        }).getOrElse(List()),
+        path = path,
+        resources = resource.values
+      ).flatMap(entry => withValidationExceptionCatchOption(path)(() => readValue(jsonNode = entry._1, parentPath = path, resource = entry._2, participantId = id)))).filter(_.nonEmpty),
+    )
+  }
+
   private def readPrimitive(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource) = {
     val id = Uri.parse(resource.getURI)
     val path = DefinitionPath.sdfDocument(parentPath.sdfDocument.id).primitive(id).build
@@ -338,7 +367,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
         jsonNodes = jsonNode.map.get("participants").map(_.asInstanceOf[ArrayJsonNode].list).getOrElse(List()),
         path = path,
         resources = resource.participants
-      ).flatMap(entry => withValidationExceptionCatchOption(path)(() => readStepParticipant(jsonNode = entry._1, parentPath = path, resource = entry._2)))).filter(_.nonEmpty),
+      ).flatMap(entry => withValidationExceptionCatchOption(path)(() => readParticipant(jsonNode = entry._1, parentPath = path, resource = entry._2)))).filter(_.nonEmpty),
       path = path,
       privateData = getDefinitionPrivateData(jsonNode, path),
       provenances = Option(resource.provenance).filter(_.nonEmpty),
@@ -404,35 +433,6 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     }
   }
 
-  private def readStepParticipant(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource): StepParticipant = {
-    val id = Uri.parse(resource.getURI)
-    val path = DefinitionPath.sdfDocument(parentPath.sdfDocument.id).schema(parentPath.sdfDocument.schema.get.id).step(parentPath.sdfDocument.schema.get.step.get.id).participant(id)
-    StepParticipant(
-      aka = Option(resource.aka).filter(_.nonEmpty),
-      comments = Option(resource.comment).filter(_.nonEmpty),
-      entityTypes = readEntityTypes(parentPath = path, resource = resource),
-      id = id,
-      name = resource.name.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required name", path)),
-      path = path,
-      privateData = getDefinitionPrivateData(jsonNode, path),
-      references = Option(resource.reference).filter(_.nonEmpty),
-      refvar = resource.refvar.headOption,
-      role = resource.role.headOption.getOrElse(throw ValidationException(s"step participant ${id} missing required role", path)),
-      sourceJsonNodeLocation = jsonNode.location,
-      values = Option(mapResourcesToJsonNodes(
-        getObjectJsonNodeId = (objectJsonNode) => objectJsonNode.map.get("entity").filter(_.isInstanceOf[StringValueJsonNode]).map(_.asInstanceOf[StringValueJsonNode].value).map(expandNamespacePrefix(_)),
-        getResourceId = (resource) => resource.entity.headOption.map(_.toString),
-        jsonNodes = jsonNode.map.get("values").map({
-          case valuesJsonNode: ArrayJsonNode => valuesJsonNode.list
-          case valuesJsonNode: ObjectJsonNode => List(valuesJsonNode)
-          case _ => List()
-        }).getOrElse(List()),
-        path = path,
-        resources = resource.values
-      ).flatMap(entry => withValidationExceptionCatchOption(path)(() => readValue(jsonNode = entry._1, parentPath = path, resource = entry._2, stepParticipantId = id)))).filter(_.nonEmpty),
-    )
-  }
-
   private def readTemporalObject(parentPath: DefinitionPath, resource: Resource) =
     TemporalObject(
       absoluteTime = resource.absoluteTime.headOption.map(DateTime(_)),
@@ -471,15 +471,15 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     )
   }
 
-  private def readValue(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource, stepParticipantId: Uri): Value =
+  private def readValue(jsonNode: ObjectJsonNode, parentPath: DefinitionPath, resource: Resource, participantId: Uri): Value =
     Value(
       comments = Option(resource.comment).filter(_.nonEmpty),
-      confidence = resource.confidence.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required confidence", parentPath)),
-      entity = resource.entity.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required entity", parentPath)),
-      //      entityTypes = readEntityTypes(parentPath = parentPath, resource = resource).getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required entityTypes or variant", parentPath)),
+      confidence = resource.confidence.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${participantId} missing required confidence", parentPath)),
+      entity = resource.entity.headOption.getOrElse(throw ValidationException(s"step participant value in step participant ${participantId} missing required entity", parentPath)),
+      //      entityTypes = readEntityTypes(parentPath = parentPath, resource = resource).getOrElse(throw ValidationException(s"step participant value in participant ${participantId} missing required entityTypes or variant", parentPath)),
       modalities = readModalities(parentPath, resource),
       privateData = getDefinitionPrivateData(jsonNode, parentPath),
-      provenances = Option(resource.provenance).filter(_.nonEmpty).getOrElse(throw ValidationException(s"step participant value in step participant ${stepParticipantId} missing required provenance", parentPath)),
+      provenances = Option(resource.provenance).filter(_.nonEmpty).getOrElse(throw ValidationException(s"step participant value in step participant ${participantId} missing required provenance", parentPath)),
       sourceJsonNodeLocation = jsonNode.location
     )
 

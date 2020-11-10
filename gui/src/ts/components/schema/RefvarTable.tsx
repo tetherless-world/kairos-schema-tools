@@ -88,7 +88,7 @@ export const RefvarTable: React.FunctionComponent<{
                         {participantsWithRefvar.map((participant) => (
                           <ListItem key={participant.id}>
                             <ListItemText>
-                              <Link to={hrefs.stepParticipant(participant)}>
+                              <Link to={hrefs.participant(participant)}>
                                 Participant: {participant.label}
                               </Link>
                             </ListItemText>

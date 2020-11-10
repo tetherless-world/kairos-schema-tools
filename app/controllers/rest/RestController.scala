@@ -31,7 +31,7 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val definitionPathPrimitiveJsonWrites = Json.writes[DefinitionPath.DefinitionPathPrimitive]
   private implicit val definitionPathProvenanceDataObjectJsonWrites = Json.writes[DefinitionPath.DefinitionPathProvenanceDataObject]
   private implicit val definitionPathSchemaSlotJsonWrites = Json.writes[DefinitionPath.DefinitionPathSchemaSlot]
-  private implicit val definitionPathStepParticipantJsonWrites = Json.writes[DefinitionPath.DefinitionPathStepParticipant]
+  private implicit val definitionPathParticipantJsonWrites = Json.writes[DefinitionPath.DefinitionPathParticipant]
   private implicit val definitionPathStepJsonWrites = Json.writes[DefinitionPath.DefinitionPathStep]
   private implicit val definitionPathSchemaJsonWrites = Json.writes[DefinitionPath.DefinitionPathSchema]
   private implicit val definitionPathPathSdfDocumentJsonWrites = Json.writes[DefinitionPath.DefinitionPathSdfDocument]
@@ -50,7 +50,7 @@ class RestController @Inject() (store: Store) extends InjectedController {
   private implicit val provenanceDataObjectJsonWrites = Json.writes[ProvenanceDataObject]
   private implicit val schemaSlotJsonWrites = Json.writes[SchemaSlot]
   private implicit val valueJsonWrites = Json.writes[Value]
-  private implicit val stepParticipantJsonWrites = Json.writes[StepParticipant]
+  private implicit val participantJsonWrites = Json.writes[Participant]
   private implicit val stepJsonWrites = Json.writes[Step]
   private implicit val stepsJsonWrites = Json.writes[Steps]
   private implicit val stepOrderFlagJsonWrites: json.Writes[StepOrderFlag] = (flag) => JsString(flag.value)
