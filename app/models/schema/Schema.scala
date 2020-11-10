@@ -12,7 +12,7 @@ final case class Schema(
                          entityRelations: List[EntityRelation],
                          id: Uri,
                          name: String,
-                         order: List[StepOrder],
+                         order: List[Order],
                          references: Option[List[String]],
                          path: DefinitionPath,
                          privateData: Option[String],

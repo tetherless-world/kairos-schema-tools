@@ -3,16 +3,16 @@
     "types": [
       {
         "kind": "INTERFACE",
-        "name": "StepOrder",
+        "name": "Order",
         "possibleTypes": [
           {
-            "name": "BeforeAfterStepOrder"
+            "name": "BeforeAfterOrder"
           },
           {
-            "name": "ContainerContainedStepOrder"
+            "name": "ContainerContainedOrder"
           },
           {
-            "name": "OverlapsStepOrder"
+            "name": "OverlapsOrder"
           }
         ]
       }

@@ -7,31 +7,31 @@ import {useHistory} from "react-router-dom";
 import {useTheme} from "@material-ui/core/styles";
 import {Alert} from "@material-ui/lab";
 
-interface StepOrdersGraphNode extends GraphNode {
+interface OrdersGraphNode extends GraphNode {
   label: string;
 }
 
-interface StepOrdersGraphLink extends GraphLink {
+interface OrdersGraphLink extends GraphLink {
   label: string;
 }
 
-export const StepOrdersGraph: React.FunctionComponent<{
+export const OrdersGraph: React.FunctionComponent<{
   hrefs: SchemaHrefs;
   schema: SchemaPageQuery_schemaById;
 }> = ({hrefs, schema}) => {
   const history = useHistory();
   const theme = useTheme();
 
-  const nodes: StepOrdersGraphNode[] = [];
-  const links: StepOrdersGraphLink[] = [];
+  const nodes: OrdersGraphNode[] = [];
+  const links: OrdersGraphLink[] = [];
 
   for (let orderI = 0; orderI < schema.order.length; orderI++) {
     const order = schema.order[orderI];
     switch (order.__typename) {
-      case "BeforeAfterStepOrder": {
+      case "BeforeAfterOrder": {
         // if (
         //   !order.flags ||
-        //   !order.flags.some((flag) => flag === StepOrderFlag.Precondition)
+        //   !order.flags.some((flag) => flag === OrderFlag.Precondition)
         // ) {
         //   continue;
         // }
@@ -41,7 +41,7 @@ export const StepOrdersGraph: React.FunctionComponent<{
           if (!step) {
             throw new EvalError(`order step ${stepId} not found in schema`);
           }
-          const node: StepOrdersGraphNode = {
+          const node: OrdersGraphNode = {
             color: theme.palette.primary.main,
             id: step.id,
             label: step.label,
@@ -92,8 +92,8 @@ export const StepOrdersGraph: React.FunctionComponent<{
         }
 
         const config: Partial<GraphConfiguration<
-          StepOrdersGraphNode,
-          StepOrdersGraphLink
+          OrdersGraphNode,
+          OrdersGraphLink
         >> = {
           directed: true,
           height,

@@ -296,7 +296,7 @@ export interface SdfDocumentSourceFragment_schemas_entities {
 }
 
 export interface SdfDocumentSourceFragment_schemas_order {
-  __typename: "BeforeAfterStepOrder" | "ContainerContainedStepOrder" | "OverlapsStepOrder";
+  __typename: "BeforeAfterOrder" | "ContainerContainedOrder" | "OverlapsOrder";
   id: string | null;
   label: string;
 }

@@ -13,7 +13,7 @@ import {useQueryParam} from "use-query-params";
 import {Grid, Tab, Tabs} from "@material-ui/core";
 import {SchemaTableOfContents} from "components/schema/SchemaTableOfContents";
 import {RefvarTable} from "components/schema/RefvarTable";
-import {StepOrdersGraph} from "components/schema/StepOrdersGraph";
+import {OrdersGraph} from "components/schema/OrdersGraph";
 import {shortenUri} from "models/shortenUri";
 import {AchievesRequiresTable} from "components/schema/AchievesRequiresTable";
 
@@ -116,7 +116,7 @@ export const SchemaPage: React.FunctionComponent = () => {
                   hidden={tab !== "order"}
                   style={{minHeight: 600, minWidth: 800}}
                 >
-                  <StepOrdersGraph hrefs={hrefs} schema={schema} />
+                  <OrdersGraph hrefs={hrefs} schema={schema} />
                 </div>
                 <div
                   hidden={tab !== "achieves-requires"}

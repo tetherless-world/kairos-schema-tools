@@ -42,6 +42,14 @@ export class SchemaHrefs extends SubHrefs {
     return `entity-${this.sanitizeId(entity.id)}`;
   }
 
+  order(order: {id: string}) {
+    return `${this.home}#${this.orderId(order)}`;
+  }
+
+  orderId(order: {id: string}) {
+    return `order-${this.sanitizeId(order.id)}`;
+  }
+
   participant(participant: {id: string}) {
     return `${this.home}#${this.participantId(participant)}`;
   }
@@ -78,19 +86,11 @@ export class SchemaHrefs extends SubHrefs {
     return `step-${this.sanitizeId(step.id)}`;
   }
 
-  stepOrder(stepOrder: {id: string}) {
-    return `${this.home}#${this.stepOrderId(stepOrder)}`;
+  temporalObjects(step: {id: string}) {
+    return `${this.home}#${this.temporalObjectsId(step)}`;
   }
 
-  stepOrderId(stepOrder: {id: string}) {
-    return `step-order-${this.sanitizeId(stepOrder.id)}`;
-  }
-
-  stepTemporalObjects(step: {id: string}) {
-    return `${this.home}#${this.stepTemporalObjectsId(step)}`;
-  }
-
-  stepTemporalObjectsId(step: {id: string}) {
+  temporalObjectsId(step: {id: string}) {
     return `step-temporal-objects-${this.sanitizeId(step.id)}`;
   }
 }
