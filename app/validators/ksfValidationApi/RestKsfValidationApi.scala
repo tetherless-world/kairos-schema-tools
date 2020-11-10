@@ -8,6 +8,7 @@ import models.schema.DefinitionPath
 import models.sdfDocument.SdfDocument
 import models.validation.{ValidationMessage, ValidationMessageType}
 import org.slf4j.LoggerFactory
+import play.api.Configuration
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -15,8 +16,8 @@ import scala.concurrent.{ExecutionContext, Future}
 final case class KsfValidationApiResults(errorsList: List[String], warningsList: List[String])
 
 @Singleton
-class RestKsfValidationApi @Inject()(ws: WSClient)(implicit ec: ExecutionContext) extends KsfValidationApi {
-  private val BaseUrl = "http://validation.kairos.nextcentury.com/json-ld/ksf/"
+class RestKsfValidationApi @Inject()(configuration: Configuration, ws: WSClient)(implicit ec: ExecutionContext) extends KsfValidationApi {
+  private val BaseUrl = s"http://${configuration.getOptional[String]("clothoHost").getOrElse("clotho:8008")}/json-ld/ksf/"
   private val JsonLdContentType = "application/ld+json"
   implicit val resultsDecoder: Decoder[KsfValidationApiResults] = deriveDecoder
   private val logger = LoggerFactory.getLogger(getClass)

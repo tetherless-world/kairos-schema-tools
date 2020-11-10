@@ -5,6 +5,7 @@
 /.idea/
 *.iml
 /logs/
+/moirai-clotho.jar
 node_modules/
 /project/project/
 /project/target/
