@@ -11,11 +11,13 @@ A web application for working with KAIROS schemas.
 
 ## One-time setup
 
-    script/bootstrap
+1. Download `moirai-clotho.jar` from the `validation/` directory in NextCentury's `kairos-pub` repository and place it alongside this README (in the root of this repository).
+1. Run `script/bootstrap` in this repository
 
 ### Updating
 
-    script/update
+1. Optionally, update `moirai-clotho.jar` as above.
+1. Run `script/update` in this repository
 
 ## Running
 
