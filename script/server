@@ -7,3 +7,5 @@ cd "$(dirname "$0")/.."
 # script/update
 
 DATA=${1:-./conf/data/examples} docker-compose up
+
+docker-compose rm -f
