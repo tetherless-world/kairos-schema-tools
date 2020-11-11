@@ -64,7 +64,7 @@ trait KairosProperties extends PropertyGetters {
   def refvar: List[String] = getPropertyObjectStrings(KAIROS.refvar)
   def role: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.role)
   def roleName: List[String] = getPropertyObjectStrings(KAIROS.roleName)
-  def schemas: List[Resource] = getPropertyObjectResources(KAIROS.schemas).filter(resource => resource.isURIResource)
+  def schemas: List[Resource] = getPropertyObjectUriResourceList(KAIROS.schemas).filter(resource => resource.isURIResource)
   def slots: List[Resource] = getPropertyObjectUriResourceList(KAIROS.slots)
   def startTime: List[Double] = getPropertyObjectDoubles(KAIROS.startTime)
   def steps: List[Resource] = getPropertyObjectUriResourceList(KAIROS.steps)
