@@ -1,5 +1,5 @@
 /conf/data/*
-!/conf/data/*.json
+!/conf/data/examples/
 /gui/dist/
 /gui/package-lock.json
 /.idea/
