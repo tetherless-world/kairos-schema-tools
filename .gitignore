@@ -1,3 +1,4 @@
+/conf/application.conf.local
 /conf/data/*
 !/conf/data/examples/
 /gui/dist/
