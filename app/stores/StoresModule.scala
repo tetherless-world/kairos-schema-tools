@@ -5,8 +5,9 @@ import java.nio.file.{Files, Path, Paths}
 import com.google.inject.AbstractModule
 import com.google.inject.name.Names
 import org.slf4j.LoggerFactory
+import play.api.{Configuration, Environment}
 
-final class StoresModule extends AbstractModule {
+final class StoresModule(environment: Environment, configuration: Configuration) extends AbstractModule {
   private val logger = LoggerFactory.getLogger(classOf[StoresModule])
 
   override def configure(): Unit = {
@@ -17,17 +18,12 @@ final class StoresModule extends AbstractModule {
       return
     }
 
-    val dataDirectoryPaths = List(
-      Paths.get("/data"),
-      Paths.get("conf").resolve("data")
-    )
-    for (dataDirectoryPath <- dataDirectoryPaths) {
-      if (Files.isDirectory(dataDirectoryPath)) {
-        bind(classOf[Path]).annotatedWith(Names.named("fsStoreDataDirectoryPath")).toInstance(dataDirectoryPath)
-        bind(classOf[Store]).to(classOf[FsStore]).asEagerSingleton()
-        logger.info("using data at {}", dataDirectoryPath)
-        return
-      }
+    val fsStoreConfiguration = FsStoreConfiguration.fromConfiguration(configuration)
+    if (fsStoreConfiguration.isDefined) {
+      bind(classOf[FsStoreConfiguration]).toInstance(fsStoreConfiguration.get)
+      bind(classOf[Store]).to(classOf[FsStore]).asEagerSingleton()
+      logger.info("using data at {}", fsStoreConfiguration.get.dataDirectoryPath)
+      return
     }
 
     logger.warn("unable to locate data on the file system, using the test store")

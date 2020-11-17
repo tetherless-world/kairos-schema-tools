@@ -13,11 +13,13 @@ A web application for working with KAIROS schemas.
 
 1. Download `moirai-clotho.jar` from the `validation/` directory in NextCentury's `kairos-pub` repository and place it alongside this README (in the root of this repository).
 1. Run `script/bootstrap` in this repository
+1. Optionally, put the CHRONOS ontology as `CHRONOS.ttl` in your data directory, by default `./conf/data`.
 
 ### Updating
 
 1. Optionally, update `moirai-clotho.jar` as above.
 1. Run `script/update` in this repository
+1. Optionally, update the CHRONOS ontology as above.
 
 ## Running
 
