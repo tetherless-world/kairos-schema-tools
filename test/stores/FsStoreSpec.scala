@@ -16,5 +16,5 @@ class FsStoreSpec extends WordSpec with StoreBehaviors with BeforeAndAfterEach {
   override protected def afterEach(): Unit =
     FileUtils.deleteDirectory(tempDirectoryPath.toFile)
 
-  behave like store(() => new FsStore(tempDirectoryPath, new Validators(List())))
+  behave like store(() => new FsStore(new FsStoreConfiguration(tempDirectoryPath), new Validators(List())))
 }

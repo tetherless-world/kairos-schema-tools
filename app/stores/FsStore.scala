@@ -21,7 +21,7 @@ import scala.concurrent.{Await, ExecutionContext}
 import scala.io.Source
 
 @Singleton
-class FsStore @Inject()(@Named("fsStoreDataDirectoryPath") val dataDirectoryPath: Path, validators: Validators)(implicit ec: ExecutionContext) extends AbstractStore with WithResource {
+class FsStore @Inject()(configuration: FsStoreConfiguration, validators: Validators)(implicit ec: ExecutionContext) extends AbstractStore with WithResource {
   private val searchEngine = new SearchEngine
 
   private def deleteSdfDocumentByFilePath(filePath: Path) = {
@@ -44,7 +44,7 @@ class FsStore @Inject()(@Named("fsStoreDataDirectoryPath") val dataDirectoryPath
 
   private def getSdfDocumentsByFilePath: Map[Path, SdfDocument] = {
     val sdfDocumentsByFilePath = new mutable.HashMap[Path, SdfDocument]
-    Files.walkFileTree(dataDirectoryPath, new SimpleFileVisitor[Path] {
+    Files.walkFileTree(configuration.dataDirectoryPath, new SimpleFileVisitor[Path] {
       override def visitFile(filePath: Path, attrs: BasicFileAttributes): FileVisitResult = {
         def isHidden(path: Path): Boolean =
           Files.isHidden(path) || (path.getParent != null && isHidden(path.getParent))
@@ -64,7 +64,7 @@ class FsStore @Inject()(@Named("fsStoreDataDirectoryPath") val dataDirectoryPath
     java.security.MessageDigest.getInstance("SHA-1").digest(sdfDocument.id.toString.getBytes("UTF-8")).map((b: Byte) => (if (b >= 0 & b < 16) "0" else "") + (b & 0xFF).toHexString).mkString + ".json"
 
   final override def putSdfDocument(sdfDocument: SdfDocument): Unit = {
-    val filePath = getSdfDocumentsByFilePath.find(entry => entry._2.id == sdfDocument.id).map(entry => entry._1).getOrElse(dataDirectoryPath.resolve(newSdfDocumentFileName(sdfDocument)))
+    val filePath = getSdfDocumentsByFilePath.find(entry => entry._2.id == sdfDocument.id).map(entry => entry._1).getOrElse(configuration.dataDirectoryPath.resolve(newSdfDocumentFileName(sdfDocument)))
     withResource(new FileWriter(filePath.toFile)) { fileWriter =>
       fileWriter.write(sdfDocument.sourceJson)
     }
