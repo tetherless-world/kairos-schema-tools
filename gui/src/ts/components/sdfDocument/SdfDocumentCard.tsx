@@ -24,6 +24,7 @@ import {shortenUri} from "models/shortenUri";
 
 export const SdfDocumentCard: React.FunctionComponent<{
   sdfDocument: {
+    ceId: string | null;
     id: string;
     label: string;
     namespacePrefixes: readonly NamespacePrefixFragment[];
@@ -42,6 +43,7 @@ export const SdfDocumentCard: React.FunctionComponent<{
   };
 }> = ({
   sdfDocument: {
+    ceId,
     id,
     label,
     namespacePrefixes,
@@ -87,6 +89,12 @@ export const SdfDocumentCard: React.FunctionComponent<{
                     <TableCell data-cy="sdf-document-version">
                       {sdfVersion}
                     </TableCell>
+                  </TableRow>
+                ) : null}
+                {ceId ? (
+                  <TableRow>
+                    <TableCell>Complex event identifier</TableCell>
+                    <TableCell>{ceId}</TableCell>
                   </TableRow>
                 ) : null}
               </TableBody>

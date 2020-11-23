@@ -32,6 +32,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
     } catch {
       case e: MalformedInputException =>
         return SdfDocument(
+          ceId = None,
           id = sourceUri,
           namespacePrefixes = List(),
           primitives = List(),
@@ -57,6 +58,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
   } catch {
     case e: RiotException => {
       return SdfDocument(
+        ceId = None,
         id = sourceUri,
         namespacePrefixes = List(),
         primitives = List(),
@@ -84,6 +86,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
   } catch {
     case e: ValidationException => {
       return SdfDocument(
+        ceId = None,
         id = e.messages.map(_.path.sdfDocument.id).headOption.getOrElse(sourceUri),
         namespacePrefixes = List(),
         primitives = List(),
@@ -111,6 +114,7 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
   } catch {
     case e: ValidationException =>
       SdfDocument(
+        ceId = None,
         id = header.id,
         namespacePrefixes = List(),
         primitives = List(),

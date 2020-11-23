@@ -451,6 +451,7 @@ final class VersionOneSdfDocumentReader(header: SdfDocumentHeader, sourceJson: S
     val id = header.id
     val path = DefinitionPath.sdfDocument(id).build
     SdfDocument(
+      ceId = header.rootResource.ceId.headOption,
       id = id,
       namespacePrefixes = header.rootResource.getModel.getNsPrefixMap.asScala.map(entry => NamespacePrefix(prefix = entry._1, uri = Uri.parse(entry._2))).toList,
       primitives = mapUriResourcesToJsonNodes(
