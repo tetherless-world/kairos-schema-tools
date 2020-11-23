@@ -146,6 +146,7 @@ export interface SdfDocumentsPageQuery_sdfDocuments_schemas {
 
 export interface SdfDocumentsPageQuery_sdfDocuments {
   __typename: "SdfDocument";
+  ceId: string | null;
   id: string;
   label: string;
   namespacePrefixes: SdfDocumentsPageQuery_sdfDocuments_namespacePrefixes[];

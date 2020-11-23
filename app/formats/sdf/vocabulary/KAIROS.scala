@@ -13,6 +13,7 @@ object KAIROS {
   val aka = ResourceFactory.createProperty(URI + "aka")
   val before = ResourceFactory.createProperty(URI + "before")
   val boundingBox = ResourceFactory.createProperty(URI + "boundingBox")
+  val ceId = ResourceFactory.createProperty(URI + "ceID")
   val childId = ResourceFactory.createProperty(URI + "childID")
   val comment = ResourceFactory.createProperty(URI + "comment")
   val confidence = ResourceFactory.createProperty(URI + "confidence")

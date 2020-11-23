@@ -10,6 +10,7 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 
 final case class SdfDocument(
+                              ceId: Option[String],
                               id: Uri,
                               namespacePrefixes: List[NamespacePrefix],
                               primitives: List[Primitive],

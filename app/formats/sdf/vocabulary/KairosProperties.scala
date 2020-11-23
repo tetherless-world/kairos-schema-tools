@@ -22,6 +22,7 @@ trait KairosProperties extends PropertyGetters {
   def aka: List[String] = getPropertyObjectStrings(KAIROS.aka)
   def before: List[Uri] = getPropertyObjectResourceParsedUris(KAIROS.before)
   def boundingBox: List[Int] = getPropertyObjectLiteralList(KAIROS.boundingBox).map(_.getInt)
+  def ceId: List[String] = getPropertyObjectStrings(KAIROS.ceId)
   def childId: List[String] = getPropertyObjectStrings(KAIROS.childId)
   def comment: List[String] = getPropertyObjectLiteralList(KAIROS.comment).map(_.getString)
   def confidence: List[Double] = getPropertyObjectDoubles(KAIROS.confidence)

@@ -3,6 +3,7 @@
 
 query SdfDocumentsPageQuery {
     sdfDocuments {
+        ceId
         id
         label
         namespacePrefixes {

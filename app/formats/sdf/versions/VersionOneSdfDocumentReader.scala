@@ -16,7 +16,7 @@ import org.apache.jena.riot.Lang
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 
-final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: String, sourceJsonNode: JsonNode) {
+final class VersionOneSdfDocumentReader(header: SdfDocumentHeader, sourceJson: String, sourceJsonNode: JsonNode) {
   private val nsPrefixMap = header.rootResource.getModel.getNsPrefixMap.asScala
   private val ta2 = header.rootResource.ta2.getOrElse(false)
   private val validationMessages = new mutable.ListBuffer[ValidationMessage]()
@@ -451,6 +451,7 @@ final class ZeroDot9SdfDocumentReader(header: SdfDocumentHeader, sourceJson: Str
     val id = header.id
     val path = DefinitionPath.sdfDocument(id).build
     SdfDocument(
+      ceId = header.rootResource.ceId.headOption,
       id = id,
       namespacePrefixes = header.rootResource.getModel.getNsPrefixMap.asScala.map(entry => NamespacePrefix(prefix = entry._1, uri = Uri.parse(entry._2))).toList,
       primitives = mapUriResourcesToJsonNodes(
