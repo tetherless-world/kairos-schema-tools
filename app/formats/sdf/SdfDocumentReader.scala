@@ -5,7 +5,7 @@ import java.nio.charset.MalformedInputException
 
 import edu.rpi.tw.twks.uri.Uri
 import formats.json.JsonParser
-import formats.sdf.versions.ZeroDot9SdfDocumentReader
+import formats.sdf.versions.VersionOneSdfDocumentReader
 import formats.sdf.vocabulary.KAIROS
 import io.github.tetherlessworld.twxplore.lib.base.WithResource
 import models.schema.DefinitionPath
@@ -99,8 +99,8 @@ final class SdfDocumentReader(source: Source, sourceUri: Uri) extends AutoClosea
   val sourceJsonNode = JsonParser.parse(sourceJson)
 
   try {
-    if (header.sdfVersion.startsWith("0.8") || header.sdfVersion.startsWith("0.9")) {
-      new ZeroDot9SdfDocumentReader(header, sourceJson, sourceJsonNode).read()
+    if (header.sdfVersion.startsWith("0.8") || header.sdfVersion.startsWith("0.9") || header.sdfVersion.startsWith("1.0")) {
+      new VersionOneSdfDocumentReader(header, sourceJson, sourceJsonNode).read()
     } else {
       throw ValidationException(
         message = s"unrecognized SDF version ${header.sdfVersion}",
